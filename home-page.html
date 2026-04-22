@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Frenchify - Master French Fluency</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <script>
+ tailwind.config = {
+ theme: {
+ extend: {
+ colors: {
+ primary: {
+ blue: '#2563eb',
+ yellow: '#f59e0b',
+ },
+ gray: {
+ 50: '#f9fafb',
+ 100: '#f3f4f6',
+ 200: '#e5e7eb',
+ 600: '#4b5563',
+ 900: '#111827',
+ }
+ },
+ boxShadow: {
+ 'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+ 'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+ },
+ animation: {
+ 'float': 'float 6s ease-in-out infinite',
+ 'float-reverse': 'float-reverse 5s ease-in-out infinite',
+ 'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+ 'bounce-slow': 'bounce 3s infinite',
+ 'scroll': 'scroll 60s linear infinite',
+ },
+ keyframes: {
+ float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
+ 'float-reverse': { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(20px)' } },
+ scroll: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(calc(-350px * 11))' } }
+ }
+ }
+ }
+ }
+ </script>
+ <style>
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+ * {
+ box-sizing: border-box;
+ }
+
+ /* GHL funnel wrapper overrides */
+ .pshot-page,
+ .hl_page-preview,
+ .hl_page-creator--v2 .inner-page,
+ #preview-container,
+ .page-preview {
+ width: 100% !important;
+ max-width: 100% !important;
+ overflow-x: hidden !important;
+ padding-left: 0 !important;
+ padding-right: 0 !important;
+ margin-left: 0 !important;
+ margin-right: 0 !important;
+ }
+
+ /* GHL Container Break Fix - Full Width Sections */
+ .full-bleed-section-ghl {
+ width: 100vw;
+ position: relative;
+ left: 50%;
+ right: 50%;
+ margin-left: -50vw;
+ margin-right: -50vw;
+ }
+
+ html {
+ scroll-behavior: smooth;
+ overflow-x: hidden;
+ width: 100%;
+ margin: 0;
+ padding: 0;
+ }
+
+ body {
+ font-family: 'Inter', sans-serif;
+ background-color: white;
+ margin: 0;
+ padding: 0;
+ padding-top: 144px;
+ overflow-x: hidden;
+ width: 100%;
+ min-width: 100%;
+ }
+
+ .ghl-row {
+ max-width: 1100px;
+ }
+
+ .ghl-row-faq {
+ max-width: 800px;
+ }
+
+ .ghl-row-full {
+ max-width: 100%;
+ }
+
+ .gradient-text {
+ background-clip: text;
+ -webkit-background-clip: text;
+ color: transparent;
+ background-image: linear-gradient(90deg, #2563eb, #f59e0b);
+ }
+ .hero-pattern {
+ background-image: radial-gradient(#2563eb20 1px, transparent 1px);
+ background-size: 20px 20px;
+ }
+ </style>
+</head>
+<body class="antialiased">
+
+    <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 z-50 transition-all duration-300 ease-in-out" id="header">
+        <nav class="flex justify-between items-center px-6 py-4 max-w-[1170px] mx-auto transition-all duration-300">
+            <div class="logo transition-all duration-300">
+                <a href="https://frenchifywithvyom.com/home">
+                    <img src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png" alt="Frenchify Logo" class="h-9 transition-all duration-300">
+                </a>
+            </div>
+            <ul class="hidden xl:flex items-center space-x-2 transition-all duration-300">
+                <li><a href="https://frenchifywithvyom.com/home" class="px-4 py-2 rounded-full text-blue-600 bg-blue-50 font-medium text-sm transition-all duration-300">Home</a></li>
+                <li><a href="https://frenchifywithvyom.com/programs" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Courses</a></li>
+                <li><a href="https://frenchifywithvyom.com/about-us" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">About Us</a></li>
+                <li><a href="https://frenchifywithvyom.com/results-page" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Results</a></li>
+                <li><a href="https://frenchifywithvyom.com/testimonials" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Testimonials</a></li>
+                <li><a href="https://frenchifywithvyom.com/faqs-8903" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">FAQs</a></li>
+                <li><a href="https://frenchifywithvyom.com/book-online" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Book a Meet</a></li>
+            </ul>
+            <a href="https://learn.frenchifywithvyom.com/web/" class="hidden xl:block bg-blue-600 text-white px-6 py-2 rounded-full font-semibold text-sm hover:bg-blue-700 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 shadow-md shadow-blue-200">Student Portal</a>
+            <button class="xl:hidden text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-all" id="mobileMenuBtn">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </nav>
+        <div class="xl:hidden absolute top-full left-0 right-0 bg-white rounded-2xl shadow-xl mt-2 mx-4 overflow-hidden transition-all duration-300 origin-top transform scale-y-0 opacity-0" id="mobileMenu">
+            <a href="https://frenchifywithvyom.com/home" class="block px-4 py-3 text-blue-600 bg-blue-50 font-medium transition-all">Home</a>
+            <a href="https://frenchifywithvyom.com/programs" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Courses</a>
+            <a href="https://frenchifywithvyom.com/about-us" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">About Us</a>
+            <a href="https://frenchifywithvyom.com/results-page" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Results</a>
+            <a href="https://frenchifywithvyom.com/testimonials" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Testimonials</a>
+            <a href="https://frenchifywithvyom.com/faqs-8903" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">FAQs</a>
+            <a href="https://frenchifywithvyom.com/book-online" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Book a Meet</a>
+            <a href="https://learn.frenchifywithvyom.com/web/" class="block px-4 py-3 bg-blue-600 text-white font-semibold text-center mx-4 my-2 rounded-lg hover:bg-blue-700 transition-all">Student Portal</a>
+        </div>
+    </header>
+
+ <!-- ORANGE NOTICE BAR UPDATED -->
+ <a href="https://frenchifywithvyom.com/frenchify_beginner_program" target="_blank" rel="noopener noreferrer"
+ class="fixed top-[69px] left-0 right-0 bg-yellow-500 text-gray-900 text-center py-2 px-[15px] text-sm font-semibold z-40 hover:bg-yellow-600 transition-all duration-300">
+ 🎓 Frenchify Beginner Program Available for Free (Worth $150) — Sign up <span class="underline">Here</span> (Spots are limited)
+ </a>
+
+ <!-- BLUE WHATSAPP BAR -->
+ <div class="fixed top-[121px] md:top-[105px] left-0 right-0 bg-blue-600 text-white text-center py-2 px-[15px] text-sm font-semibold z-40">
+ <a href="https://wa.me/15147265114" target="_blank" rel="noopener noreferrer" class="underline hover:text-yellow-300 transition-all">Ready to Start French for TEF? Connect on Whatsapp Text here</a>
+ </div>
+
+ <!-- Hero Section -->
+ <section class="hero-pattern py-20 md:py-24 relative overflow-hidden full-bleed-section-ghl" id="home">
+ <div class="ghl-row mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center relative z-10">
+ <div class="animate-slideInFromLeft opacity-0 animation-fill-forwards">
+ <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+ Becoming <span class="gradient-text">Fluent</span> with Frenchify
+ </h1>
+ <p class="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
+ Learn French & clear TEF/TCF Canada exam with a step-by-step real life language learning methodologies and roadmap used by a lot of students to become fluent in under 12 months.
+ </p>
+ <div class="flex flex-wrap gap-4">
+ <a href="https://frenchifywithvyom.com/programs" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+ Book My TEF Expert Call
+ </a>
+ <a href="https://frenchifywithvyom.com/analysis-page" class="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold px-8 py-4 rounded-lg shadow hover:shadow-md transform hover:-translate-y-1 transition-all duration-300">
+ Book my analysis test
+ </a>
+ </div>
+ </div>
+ <div class="animate-slideInFromRight opacity-0 animation-fill-forwards">
+ <div class="relative group">
+ <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-yellow-500 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-300"></div>
+ <img src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6808e5afbcc5c4159279e282.jpeg" alt="French Learning Session" class="relative w-full h-auto rounded-2xl shadow-2xl transform group-hover:scale-102 transition duration-300">
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Success Stories Results -->
+ <section class="py-20 bg-gray-50 full-bleed-section-ghl">
+ <div class="ghl-row-full mx-auto px-4 sm:px-6 lg:px-8">
+ <div class="text-center mb-16">
+ <h2 class="text-4xl font-bold text-gray-900 mb-4">Success Stories</h2>
+ <p class="text-xl text-gray-600 max-w-2xl mx-auto">See the amazing results our students have achieved with Frenchify</p>
+ </div>
+ <div class="relative image-slider-container">
+ <div class="overflow-hidden image-slider">
+ <div class="flex animate-scroll image-slide-track">
+ <!-- New images (and duplicates for seamless loop) -->
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6894588a297c860ea7933340.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fcd640fe2bec6b6d90.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fd29e384747704e2b1.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fd29e38456a804e2b2.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fd29e3840ce004e2af.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fca2e2e2e29e16466f.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fcdcebe2ffbb6a5c55.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/694e627373a5e05f4028bf11.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fcd640fec1b96b6d8e.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fcb1bd69584f93d1ee.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fcb1bd69032d93d1ed.png" alt="Student Result"></div>
+
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6894588a297c860ea7933340.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fcd640fe2bec6b6d90.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fd29e384747704e2b1.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fd29e38456a804e2b2.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fd29e3840ce004e2af.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fca2e2e2e29e16466f.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fcdcebe2ffbb6a5c55.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/694e627373a5e05f4028bf11.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fcd640fec1b96b6d8e.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fcb1bd69584f93d1ee.png" alt="Student Result"></div>
+ <div class="flex-shrink-0 w-[350px] p-4"><img class="rounded-xl shadow-lg" src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688667fcb1bd69032d93d1ed.png" alt="Student Result"></div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Features Section -->
+ <section class="py-20 bg-white full-bleed-section-ghl">
+ <div class="ghl-row mx-auto px-4 sm:px-6 lg:px-8">
+ <div class="text-center mb-16 animate-fadeInUp opacity-0 animation-fill-forwards">
+ <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+ Frenchify makes French learning <span class="gradient-text">simple and effective</span>
+ </h2>
+ <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+ All within a structured, step-by-step learning environment.
+ </p>
+ </div>
+ <div class="grid md:grid-cols-2 gap-8">
+ <div class="bg-gray-900 p-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fadeInUp opacity-0 animation-fill-forwards animate-delay-300">
+ <div class="flex items-center mb-6">
+ <div class="bg-yellow-500 bg-opacity-20 p-3 rounded-full mr-4">
+ <i class="fas fa-clock text-yellow-500 text-2xl"></i>
+ </div>
+ <span class="text-yellow-500 font-semibold text-sm uppercase tracking-wider">Easy for Anyone</span>
+ </div>
+ <h3 class="text-2xl font-bold text-white mb-4">Flexible Classes</h3>
+ <p class="text-gray-300 leading-relaxed">
+ Complete lectures & classes whenever you want, at your own pace, giving you a complete flexibility and personalization.
+ </p>
+ </div>
+ <div class="bg-gray-900 p-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fadeInUp opacity-0 animation-fill-forwards animate-delay-400">
+ <div class="flex items-center mb-6">
+ <div class="bg-yellow-500 bg-opacity-20 p-3 rounded-full mr-4">
+ <i class="fas fa-bolt text-yellow-500 text-2xl"></i>
+ </div>
+ <span class="text-yellow-500 font-semibold text-sm uppercase tracking-wider">So. Fast.</span>
+ </div>
+ <h3 class="text-2xl font-bold text-white mb-4">Intense & Structured approach</h3>
+ <p class="text-gray-300 leading-relaxed">
+ Syllabus covered at an intensive pace to save valuable time on Study/ Work Permit. A step-by-step order of all the topics to make the syllabus easy to consume.
+ </p>
+ </div>
+ <div class="bg-gray-900 p-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fadeInUp opacity-0 animation-fill-forwards animate-delay-500">
+ <div class="flex items-center mb-6">
+ <div class="bg-yellow-500 bg-opacity-20 p-3 rounded-full mr-4">
+ <i class="fas fa-graduation-cap text-yellow-500 text-2xl"></i>
+ </div>
+ <span class="text-yellow-500 font-semibold text-sm uppercase tracking-wider">Smart Solutions</span>
+ </div>
+ <h3 class="text-2xl font-bold text-white mb-4">Exam focused training</h3>
+ <p class="text-gray-300 leading-relaxed">
+ Complete focus on the concepts/topics which are essential for the exams, right from the beginning.
+ </p>
+ </div>
+ <div class="bg-gray-900 p-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 animate-fadeInUp opacity-0 animation-fill-forwards animate-delay-600">
+ <div class="flex items-center mb-6">
+ <div class="bg-yellow-500 bg-opacity-20 p-3 rounded-full mr-4">
+ <i class="fas fa-user-graduate text-yellow-500 text-2xl"></i>
+ </div>
+ <span class="text-yellow-500 font-semibold text-sm uppercase tracking-wider">Expert Guidance</span>
+ </div>
+ <h3 class="text-2xl font-bold text-white mb-4">Personalized Mentorship</h3>
+ <p class="text-gray-300 leading-relaxed">
+ Get guidance and support throughout your French learning journey with experienced instructors and regular doubt-clearing sessions.
+ </p>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Programs Section -->
+ <section class="py-20 bg-gray-50 full-bleed-section-ghl">
+ <div class="ghl-row mx-auto px-4 sm:px-6 lg:px-8">
+ <div class="text-center mb-16">
+ <h2 class="text-4xl font-bold text-gray-900 mb-4">Frenchify Programs</h2>
+ <p class="text-xl text-gray-600 max-w-2xl mx-auto">Discover Our Step-By-Step French learning Programs for TEF/TCF Canada</p>
+ <a href="https://frenchifywithvyom.com/programs" class="inline-block mt-8 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+ View All
+ </a>
+ </div>
+ <div class="grid md:grid-cols-2 gap-8">
+ <div class="program-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+ <div class="program-image bg-red-500 h-40 flex items-center justify-center text-white text-5xl font-bold transition-transform duration-300">
+ A1
+ </div>
+ <div class="p-8">
+ <h3 class="text-2xl font-bold text-gray-900 mb-2">Frenchify A1 Intensive</h3>
+ <p class="text-gray-600 mb-6">Step-By-Step for Beginners</p>
+ <a href="https://frenchifywithvyom.com/a1_intensive_program" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl text-center transition-all duration-300">
+ Learn More
+ </a>
+ </div>
+ </div>
+ <div class="program-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+ <div class="program-image bg-purple-500 h-40 flex items-center justify-center text-white text-5xl font-bold transition-transform duration-300">
+ A2
+ </div>
+ <div class="p-8">
+ <h3 class="text-2xl font-bold text-gray-900 mb-2">Frenchify A2 Intensive</h3>
+ <p class="text-gray-600 mb-6">For Intermediate Level Students</p>
+ <a href="https://frenchifywithvyom.com/a2_intensive_program" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl text-center transition-all duration-300">
+ Learn More
+ </a>
+ </div>
+ </div>
+ <div class="program-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+ <div class="program-image bg-green-500 h-40 flex items-center justify-center text-white text-5xl font-bold transition-transform duration-300">
+ B1
+ </div>
+ <div class="p-8">
+ <h3 class="text-2xl font-bold text-gray-900 mb-2">Frenchify B1 TEF/TCF</h3>
+ <p class="text-gray-600 mb-6">Fluency Level</p>
+ <a href="https://frenchifywithvyom.com/b1_intensive_program" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl text-center transition-all duration-300">
+ Learn More
+ </a>
+ </div>
+ </div>
+ <div class="program-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+ <div class="program-image bg-blue-600 h-40 flex items-center justify-center text-white text-5xl font-bold transition-transform duration-300">
+ B2
+ </div>
+ <div class="p-8">
+ <h3 class="text-2xl font-bold text-gray-900 mb-2">Frenchify B2 TEF/TCF</h3>
+ <p class="text-gray-600 mb-6">Exam Ready Level</p>
+ <a href="https://frenchifywithvyom.com/b2_intensive_program" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl text-center transition-all duration-300">
+ Learn More
+ </a>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Book a Call Section -->
+ <section class="py-20 bg-gradient-to-r from-blue-50 to-indigo-50 full-bleed-section-ghl">
+ <div class="ghl-row mx-auto px-4 sm:px-6 lg:px-8 text-center">
+ <h2 class="text-4xl font-bold text-gray-900 mb-6">Ready to Start Your French Journey?</h2>
+ <p class="text-xl text-gray-600 mb-8">
+ Book a consultation call with our French learning experts. Get personalized guidance, learn about our programs, and discover how we can help you achieve your French language goals.
+ </p>
+ <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
+ <a href="https://frenchifywithvyom.com/book-online" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center">
+ <i class="fas fa-calendar-alt mr-3"></i> Book Consultation
+ </a>
+ </div>
+ <div class="grid md:grid-cols-3 gap-8 mt-12">
+ <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+ <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center text-blue-600 text-xl mb-4 mx-auto">
+ <i class="fas fa-bullseye"></i>
+ </div>
+ <h3 class="text-xl font-semibold text-gray-900 mb-2">Personalized Assessment</h3>
+ <p class="text-gray-600">
+ Get your current French level evaluated and receive a customized learning plan
+ </p>
+ </div>
+ <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+ <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center text-blue-600 text-xl mb-4 mx-auto">
+ <i class="fas fa-comments"></i>
+ </div>
+ <h3 class="text-xl font-semibold text-gray-900 mb-2">Expert Guidance</h3>
+ <p class="text-gray-600">
+ Speak directly with our experienced French instructors about your goals
+ </p>
+ </div>
+ <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+ <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center text-blue-600 text-xl mb-4 mx-auto">
+ <i class="fas fa-book"></i>
+ </div>
+ <h3 class="text-xl font-semibold text-gray-900 mb-2">Program Recommendations</h3>
+ <p class="text-gray-600">
+ Discover which Frenchify program is perfect for your timeline and objectives
+ </p>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- FAQ Section -->
+ <section class="py-20 bg-white full-bleed-section-ghl">
+ <div class="ghl-row-faq mx-auto px-4 sm:px-6 lg:px-8">
+ <div class="text-center mb-16">
+ <h2 class="text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+ <p class="text-xl text-gray-600">Get answers to common questions about our French learning programs</p>
+ </div>
+ <div class="space-y-4">
+ <div class="faq-item bg-white border-2 border-gray-100 rounded-xl overflow-hidden hover:border-blue-500 transition-all duration-300">
+ <div class="faq-question p-6 cursor-pointer flex justify-between items-center">
+ <span class="text-lg font-semibold">Does Frenchify Program offer TEF/TCF or TEFAQ training?</span>
+ <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center">
+ <i class="fas fa-plus"></i>
+ </div>
+ </div>
+ <div class="faq-answer bg-gray-50 max-h-0 overflow-hidden transition-all duration-300">
+ <div class="p-6 pt-0 text-gray-600">
+ Yes, Exam specific training is provided right from the start and the programs are designed in a way to fast-track the preparation.
+ </div>
+ </div>
+ </div>
+ <div class="faq-item bg-white border-2 border-gray-100 rounded-xl overflow-hidden hover:border-blue-500 transition-all duration-300">
+ <div class="faq-question p-6 cursor-pointer flex justify-between items-center">
+ <span class="text-lg font-semibold">How much time does it take to clear TEF with Frenchify?</span>
+ <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center">
+ <i class="fas fa-plus"></i>
+ </div>
+ </div>
+ <div class="faq-answer bg-gray-50 max-h-0 overflow-hidden transition-all duration-300">
+ <div class="p-6 pt-0 text-gray-600">
+ If you study average 2-3 hours daily A1 & A2 can be completed within 3 months, B1 & B2 within 5-6 months. If you are studying French full-time the time frame reduces.
+ </div>
+ </div>
+ </div>
+ <div class="faq-item bg-white border-2 border-gray-100 rounded-xl overflow-hidden hover:border-blue-500 transition-all duration-300">
+ <div class="faq-question p-6 cursor-pointer flex justify-between items-center">
+ <span class="text-lg font-semibold">Does the Frenchify Program have doubt sessions?</span>
+ <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center">
+ <i class="fas fa-plus"></i>
+ </div>
+ </div>
+ <div class="faq-answer bg-gray-50 max-h-0 overflow-hidden transition-all duration-300">
+ <div class="p-6 pt-0 text-gray-600">
+ Yes. Along with the online programs, we provide 4 live doubt sessions each week for better understanding and mentorship.
+ </div>
+ </div>
+ </div>
+ <!-- FAQ about TEF/TCF specific training -->
+ <div class="faq-item bg-white border-2 border-gray-100 rounded-xl overflow-hidden hover:border-blue-500 transition-all duration-300">
+ <div class="faq-question p-6 cursor-pointer flex justify-between items-center">
+ <span class="text-lg font-semibold">At what level does TEF/TCF-specific training start in Frenchify?</span>
+ <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center">
+ <i class="fas fa-plus"></i>
+ </div>
+ </div>
+ <div class="faq-answer bg-gray-50 max-h-0 overflow-hidden transition-all duration-300">
+ <div class="p-6 pt-0 text-gray-600">
+ At B1 level, mock exam practices begin with sessions focusing on exam-specific preparation covering all 4 modules (Reading, Writing, Speaking, Listening).
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <!-- Widget Section -->
+ <section class="py-20 bg-gray-50 full-bleed-section-ghl">
+ <div class="ghl-row mx-auto px-4 sm:px-6 lg:px-8">
+ <div class="text-center mb-16">
+ <h2 class="text-4xl font-bold text-gray-900 mb-4">What Our Students Say</h2>
+ <p class="text-xl text-gray-600">Read testimonials from our successful students</p>
+ </div>
+ <div class="w-full overflow-hidden rounded-xl shadow-lg">
+ <script type='text/javascript' src='https://reputationhub.site/reputation/assets/review-widget.js'></script>
+ <iframe class='lc_reviews_widget' src='https://reputationhub.site/reputation/widgets/review_widget/cmjlzerv4DUDyZFj6PYO' frameborder='0' scrolling='no' style='width: 100%; min-width: 100%; height: 600px; border: none;'></iframe>
+ </div>
+ </div>
+ </section>
+
+ <script>
+ // Header scroll effect
+ window.addEventListener('scroll', function() {
+ const header = document.getElementById('header');
+ if (window.scrollY > 10) {
+ header.classList.add('shadow-md');
+ } else {
+ header.classList.remove('shadow-md');
+ }
+ });
+
+ // Mobile Menu Toggle
+ const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+ const mobileMenu = document.getElementById('mobileMenu');
+ const hamburgerIcon = mobileMenuBtn.querySelector('i');
+
+ mobileMenuBtn.addEventListener('click', () => {
+ const isOpen = mobileMenu.classList.contains('scale-y-100');
+
+ if (isOpen) {
+ mobileMenu.classList.remove('scale-y-100', 'opacity-100');
+ mobileMenu.classList.add('scale-y-0', 'opacity-0');
+ hamburgerIcon.classList.remove('fa-times');
+ hamburgerIcon.classList.add('fa-bars');
+ } else {
+ mobileMenu.classList.remove('scale-y-0', 'opacity-0');
+ mobileMenu.classList.add('scale-y-100', 'opacity-100');
+ hamburgerIcon.classList.remove('fa-bars');
+ hamburgerIcon.classList.add('fa-times');
+ }
+ });
+
+ // FAQ functionality
+ document.querySelectorAll('.faq-question').forEach(question => {
+ question.addEventListener('click', function() {
+ const answer = this.nextElementSibling;
+ const icon = this.querySelector('i');
+
+ // Close all other FAQs
+ document.querySelectorAll('.faq-question').forEach(q => {
+ if (q !== this) {
+ q.nextElementSibling.classList.remove('max-h-screen', 'py-4');
+ q.nextElementSibling.classList.add('max-h-0');
+ q.querySelector('i').classList.remove('fa-minus');
+ q.querySelector('i').classList.add('fa-plus');
+ }
+ });
+
+ // Toggle current FAQ
+ if (answer.classList.contains('max-h-0')) {
+ answer.classList.remove('max-h-0');
+ answer.classList.add('max-h-screen', 'py-4');
+ icon.classList.remove('fa-plus');
+ icon.classList.add('fa-minus');
+ } else {
+ answer.classList.remove('max-h-screen', 'py-4');
+ answer.classList.add('max-h-0');
+ icon.classList.remove('fa-minus');
+ icon.classList.add('fa-plus');
+ }
+ });
+ });
+
+ // Smooth scrolling for navigation links
+ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+ anchor.addEventListener('click', function(e) {
+ e.preventDefault();
+ const target = document.querySelector(this.getAttribute('href'));
+ if (target) {
+ target.scrollIntoView({
+ behavior: 'smooth',
+ block: 'start'
+ });
+ }
+ });
+ });
+
+ // Animation on scroll
+ const animateOnScroll = function() {
+ const elements = document.querySelectorAll('.animate-slideInFromLeft, .animate-slideInFromRight, .animate-fadeInUp');
+ elements.forEach(element => {
+ const elementPosition = element.getBoundingClientRect().top;
+ const windowHeight = window.innerHeight;
+ if (elementPosition < windowHeight - 100) {
+ element.style.opacity = '1';
+ element.style.animationFillMode = 'forwards';
+ }
+ });
+ };
+ window.addEventListener('scroll', animateOnScroll);
+ window.addEventListener('load', animateOnScroll);
+ </script>
+
+ <!-- GHL WIDTH CRACKER JS -->
+ <script>
+ (function() {
+     var el = document.body;
+     while (el && el !== document.documentElement) {
+         el.style.cssText += 'max-width:100%!important;width:100%!important;padding-left:0!important;padding-right:0!important;margin-left:0!important;margin-right:0!important;overflow-x:hidden!important;';
+         el = el.parentElement;
+     }
+     document.documentElement.style.cssText += 'max-width:100%!important;width:100%!important;padding-left:0!important;padding-right:0!important;margin-left:0!important;margin-right:0!important;overflow-x:hidden!important;';
+ })();
+ </script>
+
+</body>
+</html>

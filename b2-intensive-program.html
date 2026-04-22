@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frenchify B2 Intensive Program</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* GHL container overrides - force full width */
+        .row-container,
+        .container-fluid,
+        .col-lg-12,
+        .col-md-12,
+        .col-sm-12,
+        .col-xs-12,
+        .hl_page-creator--row,
+        .hl_page-creator--col,
+        .section_wrapper,
+        .hl_page-creator--section,
+        .row,
+        .inner-container,
+        .hl_page-creator--content,
+        .hl_page-creator--inner,
+        [class*="hl_page"],
+        [class*="section_"],
+        [class*="col-"],
+        #preview-container,
+        #section-0,
+        .ghl_wrapper,
+        .c-editor,
+        .c-editor-wrapper,
+        .pshot-page,
+        .hl_page-preview,
+        .hl_page-creator--v2 .inner-page,
+        .page-preview {
+            max-width: 100% !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: none !important;
+            overflow-x: hidden !important;
+        }
+
+        /* GHL Container Break Fix - Full Width Sections */
+        .full-bleed-section-ghl {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .full-bleed-section-ghl,
+        .full-bleed-section-ghl * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            padding-top: 80px; /* Adjust for fixed header */
+            overflow-x: hidden;
+            width: 100%;
+            min-width: 100%;
+        }
+
+        .hero-pattern {
+            background-image: radial-gradient(#2563eb1a 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Styles for FAQ Accordion */
+        .faq-answer {
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .faq-answer.open {
+            max-height: 500px; /* Adjust based on content length */
+            padding-top: 0.5rem;
+            padding-bottom: 1rem;
+        }
+
+        .faq-toggle .fa-chevron-down {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .faq-toggle.open .fa-chevron-down {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 z-50 transition-all duration-300 ease-in-out" id="header">
+        <nav class="flex justify-between items-center px-6 py-4 max-w-[1170px] mx-auto transition-all duration-300">
+            <div class="logo transition-all duration-300">
+                <a href="https://frenchifywithvyom.com/home">
+                    <img src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png" alt="Frenchify Logo" class="h-9 transition-all duration-300">
+                </a>
+            </div>
+            <ul class="hidden xl:flex items-center space-x-2 transition-all duration-300">
+                <li><a href="https://frenchifywithvyom.com/home" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Home</a></li>
+                <li><a href="https://frenchifywithvyom.com/programs" class="px-4 py-2 rounded-full text-blue-600 bg-blue-50 font-medium text-sm transition-all duration-300">Courses</a></li>
+                <li><a href="https://frenchifywithvyom.com/about-us" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">About Us</a></li>
+                <li><a href="https://frenchifywithvyom.com/results-page" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Results</a></li>
+                <li><a href="https://frenchifywithvyom.com/testimonials" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Testimonials</a></li>
+                <li><a href="https://frenchifywithvyom.com/faqs-8903" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">FAQs</a></li>
+                <li><a href="https://frenchifywithvyom.com/book-online" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Book a Meet</a></li>
+            </ul>
+            <a href="https://learn.frenchifywithvyom.com/web/" class="hidden xl:block bg-blue-600 text-white px-6 py-2 rounded-full font-semibold text-sm hover:bg-blue-700 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 shadow-md shadow-blue-200">Student Portal</a>
+            <button class="xl:hidden text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-all" id="mobileMenuBtn">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </nav>
+        <div class="xl:hidden absolute top-full left-0 right-0 bg-white rounded-2xl shadow-xl mt-2 mx-4 overflow-hidden transition-all duration-300 origin-top transform scale-y-0 opacity-0" id="mobileMenu">
+            <a href="https://frenchifywithvyom.com/home" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Home</a>
+            <a href="https://frenchifywithvyom.com/programs" class="block px-4 py-3 text-blue-600 bg-blue-50 font-medium transition-all">Courses</a>
+            <a href="https://frenchifywithvyom.com/about-us" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">About Us</a>
+            <a href="https://frenchifywithvyom.com/results-page" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Results</a>
+            <a href="https://frenchifywithvyom.com/testimonials" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Testimonials</a>
+            <a href="https://frenchifywithvyom.com/faqs-8903" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">FAQs</a>
+            <a href="https://frenchifywithvyom.com/book-online" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Book a Meet</a>
+            <a href="https://learn.frenchifywithvyom.com/web/" class="block px-4 py-3 bg-blue-600 text-white font-semibold text-center mx-4 my-2 rounded-lg hover:bg-blue-700 transition-all">Student Portal</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="py-16 md:py-24 bg-gray-50 hero-pattern full-bleed-section-ghl">
+            <div class="max-w-[1170px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+                <!-- Left Column: Text Content -->
+                <div class="text-center lg:text-left">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Frenchify B2 Intensive Program</h1>
+                    <p class="text-xl md:text-2xl text-blue-600 font-medium mb-6">Ready to achieve your highest score yet? 🚀</p>
+                    <p class="text-lg text-gray-600 max-w-xl mx-auto lg:mx-0 mb-8">
+                       Our B2 Program is specifically designed to sharpen your advanced French skills through targeted, exam-focused preparation for TEF/TCF Canada. Dive deep into exam strategies, practice intensive mock tests, and benefit from personalized mentorship.
+                    </p>
+                     <a href="https://frenchifywithvyom.com/book-online" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 inline-block">
+                        Know More
+                    </a>
+                </div>
+
+                <!-- Right Column: Video Content -->
+                <div class="w-full">
+                    <div class="rounded-xl shadow-2xl overflow-hidden border border-gray-200">
+                        <video
+                            src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/68d39928b43dbdae391f37fa.mp4"
+                            controls
+                            preload="metadata"
+                            playsinline
+                            poster="" <!-- Recommended: Add a URL to a preview image -->
+                            class="w-full h-full"
+                        >
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Goals Section -->
+        <section class="py-16 md:py-20 full-bleed-section-ghl">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Your B2 Program Goal: Secure B2+ Scores in TEF/TCF Canada</h2>
+                <ul class="space-y-6">
+                    <li class="flex items-start"><div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-check text-blue-600"></i></div><div><h3 class="font-semibold text-lg text-gray-800">Achieve Expert-Level Readiness</h3><p class="text-gray-600">Confidently secure B2+ scores in TEF/TCF Canada with targeted preparation.</p></div></li>
+                    <li class="flex items-start"><div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-check text-blue-600"></i></div><div><h3 class="font-semibold text-lg text-gray-800">Master Exam Strategies</h3><p class="text-gray-600">Benefit from intensive mock tests and personalized mentorship tailored for exam success.</p></div></li>
+                    <li class="flex items-start"><div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-check text-blue-600"></i></div><div><h3 class="font-semibold text-lg text-gray-800">Refine Speaking & Writing</h3><p class="text-gray-600">Practice with Section A+B prompts and receive personalized feedback to improve fluency, structure, and pronunciation.</p></div></li>
+                    <li class="flex items-start"><div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-check text-blue-600"></i></div><div><h3 class="font-semibold text-lg text-gray-800">Clarify Advanced Grammar</h3><p class="text-gray-600">Get clarity on complex B1/B2/C1 grammar concepts that frequently appear in the TEF exam.</p></div></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Program Components Section -->
+        <section class="py-16 md:py-20 bg-gray-50 full-bleed-section-ghl">
+            <div class="max-w-[1170px] mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl font-bold text-gray-900">Program is Divided into 2 Components</h2>
+                     <p class="mt-4 text-lg text-gray-600">Combine a flexible online curriculum with personalized, intensive live practice.</p>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-8 items-stretch">
+                    <!-- Live Sessions Card -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col">
+                        <div class="flex-shrink-0"><i class="fas fa-users text-4xl text-blue-600 mb-4"></i></div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Live Sessions</h3>
+                        <p class="text-gray-600 mb-6 flex-grow">Get intensive, exam-focused practice with instructor-led mock sessions, personalized feedback, and grammar clarification.</p>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="font-semibold text-gray-700">Speaking Mock Group Sessions (1.5+ hours)</p>
+                                <p class="text-gray-600">Wednesday 8 PM EST, Friday 8 PM EST, Saturday 10:30 AM EST</p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-700">Practice & Analysis</p>
+                                <p class="text-gray-600">Includes Speaking (Section A+B) practice and personalized TEF/TCF Writing Analysis.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Online Program Card -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col">
+                        <div class="flex-shrink-0"><i class="fas fa-laptop-code text-4xl text-blue-600 mb-4"></i></div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Online Program</h3>
+                        <p class="text-gray-600 mb-6 flex-grow">Access structured RSWL training and a wide variety of mock videos and modules to mimic exam conditions at your own pace.</p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>Structured RSWL Training</li>
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>Speaking & Writing Mock Videos</li>
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>Abundant Practice Modules</li>
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>Exam-Focused Listening/Reading Resources</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Features Section -->
+        <section class="py-16 md:py-20 full-bleed-section-ghl">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                     <h2 class="text-3xl font-bold text-gray-900">Program Highlights</h2>
+                     <p class="mt-4 text-lg text-gray-600">A flexible, structured, and entirely tailored path to exam success.</p>
+                </div>
+
+                <div class="relative">
+                    <!-- The vertical line -->
+                    <div class="absolute left-4 top-0 h-full w-0.5 bg-blue-200" aria-hidden="true"></div>
+
+                    <!-- Timeline items -->
+                    <div class="space-y-12">
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600"><i class="fas fa-bullseye text-white text-sm"></i></div>
+                            <h4 class="font-bold text-lg text-gray-900">Targeted Exam Practice</h4>
+                            <p class="text-gray-600">Dive deep into intensive Speaking (Section A+B) and Writing mock sessions that mimic the real TEF/TCF exam.</p>
+                        </div>
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600"><i class="fas fa-user-check text-white text-sm"></i></div>
+                            <h4 class="font-bold text-lg text-gray-900">Personalized Mentorship</h4>
+                            <p class="text-gray-600">Benefit from personalized feedback on writing and speaking to improve fluency, structure, and confidence.</p>
+                        </div>
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600"><i class="fas fa-brain text-white text-sm"></i></div>
+                            <h4 class="font-bold text-lg text-gray-900">Advanced Concept Clarity</h4>
+                            <p class="text-gray-600">Sharpen your skills by clarifying complex B1, B2, and C1 grammar concepts with expert instructors.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Access Duration & Final CTA -->
+        <section class="py-16 md:py-20 bg-gray-800 text-white full-bleed-section-ghl" id="signup">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="bg-gray-900/50 p-8 rounded-2xl mb-12 border border-gray-700">
+                    <div class="flex justify-center items-center gap-4 mb-4">
+                        <i class="fas fa-calendar-alt text-3xl text-blue-400"></i>
+                        <h3 class="text-2xl font-bold">3-Month Full Access</h3>
+                    </div>
+                    <p class="text-gray-300">You get 3 months of full access to the online course and all live sessions. This intensive program is tailored for exam success, providing mock tests, personalized feedback, and advanced strategy sessions to help you confidently secure B2+ scores.</p>
+                </div>
+
+                <h2 class="text-3xl font-bold mb-4">Ready to Sharpen Your Skills for Exam Success?</h2>
+                <p class="text-lg text-gray-300 mb-8">This program is entirely tailored to help you achieve your highest score in TEF/TCF Canada.</p>
+                <a href="https://frenchifywithvyom.com/book-online" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-4 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-lg">
+                    Know More
+                </a>
+                <p class="text-sm text-gray-400 mt-6">Taught in English. Some content may not be translated.</p>
+            </div>
+        </section>
+
+
+<!-- FAQs Section -->
+<section class="py-16 md:py-20 full-bleed-section-ghl">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Frequently Asked Questions</h2>
+
+        <div class="mb-10">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-100 pb-3">Before Joining</h3>
+            <div class="space-y-1">
+
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full text-left py-5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200">
+                        <span class="text-lg font-medium text-gray-800">How do I know if I’m ready for B2?</span>
+                        <i class="fas fa-chevron-down text-blue-600 transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="text-gray-600 leading-relaxed pt-2 pb-4">Connect with Vyom on WhatsApp at 514-726-5114 for a quick analysis test. Based on your results, we’ll confirm if you’re ready for B2 or need to strengthen your B1 first.</div>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full text-left py-5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200">
+                        <span class="text-lg font-medium text-gray-800">Is the analysis test paid?</span>
+                        <i class="fas fa-chevron-down text-blue-600 transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="text-gray-600 leading-relaxed pt-2 pb-4">Technically no — there’s a $50 deposit which you can use as credit towards your fees, whether you start at B1 or B2.</div>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full text-left py-5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200">
+                        <span class="text-lg font-medium text-gray-800">What if I don’t want to start at B1 after the results?</span>
+                        <i class="fas fa-chevron-down text-blue-600 transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="text-gray-600 leading-relaxed pt-2 pb-4">You can self-study with the feedback given and later join B2 when ready.</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mb-10">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-100 pb-3">Program Details</h3>
+            <div class="space-y-1">
+
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full text-left py-5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200">
+                        <span class="text-lg font-medium text-gray-800">What exactly is covered in the online program?</span>
+                        <i class="fas fa-chevron-down text-blue-600 transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="text-gray-600 leading-relaxed pt-2 pb-4"><ul><li class='list-disc ml-5'>Structured Reading, Speaking, Writing, Listening (RSWL) training</li><li class='list-disc ml-5'>TEF/TCF exam-specific strategies</li></ul></div>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full text-left py-5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200">
+                        <span class="text-lg font-medium text-gray-800">How long is the B2 program?</span>
+                        <i class="fas fa-chevron-down text-blue-600 transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="text-gray-600 leading-relaxed pt-2 pb-4">We offer two timelines — a 3-month plan and a 4-month plan — each with different pricing. Connect with Vyom at 5147265114 on Whatsapp for details and to choose the plan that best fits your schedule.</div>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full text-left py-5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200">
+                        <span class="text-lg font-medium text-gray-800">Does Frenchify provide only speaking or listening classes individually?</span>
+                        <i class="fas fa-chevron-down text-blue-600 transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="text-gray-600 leading-relaxed pt-2 pb-4">Not really — the B2 Intensive Program covers all modules for your exam preparation and overall language growth.</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mb-10">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-100 pb-3">Learning Process & Duration</h3>
+            <div class="space-y-1">
+
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full text-left py-5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200">
+                        <span class="text-lg font-medium text-gray-800">What if I have less time and can’t commit to 4 months?</span>
+                        <i class="fas fa-chevron-down text-blue-600 transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="text-gray-600 leading-relaxed pt-2 pb-4">No problem — connect with Vyom at 5147265114 on Whatsapp to arrange a customized plan to suit your schedule.</div>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full text-left py-5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200">
+                        <span class="text-lg font-medium text-gray-800">Are assignments included?</span>
+                        <i class="fas fa-chevron-down text-blue-600 transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="text-gray-600 leading-relaxed pt-2 pb-4">Yes — you’ll complete regular speaking, listening, reading, and writing tasks during the program for detailed feedback.</div>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full text-left py-5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200">
+                        <span class="text-lg font-medium text-gray-800">Are one-on-one speaking sessions available?</span>
+                        <i class="fas fa-chevron-down text-blue-600 transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="text-gray-600 leading-relaxed pt-2 pb-4">Yes — they are available only for Frenchify students who need a more intensive and quick approach. They’re at an additional cost, and timing or instructor availability cannot be guaranteed.</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mb-10">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-100 pb-3">Exam Readiness</h3>
+            <div class="space-y-1">
+
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full text-left py-5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200">
+                        <span class="text-lg font-medium text-gray-800">Does B2 Intensive prepare me for TEF/TCF?</span>
+                        <i class="fas fa-chevron-down text-blue-600 transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="text-gray-600 leading-relaxed pt-2 pb-4">Absolutely — the program integrates TEF/TCF strategies throughout, so your exam prep happens naturally as you master B2.</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mb-10">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-100 pb-3">Promotions or Offers</h3>
+            <div class="space-y-1">
+
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full text-left py-5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200">
+                        <span class="text-lg font-medium text-gray-800">Do I get a discount on referring a friend?</span>
+                        <i class="fas fa-chevron-down text-blue-600 transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="text-gray-600 leading-relaxed pt-2 pb-4">Yes! For every friend you refer, you’ll receive $35 off, and your friend receives $35 off as well!</div>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200">
+                    <button class="faq-toggle w-full text-left py-5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-200">
+                        <span class="text-lg font-medium text-gray-800">Is there a Combo Discount?</span>
+                        <i class="fas fa-chevron-down text-blue-600 transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="text-gray-600 leading-relaxed pt-2 pb-4">Absolutely. We offer special combo pricing when you enroll in multiple programs together. For details, message on WhatsApp at 514-726-5114 directly.</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- End of FAQs Section -->
+<!-- Testimonial Widget -->
+        <section class="py-16 md:py-20 bg-gray-50 full-bleed-section-ghl">
+            <div class="max-w-[1170px] mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">What Our Students Say</h2>
+
+                <!-- Reputation Hub Widget Code -->
+                <script type='text/javascript' src='https://reputationhub.site/reputation/assets/review-widget.js'></script>
+                <iframe class='lc_reviews_widget' src='https://reputationhub.site/reputation/widgets/review_widget/cmjlzerv4DUDyZFj6PYO' frameborder='0' scrolling='no' style='min-width: 100%; width: 100%;'></iframe>
+                <!-- End of Widget Code -->
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const hamburgerIcon = mobileMenuBtn.querySelector('i');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.contains('scale-y-100');
+
+            if (isOpen) {
+                mobileMenu.classList.remove('scale-y-100', 'opacity-100');
+                mobileMenu.classList.add('scale-y-0', 'opacity-0');
+                hamburgerIcon.classList.remove('fa-times');
+                hamburgerIcon.classList.add('fa-bars');
+            } else {
+                mobileMenu.classList.remove('scale-y-0', 'opacity-0');
+                mobileMenu.classList.add('scale-y-100', 'opacity-100');
+                hamburgerIcon.classList.remove('fa-bars');
+                hamburgerIcon.classList.add('fa-times');
+            }
+        });
+
+    // FAQ Accordion script
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+    faqToggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const answer = toggle.nextElementSibling;
+            const isOpen = answer.classList.contains('open');
+
+            // Close other open accordions in the same category
+            const parentContainer = toggle.closest('.space-y-1');
+            parentContainer.querySelectorAll('.faq-answer.open').forEach(openAnswer => {
+                if (openAnswer !== answer) {
+                    openAnswer.classList.remove('open');
+                    openAnswer.previousElementSibling.classList.remove('open');
+                }
+            });
+
+            // Toggle the clicked accordion
+            toggle.classList.toggle('open');
+            answer.classList.toggle('open');
+        });
+    });
+    </script>
+
+    <script>
+    (function(){
+        function killPadding(){
+            // Walk up from EVERY section and force all ancestors to full width
+            var sections = document.querySelectorAll('.full-bleed-section-ghl');
+            sections.forEach(function(sec){
+                var parent = sec.parentElement;
+                while (parent && parent !== document.documentElement && parent !== document.body) {
+                    parent.style.cssText += 'padding:0!important;margin:0!important;max-width:100%!important;width:100%!important;border:none!important;box-sizing:border-box!important;';
+                    parent = parent.parentElement;
+                }
+            });
+            document.documentElement.style.cssText += 'margin:0!important;overflow-x:hidden!important;width:100%!important;max-width:100%!important;';
+        }
+        killPadding();
+        if (document.readyState !== 'complete') {
+            window.addEventListener('load', killPadding);
+        }
+        setTimeout(killPadding, 500);
+        setTimeout(killPadding, 1500);
+    })();
+    </script>
+</body>
+</html>

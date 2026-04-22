@@ -1,0 +1,151 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Frenchify - Master French Fluency',
+  description = 'Learn French & clear TEF/TCF Canada exam with step-by-step methodologies. Become fluent in under 12 months with Frenchify with Vyom.',
+} = Astro.props;
+
+const pathname = Astro.url.pathname;
+const isHome = pathname === '/' || pathname === '/index' || pathname === '';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/png" href="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png" />
+  <title>{title}</title>
+
+  <!-- Tailwind via CDN with brand config -->
+  <script is:inline src="https://cdn.tailwindcss.com"></script>
+  <script is:inline>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              blue: '#2563eb',
+              yellow: '#f59e0b',
+            },
+            gray: {
+              50: '#f9fafb',
+              100: '#f3f4f6',
+              200: '#e5e7eb',
+              600: '#4b5563',
+              900: '#111827',
+            },
+          },
+          boxShadow: {
+            lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+            xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          },
+          animation: {
+            float: 'float 6s ease-in-out infinite',
+            'float-reverse': 'float-reverse 5s ease-in-out infinite',
+            'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'bounce-slow': 'bounce 3s infinite',
+            scroll: 'scroll 60s linear infinite',
+          },
+          keyframes: {
+            float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
+            'float-reverse': { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(20px)' } },
+            scroll: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(calc(-350px * 11))' } },
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <slot name="head" />
+</head>
+<body class:list={["antialiased", isHome && "has-notice-bars"]}>
+  <Header showNoticeBars={isHome} />
+
+  <main>
+    <slot />
+  </main>
+
+  <Footer />
+
+  <!-- Shared header/menu behavior -->
+  <script is:inline>
+    // Header shadow on scroll
+    window.addEventListener('scroll', function () {
+      const header = document.getElementById('header');
+      if (!header) return;
+      if (window.scrollY > 10) {
+        header.classList.add('shadow-md');
+      } else {
+        header.classList.remove('shadow-md');
+      }
+    });
+
+    // Mobile menu toggle
+    (function () {
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      if (!mobileMenuBtn || !mobileMenu) return;
+      const hamburgerIcon = mobileMenuBtn.querySelector('i');
+
+      mobileMenuBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const isOpen = mobileMenu.classList.contains('scale-y-100');
+        if (isOpen) {
+          mobileMenu.classList.remove('scale-y-100', 'opacity-100');
+          mobileMenu.classList.add('scale-y-0', 'opacity-0');
+          if (hamburgerIcon) {
+            hamburgerIcon.classList.remove('fa-times');
+            hamburgerIcon.classList.add('fa-bars');
+          }
+        } else {
+          mobileMenu.classList.remove('scale-y-0', 'opacity-0');
+          mobileMenu.classList.add('scale-y-100', 'opacity-100');
+          if (hamburgerIcon) {
+            hamburgerIcon.classList.remove('fa-bars');
+            hamburgerIcon.classList.add('fa-times');
+          }
+        }
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!mobileMenu.contains(e.target) && e.target !== mobileMenuBtn) {
+          mobileMenu.classList.remove('scale-y-100', 'opacity-100');
+          mobileMenu.classList.add('scale-y-0', 'opacity-0');
+          if (hamburgerIcon) {
+            hamburgerIcon.classList.remove('fa-times');
+            hamburgerIcon.classList.add('fa-bars');
+          }
+        }
+      });
+    })();
+
+    // Smooth scrolling for in-page anchors
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+  <slot name="scripts" />
+</body>
+</html>

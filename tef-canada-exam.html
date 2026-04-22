@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frenchify Program for TEF Canada Exam - One-on-One Speaking Sessions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* GHL container overrides - force full width */
+        .row-container,
+        .container-fluid,
+        .col-lg-12,
+        .col-md-12,
+        .col-sm-12,
+        .col-xs-12,
+        .hl_page-creator--row,
+        .hl_page-creator--col,
+        .section_wrapper,
+        .hl_page-creator--section,
+        .row,
+        .inner-container,
+        .hl_page-creator--content,
+        .hl_page-creator--inner,
+        [class*="hl_page"],
+        [class*="section_"],
+        [class*="col-"],
+        #preview-container,
+        #section-0,
+        .ghl_wrapper,
+        .c-editor,
+        .c-editor-wrapper,
+        .pshot-page,
+        .hl_page-preview,
+        .hl_page-creator--v2 .inner-page,
+        .page-preview {
+            max-width: 100% !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: none !important;
+            overflow-x: hidden !important;
+        }
+
+        /* GHL Container Break Fix - Full Width Sections */
+        .full-bleed-section-ghl {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .full-bleed-section-ghl,
+        .full-bleed-section-ghl * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            padding-top: 80px;
+            overflow-x: hidden;
+            width: 100%;
+            min-width: 100%;
+        }
+
+        .ghl-row {
+            max-width: 1170px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #2563eb, #f59e0b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .hero-pattern {
+            background-image: radial-gradient(#2563eb20 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .mentor-card {
+            transition: all 0.3s ease;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .mentor-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .mentor-avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: none;
+            flex-shrink: 0;
+        }
+
+        .avatar-placeholder {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .clb-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            background: #f3f4f6;
+        }
+
+        .session-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #2563eb;
+            color: white;
+            font-weight: 500;
+            padding: 12px 16px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 15px;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+        }
+
+        .session-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+        }
+
+        .session-btn .price {
+            font-weight: 700;
+        }
+
+        .faq-item {
+            transition: all 0.3s ease;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .faq-answer.open {
+            max-height: 300px;
+            padding-top: 4px;
+            padding-bottom: 20px;
+        }
+
+        .faq-toggle {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-toggle.open {
+            transform: rotate(180deg);
+        }
+
+        .card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 z-50 transition-all duration-300 ease-in-out" id="header">
+        <nav class="flex justify-between items-center px-6 py-4 max-w-[1170px] mx-auto transition-all duration-300">
+            <div class="logo transition-all duration-300">
+                <a href="https://frenchifywithvyom.com/home">
+                    <img src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png" alt="Frenchify Logo" class="h-9 transition-all duration-300">
+                </a>
+            </div>
+            <ul class="hidden xl:flex items-center space-x-2 transition-all duration-300">
+                <li><a href="https://frenchifywithvyom.com/home" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Home</a></li>
+                <li><a href="https://frenchifywithvyom.com/programs" class="px-4 py-2 rounded-full text-blue-600 bg-blue-50 font-medium text-sm transition-all duration-300">Courses</a></li>
+                <li><a href="https://frenchifywithvyom.com/about-us" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">About Us</a></li>
+                <li><a href="https://frenchifywithvyom.com/results-page" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Results</a></li>
+                <li><a href="https://frenchifywithvyom.com/testimonials" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Testimonials</a></li>
+                <li><a href="https://frenchifywithvyom.com/faqs-8903" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">FAQs</a></li>
+                <li><a href="https://frenchifywithvyom.com/book-online" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Book a Meet</a></li>
+            </ul>
+            <a href="https://learn.frenchifywithvyom.com/web/" class="hidden xl:block bg-blue-600 text-white px-6 py-2 rounded-full font-semibold text-sm hover:bg-blue-700 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 shadow-md shadow-blue-200">Student Portal</a>
+            <button class="xl:hidden text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-all" id="mobileMenuBtn">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </nav>
+        <div class="xl:hidden absolute top-full left-0 right-0 bg-white rounded-2xl shadow-xl mt-2 mx-4 overflow-hidden transition-all duration-300 origin-top transform scale-y-0 opacity-0" id="mobileMenu">
+            <a href="https://frenchifywithvyom.com/home" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Home</a>
+            <a href="https://frenchifywithvyom.com/programs" class="block px-4 py-3 text-blue-600 bg-blue-50 font-medium transition-all">Courses</a>
+            <a href="https://frenchifywithvyom.com/about-us" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">About Us</a>
+            <a href="https://frenchifywithvyom.com/results-page" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Results</a>
+            <a href="https://frenchifywithvyom.com/testimonials" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Testimonials</a>
+            <a href="https://frenchifywithvyom.com/faqs-8903" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">FAQs</a>
+            <a href="https://frenchifywithvyom.com/book-online" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Book a Meet</a>
+            <a href="https://learn.frenchifywithvyom.com/web/" class="block px-4 py-3 bg-blue-600 text-white font-semibold text-center mx-4 my-2 rounded-lg hover:bg-blue-700 transition-all">Student Portal</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-pattern pt-8 pb-10 md:pt-16 md:pb-20 full-bleed-section-ghl">
+        <div class="ghl-row mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-block bg-yellow-100 text-yellow-800 font-semibold text-sm px-5 py-2 rounded-full mb-6">
+                <i class="fas fa-star mr-2"></i>Exclusive for Frenchify Students Only
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+                <span class="gradient-text">Frenchify Program</span> for TEF Canada Exam
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                Book one-on-one speaking practice sessions with successful Frenchify students who have cleared their TEF Canada exam and achieved their PR dreams.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#mentors" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                    <i class="fas fa-users mr-2"></i>View Mentors
+                </a>
+                <a href="#faqs" class="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold px-8 py-3 rounded-lg shadow hover:shadow-md transform hover:-translate-y-1 transition-all duration-300">
+                    <i class="fas fa-question-circle mr-2"></i>Read FAQs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-10 md:py-20 bg-gray-50 full-bleed-section-ghl">
+        <div class="ghl-row mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    How It <span class="gradient-text">Works</span>
+                </h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-check text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">1. Choose a Mentor</h3>
+                    <p class="text-gray-600">Browse our TEF-certified mentors, check their CLB scores, and pick the one that fits your learning needs.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-calendar-check text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">2. Book a Session</h3>
+                    <p class="text-gray-600">Select your preferred session duration and book a convenient time slot directly from the mentor's calendar.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-comments text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">3. Practice & Improve</h3>
+                    <p class="text-gray-600">Join your private one-on-one session, practice speaking with real exam topics, and get personalized feedback.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mentors Section -->
+    <section class="py-10 md:py-20 bg-white full-bleed-section-ghl" id="mentors">
+        <div class="ghl-row mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Our TEF-Certified <span class="text-blue-600">Mentors</span>
+                </h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Learn from students who have successfully cleared the TEF Canada exam. Each mentor brings real exam experience and proven strategies.
+                </p>
+            </div>
+
+            <!-- Mentor Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Rajan Gurjar -->
+                <div class="mentor-card">
+                    <div class="p-6 flex flex-col md:flex-row gap-5">
+                        <div class="flex flex-col items-start flex-shrink-0">
+                            <img src="https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/698cc13f5cec6ca7d09cb2b2.png" alt="Rajan Gurjar" class="mentor-avatar">
+                            <h3 class="text-xl font-bold text-gray-900 mt-3 text-left">Rajan Gurjar</h3>
+                            <p class="text-sm text-green-600 font-medium mt-1"><i class="fas fa-check-circle mr-1"></i>Cleared in 1st Attempt</p>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-base font-medium text-gray-700 mb-3">TEF Certified</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="clb-pill">CLB 9</span>
+                                <span class="clb-pill">CLB 11</span>
+                                <span class="clb-pill">CLB 8</span>
+                                <span class="clb-pill">CLB 7</span>
+                            </div>
+                            <div class="space-y-2">
+                                <a href="https://api.leadconnectorhq.com/widget/bookings/rajan-gurjar-30-mins-one-on-onf25esfyjd43i" target="_blank" class="session-btn">
+                                    <span>30 Mins Session</span>
+                                    <span>Book Now <i class="fas fa-arrow-right ml-2"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Darshil Ashawa -->
+                <div class="mentor-card">
+                    <div class="p-6 flex flex-col md:flex-row gap-5">
+                        <div class="flex flex-col items-start flex-shrink-0">
+                            <img src="https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/698a37fda41b87d3021df22a.png" alt="Darshil Ashawa" class="mentor-avatar">
+                            <h3 class="text-xl font-bold text-gray-900 mt-3 text-left">Darshil Ashawa</h3>
+                            <p class="text-sm text-green-600 font-medium mt-1"><i class="fas fa-check-circle mr-1"></i>Cleared in 1st Attempt</p>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-base font-medium text-gray-700 mb-3">TEF Certified</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="clb-pill">CLB 9</span>
+                                <span class="clb-pill">CLB 9</span>
+                                <span class="clb-pill">CLB 7</span>
+                                <span class="clb-pill">CLB 8</span>
+                            </div>
+                            <div class="space-y-2">
+                                <a href="https://api.leadconnectorhq.com/widget/bookings/darshil-ashawa-30-mins-one-on-onf25esfyjd43iw2ayyv" target="_blank" class="session-btn">
+                                    <span>30 Mins Session</span>
+                                    <span>Book Now <i class="fas fa-arrow-right ml-2"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tapas Rastogi -->
+                <div class="mentor-card">
+                    <div class="p-6 flex flex-col md:flex-row gap-5">
+                        <div class="flex flex-col items-start flex-shrink-0">
+                            <img src="https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/698b5b8667d7495d2d572eb3.png" alt="Tapas Rastogi" class="mentor-avatar">
+                            <h3 class="text-xl font-bold text-gray-900 mt-3 text-left">Tapas Rastogi</h3>
+                            <p class="text-sm text-blue-600 font-medium mt-1"><i class="fas fa-certificate mr-1"></i>TEF Mentor</p>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-base font-medium text-gray-700 mb-3">TEF Certified</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="clb-pill">CLB 8</span>
+                                <span class="clb-pill">CLB 7</span>
+                                <span class="clb-pill">CLB 9</span>
+                                <span class="clb-pill">CLB 8</span>
+                            </div>
+                            <div class="space-y-2">
+                                <a href="https://api.leadconnectorhq.com/widget/bookings/tapas-rastogi-30-mins-one-on-onf25esfyjd43id7imab" target="_blank" class="session-btn">
+                                    <span>30 Mins Session</span>
+                                    <span>Book Now <i class="fas fa-arrow-right ml-2"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jay Patel -->
+                <div class="mentor-card">
+                    <div class="p-6 flex flex-col md:flex-row gap-5">
+                        <div class="flex flex-col items-start flex-shrink-0">
+                            <img src="https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/698a37fd0708e455aec9723a.png" alt="Jay Patel" class="mentor-avatar">
+                            <h3 class="text-xl font-bold text-gray-900 mt-3 text-left">Jay Patel</h3>
+                            <p class="text-sm text-green-600 font-medium mt-1"><i class="fas fa-check-circle mr-1"></i>Cleared in 2nd Attempt</p>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-base font-medium text-gray-700 mb-2">TEF Certified</p>
+                            <div class="flex flex-wrap gap-2 mb-2">
+                                <span class="clb-pill">CLB 8</span>
+                                <span class="clb-pill">CLB 7</span>
+                                <span class="clb-pill">CLB 7</span>
+                                <span class="clb-pill">CLB 8</span>
+                            </div>
+                            <a href="https://youtu.be/fUiQfeMw3rc?si=xX-Jj6ohN03EHo86" target="_blank" class="inline-flex items-center text-sm text-red-600 hover:text-red-800 font-medium underline mb-3">
+                                <i class="fab fa-youtube mr-1"></i>Video
+                            </a>
+                            <div class="space-y-2">
+                                <a href="https://api.leadconnectorhq.com/widget/bookings/jay-patel-30-mins-one-on-onf25esfyjd43id7imabdar3ze" target="_blank" class="session-btn">
+                                    <span>30 Mins Session</span>
+                                    <span>Book Now <i class="fas fa-arrow-right ml-2"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Harleen Kaur -->
+                <div class="mentor-card">
+                    <div class="p-6 flex flex-col md:flex-row gap-5">
+                        <div class="flex flex-col items-start flex-shrink-0">
+                            <img src="https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/698a1fd867d749129b19c343.png" alt="Harleen Kaur" class="mentor-avatar">
+                            <h3 class="text-xl font-bold text-gray-900 mt-3 text-left">Harleen Kaur</h3>
+                            <p class="text-sm text-blue-600 font-medium mt-1"><i class="fas fa-certificate mr-1"></i>2 years of TEF Teaching</p>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-base font-medium text-gray-700 mb-2">TEF Certified - 15 Nov, 2024</p>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="clb-pill">CLB 9</span>
+                                <span class="clb-pill">CLB 8</span>
+                                <span class="clb-pill">CLB 10</span>
+                                <span class="clb-pill">CLB 7</span>
+                            </div>
+                            <a href="https://youtu.be/iNMVm32mUrc?si=BTWkpU882M2ZLPkE" target="_blank" class="inline-flex items-center text-sm text-red-600 hover:text-red-800 font-medium underline mb-3">
+                                <i class="fab fa-youtube mr-1"></i>Watch Journey
+                            </a>
+                            <div class="space-y-2">
+                                <a href="https://api.leadconnectorhq.com/widget/bookings/harleen-kaur-30-mins-one-on-onf25esfyjd43id7imab6s2fmx" target="_blank" class="session-btn">
+                                    <span>30 Mins Session</span>
+                                    <span>Book Now <i class="fas fa-arrow-right ml-2"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wafaa Mansuri -->
+                <div class="mentor-card">
+                    <div class="p-6 flex flex-col md:flex-row gap-5">
+                        <div class="flex flex-col items-start flex-shrink-0">
+                            <img src="https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69df78f9109243d2ccf97897.png" alt="Wafaa Mansuri" class="mentor-avatar">
+                            <h3 class="text-xl font-bold text-gray-900 mt-3 text-left">Wafaa Mansuri</h3>
+                            <p class="text-sm text-blue-600 font-medium mt-1"><i class="fas fa-certificate mr-1"></i>Strategic Guidance</p>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-base font-medium text-gray-700 mb-3">TEF Certified</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="clb-pill">CLB 12</span>
+                                <span class="clb-pill">CLB 11</span>
+                                <span class="clb-pill">CLB 7</span>
+                                <span class="clb-pill">CLB 8</span>
+                            </div>
+                            <div class="space-y-2">
+                                <a href="https://api.leadconnectorhq.com/widget/bookings/wafaa-mansuri-30-mins-one-on-onf25esfyjd43id7imab6s2fmxr52418" target="_blank" class="session-btn">
+                                    <span>30 Mins Session</span>
+                                    <span>Book Now <i class="fas fa-arrow-right ml-2"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-10 md:py-20 bg-gray-50 full-bleed-section-ghl" id="faqs">
+        <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width:800px;">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Frequently Asked <span class="gradient-text">Questions</span>
+                </h2>
+                <p class="text-lg text-gray-600">
+                    Everything you need to know about our one-on-one speaking sessions.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ 1 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full flex items-center justify-between px-6 py-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold text-gray-900">Is this only for Frenchify students?</span>
+                        <i class="fas fa-chevron-down faq-toggle text-blue-600 text-sm"></i>
+                    </button>
+                    <div class="faq-answer px-6">
+                        <p class="text-gray-600 leading-relaxed">Yes. These sessions are exclusively for active Frenchify students. If an outsider books, the session will be canceled without refund.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full flex items-center justify-between px-6 py-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold text-gray-900">What happens if I miss my session?</span>
+                        <i class="fas fa-chevron-down faq-toggle text-blue-600 text-sm"></i>
+                    </button>
+                    <div class="faq-answer px-6">
+                        <p class="text-gray-600 leading-relaxed">Missed sessions are not refundable. Please be present and on time. They cannot be rebooked.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full flex items-center justify-between px-6 py-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold text-gray-900">Can I reschedule my session?</span>
+                        <i class="fas fa-chevron-down faq-toggle text-blue-600 text-sm"></i>
+                    </button>
+                    <div class="faq-answer px-6">
+                        <p class="text-gray-600 leading-relaxed">Rescheduling is not available once booked. In special cases, it may be possible with an additional fee.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full flex items-center justify-between px-6 py-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold text-gray-900">How do I pay for these sessions?</span>
+                        <i class="fas fa-chevron-down faq-toggle text-blue-600 text-sm"></i>
+                    </button>
+                    <div class="faq-answer px-6">
+                        <p class="text-gray-600 leading-relaxed">The best method is credit card payment through the booking page. You may also pay via e-transfer to frenchifyfee@gmail.com. If you have a Coupon Code you may use that.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full flex items-center justify-between px-6 py-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold text-gray-900">Can I book the same time slot every week?</span>
+                        <i class="fas fa-chevron-down faq-toggle text-blue-600 text-sm"></i>
+                    </button>
+                    <div class="faq-answer px-6">
+                        <p class="text-gray-600 leading-relaxed">Time slots cannot be guaranteed. Availability changes weekly, so we recommend booking in advance.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full flex items-center justify-between px-6 py-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold text-gray-900">Can I book multiple sessions in advance?</span>
+                        <i class="fas fa-chevron-down faq-toggle text-blue-600 text-sm"></i>
+                    </button>
+                    <div class="faq-answer px-6">
+                        <p class="text-gray-600 leading-relaxed">Yes. You may book multiple sessions ahead of time to ensure availability.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 7 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full flex items-center justify-between px-6 py-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold text-gray-900">Are these sessions private or group sessions?</span>
+                        <i class="fas fa-chevron-down faq-toggle text-blue-600 text-sm"></i>
+                    </button>
+                    <div class="faq-answer px-6">
+                        <p class="text-gray-600 leading-relaxed">These are fully one-on-one private speaking sessions (not group classes).</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 8 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full flex items-center justify-between px-6 py-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold text-gray-900">Will I receive a recording of the session?</span>
+                        <i class="fas fa-chevron-down faq-toggle text-blue-600 text-sm"></i>
+                    </button>
+                    <div class="faq-answer px-6">
+                        <p class="text-gray-600 leading-relaxed">No. Frenchify does not provide recordings. You may record the session on your own device.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 9 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full flex items-center justify-between px-6 py-5 text-left" onclick="toggleFaq(this)">
+                        <span class="text-lg font-semibold text-gray-900">What should I prepare before joining?</span>
+                        <i class="fas fa-chevron-down faq-toggle text-blue-600 text-sm"></i>
+                    </button>
+                    <div class="faq-answer px-6">
+                        <p class="text-gray-600 leading-relaxed">Come with one speaking topic ready, or be prepared to do an on-the-spot topic for practice.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100">
+        <div class="ghl-row mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <img src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png" alt="Frenchify Logo" class="h-8 mb-4">
+                    <p class="text-gray-600 text-sm">All copyrights with Frenchify with Vyom Inc.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-4">Explore Site</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="https://frenchifywithvyom.com/about-us" class="text-gray-600 hover:text-blue-600 transition-colors">About us</a></li>
+                        <li><a href="https://frenchifywithvyom.com/programs" class="text-gray-600 hover:text-blue-600 transition-colors">Courses</a></li>
+                        <li><a href="https://frenchifywithvyom.com/results-page" class="text-gray-600 hover:text-blue-600 transition-colors">Results</a></li>
+                        <li><a href="https://frenchifywithvyom.com/testimonials" class="text-gray-600 hover:text-blue-600 transition-colors">Testimonials</a></li>
+                        <li><a href="https://frenchifywithvyom.com/faqs-8903" class="text-gray-600 hover:text-blue-600 transition-colors">FAQ's</a></li>
+                        <li><a href="https://frenchifywithvyom.com/immigration" class="text-gray-600 hover:text-blue-600 transition-colors">Events</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-4">Useful Links</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="https://frenchifywithvyom.com/book-online" class="text-gray-600 hover:text-blue-600 transition-colors">Contact us</a></li>
+                        <li><a href="https://frenchifywithvyom.com/terms-and-conditions" class="text-gray-600 hover:text-blue-600 transition-colors">Terms & Conditions</a></li>
+                        <li><a href="https://frenchifywithvyom.com/privacypolicy" class="text-gray-600 hover:text-blue-600 transition-colors">Privacy Policy</a></li>
+                        <li><a href="https://frenchifywithvyom.com/refund-policy" class="text-gray-600 hover:text-blue-600 transition-colors">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-4">Connect With Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://www.instagram.com/frenchifywithvyom/" target="_blank" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-all">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@frenchifywithvyom" target="_blank" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-all">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.facebook.com/frenchifywithvyom" target="_blank" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-all">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // GHL parent wrapper fix - remove side whitespace
+        (function() {
+            var el = document.body;
+            while (el && el !== document.documentElement) {
+                el.style.cssText += 'max-width:100%!important;width:100%!important;padding-left:0!important;padding-right:0!important;margin-left:0!important;margin-right:0!important;overflow-x:hidden!important;';
+                el = el.parentElement;
+            }
+            document.documentElement.style.cssText += 'max-width:100%!important;width:100%!important;padding-left:0!important;padding-right:0!important;margin-left:0!important;margin-right:0!important;overflow-x:hidden!important;';
+        })();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const hamburgerIcon = mobileMenuBtn.querySelector('i');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.contains('scale-y-100');
+
+            if (isOpen) {
+                mobileMenu.classList.remove('scale-y-100', 'opacity-100');
+                mobileMenu.classList.add('scale-y-0', 'opacity-0');
+                hamburgerIcon.classList.remove('fa-times');
+                hamburgerIcon.classList.add('fa-bars');
+            } else {
+                mobileMenu.classList.remove('scale-y-0', 'opacity-0');
+                mobileMenu.classList.add('scale-y-100', 'opacity-100');
+                hamburgerIcon.classList.remove('fa-bars');
+                hamburgerIcon.classList.add('fa-times');
+            }
+        });
+
+        // FAQ Accordion
+        function toggleFaq(button) {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('.faq-toggle');
+            const allAnswers = document.querySelectorAll('.faq-answer');
+            const allIcons = document.querySelectorAll('.faq-toggle');
+
+            // Close all other FAQs
+            allAnswers.forEach(a => {
+                if (a !== answer) {
+                    a.classList.remove('open');
+                }
+            });
+            allIcons.forEach(i => {
+                if (i !== icon) {
+                    i.classList.remove('open');
+                }
+            });
+
+            // Toggle current FAQ
+            answer.classList.toggle('open');
+            icon.classList.toggle('open');
+        }
+    </script>
+
+    <script>
+    (function(){
+        function killPadding(){
+            var sections = document.querySelectorAll('.full-bleed-section-ghl');
+            sections.forEach(function(sec){
+                var parent = sec.parentElement;
+                while (parent && parent !== document.documentElement && parent !== document.body) {
+                    parent.style.cssText += 'padding:0!important;margin:0!important;max-width:100%!important;width:100%!important;border:none!important;box-sizing:border-box!important;';
+                    parent = parent.parentElement;
+                }
+            });
+            document.documentElement.style.cssText += 'margin:0!important;overflow-x:hidden!important;width:100%!important;max-width:100%!important;';
+        }
+        killPadding();
+        if (document.readyState !== 'complete') {
+            window.addEventListener('load', killPadding);
+        }
+        setTimeout(killPadding, 500);
+        setTimeout(killPadding, 1500);
+    })();
+    </script>
+</body>
+</html>

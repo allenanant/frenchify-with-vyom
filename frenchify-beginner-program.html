@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Frenchify Beginner Program — Sign-Up for Free</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+
+    * { box-sizing: border-box; }
+
+    /* GHL container overrides - force full width */
+    .row-container,
+    .container-fluid,
+    .col-lg-12,
+    .col-md-12,
+    .col-sm-12,
+    .col-xs-12,
+    .hl_page-creator--row,
+    .hl_page-creator--col,
+    .section_wrapper,
+    .hl_page-creator--section,
+    .row,
+    .inner-container,
+    .hl_page-creator--content,
+    .hl_page-creator--inner,
+    [class*="hl_page"],
+    [class*="section_"],
+    [class*="col-"],
+    #preview-container,
+    #section-0,
+    .ghl_wrapper,
+    .c-editor,
+    .c-editor-wrapper,
+    .pshot-page,
+    .hl_page-preview,
+    .hl_page-creator--v2 .inner-page,
+    .page-preview {
+      max-width: 100% !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+      overflow-x: hidden !important;
+    }
+
+    /* GHL Container Break Fix - Full Width Sections */
+    .full-bleed-section-ghl {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .full-bleed-section-ghl,
+    .full-bleed-section-ghl * {
+      box-sizing: border-box;
+    }
+
+    html {
+      overflow-x: hidden;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      width: 100%;
+      min-width: 100%;
+    }
+
+    .ghl-row {
+      max-width: 1220px;
+    }
+
+    @media (min-width: 1024px) {
+      .ghl-row {
+        max-width: 1024px;
+      }
+    }
+  </style>
+</head>
+<body class="text-gray-800 text-center">
+
+    <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 z-50 transition-all duration-300 ease-in-out" id="header">
+        <nav class="flex justify-between items-center px-6 py-4 max-w-[1170px] mx-auto transition-all duration-300">
+            <div class="logo transition-all duration-300">
+                <a href="https://frenchifywithvyom.com/home">
+                    <img src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png" alt="Frenchify Logo" class="h-9 transition-all duration-300">
+                </a>
+            </div>
+            <ul class="hidden xl:flex items-center space-x-2 transition-all duration-300">
+                <li><a href="https://frenchifywithvyom.com/home" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Home</a></li>
+                <li><a href="https://frenchifywithvyom.com/programs" class="px-4 py-2 rounded-full text-blue-600 bg-blue-50 font-medium text-sm transition-all duration-300">Courses</a></li>
+                <li><a href="https://frenchifywithvyom.com/about-us" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">About Us</a></li>
+                <li><a href="https://frenchifywithvyom.com/results-page" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Results</a></li>
+                <li><a href="https://frenchifywithvyom.com/testimonials" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Testimonials</a></li>
+                <li><a href="https://frenchifywithvyom.com/faqs-8903" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">FAQs</a></li>
+                <li><a href="https://frenchifywithvyom.com/book-online" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Book a Meet</a></li>
+            </ul>
+            <a href="https://learn.frenchifywithvyom.com/web/" class="hidden xl:block bg-blue-600 text-white px-6 py-2 rounded-full font-semibold text-sm hover:bg-blue-700 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 shadow-md shadow-blue-200">Student Portal</a>
+            <button class="xl:hidden text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-all" id="mobileMenuBtn">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </nav>
+        <div class="xl:hidden absolute top-full left-0 right-0 bg-white rounded-2xl shadow-xl mt-2 mx-4 overflow-hidden transition-all duration-300 origin-top transform scale-y-0 opacity-0" id="mobileMenu">
+            <a href="https://frenchifywithvyom.com/home" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Home</a>
+            <a href="https://frenchifywithvyom.com/programs" class="block px-4 py-3 text-blue-600 bg-blue-50 font-medium transition-all">Courses</a>
+            <a href="https://frenchifywithvyom.com/about-us" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">About Us</a>
+            <a href="https://frenchifywithvyom.com/results-page" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Results</a>
+            <a href="https://frenchifywithvyom.com/testimonials" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Testimonials</a>
+            <a href="https://frenchifywithvyom.com/faqs-8903" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">FAQs</a>
+            <a href="https://frenchifywithvyom.com/book-online" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Book a Meet</a>
+            <a href="https://learn.frenchifywithvyom.com/web/" class="block px-4 py-3 bg-blue-600 text-white font-semibold text-center mx-4 my-2 rounded-lg hover:bg-blue-700 transition-all">Student Portal</a>
+        </div>
+    </header>
+
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden bg-blue-50 full-bleed-section-ghl">
+    <div class="ghl-row mx-auto px-6 py-16">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+        Beginner Program — Your First Step Towards Canada PR
+      </h1>
+      <p class="text-lg md:text-xl text-gray-700 mt-4 max-w-2xl mx-auto">
+        This is your <span class="font-semibold">first step</span> to learn French for Canada PR.
+        Sign up for this program to build a solid base and understand the key aspects of the French language.
+      </p>
+      <div class="mt-6 flex justify-center">
+        <a href="https://learn.frenchifywithvyom.com/l/3f67c30cab" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg shadow">
+          Sign me up for Free (Worth 150$)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULES -->
+  <section class="py-12 px-6 bg-white full-bleed-section-ghl" style="padding-left:20px;padding-right:20px;">
+    <div class="ghl-row mx-auto">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">What You’ll Cover in This Preview</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto mb-8">
+        Get oriented with the core concepts of the French language. You’ll understand how to build sentences, follow a clear weekly plan, and finish with a quick check of your understanding at the end.
+      </p>
+
+      <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4 text-left">
+        <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+          <h3 class="font-semibold mb-1">Grammar</h3>
+          <p class="text-sm text-gray-600">Articles, pronouns, sentence order.</p>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+          <h3 class="font-semibold mb-1">Vocabulary</h3>
+          <p class="text-sm text-gray-600">Greetings, introductions, family, nationalities.</p>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+          <h3 class="font-semibold mb-1">Pronunciation</h3>
+          <p class="text-sm text-gray-600">Key sounds, vowels, the French “R”.</p>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+          <h3 class="font-semibold mb-1">Reading</h3>
+          <p class="text-sm text-gray-600">Short texts to build comprehension.</p>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+          <h3 class="font-semibold mb-1">Listening</h3>
+          <p class="text-sm text-gray-600">Mini introductions + guided answers.</p>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+          <h3 class="font-semibold mb-1">Writing</h3>
+          <p class="text-sm text-gray-600">Compose your “Présentez-vous”.</p>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+          <h3 class="font-semibold mb-1">Speaking</h3>
+          <p class="text-sm text-gray-600">Record and refine a short intro.</p>
+        </div>
+        <div class="bg-white border border-blue-200 rounded-xl p-5 shadow-sm">
+          <h3 class="font-semibold mb-1 text-blue-700">Final Unit Test</h3>
+          <p class="text-sm text-gray-600">Quick check to confirm progress.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHORT VALUE REMINDER -->
+  <section class="py-8 px-6 bg-gray-50 full-bleed-section-ghl">
+    <div class="ghl-row mx-auto">
+      <p class="text-gray-700">
+        By the end, you’ll know the flow of Frenchify A1, have the base of the language, and a weekly plan you can actually follow — with a final unit test to validate your understanding.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta" class="py-14 px-6 bg-white full-bleed-section-ghl">
+    <div class="ghl-row mx-auto">
+      <h3 class="text-3xl font-bold text-gray-900 mb-3">Get Started Today</h3>
+      <p class="text-gray-600 mb-6">
+        Start learning French today for Free
+      </p>
+      <a href="https://learn.frenchifywithvyom.com/l/3f67c30cab" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg shadow">
+        Begin My Free Access
+      </a>
+    </div>
+  </section>
+
+  <script>
+    // GHL parent wrapper fix - remove side whitespace
+    (function() {
+      var el = document.body;
+      while (el && el !== document.documentElement) {
+        el.style.cssText += 'max-width:100%!important;width:100%!important;padding-left:0!important;padding-right:0!important;margin-left:0!important;margin-right:0!important;overflow-x:hidden!important;';
+        el = el.parentElement;
+      }
+      document.documentElement.style.cssText += 'max-width:100%!important;width:100%!important;padding-left:0!important;padding-right:0!important;margin-left:0!important;margin-right:0!important;overflow-x:hidden!important;';
+    })();
+  </script>
+
+  <script>
+  (function(){
+    function killPadding(){
+      var sections = document.querySelectorAll('.full-bleed-section-ghl');
+      sections.forEach(function(sec){
+        var parent = sec.parentElement;
+        while (parent && parent !== document.documentElement && parent !== document.body) {
+          parent.style.cssText += 'padding:0!important;margin:0!important;max-width:100%!important;width:100%!important;border:none!important;box-sizing:border-box!important;';
+          parent = parent.parentElement;
+        }
+      });
+      document.documentElement.style.cssText += 'margin:0!important;overflow-x:hidden!important;width:100%!important;max-width:100%!important;';
+    }
+    killPadding();
+    if (document.readyState !== 'complete') {
+      window.addEventListener('load', killPadding);
+    }
+    setTimeout(killPadding, 500);
+    setTimeout(killPadding, 1500);
+  })();
+  
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const hamburgerIcon = mobileMenuBtn.querySelector('i');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.contains('scale-y-100');
+
+            if (isOpen) {
+                mobileMenu.classList.remove('scale-y-100', 'opacity-100');
+                mobileMenu.classList.add('scale-y-0', 'opacity-0');
+                hamburgerIcon.classList.remove('fa-times');
+                hamburgerIcon.classList.add('fa-bars');
+            } else {
+                mobileMenu.classList.remove('scale-y-0', 'opacity-0');
+                mobileMenu.classList.add('scale-y-100', 'opacity-100');
+                hamburgerIcon.classList.remove('fa-bars');
+                hamburgerIcon.classList.add('fa-times');
+            }
+        });
+    </script>
+
+</body>
+</html>

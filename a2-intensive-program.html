@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frenchify A2 Intensive Program</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* GHL container overrides - force full width */
+        .row-container,
+        .container-fluid,
+        .col-lg-12,
+        .col-md-12,
+        .col-sm-12,
+        .col-xs-12,
+        .hl_page-creator--row,
+        .hl_page-creator--col,
+        .section_wrapper,
+        .hl_page-creator--section,
+        .row,
+        .inner-container,
+        .hl_page-creator--content,
+        .hl_page-creator--inner,
+        [class*="hl_page"],
+        [class*="section_"],
+        [class*="col-"],
+        #preview-container,
+        #section-0,
+        .ghl_wrapper,
+        .c-editor,
+        .c-editor-wrapper,
+        .pshot-page,
+        .hl_page-preview,
+        .hl_page-creator--v2 .inner-page,
+        .page-preview {
+            max-width: 100% !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: none !important;
+            overflow-x: hidden !important;
+        }
+
+        /* GHL Container Break Fix - Full Width Sections */
+        .full-bleed-section-ghl {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .full-bleed-section-ghl,
+        .full-bleed-section-ghl * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            padding-top: 80px; /* Adjust for fixed header */
+            overflow-x: hidden;
+            width: 100%;
+            min-width: 100%;
+        }
+
+        .hero-pattern {
+            background-image: radial-gradient(#2563eb1a 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 z-50 transition-all duration-300 ease-in-out" id="header">
+        <nav class="flex justify-between items-center px-6 py-4 max-w-[1170px] mx-auto transition-all duration-300">
+            <div class="logo transition-all duration-300">
+                <a href="https://frenchifywithvyom.com/home">
+                    <img src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png" alt="Frenchify Logo" class="h-9 transition-all duration-300">
+                </a>
+            </div>
+            <ul class="hidden xl:flex items-center space-x-2 transition-all duration-300">
+                <li><a href="https://frenchifywithvyom.com/home" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Home</a></li>
+                <li><a href="https://frenchifywithvyom.com/programs" class="px-4 py-2 rounded-full text-blue-600 bg-blue-50 font-medium text-sm transition-all duration-300">Courses</a></li>
+                <li><a href="https://frenchifywithvyom.com/about-us" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">About Us</a></li>
+                <li><a href="https://frenchifywithvyom.com/results-page" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Results</a></li>
+                <li><a href="https://frenchifywithvyom.com/testimonials" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Testimonials</a></li>
+                <li><a href="https://frenchifywithvyom.com/faqs-8903" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">FAQs</a></li>
+                <li><a href="https://frenchifywithvyom.com/book-online" class="px-4 py-2 rounded-full text-gray-600 font-medium text-sm hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">Book a Meet</a></li>
+            </ul>
+            <a href="https://learn.frenchifywithvyom.com/web/" class="hidden xl:block bg-blue-600 text-white px-6 py-2 rounded-full font-semibold text-sm hover:bg-blue-700 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 shadow-md shadow-blue-200">Student Portal</a>
+            <button class="xl:hidden text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-all" id="mobileMenuBtn">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </nav>
+        <div class="xl:hidden absolute top-full left-0 right-0 bg-white rounded-2xl shadow-xl mt-2 mx-4 overflow-hidden transition-all duration-300 origin-top transform scale-y-0 opacity-0" id="mobileMenu">
+            <a href="https://frenchifywithvyom.com/home" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Home</a>
+            <a href="https://frenchifywithvyom.com/programs" class="block px-4 py-3 text-blue-600 bg-blue-50 font-medium transition-all">Courses</a>
+            <a href="https://frenchifywithvyom.com/about-us" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">About Us</a>
+            <a href="https://frenchifywithvyom.com/results-page" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Results</a>
+            <a href="https://frenchifywithvyom.com/testimonials" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Testimonials</a>
+            <a href="https://frenchifywithvyom.com/faqs-8903" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">FAQs</a>
+            <a href="https://frenchifywithvyom.com/book-online" class="block px-4 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-blue-50 transition-all">Book a Meet</a>
+            <a href="https://learn.frenchifywithvyom.com/web/" class="block px-4 py-3 bg-blue-600 text-white font-semibold text-center mx-4 my-2 rounded-lg hover:bg-blue-700 transition-all">Student Portal</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="py-16 md:py-24 bg-gray-50 hero-pattern full-bleed-section-ghl">
+            <div class="max-w-[1170px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+                <!-- Left Column: Text Content -->
+                <div class="text-center lg:text-left">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Frenchify A2 Intensive Program</h1>
+                    <p class="text-xl md:text-2xl text-blue-600 font-medium mb-6">Deepen Your French Journey and Build Real Confidence</p>
+                    <p class="text-lg text-gray-600 max-w-xl mx-auto lg:mx-0 mb-8">
+                        Congratulations, you’ve mastered the basics at A1! Now, join this exciting second step to uncover the real beauty of French and understand how the language truly comes together.
+                    </p>
+                     <a href="https://link.fastpaydirect.com/payment-link/67e8bb027178768a29a43b4e" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 inline-block">
+                        Sign Up
+                    </a>
+                </div>
+
+                <!-- Right Column: Video Content -->
+                <div class="w-full">
+                    <div class="rounded-xl shadow-2xl overflow-hidden border border-gray-200">
+                        <video
+                            src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/68d39928e1ce45e40bf67452.mp4"
+                            controls
+                            preload="metadata"
+                            playsinline
+                            poster="" <!-- Recommended: Add a URL to a preview image -->
+                            class="w-full h-full"
+                        >
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Goals Section -->
+        <section class="py-16 md:py-20 full-bleed-section-ghl">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Our Goal at A2 Is Clear</h2>
+                <ul class="space-y-6">
+                    <li class="flex items-start"><div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-check text-blue-600"></i></div><div><h3 class="font-semibold text-lg text-gray-800">Strengthen Your Foundation</h3><p class="text-gray-600">Strengthen your understanding of sentence structure and grammar rules.</p></div></li>
+                    <li class="flex items-start"><div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-check text-blue-600"></i></div><div><h3 class="font-semibold text-lg text-gray-800">Expand Your Vocabulary</h3><p class="text-gray-600">Expand your vocabulary for social, work, and day-to-day conversations.</p></div></li>
+                    <li class="flex items-start"><div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-check text-blue-600"></i></div><div><h3 class="font-semibold text-lg text-gray-800">Express Yourself Confidently</h3><p class="text-gray-600">Learn to express opinions, preferences, and reasons confidently.</p></div></li>
+                    <li class="flex items-start"><div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-check text-blue-600"></i></div><div><h3 class="font-semibold text-lg text-gray-800">Enhance Listening Comprehension</h3><p class="text-gray-600">Understand and respond to faster-paced spoken French.</p></div></li>
+                    <li class="flex items-start"><div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-check text-blue-600"></i></div><div><h3 class="font-semibold text-lg text-gray-800">Develop Writing Skills</h3><p class="text-gray-600">Start writing structured messages, descriptions, and emails.</p></div></li>
+                     <li class="flex items-start"><div class="flex-shrink-0 bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-check text-blue-600"></i></div><div><h3 class="font-semibold text-lg text-gray-800">Engage With The Language</h3><p class="text-gray-600">Build the confidence to engage with the language in-depth through more comprehensible input.</p></div></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Program Components Section -->
+        <section class="py-16 md:py-20 bg-gray-50 full-bleed-section-ghl">
+            <div class="max-w-[1170px] mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl font-bold text-gray-900">Two Powerful Learning Components</h2>
+                     <p class="mt-4 text-lg text-gray-600">The program is divided into two parts: a flexible online curriculum and expert-led live interaction.</p>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-8 items-stretch">
+                    <!-- Live Sessions Card -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col">
+                        <div class="flex-shrink-0"><i class="fas fa-users text-4xl text-blue-600 mb-4"></i></div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Weekly 4 Live Sessions</h3>
+                        <p class="text-gray-600 mb-6 flex-grow">Reinforce your learning, ask questions, and practice with instructors and peers in four dedicated sessions each week.</p>
+                        <div>
+                            <p class="font-semibold text-gray-700">Doubt Sessions</p>
+                            <p class="text-gray-600 mb-3">Tuesday - 8 AM EST, Thursday - 8:15 PM EST, Sunday - 8:30 AM EST</p>
+                            <p class="font-semibold text-gray-700">Activity Session</p>
+                            <p class="text-gray-600">Saturday - 9 AM EST</p>
+                        </div>
+                    </div>
+                    <!-- Online Program Card -->
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col">
+                        <div class="flex-shrink-0"><i class="fas fa-laptop-code text-4xl text-blue-600 mb-4"></i></div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Complete Online Program</h3>
+                        <p class="text-gray-600 mb-6 flex-grow">Access a fully guided A2 curriculum with step-by-step units designed to build strong real-world language skills.</p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>Detailed Grammar Lessons</li>
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>Vocabulary & Thematic Word Lists</li>
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>Reading & Listening Practice</li>
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>Speaking & Writing Prompts</li>
+                            <li class="flex items-center"><i class="fas fa-star text-yellow-500 mr-3"></i>Worksheets, Quizzes & Tests</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadmap Section -->
+        <section class="py-16 md:py-20 full-bleed-section-ghl">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                     <h2 class="text-3xl font-bold text-gray-900">Your Step-by-Step Learning Roadmap</h2>
+                     <p class="mt-4 text-lg text-gray-600">Every step is laid out — so you never feel lost, stuck, or confused.</p>
+                </div>
+
+                <div class="relative">
+                    <!-- The vertical line -->
+                    <div class="absolute left-4 top-0 h-full w-0.5 bg-blue-200" aria-hidden="true"></div>
+
+                    <!-- Timeline items -->
+                    <div class="space-y-12">
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600"><i class="fas fa-play text-white text-sm"></i></div>
+                            <h4 class="font-bold text-lg text-gray-900">Unit 0: Your A2 Starting Plan</h4>
+                            <p class="text-gray-600">A clear, guided plan on how to approach A2-level learning after A1.</p>
+                        </div>
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600"><i class="fas fa-book-open text-white text-sm"></i></div>
+                            <h4 class="font-bold text-lg text-gray-900">Units 1-5: Core A2 Syllabus</h4>
+                            <p class="text-gray-600">Covering all essential A2 grammar, vocabulary, and communication skills in a structured, step-by-step way.</p>
+                        </div>
+                        <div class="relative pl-12">
+                            <div class="absolute left-0 top-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600"><i class="fas fa-graduation-cap text-white text-sm"></i></div>
+                            <h4 class="font-bold text-lg text-gray-900">Unit 6: Practice & A2-Level Test</h4>
+                            <p class="text-gray-600">Filled with real-life practice tasks and a Full A2-level test to evaluate your readiness for B1 and TEF preparation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Access Duration & Final CTA (Condensed) -->
+        <section class="py-10 md:py-12 bg-gray-800 text-white full-bleed-section-ghl" id="signup">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="bg-gray-900/50 p-6 rounded-2xl mb-6 border border-gray-700">
+                    <div class="flex justify-center items-center gap-4 mb-3">
+                        <i class="fas fa-calendar-alt text-3xl text-blue-400"></i>
+                        <h3 class="text-2xl font-bold">Instant Access for 4 Months</h3>
+                    </div>
+                    <p class="text-gray-300">You get 4 full months of access to the online course and all live sessions. This provides ample time to master the A2 level at your own pace, as the average completion time is 6-8 weeks. No pressure, just flexible learning.</p>
+                </div>
+
+                <h2 class="text-3xl font-bold mb-3">This is not just “the next level.” It’s the bridge to real fluency.</h2>
+                <p class="text-lg text-gray-300 mb-5">Enroll in the A2 Intensive Program — and take the fastest path to B1, TEF, and PR.</p>
+                <a href="https://link.fastpaydirect.com/payment-link/67e8bb027178768a29a43b4e" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-10 py-3 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-lg">
+                    Sign Up
+                </a>
+                <p class="text-sm text-gray-400 mt-4">Taught in English. Some content may not be translated.</p>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-16 md:py-20 bg-white full-bleed-section-ghl">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-gray-900 text-center mb-16">Frequently Asked Questions</h2>
+                <div class="space-y-12">
+
+                    <!-- Before Joining -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-6 pb-2 border-b-2 border-blue-100">Before Joining</h3>
+                        <div class="space-y-4">
+                            <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">How do I know if I’m ready for A2?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">You should have completed A1 or have equivalent knowledge. If you’ve done A1 elsewhere, you’ll need to take our Analysis Test to confirm readiness.</p>
+                            </details>
+                            <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">How do I take the Placement & Analysis Test?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">Connect with Vyom at 514-726-5114 to schedule your test. The test costs $50 CAD, includes detailed feedback, and the amount will be credited towards your A2 program fee if you join.</p>
+                            </details>
+                             <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">Can I join if I’ve done A1 at another institute?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">Yes — as long as you pass the analysis test to confirm you’re ready for A2.</p>
+                            </details>
+                        </div>
+                    </div>
+
+                    <!-- Program Details -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-6 pb-2 border-b-2 border-blue-100">Program Details</h3>
+                        <div class="space-y-4">
+                            <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">What’s included in A2 Intensive?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">You get 4 live sessions per week (3 doubt-clearing + 1 activity), structured lesson plans, advanced grammar mastery, speaking assignments, real-world vocabulary, listening & reading practice tasks, writing tasks, and TEF-style exercises woven in for early exam readiness.</p>
+                            </details>
+                             <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">Is there a community group for A2 Intensive students?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">Yes — you’ll be part of an active learning community for daily practice, peer feedback, and extra support between classes.</p>
+                            </details>
+                             <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">What happens if I miss a live class? Are they recorded?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">Yes — all live sessions are recorded and shared in the group on request so you can catch up or review later.</p>
+                            </details>
+                        </div>
+                    </div>
+
+                    <!-- Learning Process & Duration -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-6 pb-2 border-b-2 border-blue-100">Learning Process & Duration</h3>
+                        <div class="space-y-4">
+                            <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">How long will it take to complete A2 Intensive?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">Most students finish in 1.5 to 2 months with 2–3 hours of daily study.</p>
+                            </details>
+                             <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">Does it take 2 months for everyone?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">No — that’s the average. Some progress faster, others slower depending on schedule and consistency.</p>
+                            </details>
+                             <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">How is progress tracked?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">By completing units, assignments, and participation in live sessions.</p>
+                            </details>
+                        </div>
+                    </div>
+
+                    <!-- Exam Readiness -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-6 pb-2 border-b-2 border-blue-100">Exam Readiness</h3>
+                        <div class="space-y-4">
+                            <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">Does A2 Intensive prepare me for TEF/TCF?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">Yes, the main goal is mastering A2, Exam tasks are integrated so your prep starts early.</p>
+                            </details>
+                             <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">What’s included in the A2 test?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">A full evaluation in grammar, listening, reading, and speaking assignments, with personalised feedback so you know exactly what to work on before B1.</p>
+                            </details>
+                             <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">Are all assignments mandatory?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">Yes — they’re carefully designed to help you master every skill. Students who complete them consistently finish B1-ready and confident.</p>
+                            </details>
+                        </div>
+                    </div>
+
+                    <!-- Promotions or Offers -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-6 pb-2 border-b-2 border-blue-100">Promotions or Offers</h3>
+                        <div class="space-y-4">
+                            <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">Do I get a discount on referring a friend?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">Yes! For every friend you refer, you’ll receive $35 off!</p>
+                            </details>
+                             <details class="group border-b border-gray-200 pb-4">
+                                <summary class="flex justify-between items-center cursor-pointer list-none">
+                                    <span class="font-medium text-lg text-gray-800 group-hover:text-blue-600">Is there a Combo Discount?</span>
+                                    <span class="text-blue-600 transition-transform duration-300 group-open:rotate-180">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
+                                </summary>
+                                <p class="mt-4 text-gray-600">Absolutely. We offer special combo pricing when you enroll in multiple programs together. For details, message on WhatsApp at 514-726-5114 directly.</p>
+                            </details>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonial Widget -->
+        <section class="py-16 md:py-20 bg-gray-50 full-bleed-section-ghl">
+            <div class="max-w-[1170px] mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">What Our Students Say</h2>
+
+                <!-- Reputation Hub Widget Code -->
+                <script type='text/javascript' src='https://reputationhub.site/reputation/assets/review-widget.js'></script>
+                <iframe class='lc_reviews_widget' src='https://reputationhub.site/reputation/widgets/review_widget/cmjlzerv4DUDyZFj6PYO' frameborder='0' scrolling='no' style='min-width: 100%; width: 100%;'></iframe>
+                <!-- End of Widget Code -->
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const hamburgerIcon = mobileMenuBtn.querySelector('i');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.contains('scale-y-100');
+
+            if (isOpen) {
+                mobileMenu.classList.remove('scale-y-100', 'opacity-100');
+                mobileMenu.classList.add('scale-y-0', 'opacity-0');
+                hamburgerIcon.classList.remove('fa-times');
+                hamburgerIcon.classList.add('fa-bars');
+            } else {
+                mobileMenu.classList.remove('scale-y-0', 'opacity-0');
+                mobileMenu.classList.add('scale-y-100', 'opacity-100');
+                hamburgerIcon.classList.remove('fa-bars');
+                hamburgerIcon.classList.add('fa-times');
+            }
+        });
+    </script>
+
+    <script>
+    (function(){
+        function killPadding(){
+            // Walk up from EVERY section and force all ancestors to full width
+            var sections = document.querySelectorAll('.full-bleed-section-ghl');
+            sections.forEach(function(sec){
+                var parent = sec.parentElement;
+                while (parent && parent !== document.documentElement && parent !== document.body) {
+                    parent.style.cssText += 'padding:0!important;margin:0!important;max-width:100%!important;width:100%!important;border:none!important;box-sizing:border-box!important;';
+                    parent = parent.parentElement;
+                }
+            });
+            document.documentElement.style.cssText += 'margin:0!important;overflow-x:hidden!important;width:100%!important;max-width:100%!important;';
+        }
+        killPadding();
+        if (document.readyState !== 'complete') {
+            window.addEventListener('load', killPadding);
+        }
+        setTimeout(killPadding, 500);
+        setTimeout(killPadding, 1500);
+    })();
+    </script>
+</body>
+</html>

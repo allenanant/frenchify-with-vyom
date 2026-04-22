@@ -1,0 +1,100 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Privacy Policy - Frenchify">
+  <main>
+    <section class="py-16 md:py-20 bg-gray-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 text-center">Privacy Policy</h1>
+        <p class="text-center text-gray-500 mb-2">Last Updated: November 5, 2025</p>
+        <br>
+
+        <div class="prose max-w-none prose-lg prose-indigo">
+          <p>This Privacy Policy explains how Frenchify with Vyom Inc. (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) collects, uses, stores, and protects your personal information under Canada&rsquo;s Personal Information Protection and Electronic Documents Act (PIPEDA) and Qu&eacute;bec&rsquo;s Act Respecting the Protection of Personal Information in the Private Sector (Act 25).</p>
+
+          <h2>1. Information We Collect</h2>
+          <p>Frenchify with Vyom Inc. collects personal information on the legal basis of consent and legitimate business interest under PIPEDA and Act 25.</p>
+          <p>We collect:</p>
+          <ul>
+            <li>Full name, contact details, and payment data</li>
+            <li>Course enrollment and progress information</li>
+            <li>IP addresses and device IDs (for security)</li>
+            <li>Class recordings, messages, and feedback</li>
+          </ul>
+          <p>These details are used solely to provide and administer our educational services and maintain account security.</p>
+
+          <h2>2. Class Recordings &amp; Consent</h2>
+          <p>All live sessions are recorded. Attendance constitutes consent to recording of your name, voice, and video.</p>
+          <p>Recordings may be used for:</p>
+          <ul>
+            <li>Student revision and quality control</li>
+            <li>Instructor training and evaluation</li>
+            <li>Integration into future course content</li>
+            <li>Marketing and educational demonstrations</li>
+          </ul>
+          <p>Students must use their registered names in all live sessions.</p>
+
+          <h2>3. Testimonial &amp; Likeness Release</h2>
+          <p>Students who voluntarily share feedback, testimonials, screenshots, or videos grant Frenchify the right to use their first name, image, and comments in marketing and promotional materials without additional compensation.</p>
+
+          <h2>4. Duplicate Payment Refund Exception</h2>
+          <p>Refunds are issued only for verified duplicate transactions confirmed by the payment processor.</p>
+          <p>All other payments remain non-refundable.</p>
+
+          <h2>5. Data Security</h2>
+          <p>Data is stored on encrypted, secure systems.</p>
+          <p>Payments are processed through certified providers (Stripe, Klarna, Afterpay, E-transfer).</p>
+          <p>Access to data is limited to authorized staff only.</p>
+          <p>Note: If you use the above payment methods of the banks, legal institutions or Private payment providers we are not responsible if they store your information on their end.</p>
+
+          <h2>6. Data Sharing</h2>
+          <p>We do not sell or rent user data.</p>
+          <p>Information is shared only when:</p>
+          <ul>
+            <li>Required by law</li>
+            <li>Needed to process payments or prevent fraud</li>
+            <li>Used by service providers bound by confidentiality</li>
+          </ul>
+
+          <h2>7. Data Retention</h2>
+          <p>Personal data is retained only as long as necessary for course delivery and to meet legal obligations.</p>
+          <p>After that period, it may be anonymized or securely deleted.</p>
+
+          <h2>8. Cookies &amp; Analytics</h2>
+          <p>Our website uses cookies and analytics tools to improve functionality and performance.</p>
+          <p>Users may disable cookies in their browser settings.</p>
+
+          <h2>9. Third-Party Tools Notice</h2>
+          <p>Participation via Zoom, Google Meet, Stripe, Afterpay, or similar platforms is governed by each provider&rsquo;s independent terms and privacy policies.</p>
+
+          <h2>10. Student Rights</h2>
+          <p>Students may request access to their data, corrections, or withdraw consent (which may limit services) by emailing <a href="mailto:frenchifywithvyom@gmail.com" class="text-blue-600 hover:underline">frenchifywithvyom@gmail.com</a>.</p>
+
+          <h2>11. Policy Updates</h2>
+          <p>We may modify this Policy periodically. Continued use of our services signifies acceptance of the most recent version.</p>
+
+          <h2>12. Contact</h2>
+          <ul>
+            <li>Email: <a href="mailto:frenchifywithvyom@gmail.com" class="text-blue-600 hover:underline">frenchifywithvyom@gmail.com</a></li>
+            <li>Location: Montr&eacute;al, Qu&eacute;bec, Canada</li>
+          </ul>
+          <p class="text-gray-500 text-sm mt-6 text-center">&copy; 2025 Frenchify with Vyom Inc. &mdash; All Rights Reserved.</p>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <script slot="scripts" is:inline>
+    document.addEventListener('DOMContentLoaded', function () {
+      const proseContainer = document.querySelector('.prose');
+      if (proseContainer) {
+        proseContainer.querySelectorAll('h2').forEach(el => el.classList.add('text-2xl', 'font-bold', 'text-gray-900', 'mt-10', 'mb-4', 'border-b', 'pb-2'));
+        proseContainer.querySelectorAll('p').forEach(el => el.classList.add('text-gray-700', 'leading-relaxed', 'mb-4'));
+        proseContainer.querySelectorAll('ul').forEach(el => el.classList.add('list-disc', 'list-inside', 'space-y-4', 'mb-6', 'pl-4'));
+        proseContainer.querySelectorAll('li').forEach(el => el.classList.add('text-gray-700'));
+      }
+    });
+  </script>
+</Layout>

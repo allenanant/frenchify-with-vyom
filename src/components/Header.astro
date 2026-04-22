@@ -1,0 +1,79 @@
+---
+interface Props {
+  showNoticeBars?: boolean;
+}
+
+const { showNoticeBars = false } = Astro.props;
+const { pathname } = Astro.url;
+const isActive = (path: string) => pathname === path || pathname === path + '/';
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/programs', label: 'Courses' },
+  { href: '/about-us', label: 'About Us' },
+  { href: '/results-page', label: 'Results' },
+  { href: '/testimonials', label: 'Testimonials' },
+  { href: '/faq', label: 'FAQs' },
+  { href: '/contact', label: 'Book a Meet' },
+];
+---
+
+<header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 z-50 transition-all duration-300 ease-in-out" id="header">
+  <nav class="flex justify-between items-center px-6 py-4 max-w-[1170px] mx-auto transition-all duration-300">
+    <div class="logo transition-all duration-300">
+      <a href="/">
+        <img src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png" alt="Frenchify Logo" class="h-9 transition-all duration-300">
+      </a>
+    </div>
+    <ul class="hidden xl:flex items-center space-x-2 transition-all duration-300">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class={`px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 ${
+              isActive(link.href)
+                ? 'text-blue-600 bg-blue-50'
+                : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+            }`}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <a href="https://learn.frenchifywithvyom.com/web/" class="hidden xl:block bg-blue-600 text-white px-6 py-2 rounded-full font-semibold text-sm hover:bg-blue-700 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 shadow-md shadow-blue-200">Student Portal</a>
+    <button class="xl:hidden text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-all" id="mobileMenuBtn" aria-label="Open menu">
+      <i class="fas fa-bars text-xl"></i>
+    </button>
+  </nav>
+  <div class="xl:hidden absolute top-full left-0 right-0 bg-white rounded-2xl shadow-xl mt-2 mx-4 overflow-hidden transition-all duration-300 origin-top transform scale-y-0 opacity-0" id="mobileMenu">
+    {navLinks.map(link => (
+      <a
+        href={link.href}
+        class={`block px-4 py-3 font-medium transition-all ${
+          isActive(link.href)
+            ? 'text-blue-600 bg-blue-50'
+            : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+        }`}
+      >
+        {link.label}
+      </a>
+    ))}
+    <a href="https://learn.frenchifywithvyom.com/web/" class="block px-4 py-3 bg-blue-600 text-white font-semibold text-center mx-4 my-2 rounded-lg hover:bg-blue-700 transition-all">Student Portal</a>
+  </div>
+</header>
+
+{showNoticeBars && (
+  <>
+    <!-- Yellow notice bar (home page only) -->
+    <a href="/frenchify-beginner-program" rel="noopener noreferrer"
+       class="fixed top-[69px] left-0 right-0 bg-yellow-500 text-gray-900 text-center py-2 px-[15px] text-sm font-semibold z-40 hover:bg-yellow-600 transition-all duration-300">
+      🎓 Frenchify Beginner Program Available for Free (Worth $150) — Sign up <span class="underline">Here</span> (Spots are limited)
+    </a>
+
+    <!-- Blue WhatsApp bar (home page only) -->
+    <div class="fixed top-[121px] md:top-[105px] left-0 right-0 bg-blue-600 text-white text-center py-2 px-[15px] text-sm font-semibold z-40">
+      <a href="https://wa.me/15147265114" target="_blank" rel="noopener noreferrer" class="underline hover:text-yellow-300 transition-all">Ready to Start French for TEF? Connect on Whatsapp Text here</a>
+    </div>
+  </>
+)}
