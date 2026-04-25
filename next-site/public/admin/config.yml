@@ -6,9 +6,9 @@
 # IMPORTANT: After ownership transfer to Allen, change `repo:` to `allenanant/frenchify-with-vyom`.
 backend:
   name: github
-  repo: ashishverma0661/frenchify-with-vyom
+  repo: allenanant/frenchify-with-vyom
   branch: nextjs-homepage-redesign
-  base_url: https://REPLACE_WITH_OAUTH_PROXY_DOMAIN
+  base_url: https://frenchify-with-vyom.vercel.app
   auth_endpoint: api/oauth/auth
 
 publish_mode: editorial_workflow
