@@ -1,8 +1,19 @@
+# Auth: direct GitHub OAuth.
+# Replace REPO_OWNER/REPO_NAME with the actual GitHub repo (e.g. "allenanant/frenchify-with-vyom").
+# The OAuth proxy at base_url + auth_endpoint will be a Vercel serverless function once you migrate hosting.
+# For now, this config is in place but the admin login won't work until Vercel deploy is set up.
 backend:
-  name: git-gateway
-  branch: announcement-page
+  name: github
+  repo: REPO_OWNER/REPO_NAME
+  branch: main
+  base_url: https://REPLACE_WITH_VERCEL_DOMAIN
+  auth_endpoint: api/oauth/auth
 
 publish_mode: editorial_workflow
+
+# When the admin is opened locally during dev, run `npx decap-server` separately
+# and uncomment the line below to bypass GitHub OAuth for local content editing.
+# local_backend: true
 
 media_folder: "next-site/public/announcements"
 public_folder: "/announcements"
