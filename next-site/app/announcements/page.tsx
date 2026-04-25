@@ -6,6 +6,9 @@ import {
 } from '@/lib/announcements';
 import FeaturedCard from '@/components/announcements/FeaturedCard';
 import AnnouncementsClient from './AnnouncementsClient';
+import YoutubeSection from '@/components/announcements/YoutubeSection';
+
+export const revalidate = 21600;
 
 export const metadata: Metadata = {
   title: 'Announcements & Updates · Frenchify with Vyom',
@@ -48,6 +51,8 @@ export default function AnnouncementsPage() {
             <AnnouncementsClient items={rest.length > 0 ? rest : all} />
           </section>
         )}
+
+        <YoutubeSection />
       </div>
     </div>
   );
