@@ -1,6 +1,5 @@
 ---
 title: "Free TEF Canada Webinar with Vyom"
-type: "webinar"
 featured: true
 images: []
 link: "https://frenchifywithvyom.com/sunday-webinar"

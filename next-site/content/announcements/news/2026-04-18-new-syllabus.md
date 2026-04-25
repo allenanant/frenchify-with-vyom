@@ -1,6 +1,5 @@
 ---
 title: "Updated A1 Syllabus for 2026"
-type: "news"
 featured: false
 images: []
 link: ""

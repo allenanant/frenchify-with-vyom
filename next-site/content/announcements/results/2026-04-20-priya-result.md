@@ -1,6 +1,5 @@
 ---
 title: "Priya cracked B2 in 4 months"
-type: "result"
 featured: false
 images: []
 link: "https://frenchifywithvyom.com/results-page"

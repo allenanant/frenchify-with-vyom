@@ -1,42 +1,35 @@
-// next-site/lib/announcements.ts
-// Read at build time only. Do not import from client components.
-// Types and constants live in announcements-types.ts (client-safe).
-
-export type {
-  AnnouncementType,
-  WebinarAnnouncement,
-  DiscountAnnouncement,
-  ResultAnnouncement,
-  NewsAnnouncement,
-  Announcement,
-} from './announcements-types';
-export { TYPE_LABELS, DEFAULT_BUTTON_TEXT } from './announcements-types';
-
-import type { Announcement, AnnouncementType } from './announcements-types';
+// Server-only loader. Do not import from client components.
 
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
+import type {
+  Announcement,
+  AnnouncementType,
+} from './announcements-types';
+
+export * from './announcements-types';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content', 'announcements');
 
-function parseFile(filePath: string): Announcement | null {
-  const raw = fs.readFileSync(filePath, 'utf-8');
-  const { data, content } = matter(raw);
-  const slug = path.basename(filePath, '.md');
+const TYPE_FOLDERS: Array<{ folder: string; type: AnnouncementType }> = [
+  { folder: 'webinars', type: 'webinar' },
+  { folder: 'discounts', type: 'discount' },
+  { folder: 'results', type: 'result' },
+  { folder: 'news', type: 'news' },
+];
 
-  // Validate the type field first
-  const type = data.type as AnnouncementType | undefined;
-  if (!type || !['webinar', 'discount', 'result', 'news'].includes(type)) {
-    console.warn(`[announcements] Skipping ${slug}: invalid or missing 'type' field`);
-    return null;
-  }
-
+function buildAnnouncement(
+  slug: string,
+  type: AnnouncementType,
+  data: Record<string, unknown>,
+  content: string
+): Announcement | null {
   const base = {
     slug,
     title: String(data.title ?? ''),
     featured: Boolean(data.featured),
-    images: Array.isArray(data.images) ? data.images.map(String) : [],
+    images: Array.isArray(data.images) ? (data.images as unknown[]).map(String) : [],
     link: data.link ? String(data.link) : undefined,
     buttonText: data.buttonText ? String(data.buttonText) : undefined,
     createdAt: String(data.createdAt ?? ''),
@@ -75,23 +68,31 @@ function parseFile(filePath: string): Announcement | null {
 
 export function getAllAnnouncements(): Announcement[] {
   if (!fs.existsSync(CONTENT_DIR)) return [];
-  const files = fs
-    .readdirSync(CONTENT_DIR)
-    .filter((f) => f.endsWith('.md'))
-    .map((f) => path.join(CONTENT_DIR, f));
+  const items: Announcement[] = [];
 
-  const items = files
-    .map(parseFile)
-    .filter((a): a is Announcement => a !== null);
+  for (const { folder, type } of TYPE_FOLDERS) {
+    const dir = path.join(CONTENT_DIR, folder);
+    if (!fs.existsSync(dir)) continue;
+    const files = fs
+      .readdirSync(dir)
+      .filter((f) => f.endsWith('.md'))
+      .map((f) => path.join(dir, f));
 
-  // Newest first by createdAt (lexicographic sort works on YYYY-MM-DD)
+    for (const filePath of files) {
+      const raw = fs.readFileSync(filePath, 'utf-8');
+      const { data, content } = matter(raw);
+      const slug = path.basename(filePath, '.md');
+      const parsed = buildAnnouncement(slug, type, data, content);
+      if (parsed) items.push(parsed);
+    }
+  }
+
   items.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
   return items;
 }
 
 export function getFeaturedAnnouncement(): Announcement | null {
   const all = getAllAnnouncements();
-  // Featured wins; if multiple, the most recent (already sorted newest first) wins
   return all.find((a) => a.featured) ?? null;
 }
 

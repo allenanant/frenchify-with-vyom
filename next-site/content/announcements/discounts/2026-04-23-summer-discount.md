@@ -1,6 +1,5 @@
 ---
 title: "Summer Special: 20% Off A1 Intensive"
-type: "discount"
 featured: false
 images: []
 link: "https://frenchifywithvyom.com/a1-intensive-program"
