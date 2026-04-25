@@ -1,9 +1,10 @@
 import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
 
 export default defineConfig({
-  site: 'https://ashishverma0661.github.io',
-  base: '/frenchify-with-vyom',
+  site: 'https://frenchifywithvyom.com',
   build: {
     format: 'directory',
   },
+  integrations: [react()],
 });
