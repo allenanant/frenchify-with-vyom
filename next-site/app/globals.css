@@ -294,7 +294,7 @@
   .image-slide-track {
     display: flex;
     width: max-content;
-    animation: scroll 60s linear infinite;
+    animation: scroll 150s linear infinite;
   }
   .image-slider-container:hover .image-slide-track {
     animation-play-state: paused;
@@ -388,7 +388,7 @@
 
 @keyframes scroll {
   0%   { transform: translateX(0); }
-  100% { transform: translateX(calc(-350px * 11)); }
+  100% { transform: translateX(calc(-350px * 28)); }
 }
 
 @keyframes aurora {
@@ -402,6 +402,26 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ── Mobile-only: homepage sections vertical padding = 48px ─ */
+@media (max-width: 767px) {
+  body.is-home section {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+  /* Student Stories section: 40px less top+bottom */
+  body.is-home section.student-stack-section {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+}
+
+/* ── Tablet-only: trim Student Stories section's bottom padding */
+@media (min-width: 768px) and (max-width: 1023px) {
+  section.student-stack-section {
+    padding-bottom: 0 !important;
   }
 }
 

@@ -109,7 +109,7 @@ export default function ProgramsStaircase() {
           </span>
         </motion.div>
 
-        <div className="flex flex-col gap-6 xl:flex-row xl:items-start xl:gap-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:flex xl:flex-row xl:items-start xl:gap-3">
           {steps.map((step, i) => (
             <Fragment key={step.number}>
               <div className={`flex-1 min-w-0 ${cardOffsets[i]}`}>

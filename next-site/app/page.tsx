@@ -12,7 +12,7 @@ import ReviewsWidget from '@/components/sections/home/ReviewsWidget';
 export default function HomePage() {
   return (
     <>
-      <BodyClass className="has-notice-bars" />
+      <BodyClass className="has-notice-bars is-home" />
       <NoticeBars />
       <HeroSection />
       <SuccessStoriesMarquee />

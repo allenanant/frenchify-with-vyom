@@ -31,6 +31,17 @@ export default function HeroSection() {
         className="ghl-row mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center relative z-10"
       >
         <div>
+          <Reveal direction="left" duration={0.6}>
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 mb-5 rounded-full bg-white/80 backdrop-blur-sm border border-blue-100 shadow-sm">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500" />
+              </span>
+              <span className="text-sm font-bold tracking-wide text-blue-700">
+                4+ Years of Experience with TEF Canada Training
+              </span>
+            </div>
+          </Reveal>
           <Reveal direction="left" duration={0.8}>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-[1.08] tracking-tight">
               Becoming <span className="gradient-text">Fluent</span> with Frenchify
@@ -44,7 +55,7 @@ export default function HeroSection() {
           <Reveal direction="up" delay={0.3} duration={0.6}>
             <div className="flex flex-wrap gap-4">
               <Magnetic>
-                <Link href="/programs" className="btn-primary">
+                <Link href="/contact" className="btn-primary">
                   Book My TEF Expert Call
                 </Link>
               </Magnetic>

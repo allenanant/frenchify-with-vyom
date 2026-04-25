@@ -187,8 +187,8 @@ export default function StudentStoriesStack() {
   });
 
   return (
-    <section className="relative bg-white full-bleed-section-ghl">
-      <div className="ghl-row mx-auto px-4 sm:px-6 lg:px-8 pt-20 md:pt-28">
+    <section className="relative bg-white full-bleed-section-ghl student-stack-section">
+      <div className="ghl-row mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-[72px] lg:pt-28">
         <Reveal>
           <div className="text-center mb-12 md:mb-16">
             <span className="inline-block text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-brand-blue bg-blue-50 border border-blue-100 rounded-full px-4 py-1.5 mb-5">
