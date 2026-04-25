@@ -1,7 +1,9 @@
 # Auth: direct GitHub OAuth (no Netlify).
-# Login works only AFTER the OAuth proxy is deployed (planned for Vercel migration).
-# Until then, use local_backend mode: run `npx decap-server` + `npm run dev`,
-# open localhost:3000/admin/, edit content. Files write to your local working tree.
+# Login works only AFTER the OAuth proxy is deployed.
+# See HANDOFF.md at the repo root for setup instructions.
+# Until proxy is set up, use local_backend mode below.
+#
+# IMPORTANT: After ownership transfer to Allen, change `repo:` to `allenanant/frenchify-with-vyom`.
 backend:
   name: github
   repo: ashishverma0661/frenchify-with-vyom
