@@ -6,12 +6,12 @@ import FloatingOrbs from '@/components/motion/FloatingOrbs';
 
 export default function HeroSection() {
   return (
-    <section className="hero-pattern-animated py-20 md:py-24 relative overflow-hidden full-bleed-section-ghl aurora-bg">
+    <section className="hero-pattern-animated py-16 md:py-24 relative overflow-hidden full-bleed-section-ghl aurora-bg">
       <FloatingOrbs variant="soft" />
       <div className="ghl-row mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
         <div className="text-center lg:text-left">
           <Reveal direction="left" duration={0.8}>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 leading-[1.08] tracking-tight">
+            <h1 className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
               Frenchify A2 <span className="gradient-text">Intensive Program</span>
             </h1>
           </Reveal>

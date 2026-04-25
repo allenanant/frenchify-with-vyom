@@ -55,7 +55,7 @@ export default function A2IntensiveProgramPage() {
       <HeroSection />
 
       {/* Goals Section */}
-      <section className="py-20 bg-white full-bleed-section-ghl">
+      <section className="py-16 md:py-20 bg-white full-bleed-section-ghl">
         <div className="ghl-row-faq mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12 tracking-tight">
@@ -72,7 +72,7 @@ export default function A2IntensiveProgramPage() {
                   <Check className="w-5 h-5 text-brand-blue" strokeWidth={2.5} />
                 </div>
                 <div>
-                  <h3 className="font-display font-semibold text-lg text-gray-900 mb-1">{g.title}</h3>
+                  <h3 className="font-semibold text-lg text-gray-900 mb-1">{g.title}</h3>
                   <p className="text-gray-600 leading-relaxed">{g.copy}</p>
                 </div>
               </div>
@@ -82,7 +82,7 @@ export default function A2IntensiveProgramPage() {
       </section>
 
       {/* Program Components Section */}
-      <section className="py-20 bg-gray-50 full-bleed-section-ghl">
+      <section className="py-16 md:py-20 bg-gray-50 full-bleed-section-ghl">
         <div className="ghl-row mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <div className="text-center mb-12">
@@ -141,7 +141,7 @@ export default function A2IntensiveProgramPage() {
       </section>
 
       {/* Roadmap Section */}
-      <section className="py-20 bg-white full-bleed-section-ghl">
+      <section className="py-16 md:py-20 bg-white full-bleed-section-ghl">
         <div className="ghl-row-faq mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <div className="text-center mb-16">
@@ -158,11 +158,11 @@ export default function A2IntensiveProgramPage() {
             <div className="absolute left-4 top-0 h-full w-0.5 bg-gradient-to-b from-brand-blue via-brand-blue-deep to-brand-amber" aria-hidden="true" />
             <Stagger className="space-y-12" duration={0.65}>
               {roadmap.map(({ Icon, title, copy }) => (
-                <div key={title} className="relative pl-14">
+                <div key={title} className="relative pl-16">
                   <div className="absolute left-0 top-1.5 flex h-9 w-9 items-center justify-center rounded-full bg-brand-blue shadow-lg ring-4 ring-white">
                     <Icon className="text-white w-4 h-4" strokeWidth={2.5} />
                   </div>
-                  <h4 className="font-display font-bold text-xl text-gray-900 mb-1 tracking-tight">{title}</h4>
+                  <h4 className="font-display font-bold text-xl text-gray-900 mb-2 tracking-tight">{title}</h4>
                   <p className="text-gray-600 leading-relaxed">{copy}</p>
                 </div>
               ))}
@@ -172,12 +172,12 @@ export default function A2IntensiveProgramPage() {
       </section>
 
       {/* Access Duration & Final CTA */}
-      <section className="py-14 md:py-16 full-bleed-section-ghl bg-gray-900 text-white relative overflow-hidden" id="signup">
+      <section className="py-16 md:py-20 full-bleed-section-ghl bg-gray-900 text-white relative overflow-hidden" id="signup">
         <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/20 via-transparent to-brand-amber/10 pointer-events-none" />
         <div className="ghl-row-faq mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <Reveal>
-            <div className="bg-gray-900/60 p-6 rounded-2xl mb-6 border border-gray-700 backdrop-blur-sm">
-              <div className="flex justify-center items-center gap-4 mb-3">
+            <div className="bg-gray-900/60 p-8 rounded-2xl mb-12 border border-gray-700 backdrop-blur-sm">
+              <div className="flex justify-center items-center gap-4 mb-4">
                 <Calendar className="w-8 h-8 text-brand-amber" />
                 <h3 className="font-display text-2xl font-bold tracking-tight">Instant Access for 4 Months</h3>
               </div>
@@ -188,10 +188,10 @@ export default function A2IntensiveProgramPage() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-3 tracking-tight">
-              This is not just &ldquo;the next level.&rdquo; It&rsquo;s the bridge to real fluency.
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 tracking-tight">
+              This is not just &ldquo;the next level.&rdquo; It&rsquo;s the bridge to <span className="gradient-text">real fluency</span>.
             </h2>
-            <p className="text-lg text-gray-300 mb-6">
+            <p className="text-lg text-gray-300 mb-8">
               Enroll in the A2 Intensive Program — and take the fastest path to B1, TEF, and PR.
             </p>
             <Magnetic>
@@ -204,7 +204,7 @@ export default function A2IntensiveProgramPage() {
                 Sign Up
               </a>
             </Magnetic>
-            <p className="text-sm text-gray-400 mt-4">Taught in English. Some content may not be translated.</p>
+            <p className="text-sm text-gray-400 mt-6">Taught in English. Some content may not be translated.</p>
           </Reveal>
         </div>
       </section>

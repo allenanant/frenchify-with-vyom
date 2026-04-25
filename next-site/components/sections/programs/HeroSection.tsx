@@ -12,7 +12,7 @@ export default function HeroSection() {
       style={{ paddingTop: 'calc(4rem + 50px)' }}
     >
       <FloatingOrbs variant="soft" />
-      <div className="ghl-row-full mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <div className="ghl-row mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <Reveal duration={0.8}>
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-[1.08] tracking-tight">
             Our <span className="gradient-text">TEF/TCF Specific French Programs</span>

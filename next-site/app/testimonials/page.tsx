@@ -77,7 +77,7 @@ export default function TestimonialsPage() {
       {/* Hero Section */}
       <section className="py-16 md:py-20 bg-white full-bleed-section-ghl relative overflow-hidden aurora-bg">
         <FloatingOrbs variant="soft" />
-        <div className="ghl-row mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div className="mx-auto w-full lg:max-w-[1280px] px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <Reveal>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
               What Our Students Are <span className="gradient-text">Saying</span>
@@ -93,7 +93,7 @@ export default function TestimonialsPage() {
 
       {/* Review Widget Section */}
       <section className="py-16 md:py-20 full-bleed-section-ghl">
-        <div className="ghl-row-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto w-full lg:max-w-[1280px] px-4 sm:px-6 lg:px-8">
           <Reveal>
             <h2 className="font-display text-3xl font-bold text-gray-900 text-center mb-12 tracking-tight">
               Our Reviews on Trustpilot
@@ -112,7 +112,7 @@ export default function TestimonialsPage() {
 
       {/* Video Testimonials Section */}
       <section className="py-16 md:py-20 bg-white full-bleed-section-ghl">
-        <div className="ghl-row-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto w-full lg:max-w-[1280px] px-4 sm:px-6 lg:px-8">
           <Reveal>
             <h2 className="font-display text-3xl font-bold text-gray-900 text-center mb-12 tracking-tight">
               Hear Directly From Our Students
@@ -139,7 +139,7 @@ export default function TestimonialsPage() {
 
       {/* Final CTA Section */}
       <section className="py-16 md:py-20 bg-gray-800 text-white full-bleed-section-ghl">
-        <div className="ghl-row mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="mx-auto w-full lg:max-w-[1280px] px-4 sm:px-6 lg:px-8 text-center">
           <Reveal>
             <h2 className="font-display text-3xl font-bold mb-4 tracking-tight">
               Ready to Start Your Own Success Story?
