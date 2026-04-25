@@ -11,6 +11,7 @@ import { cn } from '@/lib/cn';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/programs', label: 'Courses' },
+  { href: '/announcements', label: 'Announcements' },
   { href: '/about-us', label: 'About Us' },
   { href: '/results-page', label: 'Results' },
   { href: '/testimonials', label: 'Testimonials' },
