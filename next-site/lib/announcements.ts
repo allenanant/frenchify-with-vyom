@@ -1,64 +1,18 @@
 // next-site/lib/announcements.ts
 // Read at build time only. Do not import from client components.
+// Types and constants live in announcements-types.ts (client-safe).
 
-export type AnnouncementType = 'webinar' | 'discount' | 'result' | 'news';
+export type {
+  AnnouncementType,
+  WebinarAnnouncement,
+  DiscountAnnouncement,
+  ResultAnnouncement,
+  NewsAnnouncement,
+  Announcement,
+} from './announcements-types';
+export { TYPE_LABELS, DEFAULT_BUTTON_TEXT } from './announcements-types';
 
-interface AnnouncementBase {
-  slug: string;
-  title: string;
-  featured: boolean;
-  images: string[];
-  link?: string;
-  buttonText?: string;
-  createdAt: string; // ISO date YYYY-MM-DD
-}
-
-export interface WebinarAnnouncement extends AnnouncementBase {
-  type: 'webinar';
-  webinarDate: string;
-  webinarTime: string;
-  description?: string;
-}
-
-export interface DiscountAnnouncement extends AnnouncementBase {
-  type: 'discount';
-  discountAmount: string;
-  couponCode?: string;
-  expiryDate?: string;
-  description?: string;
-}
-
-export interface ResultAnnouncement extends AnnouncementBase {
-  type: 'result';
-  studentName: string;
-  achievement: string;
-  quote?: string;
-}
-
-export interface NewsAnnouncement extends AnnouncementBase {
-  type: 'news';
-  body: string;
-}
-
-export type Announcement =
-  | WebinarAnnouncement
-  | DiscountAnnouncement
-  | ResultAnnouncement
-  | NewsAnnouncement;
-
-export const TYPE_LABELS: Record<AnnouncementType, string> = {
-  webinar: 'Webinar',
-  discount: 'Discount',
-  result: 'Result',
-  news: 'News',
-};
-
-export const DEFAULT_BUTTON_TEXT: Record<AnnouncementType, string> = {
-  webinar: 'Register Now',
-  discount: 'Claim Offer',
-  result: 'Read Story',
-  news: 'Read More',
-};
+import type { Announcement, AnnouncementType } from './announcements-types';
 
 import fs from 'node:fs';
 import path from 'node:path';

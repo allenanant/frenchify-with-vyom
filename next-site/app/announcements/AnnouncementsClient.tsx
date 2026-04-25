@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import type { Announcement } from '@/lib/announcements';
+import type { Announcement } from '@/lib/announcements-types';
 import AnnouncementCard from '@/components/announcements/AnnouncementCard';
 import FilterPills, { type FilterValue } from '@/components/announcements/FilterPills';
 

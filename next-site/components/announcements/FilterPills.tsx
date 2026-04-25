@@ -1,8 +1,8 @@
 'use client';
 
 import { cn } from '@/lib/cn';
-import type { AnnouncementType } from '@/lib/announcements';
-import { TYPE_LABELS } from '@/lib/announcements';
+import type { AnnouncementType } from '@/lib/announcements-types';
+import { TYPE_LABELS } from '@/lib/announcements-types';
 
 export type FilterValue = 'all' | AnnouncementType;
 

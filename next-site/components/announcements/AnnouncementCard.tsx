@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
-import type { Announcement } from '@/lib/announcements';
-import { DEFAULT_BUTTON_TEXT } from '@/lib/announcements';
+import type { Announcement } from '@/lib/announcements-types';
+import { DEFAULT_BUTTON_TEXT } from '@/lib/announcements-types';
 import TypeBadge from './TypeBadge';
 import ImageCarousel from './ImageCarousel';
 

@@ -1,6 +1,6 @@
 import { cn } from '@/lib/cn';
-import type { AnnouncementType } from '@/lib/announcements';
-import { TYPE_LABELS } from '@/lib/announcements';
+import type { AnnouncementType } from '@/lib/announcements-types';
+import { TYPE_LABELS } from '@/lib/announcements-types';
 
 const COLOR_BY_TYPE: Record<AnnouncementType, string> = {
   webinar: 'bg-blue-100 text-brand-blue ring-blue-200',
