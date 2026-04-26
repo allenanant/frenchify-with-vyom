@@ -3,7 +3,6 @@ import { Inter, Sora } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import LenisProvider from '@/components/LenisProvider';
 import ScrollProgress from '@/components/motion/ScrollProgress';
 
 const inter = Inter({
@@ -41,7 +40,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="antialiased">
-        <LenisProvider />
         <ScrollProgress />
         <Header />
         <main>{children}</main>
