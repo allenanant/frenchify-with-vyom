@@ -14,7 +14,6 @@ const navLinks = [
   { href: '/announcements', label: 'Announcements' },
   { href: '/about-us', label: 'About Us' },
   { href: '/results-page', label: 'Results' },
-  { href: '/testimonials', label: 'Testimonials' },
   { href: '/faq', label: 'FAQs' },
   { href: '/contact', label: 'Book a Meet' },
 ];
