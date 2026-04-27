@@ -14,7 +14,7 @@ const bullets = [
 export default function SelfStudyVideoSection() {
   return (
     <section id="self-study-video" className="py-16 md:py-20 bg-white full-bleed-section-ghl">
-      <div className="ghl-row mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="bg-gray-50 rounded-2xl p-8 md:p-12 border border-gray-100">
             <div className="grid lg:grid-cols-2 gap-8 items-center">

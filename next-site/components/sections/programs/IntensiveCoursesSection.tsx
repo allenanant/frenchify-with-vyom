@@ -62,7 +62,7 @@ const courses: Course[] = [
 export default function IntensiveCoursesSection() {
   return (
     <section id="intensive" className="py-16 md:py-20 bg-gray-50 full-bleed-section-ghl">
-      <div className="ghl-row mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="text-center mb-12">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">

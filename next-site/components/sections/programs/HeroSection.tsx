@@ -8,11 +8,10 @@ export default function HeroSection() {
   return (
     <section
       id="hero-section"
-      className="hero-pattern-animated py-16 md:py-20 relative overflow-hidden full-bleed-section-ghl aurora-bg"
-      style={{ paddingTop: 'calc(4rem + 50px)' }}
+      className="hero-pattern-animated py-16 md:py-20 md:pt-[calc(4rem+50px)] relative overflow-hidden full-bleed-section-ghl aurora-bg"
     >
       <FloatingOrbs variant="soft" />
-      <div className="ghl-row mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <Reveal duration={0.8}>
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-[1.08] tracking-tight">
             Our <span className="gradient-text">TEF/TCF Specific French Programs</span>
