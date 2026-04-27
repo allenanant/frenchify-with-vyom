@@ -43,7 +43,7 @@ export default function HeroSection() {
             </div>
           </Reveal>
           <Reveal direction="left" duration={0.8}>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-[1.08] tracking-tight">
+            <h1 className="font-display text-[56px] font-bold text-gray-900 mb-6 leading-[1.08] tracking-tight">
               Becoming <span className="gradient-text">Fluent</span> with Frenchify
             </h1>
           </Reveal>

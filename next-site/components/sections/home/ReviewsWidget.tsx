@@ -22,11 +22,10 @@ export default function ReviewsWidget() {
               strategy="lazyOnload"
             />
             <iframe
-              className="lc_reviews_widget"
+              className="lc_reviews_widget block w-full h-[600px] md:h-[460px] border-0"
               src="https://reputationhub.site/reputation/widgets/review_widget/cmjlzerv4DUDyZFj6PYO"
               frameBorder={0}
-              scrolling="no"
-              style={{ width: '100%', minWidth: '100%', height: 600, border: 'none' }}
+              scrolling="auto"
             />
           </div>
         </Reveal>

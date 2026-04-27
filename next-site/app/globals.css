@@ -31,7 +31,15 @@
   }
 
   body.has-notice-bars {
-    padding-top: 144px;
+    /* Mobile: amber bar wraps to 2 lines (~52px) + blue bar (36px) + header (69px) */
+    padding-top: 157px;
+  }
+
+  @media (min-width: 768px) {
+    body.has-notice-bars {
+      /* Desktop: amber bar single line (36px) + blue bar (36px) + header (69px) */
+      padding-top: 141px;
+    }
   }
 
   ::selection {
@@ -425,6 +433,13 @@
   }
 }
 
+/* ── Desktop: extra bottom padding to separate from ProgramsStaircase */
+@media (min-width: 1024px) {
+  section.student-stack-section {
+    padding-bottom: 50px;
+  }
+}
+
 /* ── Student Stories Stack (tagmango-style fanned-deck scroll) ─ */
 .student-stack-scroller {
   position: relative;
@@ -437,7 +452,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  /* Clip top (cards translating up) but let bottom shadow bleed into section padding */
+  clip-path: inset(0 -100vw -200px -100vw);
 }
 
 .student-stack-abs-wrap {
