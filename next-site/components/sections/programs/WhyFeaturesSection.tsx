@@ -38,7 +38,7 @@ const features: Feature[] = [
 export default function WhyFeaturesSection() {
   return (
     <section className="py-16 md:py-20 bg-gray-50 full-bleed-section-ghl">
-      <div className="ghl-row-full mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="text-center mb-12">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">

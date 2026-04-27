@@ -11,7 +11,7 @@ export default function ContactCtaSection() {
       className="py-16 md:py-20 bg-gray-900 text-white full-bleed-section-ghl relative overflow-hidden"
     >
       <FloatingOrbs variant="soft" />
-      <div className="ghl-row-full mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <Reveal>
           <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 tracking-tight">
             Ready to Start Your <span className="gradient-text">French Journey</span>?

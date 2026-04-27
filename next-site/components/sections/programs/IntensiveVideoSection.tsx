@@ -14,7 +14,7 @@ const bullets = [
 export default function IntensiveVideoSection() {
   return (
     <section id="intensive-video" className="py-16 md:py-20 bg-gray-50 full-bleed-section-ghl">
-      <div className="ghl-row-full mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg border border-gray-100">
             <div className="grid lg:grid-cols-2 gap-8 items-center">
