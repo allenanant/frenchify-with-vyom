@@ -6,21 +6,21 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-gray-900 text-gray-400 px-6 py-14 overflow-hidden">
+    <footer className="relative bg-gray-900 text-gray-400 px-6 pt-14 pb-6 lg:pb-14 overflow-hidden">
       <div aria-hidden="true" className="absolute inset-0 opacity-[0.07] pointer-events-none">
         <div className="absolute -top-32 -left-32 w-[520px] h-[520px] rounded-full blur-3xl bg-brand-blue" />
         <div className="absolute -bottom-32 -right-32 w-[420px] h-[420px] rounded-full blur-3xl bg-brand-amber" />
       </div>
 
       <div className="relative max-w-[1170px] mx-auto">
-        <div className="grid md:grid-cols-4 gap-10 mb-10">
-          <div className="md:col-span-2">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-10">
+          <div className="col-span-2 md:col-span-2">
             <Image
               src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png"
               alt="Frenchify Logo"
               width={160}
               height={40}
-              className="h-10 w-auto mb-5 brightness-0 invert"
+              className="h-10 w-auto mb-5"
             />
             <p className="text-sm leading-relaxed max-w-md">
               Helping students master French for Canadian immigration success. Specialized training for TEF Canada exam preparation.
