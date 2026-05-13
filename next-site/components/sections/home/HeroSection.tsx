@@ -53,14 +53,14 @@ export default function HeroSection() {
             </p>
           </Reveal>
           <Reveal direction="up" delay={0.3} duration={0.6}>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 lg:flex-nowrap lg:gap-3">
               <Magnetic>
-                <Link href="/contact" className="btn-primary">
+                <Link href="/contact" className="btn-primary whitespace-nowrap lg:!px-5 lg:!text-[15px]">
                   Book My TEF Expert Call
                 </Link>
               </Magnetic>
               <Magnetic>
-                <Link href="/analysis-page" className="btn-ghost">
+                <Link href="/analysis-page" className="btn-ghost whitespace-nowrap lg:!px-5 lg:!text-[15px]">
                   Book my analysis test
                 </Link>
               </Magnetic>
