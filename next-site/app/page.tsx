@@ -8,6 +8,7 @@ import ProgramsStaircase from '@/components/sections/home/ProgramsStaircase';
 import BookACallSection from '@/components/sections/home/BookACallSection';
 import FaqSection from '@/components/sections/home/FaqSection';
 import ReviewsWidget from '@/components/sections/home/ReviewsWidget';
+import FloatingLeadButton from '@/components/FloatingLeadButton';
 
 export default function HomePage() {
   return (
@@ -16,12 +17,13 @@ export default function HomePage() {
       <NoticeBars />
       <HeroSection />
       <SuccessStoriesMarquee />
+      <ProgramsStaircase />
       <FeaturesGrid />
       <StudentStoriesStack />
-      <ProgramsStaircase />
       <BookACallSection />
       <FaqSection />
       <ReviewsWidget />
+      <FloatingLeadButton />
     </>
   );
 }
