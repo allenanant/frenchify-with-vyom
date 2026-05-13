@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Script from 'next/script';
 import { CheckCircle2, Phone, Mail } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
 import Stagger from '@/components/motion/Stagger';
@@ -15,7 +16,7 @@ export default function ContactPage() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="py-16 md:py-20 bg-white">
+      <section className="pt-10 md:pt-14 lg:pt-20 pb-6 md:pb-12 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Reveal>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
@@ -28,13 +29,48 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* Inline Contact Form */}
+      <section className="pb-10 md:pb-14 lg:pb-20 bg-white">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal delay={0.1}>
+            <div className="premium-card bg-white rounded-2xl shadow-xl p-5 md:p-8 lg:p-10 border border-gray-100">
+              <div className="text-center mb-4 lg:mb-6">
+                <h2 className="font-display text-2xl md:text-3xl font-semibold text-gray-900 mb-2 tracking-tight">
+                  Get In Touch
+                </h2>
+                <p className="text-gray-600 text-sm md:text-base">
+                  Tell us a bit about your goals and we&apos;ll get back to you.
+                </p>
+              </div>
+              <iframe
+                src="https://api.leadconnectorhq.com/widget/form/DqCZ5admvl0tPdrDgsok"
+                style={{ width: '100%', height: '411px', border: 'none', borderRadius: '12px' }}
+                id="inline-DqCZ5admvl0tPdrDgsok"
+                data-layout="{'id':'INLINE'}"
+                data-trigger-type="alwaysShow"
+                data-trigger-value=""
+                data-activation-type="alwaysActivated"
+                data-activation-value=""
+                data-deactivation-type="neverDeactivate"
+                data-deactivation-value=""
+                data-form-name="Contact Form"
+                data-height="411"
+                data-layout-iframe-id="inline-DqCZ5admvl0tPdrDgsok"
+                data-form-id="DqCZ5admvl0tPdrDgsok"
+                title="Contact Form"
+              />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Consultants Section */}
-      <section className="py-20 sm:py-24">
+      <section className="py-10 md:py-14 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Stagger className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-24">
+          <Stagger className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-14 md:gap-y-20 lg:gap-y-24">
             {/* Darshan Column */}
             <div className="flex flex-col items-center">
-              <div className="text-center mb-16">
+              <div className="text-center mb-20 lg:mb-16">
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-2 tracking-tight">
                   TEF Consultation
                 </h2>
@@ -109,7 +145,7 @@ export default function ContactPage() {
 
             {/* Khushi Column */}
             <div className="flex flex-col items-center">
-              <div className="text-center mb-16">
+              <div className="text-center mb-20 lg:mb-16">
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-2 tracking-tight">
                   Program Consultation
                 </h2>
@@ -156,9 +192,9 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Info Section */}
-      <section className="py-16 md:py-20 bg-white">
+      <section className="py-10 md:py-12 lg:py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+          <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 text-center">
             <div>
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Phone className="text-blue-600 w-7 h-7" />
@@ -180,6 +216,8 @@ export default function ContactPage() {
           </Stagger>
         </div>
       </section>
+
+      <Script src="https://link.msgsndr.com/js/form_embed.js" strategy="lazyOnload" />
     </main>
   );
 }
