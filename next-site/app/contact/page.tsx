@@ -43,9 +43,9 @@ export default function ContactPage() {
                 </p>
               </div>
               <iframe
-                src="https://api.leadconnectorhq.com/widget/form/DqCZ5admvl0tPdrDgsok"
-                style={{ width: '100%', height: '411px', border: 'none', borderRadius: '12px' }}
-                id="inline-DqCZ5admvl0tPdrDgsok"
+                src="https://api.leadconnectorhq.com/widget/form/hNHsUQGDYnwiWeSJKXSe"
+                style={{ width: '100%', height: '462px', border: 'none', borderRadius: '12px' }}
+                id="inline-hNHsUQGDYnwiWeSJKXSe"
                 data-layout="{'id':'INLINE'}"
                 data-trigger-type="alwaysShow"
                 data-trigger-value=""
@@ -53,11 +53,11 @@ export default function ContactPage() {
                 data-activation-value=""
                 data-deactivation-type="neverDeactivate"
                 data-deactivation-value=""
-                data-form-name="Contact Form"
-                data-height="411"
-                data-layout-iframe-id="inline-DqCZ5admvl0tPdrDgsok"
-                data-form-id="DqCZ5admvl0tPdrDgsok"
-                title="Contact Form"
+                data-form-name="Contact us form"
+                data-height="462"
+                data-layout-iframe-id="inline-hNHsUQGDYnwiWeSJKXSe"
+                data-form-id="hNHsUQGDYnwiWeSJKXSe"
+                title="Contact us form"
               />
             </div>
           </Reveal>
