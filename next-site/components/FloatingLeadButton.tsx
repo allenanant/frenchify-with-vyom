@@ -8,6 +8,7 @@ export default function FloatingLeadButton() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return;
     const t = setTimeout(() => setOpen(true), 600);
     return () => clearTimeout(t);
   }, []);
@@ -30,8 +31,7 @@ export default function FloatingLeadButton() {
           className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 inline-flex items-center gap-2 rounded-full bg-brand-gradient text-white px-5 py-3.5 shadow-premium hover:shadow-premium-amber hover:-translate-y-0.5 transition-all duration-300 font-semibold text-sm"
         >
           <MessageCircle className="w-5 h-5" aria-hidden="true" />
-          <span className="hidden sm:inline">Get In Touch</span>
-          <span className="sm:hidden">Inquiry</span>
+          <span>Get In Touch</span>
         </button>
       )}
 
