@@ -39,7 +39,7 @@ export default function ContactPage() {
                   Get In Touch
                 </h2>
                 <p className="text-gray-600 text-sm md:text-base">
-                  Tell us a bit about your goals and we&apos;ll get back to you.
+                  Send us your details and we&apos;ll get back to you shortly.
                 </p>
               </div>
               <iframe
