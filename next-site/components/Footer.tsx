@@ -16,10 +16,10 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-10">
           <div className="col-span-2 md:col-span-2">
             <Image
-              src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png"
+              src="/footer-logo.png"
               alt="Frenchify Logo"
-              width={160}
-              height={40}
+              width={200}
+              height={50}
               className="h-10 w-auto mb-5"
             />
             <p className="text-sm leading-relaxed max-w-md">
