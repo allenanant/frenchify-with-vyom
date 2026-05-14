@@ -50,16 +50,16 @@ export default function FloatingLeadButton() {
             <X className="w-5 h-5" aria-hidden="true" />
           </button>
 
-          <div className="bg-brand-gradient text-white px-5 pt-5 pb-4 shrink-0">
-            <h3 className="font-display text-lg font-semibold tracking-tight pr-10">
+          <div className="bg-brand-gradient text-white px-4 pt-3 pb-2.5 shrink-0">
+            <h3 className="font-display text-base font-semibold tracking-tight pr-10 leading-tight">
               Talk to a Frenchify Coach
             </h3>
-            <p className="text-white/90 text-xs mt-1">
-              Drop your details &mdash; we&apos;ll get back to you with a personalised plan.
+            <p className="text-white/90 text-[11px] mt-0.5 leading-snug">
+              Drop your details &mdash; we&apos;ll get back with a personalised plan.
             </p>
           </div>
 
-          <div className="p-3 sm:p-4 overflow-y-auto">
+          <div className="px-2 py-1 overflow-y-auto">
             <iframe
               src="https://api.leadconnectorhq.com/widget/form/38KzdDFiaY6RCYwKLwPX"
               style={{ width: '100%', height: '362px', border: 'none', borderRadius: '3px' }}
