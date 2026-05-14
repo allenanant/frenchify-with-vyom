@@ -33,7 +33,7 @@ export default function ContactPage() {
       <section className="pb-10 md:pb-14 lg:pb-20 bg-white">
         <div className="max-w-[720px] mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal delay={0.1}>
-            <div className="bg-white rounded-2xl p-5 md:p-8 lg:p-10">
+            <div className="bg-white rounded-2xl py-5 px-2 md:py-8 md:px-4 lg:py-10 lg:px-5">
               <div className="text-center mb-4 lg:mb-6">
                 <h2 className="font-display text-2xl md:text-3xl font-semibold text-gray-900 mb-2 tracking-tight">
                   Contact Us
