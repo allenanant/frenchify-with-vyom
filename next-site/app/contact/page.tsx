@@ -30,7 +30,7 @@ export default function ContactPage() {
       </section>
 
       {/* Inline Contact Form */}
-      <section className="pb-10 md:pb-14 lg:pb-20 bg-white">
+      <section className="pb-0 md:pb-0 lg:pb-7 bg-white">
         <div className="max-w-[750px] mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal delay={0.1}>
             <div className="bg-white rounded-2xl py-5 px-0 md:py-8 lg:py-10">
@@ -65,7 +65,7 @@ export default function ContactPage() {
       </section>
 
       {/* Consultants Section */}
-      <section className="py-10 md:py-14 lg:py-24">
+      <section className="pt-0 pb-10 md:pt-3 md:pb-14 lg:pt-12 lg:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Stagger className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-14 md:gap-y-20 lg:gap-y-24">
             {/* Darshan Column */}
