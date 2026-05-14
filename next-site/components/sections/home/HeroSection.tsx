@@ -43,12 +43,12 @@ export default function HeroSection() {
             </div>
           </Reveal>
           <Reveal direction="left" duration={0.8}>
-            <h1 className="font-display text-[56px] md:text-[64px] font-bold text-gray-900 mb-6 leading-[1.08] tracking-tight">
+            <h1 className="font-display text-[40px] lg:text-[64px] font-bold text-gray-900 mb-6 leading-[1.08] tracking-tight">
               Becoming <span className="gradient-text">Fluent</span> with Frenchify
             </h1>
           </Reveal>
           <Reveal direction="left" delay={0.15} duration={0.7}>
-            <p className="text-lg md:text-[1.15rem] text-gray-600 mb-8 leading-relaxed">
+            <p className="text-base lg:text-[1.15rem] text-gray-600 mb-8 leading-relaxed">
               Learn French &amp; clear TEF/TCF Canada exam with a step-by-step real life language learning methodologies and roadmap used by a lot of students to become fluent in under 12 months.
             </p>
           </Reveal>
