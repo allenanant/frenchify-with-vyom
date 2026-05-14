@@ -36,7 +36,7 @@ export default function ContactPage() {
             <div className="bg-white rounded-2xl p-5 md:p-8 lg:p-10">
               <div className="text-center mb-4 lg:mb-6">
                 <h2 className="font-display text-2xl md:text-3xl font-semibold text-gray-900 mb-2 tracking-tight">
-                  Get In Touch
+                  Contact Us
                 </h2>
                 <p className="text-gray-600 text-sm md:text-base">
                   Send us your details and we&apos;ll get back to you shortly.
