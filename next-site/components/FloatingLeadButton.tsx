@@ -37,7 +37,7 @@ export default function FloatingLeadButton() {
 
       {open && (
         <div
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[min(94vw,380px)] max-h-[min(85vh,640px)] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[min(80vw,323px)] max-h-[min(68vh,512px)] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col"
           role="dialog"
           aria-label="Get in touch"
         >
@@ -62,7 +62,7 @@ export default function FloatingLeadButton() {
           <div className="p-3 sm:p-4 overflow-y-auto">
             <iframe
               src="https://api.leadconnectorhq.com/widget/form/38KzdDFiaY6RCYwKLwPX"
-              style={{ width: '100%', height: '452px', border: 'none', borderRadius: '3px' }}
+              style={{ width: '100%', height: '362px', border: 'none', borderRadius: '3px' }}
               id="inline-38KzdDFiaY6RCYwKLwPX"
               data-layout="{'id':'INLINE'}"
               data-trigger-type="alwaysShow"
