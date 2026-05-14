@@ -15,13 +15,15 @@ export default function Footer() {
       <div className="relative max-w-[1170px] mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-10">
           <div className="col-span-2 md:col-span-2">
-            <Image
-              src="/footer-logo.png"
-              alt="Frenchify Logo"
-              width={200}
-              height={50}
-              className="h-10 w-auto mb-5"
-            />
+            <span className="inline-flex items-center mb-5 px-3 py-2 rounded-lg bg-gradient-to-br from-white via-slate-50 to-amber-50 shadow-[0_4px_14px_-4px_rgba(0,0,0,0.35)] ring-1 ring-white/30">
+              <Image
+                src="/footer-logo.png"
+                alt="Frenchify Logo"
+                width={200}
+                height={50}
+                className="h-10 w-auto"
+              />
+            </span>
             <p className="text-sm leading-relaxed max-w-md">
               Helping students master French for Canadian immigration success. Specialized training for TEF Canada exam preparation.
             </p>
