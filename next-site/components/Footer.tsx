@@ -6,24 +6,22 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-gray-900 text-gray-400 px-6 pt-14 pb-6 lg:pb-14 overflow-hidden">
-      <div aria-hidden="true" className="absolute inset-0 opacity-[0.07] pointer-events-none">
-        <div className="absolute -top-32 -left-32 w-[520px] h-[520px] rounded-full blur-3xl bg-brand-blue" />
-        <div className="absolute -bottom-32 -right-32 w-[420px] h-[420px] rounded-full blur-3xl bg-brand-amber" />
+    <footer className="relative bg-gradient-to-br from-slate-800 via-blue-950 to-slate-900 text-gray-400 px-6 pt-14 pb-6 lg:pb-14 overflow-hidden">
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-40 -left-32 w-[620px] h-[620px] rounded-full blur-3xl bg-amber-200/25" />
+        <div className="absolute -bottom-32 -right-32 w-[460px] h-[460px] rounded-full blur-3xl bg-brand-blue/30" />
       </div>
 
       <div className="relative max-w-[1170px] mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-10">
           <div className="col-span-2 md:col-span-2">
-            <span className="inline-flex items-center mb-5 px-3 py-2 rounded-lg bg-gradient-to-br from-white via-slate-50 to-amber-50 shadow-[0_4px_14px_-4px_rgba(0,0,0,0.35)] ring-1 ring-white/30">
-              <Image
-                src="/footer-logo.png"
-                alt="Frenchify Logo"
-                width={200}
-                height={50}
-                className="h-10 w-auto"
-              />
-            </span>
+            <Image
+              src="/footer-logo.png"
+              alt="Frenchify Logo"
+              width={200}
+              height={50}
+              className="h-10 w-auto mb-5"
+            />
             <p className="text-sm leading-relaxed max-w-md">
               Helping students master French for Canadian immigration success. Specialized training for TEF Canada exam preparation.
             </p>
