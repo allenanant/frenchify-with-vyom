@@ -45,9 +45,9 @@ export default function FloatingLeadButton() {
             type="button"
             onClick={() => setOpen(false)}
             aria-label="Close form"
-            className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-gray-100 flex items-center justify-center text-gray-700 transition-colors"
+            className="absolute top-2 right-2 z-10 w-[25px] h-[25px] rounded-full bg-white/90 hover:bg-gray-100 flex items-center justify-center text-gray-700 transition-colors"
           >
-            <X className="w-5 h-5" aria-hidden="true" />
+            <X className="w-[14px] h-[14px]" aria-hidden="true" />
           </button>
 
           <div className="bg-brand-gradient text-white px-4 pt-3 pb-2.5 shrink-0">
