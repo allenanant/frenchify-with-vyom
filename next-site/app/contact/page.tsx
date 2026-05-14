@@ -31,7 +31,7 @@ export default function ContactPage() {
 
       {/* Inline Contact Form */}
       <section className="pb-10 md:pb-14 lg:pb-20 bg-white">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[720px] mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal delay={0.1}>
             <div className="bg-white rounded-2xl p-5 md:p-8 lg:p-10">
               <div className="text-center mb-4 lg:mb-6">
