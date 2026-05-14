@@ -44,7 +44,7 @@ export default function ContactPage() {
               </div>
               <iframe
                 src="https://api.leadconnectorhq.com/widget/form/hNHsUQGDYnwiWeSJKXSe"
-                style={{ width: '100%', height: '462px', border: 'none', borderRadius: '12px' }}
+                style={{ width: '100%', height: '440px', border: 'none', borderRadius: '3px' }}
                 id="inline-hNHsUQGDYnwiWeSJKXSe"
                 data-layout="{'id':'INLINE'}"
                 data-trigger-type="alwaysShow"
@@ -54,7 +54,7 @@ export default function ContactPage() {
                 data-deactivation-type="neverDeactivate"
                 data-deactivation-value=""
                 data-form-name="Contact us form"
-                data-height="462"
+                data-height="440"
                 data-layout-iframe-id="inline-hNHsUQGDYnwiWeSJKXSe"
                 data-form-id="hNHsUQGDYnwiWeSJKXSe"
                 title="Contact us form"
