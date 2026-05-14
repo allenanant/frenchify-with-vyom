@@ -6,10 +6,12 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-gradient-to-br from-slate-800 via-blue-950 to-slate-900 text-gray-400 px-6 pt-14 pb-6 lg:pb-14 overflow-hidden">
+    <footer className="relative bg-[#0a1426] text-gray-300 px-6 pt-14 pb-6 lg:pb-14 overflow-hidden">
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-40 -left-32 w-[620px] h-[620px] rounded-full blur-3xl bg-amber-200/25" />
-        <div className="absolute -bottom-32 -right-32 w-[460px] h-[460px] rounded-full blur-3xl bg-brand-blue/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1c2e4a] via-[#101f3a] to-[#050b18]" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[420px] rounded-[50%] blur-3xl bg-amber-300/[0.10]" />
+        <div className="absolute -bottom-44 -right-32 w-[520px] h-[520px] rounded-full blur-3xl bg-brand-blue/15" />
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" />
       </div>
 
       <div className="relative max-w-[1170px] mx-auto">
