@@ -65,7 +65,7 @@ export default function IntensiveCoursesSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {courses.map((c) => (
             <a key={c.href} href={c.href} className={`ed-card ${c.theme}`}>
               <div className="ed-card__media">
