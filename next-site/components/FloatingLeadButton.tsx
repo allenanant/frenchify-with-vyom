@@ -52,18 +52,18 @@ export default function FloatingLeadButton() {
 
           <div className="bg-brand-gradient text-white px-4 pt-3 pb-2.5 shrink-0">
             <h3 className="font-display text-base font-semibold tracking-tight pr-10 leading-tight">
-              Talk to a Frenchify Coach
+              Contact Us
             </h3>
             <p className="text-white/90 text-[11px] mt-0.5 leading-snug">
-              Drop your details &mdash; we&apos;ll get back with a personalised plan.
+              Drop your details &mdash; we&apos;ll get back to you shortly.
             </p>
           </div>
 
           <div className="px-2 py-1 overflow-y-auto">
             <iframe
-              src="https://api.leadconnectorhq.com/widget/form/38KzdDFiaY6RCYwKLwPX"
-              style={{ width: '100%', height: '362px', border: 'none', borderRadius: '3px' }}
-              id="inline-38KzdDFiaY6RCYwKLwPX"
+              src="https://api.leadconnectorhq.com/widget/form/hNHsUQGDYnwiWeSJKXSe"
+              style={{ width: '100%', height: '440px', border: 'none', borderRadius: '3px' }}
+              id="inline-hNHsUQGDYnwiWeSJKXSe-floating"
               data-layout="{'id':'INLINE'}"
               data-trigger-type="alwaysShow"
               data-trigger-value=""
@@ -71,11 +71,11 @@ export default function FloatingLeadButton() {
               data-activation-value=""
               data-deactivation-type="neverDeactivate"
               data-deactivation-value=""
-              data-form-name="Form- Get in touch"
-              data-height="452"
-              data-layout-iframe-id="inline-38KzdDFiaY6RCYwKLwPX"
-              data-form-id="38KzdDFiaY6RCYwKLwPX"
-              title="Form- Get in touch"
+              data-form-name="Contact us form"
+              data-height="440"
+              data-layout-iframe-id="inline-hNHsUQGDYnwiWeSJKXSe-floating"
+              data-form-id="hNHsUQGDYnwiWeSJKXSe"
+              title="Contact us form"
             />
           </div>
         </div>
