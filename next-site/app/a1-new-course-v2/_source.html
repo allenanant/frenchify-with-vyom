@@ -987,16 +987,15 @@
   // eases back to (0,0) on mouseleave. Honors prefers-reduced-motion.
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Auto-tag all interactive buttons so they get the magnetic feel.
+  // Magnetic only on actual buttons / button-like CTAs.
+  // Explicitly NOT on cards (.ed-card, .tl__card), badges (.stat-pill), or columns.
   const magneticSelectors = [
     '.cta-link',
-    '.ed-card',
-    '.stat-pill',
-    '.tl__card',
-    '.ed-mini a',
     'a.btn-primary',
-    'a[href]:not(.no-magnetic)',
-    'button:not(.no-magnetic)',
+    '.ed-mini a',
+    'button.magnetic',
+    'a.magnetic',
+    '[data-magnetic]',
   ];
   const seen = new Set();
   document.querySelectorAll(magneticSelectors.join(',')).forEach(el => {
