@@ -53,37 +53,34 @@ export default function HomeV2BentoFeatures() {
                 </p>
               </div>
 
-              <div className="relative mt-10 grid grid-cols-3 gap-3 max-w-md">
-                {[
-                  { d: 'Mon', h: 7 },
-                  { d: 'Tue', h: 4 },
-                  { d: 'Wed', h: 9 },
-                  { d: 'Thu', h: 5 },
-                  { d: 'Fri', h: 11 },
-                  { d: 'Sat', h: 6 },
-                ].map((b, i) => (
-                  <motion.div
-                    key={b.d}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1 + i * 0.06 }}
-                    className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-3"
-                  >
-                    <div className="text-[9px] font-bold uppercase tracking-[0.16em] text-white/50">
-                      {b.d}
-                    </div>
-                    <div className="mt-2 flex items-end gap-1 h-8">
-                      <motion.div
-                        initial={{ height: 0 }}
-                        whileInView={{ height: `${b.h * 8}%` }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 + i * 0.06, duration: 0.6 }}
-                        className="w-full rounded-sm bg-gradient-to-t from-[#2563eb] to-[#3b82f6]"
-                      />
-                    </div>
-                  </motion.div>
-                ))}
+              {/* "Anytime" availability strip — replaces the meaningless bar chart */}
+              <div className="relative mt-10 max-w-md">
+                <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/55 mb-3">
+                  Available every day · every hour
+                </div>
+                <div className="grid grid-cols-7 gap-1.5">
+                  {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, scale: 0.85 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.1 + i * 0.05 }}
+                      className="aspect-square rounded-md bg-white/[0.06] border border-white/10 flex items-center justify-center text-[11px] font-extrabold text-white/80"
+                    >
+                      {d}
+                    </motion.div>
+                  ))}
+                </div>
+                <div className="mt-4 flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                  <span className="relative flex h-2 w-2 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                  </span>
+                  <div className="text-[12.5px] font-semibold text-white/85 leading-tight">
+                    Lecture replays on-demand · Live doubt calls 4×/week
+                  </div>
+                </div>
               </div>
             </div>
           </Tilt>

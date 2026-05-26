@@ -21,7 +21,7 @@ const quotes: Quote[] = [
     role: 'Software engineer · moving to Toronto',
     avatar:
       'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=400&auto=format&fit=crop',
-    badge: 'CLB 8 · TEF Canada',
+    badge: 'CLB 8',
     tone: 'dark',
   },
   {
@@ -31,17 +31,17 @@ const quotes: Quote[] = [
     role: 'Product manager · Bengaluru',
     avatar:
       'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop',
-    badge: 'CLB 7 · Working pro',
+    badge: 'CLB 7',
     tone: 'light',
   },
   {
     text:
       'I scored CLB 9 in Speaking. That alone unlocked the maximum French bonus on Express Entry. Vyom drilled the pronunciation patterns until they became reflex.',
     name: 'Simran Kaur',
-    role: 'Marketing lead · applying via Express Entry',
+    role: 'Marketing lead · Express Entry',
     avatar:
       'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop',
-    badge: 'CLB 9 · Speaking',
+    badge: 'CLB 9',
     tone: 'amber',
   },
 ];
@@ -75,12 +75,12 @@ export default function HomeV2TestimonialQuotes() {
                 delay: i * 0.1,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className={`relative overflow-hidden rounded-3xl p-7 md:p-9 flex flex-col ${
+              className={`relative overflow-hidden rounded-3xl p-7 md:p-8 flex flex-col min-w-0 ${
                 q.tone === 'dark'
                   ? 'md:col-span-5 bg-gradient-to-br from-[#0A1426] via-[#0b1d3a] to-[#0A1426] text-white'
                   : q.tone === 'amber'
                   ? 'md:col-span-4 bg-gradient-to-br from-[#FEF3C7] via-white to-[#FFF7ED] text-[#252525] border border-[#fde68a]'
-                  : 'md:col-span-3 bg-[#F9FAFB] border border-[#e5e7eb] text-[#252525]'
+                  : 'md:col-span-3 bg-white border border-[#e5e7eb] text-[#252525]'
               }`}
               style={{ minHeight: '380px' }}
             >
@@ -92,7 +92,7 @@ export default function HomeV2TestimonialQuotes() {
               )}
 
               <Quote
-                className={`h-9 w-9 mb-5 ${
+                className={`h-8 w-8 mb-5 ${
                   q.tone === 'dark'
                     ? 'text-[#3b82f6]'
                     : q.tone === 'amber'
@@ -102,43 +102,19 @@ export default function HomeV2TestimonialQuotes() {
               />
 
               <blockquote
-                className={`relative font-display font-bold tracking-[-0.02em] leading-[1.25] ${
+                className={`relative font-display font-bold tracking-[-0.02em] leading-[1.3] ${
                   q.tone === 'dark'
-                    ? 'text-[22px] md:text-[26px] text-white'
-                    : 'text-[17px] md:text-[19px] text-[#111827]'
+                    ? 'text-[20px] md:text-[24px] text-white'
+                    : 'text-[16px] md:text-[18px] text-[#111827]'
                 }`}
               >
                 &ldquo;{q.text}&rdquo;
               </blockquote>
 
-              <div className="relative mt-auto pt-8 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={q.avatar}
-                    alt={q.name}
-                    loading="lazy"
-                    className="h-12 w-12 rounded-full object-cover border-2 border-white shadow-sm"
-                  />
-                  <div>
-                    <div
-                      className={`font-display text-[14.5px] font-extrabold tracking-tight ${
-                        q.tone === 'dark' ? 'text-white' : 'text-[#111827]'
-                      }`}
-                    >
-                      {q.name}
-                    </div>
-                    <div
-                      className={`text-[12px] ${
-                        q.tone === 'dark' ? 'text-white/65' : 'text-[#6B7280]'
-                      }`}
-                    >
-                      {q.role}
-                    </div>
-                  </div>
-                </div>
+              {/* Footer: stacks vertically so badge never overflows */}
+              <div className="relative mt-auto pt-7 flex flex-col gap-3">
                 <span
-                  className={`shrink-0 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] ${
+                  className={`self-start shrink-0 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] ${
                     q.tone === 'dark'
                       ? 'bg-white/10 text-[#f59e0b]'
                       : q.tone === 'amber'
@@ -157,6 +133,31 @@ export default function HomeV2TestimonialQuotes() {
                   />
                   {q.badge}
                 </span>
+                <div className="flex items-center gap-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={q.avatar}
+                    alt={q.name}
+                    loading="lazy"
+                    className="h-11 w-11 shrink-0 rounded-full object-cover border-2 border-white shadow-sm"
+                  />
+                  <div className="min-w-0">
+                    <div
+                      className={`font-display text-[14px] font-extrabold tracking-tight truncate ${
+                        q.tone === 'dark' ? 'text-white' : 'text-[#111827]'
+                      }`}
+                    >
+                      {q.name}
+                    </div>
+                    <div
+                      className={`text-[12px] truncate ${
+                        q.tone === 'dark' ? 'text-white/65' : 'text-[#6B7280]'
+                      }`}
+                    >
+                      {q.role}
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.figure>
           ))}

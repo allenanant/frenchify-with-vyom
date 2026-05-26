@@ -102,13 +102,13 @@ export default function HomeV2CurriculumJourney() {
         </div>
 
         {/* Timeline */}
-        <div className="relative pl-8 md:pl-16">
+        <div className="relative pl-12 sm:pl-16 md:pl-20">
           {/* base line */}
-          <div className="absolute left-3 md:left-7 top-2 bottom-2 w-[2px] bg-[#e5e7eb] rounded-full" />
+          <div className="absolute left-4 sm:left-6 md:left-8 top-2 bottom-2 w-[2px] bg-[#e5e7eb] rounded-full" />
           {/* progress line */}
           <motion.div
             style={{ scaleY: lineScale, transformOrigin: 'top' }}
-            className="absolute left-3 md:left-7 top-2 bottom-2 w-[2px] rounded-full bg-gradient-to-b from-[#2563eb] via-[#3b82f6] to-[#f59e0b]"
+            className="absolute left-4 sm:left-6 md:left-8 top-2 bottom-2 w-[2px] rounded-full bg-gradient-to-b from-[#2563eb] via-[#3b82f6] to-[#f59e0b]"
           />
 
           <div className="space-y-6 md:space-y-8">
@@ -131,57 +131,71 @@ function MilestoneRow({ m, index }: { m: Milestone; index: number }) {
       transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
       className="relative"
     >
-      {/* node */}
-      <div className="absolute -left-8 md:-left-16 top-7 grid h-7 w-7 md:h-9 md:w-9 place-items-center rounded-full bg-white border-2 border-[#2563eb] shadow-[0_10px_24px_-10px_rgba(37,99,235,0.55)]">
+      {/* node — positioned relative to the timeline line, not the card */}
+      <div className="absolute -left-[36px] sm:-left-[44px] md:-left-[56px] top-7 grid h-8 w-8 md:h-10 md:w-10 place-items-center rounded-full bg-white border-2 border-[#2563eb] shadow-[0_10px_24px_-10px_rgba(37,99,235,0.55)] z-10">
         <span className="h-2.5 w-2.5 md:h-3 md:w-3 rounded-full bg-[#2563eb]" />
       </div>
 
-      <div className="group relative rounded-3xl border border-[#e5e7eb] bg-white p-6 md:p-9 hover:border-[#dbeafe] hover:shadow-[0_30px_60px_-30px_rgba(37,99,235,0.3)] transition-all duration-500">
+      <div className="group relative w-full rounded-3xl border border-[#e5e7eb] bg-white p-6 md:p-8 lg:p-10 hover:border-[#dbeafe] hover:shadow-[0_30px_60px_-30px_rgba(37,99,235,0.3)] transition-all duration-500">
         <div
           aria-hidden
           className="absolute -inset-px rounded-3xl bg-gradient-to-br from-[#2563eb]/0 via-transparent to-[#f59e0b]/0 group-hover:from-[#2563eb]/10 group-hover:to-[#f59e0b]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
         />
-        <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-start">
-          <div className="md:col-span-3 flex md:flex-col items-baseline md:items-start gap-4">
-            <span className="font-display text-[64px] md:text-[88px] font-bold text-[#111827] tracking-[-0.05em] leading-[0.85]">
+
+        {/* Header row: number + level + CTA on lg */}
+        <div className="relative flex items-center justify-between gap-4 mb-5 md:mb-6">
+          <div className="flex items-center gap-4">
+            <span className="font-display text-[48px] sm:text-[56px] md:text-[72px] font-bold text-[#111827] tracking-[-0.05em] leading-[0.85]">
               {m.num}
             </span>
             <span className="inline-flex items-center rounded-full bg-[#EFF6FF] text-[#2667FF] px-3 py-1.5 text-[11px] font-extrabold tracking-[0.14em]">
               LEVEL {m.level}
             </span>
           </div>
-
-          <div className="md:col-span-6">
-            <h3 className="font-display text-[24px] md:text-[28px] font-extrabold text-[#111827] tracking-[-0.025em] leading-[1.1]">
-              {m.title}
-            </h3>
-            <p className="mt-3 text-[14.5px] md:text-[15.5px] leading-[1.6] text-[#4b5563]">
-              {m.copy}
-            </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#e5e7eb] bg-[#F9FAFB] px-3 py-1.5 text-[11.5px] font-semibold text-[#374151]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#2563eb]" />
-                {m.duration}
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#e5e7eb] bg-[#F9FAFB] px-3 py-1.5 text-[11.5px] font-semibold text-[#374151]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#16a34a]" />
-                {m.outcome}
-              </span>
-            </div>
-          </div>
-
-          <div className="md:col-span-3 flex md:justify-end">
-            <Link
-              href={m.href}
-              className="group/cta inline-flex items-center gap-3 rounded-full bg-[#0A1426] text-white px-5 py-3.5 text-[13.5px] font-semibold hover:bg-[#2563eb] transition-colors duration-300 w-full md:w-auto justify-center"
-            >
-              {m.cta}
-              <span className="grid h-7 w-7 place-items-center rounded-full bg-white/10 group-hover/cta:bg-white/25 transition-colors">
-                <ArrowUpRight className="h-3.5 w-3.5" />
-              </span>
-            </Link>
-          </div>
+          <Link
+            href={m.href}
+            aria-label={m.cta}
+            className="hidden lg:inline-flex group/cta items-center gap-3 rounded-full bg-[#0A1426] text-white px-5 py-3 text-[13px] font-semibold hover:bg-[#2563eb] transition-colors duration-300 shrink-0"
+          >
+            {m.cta}
+            <span className="grid h-6 w-6 place-items-center rounded-full bg-white/10 group-hover/cta:bg-white/25 transition-colors">
+              <ArrowUpRight className="h-3 w-3" />
+            </span>
+          </Link>
         </div>
+
+        {/* Title */}
+        <h3 className="relative font-display text-[22px] sm:text-[26px] md:text-[30px] font-extrabold text-[#111827] tracking-[-0.025em] leading-[1.1]">
+          {m.title}
+        </h3>
+
+        {/* Copy */}
+        <p className="relative mt-3 text-[14.5px] md:text-[15.5px] leading-[1.6] text-[#4b5563] max-w-[640px]">
+          {m.copy}
+        </p>
+
+        {/* Chips */}
+        <div className="relative mt-5 flex flex-wrap gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#e5e7eb] bg-[#F9FAFB] px-3 py-1.5 text-[11.5px] font-semibold text-[#374151]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#2563eb]" />
+            {m.duration}
+          </span>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#e5e7eb] bg-[#F9FAFB] px-3 py-1.5 text-[11.5px] font-semibold text-[#374151]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#16a34a]" />
+            {m.outcome}
+          </span>
+        </div>
+
+        {/* CTA on small screens */}
+        <Link
+          href={m.href}
+          className="relative lg:hidden mt-6 inline-flex group/cta items-center gap-3 rounded-full bg-[#0A1426] text-white px-5 py-3 text-[13px] font-semibold hover:bg-[#2563eb] transition-colors duration-300"
+        >
+          {m.cta}
+          <span className="grid h-6 w-6 place-items-center rounded-full bg-white/10 group-hover/cta:bg-white/25 transition-colors">
+            <ArrowUpRight className="h-3 w-3" />
+          </span>
+        </Link>
       </div>
     </motion.div>
   );

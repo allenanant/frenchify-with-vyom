@@ -12,53 +12,54 @@ type Tile = {
   span?: 'wide' | 'tall' | 'square';
 };
 
+// Photos confirmed to render relevant content for the captions (France / learning / Canada).
 const tiles: Tile[] = [
   {
-    src: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Eiffel Tower in Paris',
-    caption: 'Paris, France',
+    src: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1400&auto=format&fit=crop',
+    alt: 'Eiffel Tower in Paris at sunset',
+    caption: 'Paris · the language',
     span: 'wide',
   },
   {
-    src: 'https://images.unsplash.com/photo-1517732306149-e8f829eb588a?q=80&w=900&auto=format&fit=crop',
-    alt: 'French books and cafe',
-    caption: 'French books · daily ritual',
+    src: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=900&auto=format&fit=crop',
+    alt: 'Open book with reading glasses',
+    caption: 'Daily reading · A1 to B2',
     span: 'square',
   },
   {
-    src: 'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?q=80&w=900&auto=format&fit=crop',
-    alt: 'Student studying with laptop',
-    caption: 'Self-study · own pace',
+    src: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=900&auto=format&fit=crop',
+    alt: 'Group of students learning together',
+    caption: 'Live mentorship · 4× a week',
     span: 'tall',
   },
   {
-    src: 'https://images.unsplash.com/photo-1517022812141-23620dba5c23?q=80&w=900&auto=format&fit=crop',
-    alt: 'Group of students learning',
-    caption: 'Live mentorship · 4×/week',
+    src: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=900&auto=format&fit=crop',
+    alt: 'Open notebook with pen on desk',
+    caption: 'Structured notes · every level',
     span: 'square',
   },
   {
-    src: 'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Montreal cityscape',
-    caption: 'Montréal — your destination',
+    src: 'https://images.unsplash.com/photo-1519178614-68673b201f36?q=80&w=1400&auto=format&fit=crop',
+    alt: 'Montréal city skyline at dusk',
+    caption: 'Montréal · the destination',
     span: 'wide',
   },
   {
-    src: 'https://images.unsplash.com/photo-1521295121783-8a321d551ad2?q=80&w=900&auto=format&fit=crop',
-    alt: 'Open notebook with notes',
-    caption: 'Structured notes · A1 → B2',
+    src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=900&auto=format&fit=crop',
+    alt: 'French café latte on wooden table',
+    caption: 'Café French · everyday fluency',
     span: 'square',
   },
   {
-    src: 'https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?q=80&w=900&auto=format&fit=crop',
-    alt: 'French croissant and coffee',
-    caption: 'Real life · real fluency',
+    src: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=900&auto=format&fit=crop',
+    alt: 'Student studying on laptop at desk',
+    caption: 'Self-study · your own hours',
     span: 'tall',
   },
   {
-    src: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=900&auto=format&fit=crop',
-    alt: 'Student on laptop happy',
-    caption: 'On-demand · anywhere',
+    src: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=900&auto=format&fit=crop',
+    alt: 'Person celebrating a milestone',
+    caption: 'TEF Canada · cleared',
     span: 'square',
   },
 ];
@@ -80,7 +81,7 @@ export default function HomeV2ImageGallery() {
     target: sectionRef,
     offset: ['start end', 'end start'],
   });
-  const headerY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const headerY = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
     <section
@@ -124,7 +125,7 @@ export default function HomeV2ImageGallery() {
                 delay: i * 0.06,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className={`group relative overflow-hidden rounded-2xl bg-white ${spanClasses(t.span)}`}
+              className={`group relative overflow-hidden rounded-2xl bg-[#0A1426] ${spanClasses(t.span)}`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -133,7 +134,7 @@ export default function HomeV2ImageGallery() {
                 loading="lazy"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.08]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/0 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent opacity-95 transition-opacity duration-500 group-hover:opacity-100" />
               <figcaption className="absolute left-4 bottom-4 right-4 flex items-center justify-between text-white">
                 <span className="font-display text-[13.5px] md:text-[15px] font-bold tracking-tight drop-shadow">
                   {t.caption}

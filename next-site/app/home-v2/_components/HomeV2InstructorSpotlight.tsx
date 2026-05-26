@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Quote, MessagesSquare, BookOpen, Target } from 'lucide-react';
+import { MessagesSquare, BookOpen, Target } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
 import Magnetic from '@/components/motion/Magnetic';
 
@@ -61,11 +61,17 @@ export default function HomeV2InstructorSpotlight() {
               Built around one teacher
             </span>
 
+            {/* Big stylized quote — using a styled span instead of the lucide Quote icon */}
             <div className="relative mt-8">
-              <Quote className="absolute -left-2 -top-4 h-12 w-12 text-[#2563eb]/30" />
-              <p className="relative font-display text-[26px] md:text-[40px] lg:text-[44px] font-bold text-white tracking-[-0.025em] leading-[1.15]">
-                &ldquo;Most institutes teach French. We teach you how to walk into a TEF
-                Canada exam hall and walk out with the score that unlocks your PR.&rdquo;
+              <span
+                aria-hidden
+                className="absolute -left-1 -top-6 md:-top-8 font-display text-[110px] md:text-[140px] font-bold leading-none text-[#2563eb]/35 select-none pointer-events-none"
+              >
+                &ldquo;
+              </span>
+              <p className="relative font-display text-[22px] md:text-[32px] lg:text-[36px] font-bold text-white tracking-[-0.025em] leading-[1.2] pt-4 md:pt-6">
+                Most institutes teach French. We teach you how to walk into a TEF
+                Canada exam hall and walk out with the score that unlocks your PR.
               </p>
             </div>
 
@@ -76,7 +82,7 @@ export default function HomeV2InstructorSpotlight() {
                   className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 md:p-5 backdrop-blur-sm"
                 >
                   <c.Icon className="h-5 w-5 text-[#3b82f6]" />
-                  <div className="mt-3 font-display text-[20px] md:text-[24px] font-extrabold text-white tracking-[-0.02em]">
+                  <div className="mt-3 font-display text-[18px] md:text-[22px] font-extrabold text-white tracking-[-0.02em]">
                     {c.label}
                   </div>
                   <div className="text-[11.5px] text-white/60">{c.sub}</div>
