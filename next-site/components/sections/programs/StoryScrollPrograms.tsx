@@ -300,13 +300,13 @@ export default function StoryScrollPrograms() {
       {/* TRACK 1 INTRO + INTENSIVE VIDEO */}
       <section data-flow-section className="paper-flow">
         <div className="flow-art-container">
-          <section id="track-1" className="track-header paper">
-            <div className="track-num">01</div>
-            <div className="track-intro">
+          <section id="track-1" className="track-header-compact paper">
+            <div className="track-num-compact">01</div>
+            <div className="track-intro-compact">
               <span className="level-badge">
                 <span className="dot"></span> Track One — Live + Online
               </span>
-              <h3 className="mt-6">
+              <h3 className="mt-5">
                 Intensive Courses (Online Course + Live Sessions)
               </h3>
               <p>
@@ -314,13 +314,11 @@ export default function StoryScrollPrograms() {
                 sessions, and expert mentorship.
               </p>
             </div>
-          </section>
 
-          {/* intensive program video card */}
-          <div className="mt-12 max-w-[1100px] mx-auto w-full px-4">
-            <div className="bg-white rounded-2xl p-6 md:p-10 shadow-lg border border-gray-100">
+            {/* intensive program video card */}
+            <div className="track-video-card">
               <div className="grid lg:grid-cols-2 gap-8 items-center">
-                <div>
+                <div className="text-left">
                   <h3 className="font-display text-2xl md:text-3xl font-bold text-gray-900 mb-6 tracking-tight">
                     Frenchify{' '}
                     <span className="gradient-text">Intensive Programs</span>
@@ -361,7 +359,7 @@ export default function StoryScrollPrograms() {
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </section>
 
@@ -779,6 +777,71 @@ export default function StoryScrollPrograms() {
         }
         .track-header.paper {
           background: #f9fafb;
+        }
+        /* Compact track header (heading + video together) */
+        .track-header-compact {
+          background: #ffffff;
+          color: #111827;
+          padding: clamp(4rem, 9vw, 7rem) 1.5rem clamp(4rem, 8vw, 6rem);
+          text-align: center;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: clamp(2rem, 4vw, 3.5rem);
+          position: relative;
+        }
+        .track-header-compact.paper {
+          background: #f9fafb;
+        }
+        .track-num-compact {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 700;
+          font-size: clamp(7rem, 18vw, 18rem);
+          line-height: 0.85;
+          letter-spacing: -0.04em;
+          color: rgba(37, 99, 235, 0.05);
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          pointer-events: none;
+        }
+        .track-intro-compact {
+          position: relative;
+          max-width: 900px;
+          margin: 0 auto;
+          z-index: 1;
+        }
+        .track-intro-compact h3 {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 700;
+          font-size: clamp(1.75rem, 3.6vw, 2.75rem);
+          line-height: 1.1;
+          letter-spacing: -0.025em;
+          color: #111827;
+          margin-bottom: 1rem;
+        }
+        .track-intro-compact p {
+          color: #4b5563;
+          font-size: 17px;
+          line-height: 1.6;
+          max-width: 620px;
+          margin: 0 auto;
+        }
+        .track-video-card {
+          position: relative;
+          z-index: 1;
+          width: 100%;
+          max-width: 1100px;
+          margin: 0 auto;
+          background: #ffffff;
+          border: 1px solid #f3f4f6;
+          border-radius: 1rem;
+          padding: clamp(1.5rem, 3vw, 2.5rem);
+          box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.12);
         }
         .track-num {
           font-family: var(--font-display), 'Sora', sans-serif;
