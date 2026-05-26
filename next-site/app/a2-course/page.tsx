@@ -3,9 +3,9 @@ import path from 'path';
 import Script from 'next/script';
 
 export const metadata = {
-  title: 'Frenchify with Vyom A1 Program',
+  title: 'Frenchify with Vyom A2 Program',
   description:
-    'Start Your French Journey with A1. Build your French foundation the right way — grammar, pronunciation and daily practice structured to get you exam-ready faster than you think.',
+    'Speak French with Confidence by the End of A2. Complete step-by-step system to build real grammar, pronunciation and speaking fluency from A2 all the way to TEF Canada Exam Preparation.',
 };
 
 const TAILWIND_CONFIG = `
@@ -26,8 +26,8 @@ const HIDE_FOOTER_CSS = `
   body > footer { display: none !important; }
 `;
 
-export default async function A1NewCourseV2Page() {
-  const sourcePath = path.join(process.cwd(), 'app', 'a1-new-course-v2', '_source.html');
+export default async function A2NewCourseV2Page() {
+  const sourcePath = path.join(process.cwd(), 'app', 'a2-course', '_source.html');
   const html = await fs.readFile(sourcePath, 'utf-8');
 
   const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/);
@@ -48,7 +48,7 @@ export default async function A1NewCourseV2Page() {
       <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
       <style dangerouslySetInnerHTML={{ __html: HIDE_FOOTER_CSS + styleContent }} />
       <div dangerouslySetInnerHTML={{ __html: bodyHtml }} />
-      <Script id="a1-page-js" strategy="afterInteractive">{scriptContent}</Script>
+      <Script id="a2-page-js" strategy="afterInteractive">{scriptContent}</Script>
     </>
   );
 }

@@ -27,7 +27,7 @@ const HIDE_FOOTER_CSS = `
 `;
 
 export default async function B1NewCourseV2Page() {
-  const sourcePath = path.join(process.cwd(), 'app', 'b1-new-course-v2', '_source.html');
+  const sourcePath = path.join(process.cwd(), 'app', 'b1-course', '_source.html');
   const html = await fs.readFile(sourcePath, 'utf-8');
 
   const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/);
