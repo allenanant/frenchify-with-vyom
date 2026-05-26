@@ -32,7 +32,7 @@ export default function HomeV2InstructorSpotlight() {
               <div className="absolute -inset-3 rounded-[28px] bg-gradient-to-br from-[#2563eb] via-[#3b82f6] to-[#f59e0b] opacity-70 blur-[2px]" />
               <div className="relative overflow-hidden rounded-[24px] bg-[#0A1426]">
                 <Image
-                  src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/698fda91899b8843c9757497.jpeg"
+                  src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6808e5afbcc5c4159279e282.jpeg"
                   alt="Vyom — Frenchify instructor"
                   width={680}
                   height={780}

@@ -9,71 +9,51 @@ type Tile = {
   src: string;
   alt: string;
   caption: string;
-  span?: 'wide' | 'tall' | 'square';
 };
 
-// Photos confirmed to render relevant content for the captions (France / learning / Canada).
+// 8 tiles, all uniform squares — clean 4x2 grid on desktop, 2x4 on mobile.
 const tiles: Tile[] = [
   {
-    src: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1400&auto=format&fit=crop',
-    alt: 'Eiffel Tower in Paris at sunset',
+    src: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=900&auto=format&fit=crop',
+    alt: 'Eiffel Tower in Paris',
     caption: 'Paris · the language',
-    span: 'wide',
   },
   {
     src: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=900&auto=format&fit=crop',
     alt: 'Open book with reading glasses',
     caption: 'Daily reading · A1 to B2',
-    span: 'square',
   },
   {
     src: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=900&auto=format&fit=crop',
-    alt: 'Group of students learning together',
+    alt: 'Students learning together',
     caption: 'Live mentorship · 4× a week',
-    span: 'tall',
   },
   {
     src: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=900&auto=format&fit=crop',
-    alt: 'Open notebook with pen on desk',
+    alt: 'Notebook with pen',
     caption: 'Structured notes · every level',
-    span: 'square',
   },
   {
-    src: 'https://images.unsplash.com/photo-1519178614-68673b201f36?q=80&w=1400&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1519178614-68673b201f36?q=80&w=900&auto=format&fit=crop',
     alt: 'Montréal city skyline at dusk',
     caption: 'Montréal · the destination',
-    span: 'wide',
   },
   {
     src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=900&auto=format&fit=crop',
-    alt: 'French café latte on wooden table',
+    alt: 'French café latte',
     caption: 'Café French · everyday fluency',
-    span: 'square',
   },
   {
     src: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=900&auto=format&fit=crop',
-    alt: 'Student studying on laptop at desk',
+    alt: 'Student studying on laptop',
     caption: 'Self-study · your own hours',
-    span: 'tall',
   },
   {
     src: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=900&auto=format&fit=crop',
-    alt: 'Person celebrating a milestone',
+    alt: 'Person celebrating',
     caption: 'TEF Canada · cleared',
-    span: 'square',
   },
 ];
-
-function spanClasses(span?: Tile['span']) {
-  switch (span) {
-    case 'wide':
-      return 'md:col-span-2 md:row-span-1 aspect-[16/9]';
-    case 'tall':
-      return 'md:col-span-1 md:row-span-2 aspect-[3/4] md:aspect-auto';
-    default:
-      return 'md:col-span-1 md:row-span-1 aspect-square';
-  }
-}
 
 export default function HomeV2ImageGallery() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -113,19 +93,20 @@ export default function HomeV2ImageGallery() {
           </Reveal>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 md:auto-rows-[220px] gap-3 md:gap-4">
+        {/* Uniform 4×2 grid — no row spans, no gaps. */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {tiles.map((t, i) => (
             <motion.figure
               key={t.src}
               initial={{ opacity: 0, y: 24, scale: 0.97 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-60px' }}
+              viewport={{ once: true, margin: '-40px', amount: 0.1 }}
               transition={{
                 duration: 0.6,
                 delay: i * 0.06,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className={`group relative overflow-hidden rounded-2xl bg-[#0A1426] ${spanClasses(t.span)}`}
+              className="group relative overflow-hidden rounded-2xl bg-[#0A1426] aspect-square"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -134,15 +115,15 @@ export default function HomeV2ImageGallery() {
                 loading="lazy"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.08]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent opacity-95 transition-opacity duration-500 group-hover:opacity-100" />
-              <figcaption className="absolute left-4 bottom-4 right-4 flex items-center justify-between text-white">
-                <span className="font-display text-[13.5px] md:text-[15px] font-bold tracking-tight drop-shadow">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-95 transition-opacity duration-500 group-hover:opacity-100" />
+              <figcaption className="absolute left-4 bottom-4 right-4 text-white">
+                <div className="font-display text-[13.5px] md:text-[15px] font-bold tracking-tight drop-shadow leading-tight">
                   {t.caption}
-                </span>
-                <span className="hidden md:inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white/70">
+                </div>
+                <div className="mt-1 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white/70">
                   <span className="h-1 w-1 rounded-full bg-[#f59e0b]" />
                   Frenchify
-                </span>
+                </div>
               </figcaption>
               <div className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#2667FF]">
                 <span className="h-1 w-1 rounded-full bg-[#2563eb]" />
