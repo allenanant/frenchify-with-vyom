@@ -1,0 +1,1005 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+type Chapter = {
+  index: string;
+  tag: string;
+  badge: string;
+  title: string;
+  body: string;
+  metaLeftLabel: string;
+  metaLeftValue: string;
+  metaRightLabel: string;
+  metaRightValue: string;
+  cta: string;
+  image: string;
+  imageLeft: boolean;
+  paper: boolean;
+};
+
+const CHAPTERS: Chapter[] = [
+  {
+    index: '01',
+    tag: 'Chapter 01 — Beginner',
+    badge: 'A1 · Intensive · Live',
+    title: 'Frenchify A1 Intensive Program',
+    body:
+      'New to French? This is your starting point. Build a solid foundation and kickstart your TEF Canada journey with our step-by-step A1 French Program—perfect for absolute beginners.',
+    metaLeftLabel: 'Level',
+    metaLeftValue: 'A1 — Beginner',
+    metaRightLabel: 'Format',
+    metaRightValue: 'Live + Recorded',
+    cta: 'Know More',
+    image:
+      'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1400&q=80',
+    imageLeft: true,
+    paper: false,
+  },
+  {
+    index: '02',
+    tag: 'Chapter 02 — Elementary',
+    badge: 'A2 · Intensive · Live',
+    title: 'Frenchify A2 Intensive Program',
+    body:
+      "Already mastered the basics and completed A1? Now it's time to deepen your skills, expand your French knowledge with real-life language learning inputs.",
+    metaLeftLabel: 'Level',
+    metaLeftValue: 'A2 — Elementary',
+    metaRightLabel: 'Format',
+    metaRightValue: 'Live + Recorded',
+    cta: 'Know More',
+    image:
+      'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1400&q=80',
+    imageLeft: false,
+    paper: true,
+  },
+  {
+    index: '03',
+    tag: 'Chapter 03 — Intermediate',
+    badge: 'B1 · TEF/TCF · Live',
+    title: 'Frenchify B1 TEF/TCF Program',
+    body:
+      'Strengthen advanced grammar, expand vocabulary, and elevate all four TEF/TCF modules—Reading, Listening, Speaking, and Writing—with targeted practice and structured guidance.',
+    metaLeftLabel: 'Level',
+    metaLeftValue: 'B1 — Intermediate',
+    metaRightLabel: 'Exam',
+    metaRightValue: 'TEF + TCF',
+    cta: 'Know More',
+    image:
+      'https://images.unsplash.com/photo-1431274172761-fca41d930114?auto=format&fit=crop&w=1400&q=80',
+    imageLeft: true,
+    paper: false,
+  },
+  {
+    index: '04',
+    tag: 'Chapter 04 — Upper Intermediate',
+    badge: 'B2 · TEF/TCF · The All-In',
+    title: 'Frenchify B2 TEF/TCF Program',
+    body:
+      'The "All-In" —where strategy meets fluency for exam-specific preparation: mastering formats, perfecting timing, and practicing with real exam type questions to ace your test.',
+    metaLeftLabel: 'Level',
+    metaLeftValue: 'B2 — Upper Int.',
+    metaRightLabel: 'Focus',
+    metaRightValue: 'Exam Strategy',
+    cta: 'Know More',
+    image:
+      'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1400&q=80',
+    imageLeft: false,
+    paper: true,
+  },
+  {
+    index: '05',
+    tag: 'Chapter 05 — Self-Paced',
+    badge: 'A1 · Self-Study',
+    title: 'Frenchify A1 Self-Study Program',
+    body:
+      'If you are just starting out, our Frenchify A1 Self-Study Program is built for busy learners who want structure, strategy, and serious results without live sessions, at their own pace.',
+    metaLeftLabel: 'Pace',
+    metaLeftValue: 'Your own',
+    metaRightLabel: 'Format',
+    metaRightValue: 'Pre-recorded',
+    cta: 'Enroll Now',
+    image:
+      'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1400&q=80',
+    imageLeft: true,
+    paper: true,
+  },
+  {
+    index: '06',
+    tag: 'Chapter 06 — Self-Paced',
+    badge: 'A2 · Self-Study',
+    title: 'Frenchify A2 Self-Study Program',
+    body:
+      'If you have built a strong foundation of A1 level syllabus, our Frenchify A2 Self-Study Program is a second step for our busy learners who want to continue diving deeper in the language, without live sessions, at their own pace.',
+    metaLeftLabel: 'Pace',
+    metaLeftValue: 'Your own',
+    metaRightLabel: 'Format',
+    metaRightValue: 'Pre-recorded',
+    cta: 'Enroll Now',
+    image:
+      'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1400&q=80',
+    imageLeft: false,
+    paper: false,
+  },
+];
+
+const HERO_INDEX = [
+  { num: '01', label: 'A1 Intensive' },
+  { num: '02', label: 'A2 Intensive' },
+  { num: '03', label: 'B1 TEF/TCF' },
+  { num: '04', label: 'B2 TEF/TCF' },
+  { num: '05', label: 'A1 Self-Study' },
+  { num: '06', label: 'A2 Self-Study' },
+];
+
+const ArrowIcon = () => (
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+  >
+    <path d="M5 12h14M13 5l7 7-7 7" />
+  </svg>
+);
+
+function ChapterBlock({ chapter }: { chapter: Chapter }) {
+  const media = (
+    <div className="chapter-media">
+      <img src={chapter.image} alt="" loading="lazy" />
+    </div>
+  );
+
+  const text = (
+    <div className="chapter-text relative">
+      <div className="chap-index">{chapter.index}</div>
+      <span className="side-tag">{chapter.tag}</span>
+      <div className="max-w-xl">
+        <span className="level-badge">
+          <span className="dot"></span> {chapter.badge}
+        </span>
+        <h2 className="course-title mt-6">{chapter.title}</h2>
+        <p className="course-body">{chapter.body}</p>
+        <div className="meta-row">
+          <div className="meta-cell">
+            <div className="meta-label">{chapter.metaLeftLabel}</div>
+            <div className="meta-value">{chapter.metaLeftValue}</div>
+          </div>
+          <div className="meta-cell">
+            <div className="meta-label">{chapter.metaRightLabel}</div>
+            <div className="meta-value">{chapter.metaRightValue}</div>
+          </div>
+        </div>
+        <div className="mt-2">
+          <a href="#" className="ssp-btn-primary">
+            {chapter.cta}
+            <ArrowIcon />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <section className="chapter grid md:grid-cols-2">
+      {chapter.imageLeft ? (
+        <>
+          {media}
+          {text}
+        </>
+      ) : (
+        <>
+          {text}
+          {media}
+        </>
+      )}
+    </section>
+  );
+}
+
+export default function StoryScrollPrograms() {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+
+    const root = rootRef.current;
+    if (!root) return;
+
+    const sections = Array.from(
+      root.querySelectorAll<HTMLElement>('[data-flow-section]')
+    );
+    const triggers: ScrollTrigger[] = [];
+    const tweens: gsap.core.Tween[] = [];
+
+    sections.forEach((section, i) => {
+      section.style.zIndex = String(i + 1);
+      const inner = section.querySelector<HTMLElement>('.flow-art-container');
+      if (!inner) return;
+      if (i > 0) {
+        gsap.set(inner, { rotation: 30, transformOrigin: 'bottom left' });
+        const t = gsap.to(inner, {
+          rotation: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top bottom',
+            end: 'top 25%',
+            scrub: true,
+          },
+        });
+        tweens.push(t);
+        if (t.scrollTrigger) triggers.push(t.scrollTrigger);
+      }
+      if (i < sections.length - 1) {
+        triggers.push(
+          ScrollTrigger.create({
+            trigger: section,
+            start: 'bottom bottom',
+            end: 'bottom top',
+            pin: true,
+            pinSpacing: false,
+          })
+        );
+      }
+    });
+
+    ScrollTrigger.refresh();
+
+    return () => {
+      triggers.forEach((t) => t.kill());
+      tweens.forEach((t) => t.kill());
+    };
+  }, []);
+
+  // Progress bar
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement;
+      const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+      setProgress(Math.min(100, Math.max(0, scrolled * 100)));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <div ref={rootRef} className="ssp-root">
+      {/* Scroll progress */}
+      <div className="ssp-progress">
+        <div className="ssp-progress-bar" style={{ width: `${progress}%` }} />
+      </div>
+
+      {/* HERO */}
+      <section className="ssp-hero">
+        <div className="max-w-[1170px] mx-auto w-full">
+          <div className="text-center">
+            <span className="hero-kicker">Programs 2026</span>
+          </div>
+          <h1 className="hero-headline mt-6 text-center">
+            Our <span className="gradient-text">TEF/TCF Specific</span>
+            <br />
+            <span className="gradient-text">French Programs</span>
+          </h1>
+          <p
+            className="mt-8 max-w-3xl mx-auto text-center text-lg"
+            style={{ color: '#4B5563' }}
+          >
+            Our French programs are specially designed for French learners for
+            TEF/TCF/TEFAQ examinations. Choose between intensive programs with
+            live sessions or self-paced study courses.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <a href="#track-1" className="ssp-btn-primary">
+              Intensive Programs
+            </a>
+            <a href="#track-2" className="ssp-btn-secondary">
+              Self-Study Courses
+            </a>
+          </div>
+
+          {/* chapter index strip */}
+          <div className="mt-20 grid grid-cols-2 md:grid-cols-6 gap-6 border-t border-[#F3F4F6] pt-10">
+            {HERO_INDEX.map((it) => (
+              <div key={it.num}>
+                <div className="text-xs tracking-[0.22em] uppercase text-[#6B7280] font-semibold">
+                  {it.num}
+                </div>
+                <div className="ssp-display text-[#111827] mt-2 text-sm font-semibold">
+                  {it.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="scroll-cue">
+          <span>Scroll to begin</span>
+          <span className="line"></span>
+        </div>
+      </section>
+
+      {/* TRACK 1 INTRO */}
+      <section data-flow-section className="paper-flow">
+        <div className="flow-art-container">
+          <section id="track-1" className="track-header paper">
+            <div className="track-num">01</div>
+            <div className="track-intro">
+              <span className="level-badge">
+                <span className="dot"></span> Track One — Live + Online
+              </span>
+              <h3 className="mt-6">
+                Intensive Courses (Online Course + Live Sessions)
+              </h3>
+              <p>
+                Accelerate your French learning with structured guidance, live
+                sessions, and expert mentorship.
+              </p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      {/* CHAPTER 1 */}
+      <section data-flow-section>
+        <div className="flow-art-container">
+          <ChapterBlock chapter={CHAPTERS[0]} />
+        </div>
+      </section>
+
+      {/* CHAPTER 2 */}
+      <section data-flow-section className="paper-flow">
+        <div className="flow-art-container">
+          <ChapterBlock chapter={CHAPTERS[1]} />
+        </div>
+      </section>
+
+      {/* CHAPTER 3 */}
+      <section data-flow-section>
+        <div className="flow-art-container">
+          <ChapterBlock chapter={CHAPTERS[2]} />
+        </div>
+      </section>
+
+      {/* CHAPTER 4 */}
+      <section data-flow-section className="paper-flow">
+        <div className="flow-art-container">
+          <ChapterBlock chapter={CHAPTERS[3]} />
+        </div>
+      </section>
+
+      {/* TRACK 2 INTRO */}
+      <section data-flow-section>
+        <div className="flow-art-container">
+          <section id="track-2" className="track-header">
+            <div className="track-num">02</div>
+            <div className="track-intro">
+              <span className="level-badge">
+                <span className="dot"></span> Track Two — Self-Paced
+              </span>
+              <h3 className="mt-6">
+                Self Study Programs (Self-Paced Online Programs)
+              </h3>
+              <p>
+                Learn at your own pace with our comprehensive self-study
+                programs, perfect for busy learners.
+              </p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      {/* CHAPTER 5 */}
+      <section data-flow-section className="paper-flow">
+        <div className="flow-art-container">
+          <ChapterBlock chapter={CHAPTERS[4]} />
+        </div>
+      </section>
+
+      {/* CHAPTER 6 */}
+      <section data-flow-section>
+        <div className="flow-art-container">
+          <ChapterBlock chapter={CHAPTERS[5]} />
+        </div>
+      </section>
+
+      {/* WHY CHOOSE */}
+      <section className="ssp-why">
+        <div className="max-w-[1170px] mx-auto">
+          <div className="text-center max-w-3xl mx-auto">
+            <span className="level-badge">
+              <span className="dot"></span> The Frenchify Edge
+            </span>
+            <h2 className="ssp-why-title mt-6">Why Choose Frenchify Programs?</h2>
+          </div>
+
+          <div className="mt-16 grid md:grid-cols-3 gap-6">
+            <div className="why-card">
+              <div className="why-icon">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <circle cx="12" cy="12" r="9" />
+                  <polyline points="12 7 12 12 15 14" />
+                </svg>
+              </div>
+              <h3 className="ssp-display text-[#111827] text-xl font-bold mb-3">
+                Flexible Classes
+              </h3>
+              <p className="leading-relaxed" style={{ color: '#4B5563' }}>
+                Complete lectures &amp; classes whenever you want, at your own
+                pace, giving you complete flexibility and personalization.
+              </p>
+            </div>
+
+            <div className="why-card">
+              <div className="why-icon">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <rect x="3" y="4" width="18" height="16" rx="2" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+              </div>
+              <h3 className="ssp-display text-[#111827] text-xl font-bold mb-3">
+                Intense &amp; Structured approach
+              </h3>
+              <p className="leading-relaxed" style={{ color: '#4B5563' }}>
+                Syllabus covered at an intensive pace to save valuable time on
+                Study/Work Permit. A step-by-step order of all topics to make
+                the syllabus easy to consume.
+              </p>
+            </div>
+
+            <div className="why-card">
+              <div className="why-icon">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <circle cx="12" cy="12" r="6" />
+                  <circle cx="12" cy="12" r="2" />
+                </svg>
+              </div>
+              <h3 className="ssp-display text-[#111827] text-xl font-bold mb-3">
+                Exam focused training
+              </h3>
+              <p className="leading-relaxed" style={{ color: '#4B5563' }}>
+                Complete focus on the concepts/topics which are essential for
+                the exams, right from the beginning.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="cta-band">
+        <div className="max-w-3xl mx-auto relative">
+          <h2 className="ssp-cta-title text-white">
+            Ready to Start Your French Journey?
+          </h2>
+          <p
+            className="mt-5 text-lg"
+            style={{ color: 'rgba(255,255,255,0.8)' }}
+          >
+            Join thousands of students and achieve your language goals with
+            Frenchify.
+          </p>
+          <div className="mt-10">
+            <a
+              href="#"
+              className="inline-flex items-center gap-3 text-white px-8 py-4 rounded-xl font-semibold transition"
+              style={{
+                background: '#2563EB',
+                boxShadow: '0 12px 28px -8px rgba(37,99,235,0.5)',
+              }}
+            >
+              Enroll Today
+              <ArrowIcon />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <style jsx global>{`
+        .ssp-root {
+          font-family: var(--font-inter), 'Inter', sans-serif;
+          color: #252525;
+          background: #ffffff;
+          overflow-x: hidden;
+        }
+        .ssp-display {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          letter-spacing: -0.02em;
+        }
+
+        /* Progress bar */
+        .ssp-progress {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          z-index: 70;
+          background: transparent;
+          pointer-events: none;
+        }
+        .ssp-progress-bar {
+          height: 100%;
+          width: 0%;
+          background: #2563eb;
+          transition: width 0.1s linear;
+        }
+
+        /* Story-scroll flow sections */
+        [data-flow-section] {
+          position: relative;
+          min-height: 100vh;
+          width: 100%;
+          overflow: hidden;
+        }
+        [data-flow-section] .flow-art-container {
+          transform-origin: bottom left;
+          will-change: transform;
+          min-height: 100vh;
+          width: 100%;
+          position: relative;
+          background: #ffffff;
+        }
+        [data-flow-section].paper-flow .flow-art-container {
+          background: #f9fafb;
+        }
+
+        /* Hero */
+        .ssp-hero {
+          position: relative;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 6rem 2rem 6rem;
+          background: #ffffff;
+          overflow: hidden;
+        }
+        .ssp-hero::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(900px 500px at 20% 20%, rgba(37, 99, 235, 0.16), transparent 55%),
+            radial-gradient(800px 450px at 80% 30%, rgba(245, 158, 11, 0.12), transparent 55%),
+            radial-gradient(900px 500px at 50% 100%, rgba(37, 99, 235, 0.08), transparent 60%);
+          pointer-events: none;
+          z-index: 0;
+        }
+        .ssp-hero > * {
+          position: relative;
+          z-index: 1;
+        }
+
+        .hero-headline {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 700;
+          line-height: 1;
+          letter-spacing: -0.025em;
+          font-size: clamp(2.5rem, 7vw, 5.25rem);
+          color: #111827;
+        }
+
+        .gradient-text {
+          background-image: linear-gradient(90deg, #2563eb 0%, #f59e0b 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
+        }
+
+        .hero-kicker {
+          font-family: var(--font-inter), 'Inter', sans-serif;
+          text-transform: uppercase;
+          letter-spacing: 0.28em;
+          font-size: 12px;
+          font-weight: 600;
+          color: #2563eb;
+        }
+
+        /* Scroll cue */
+        .scroll-cue {
+          position: absolute;
+          bottom: 32px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+          font-family: var(--font-inter), 'Inter', sans-serif;
+          font-size: 11px;
+          letter-spacing: 0.26em;
+          text-transform: uppercase;
+          color: #6b7280;
+          z-index: 2;
+        }
+        .scroll-cue .line {
+          width: 1px;
+          height: 56px;
+          background: #e5e7eb;
+          position: relative;
+          overflow: hidden;
+        }
+        .scroll-cue .line::after {
+          content: '';
+          position: absolute;
+          top: -56px;
+          left: 0;
+          width: 1px;
+          height: 56px;
+          background: linear-gradient(to bottom, transparent, #2563eb);
+          animation: cueDrop 2.2s ease-in-out infinite;
+        }
+        @keyframes cueDrop {
+          0% {
+            top: -56px;
+          }
+          100% {
+            top: 56px;
+          }
+        }
+
+        /* Chapter layout */
+        .chapter {
+          position: relative;
+          min-height: 100vh;
+        }
+        .chapter-media {
+          position: relative;
+          top: 0;
+          height: 100vh;
+          overflow: hidden;
+        }
+        .chapter-media img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .chapter-media::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            180deg,
+            rgba(17, 24, 39, 0.08) 0%,
+            rgba(17, 24, 39, 0) 30%,
+            rgba(17, 24, 39, 0) 70%,
+            rgba(17, 24, 39, 0.18) 100%
+          );
+          pointer-events: none;
+        }
+        .chapter-text {
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          padding: 6rem 4rem;
+        }
+        [data-flow-section].paper-flow .chapter {
+          background: #f9fafb;
+        }
+        @media (max-width: 900px) {
+          .chapter-text {
+            padding: 4rem 1.5rem;
+            min-height: auto;
+          }
+          .chapter-media {
+            position: relative;
+            height: 60vh;
+          }
+        }
+
+        /* Level badge */
+        .level-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: #eff6ff;
+          color: #2563eb;
+          border-radius: 999px;
+          padding: 6px 14px;
+          font-size: 12px;
+          letter-spacing: 0.02em;
+          font-weight: 600;
+          font-family: var(--font-inter), 'Inter', sans-serif;
+        }
+        .level-badge .dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 999px;
+          background: #2563eb;
+        }
+
+        /* Buttons */
+        .ssp-btn-primary {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          background: #2563eb;
+          color: #ffffff;
+          padding: 15px 32px;
+          border-radius: 12px;
+          font-family: var(--font-inter), 'Inter', sans-serif;
+          font-weight: 600;
+          font-size: 16px;
+          transition: transform 0.25s ease, background 0.25s ease,
+            box-shadow 0.25s ease;
+          box-shadow: 0 8px 20px -6px rgba(37, 99, 235, 0.35);
+        }
+        .ssp-btn-primary:hover {
+          background: #1d4ed8;
+          transform: translateY(-1px);
+          box-shadow: 0 12px 28px -8px rgba(37, 99, 235, 0.45);
+        }
+        .ssp-btn-secondary {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          background: transparent;
+          color: #2563eb;
+          padding: 13px 32px;
+          border-radius: 12px;
+          border: 2px solid #2563eb;
+          font-family: var(--font-inter), 'Inter', sans-serif;
+          font-weight: 600;
+          font-size: 16px;
+          transition: background 0.25s ease, color 0.25s ease;
+        }
+        .ssp-btn-secondary:hover {
+          background: #2563eb;
+          color: #ffffff;
+        }
+
+        /* Track header */
+        .track-header {
+          background: #ffffff;
+          color: #111827;
+          padding: 8rem 2rem;
+          text-align: center;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+        }
+        .track-header.paper {
+          background: #f9fafb;
+        }
+        .track-num {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 700;
+          font-size: clamp(8rem, 22vw, 22rem);
+          line-height: 0.85;
+          letter-spacing: -0.04em;
+          color: rgba(37, 99, 235, 0.05);
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          pointer-events: none;
+        }
+        .track-intro {
+          position: relative;
+          max-width: 1100px;
+          margin: 0 auto;
+          z-index: 1;
+        }
+        .track-intro h3 {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 700;
+          font-size: clamp(2rem, 4.6vw, 3.6rem);
+          line-height: 1.05;
+          letter-spacing: -0.025em;
+          color: #111827;
+          margin-bottom: 1.25rem;
+        }
+        .track-intro p {
+          color: #4b5563;
+          font-size: 18px;
+          line-height: 1.6;
+          max-width: 640px;
+          margin: 0 auto;
+        }
+
+        /* Why choose */
+        .ssp-why {
+          background: #f9fafb;
+          padding: 6rem 1.5rem;
+        }
+        @media (min-width: 1024px) {
+          .ssp-why {
+            padding: 6rem 2rem;
+          }
+        }
+        .ssp-why-title {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-size: clamp(2.1rem, 4vw, 3.25rem);
+          font-weight: 700;
+          letter-spacing: -0.025em;
+          line-height: 1.05;
+          color: #111827;
+        }
+        .why-card {
+          border: 1px solid #f3f4f6;
+          background: #ffffff;
+          padding: 2.5rem;
+          border-radius: 16px;
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06),
+            0 4px 6px -4px rgba(0, 0, 0, 0.05);
+          transition: box-shadow 0.4s ease, transform 0.4s ease;
+        }
+        .why-card:hover {
+          box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.12),
+            0 10px 15px -6px rgba(0, 0, 0, 0.08);
+          transform: translateY(-4px);
+        }
+        .why-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 12px;
+          background: #eff6ff;
+          color: #2563eb;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 1.5rem;
+        }
+
+        /* Chapter ornament + course typography */
+        .chap-index {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 700;
+          font-size: clamp(4rem, 9vw, 9rem);
+          line-height: 0.85;
+          letter-spacing: -0.04em;
+          color: rgba(37, 99, 235, 0.05);
+          position: absolute;
+          top: 6rem;
+          right: 2rem;
+          pointer-events: none;
+        }
+        .side-tag {
+          position: absolute;
+          top: 6rem;
+          left: 2rem;
+          font-size: 11px;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+          color: #6b7280;
+          font-weight: 600;
+        }
+        .course-title {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 700;
+          font-size: clamp(2.1rem, 4vw, 3.25rem);
+          line-height: 1.05;
+          letter-spacing: -0.025em;
+          color: #111827;
+          margin-bottom: 1rem;
+        }
+        .course-body {
+          font-size: 17px;
+          line-height: 1.65;
+          color: #4b5563;
+          max-width: 540px;
+        }
+
+        /* Meta row */
+        .meta-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0;
+          background: transparent;
+          border: 1px solid #f3f4f6;
+          border-radius: 16px;
+          overflow: hidden;
+          margin: 2rem 0;
+          box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.04);
+        }
+        .meta-cell {
+          background: #ffffff;
+          padding: 1.15rem 1.4rem;
+        }
+        .meta-cell + .meta-cell {
+          border-left: 1px solid #f3f4f6;
+        }
+        .meta-label {
+          font-size: 11px;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: #6b7280;
+          margin-bottom: 4px;
+          font-weight: 600;
+        }
+        .meta-value {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 600;
+          font-size: 16px;
+          color: #111827;
+        }
+
+        /* Final CTA */
+        .cta-band {
+          background: #111827;
+          color: #ffffff;
+          text-align: center;
+          padding: 6rem 1.5rem;
+          position: relative;
+          overflow: hidden;
+        }
+        .cta-band::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(900px 420px at 50% -10%, rgba(37, 99, 235, 0.25), transparent 60%),
+            radial-gradient(700px 380px at 90% 100%, rgba(245, 158, 11, 0.1), transparent 60%);
+          pointer-events: none;
+        }
+        .ssp-cta-title {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 700;
+          font-size: clamp(2.1rem, 4.5vw, 3.5rem);
+          line-height: 1.05;
+          letter-spacing: -0.025em;
+        }
+
+        @media (max-width: 768px) {
+          .chap-index {
+            display: none;
+          }
+          .side-tag {
+            display: none;
+          }
+          .chapter-text {
+            padding: 3rem 1.25rem 4rem;
+          }
+          .course-title {
+            font-size: 1.85rem;
+          }
+          .course-body {
+            font-size: 16px;
+          }
+          .ssp-hero {
+            padding: 5rem 1.25rem 5rem;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
