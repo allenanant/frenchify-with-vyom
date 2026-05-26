@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { CheckCircle2 } from 'lucide-react';
 
 type Chapter = {
   index: string;
@@ -89,40 +90,6 @@ const CHAPTERS: Chapter[] = [
     imageLeft: false,
     paper: true,
   },
-  {
-    index: '05',
-    tag: 'Chapter 05 — Self-Paced',
-    badge: 'A1 · Self-Study',
-    title: 'Frenchify A1 Self-Study Program',
-    body:
-      'If you are just starting out, our Frenchify A1 Self-Study Program is built for busy learners who want structure, strategy, and serious results without live sessions, at their own pace.',
-    metaLeftLabel: 'Pace',
-    metaLeftValue: 'Your own',
-    metaRightLabel: 'Format',
-    metaRightValue: 'Pre-recorded',
-    cta: 'Enroll Now',
-    image:
-      'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1400&q=80',
-    imageLeft: true,
-    paper: true,
-  },
-  {
-    index: '06',
-    tag: 'Chapter 06 — Self-Paced',
-    badge: 'A2 · Self-Study',
-    title: 'Frenchify A2 Self-Study Program',
-    body:
-      'If you have built a strong foundation of A1 level syllabus, our Frenchify A2 Self-Study Program is a second step for our busy learners who want to continue diving deeper in the language, without live sessions, at their own pace.',
-    metaLeftLabel: 'Pace',
-    metaLeftValue: 'Your own',
-    metaRightLabel: 'Format',
-    metaRightValue: 'Pre-recorded',
-    cta: 'Enroll Now',
-    image:
-      'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1400&q=80',
-    imageLeft: false,
-    paper: false,
-  },
 ];
 
 const HERO_INDEX = [
@@ -130,8 +97,13 @@ const HERO_INDEX = [
   { num: '02', label: 'A2 Intensive' },
   { num: '03', label: 'B1 TEF/TCF' },
   { num: '04', label: 'B2 TEF/TCF' },
-  { num: '05', label: 'A1 Self-Study' },
-  { num: '06', label: 'A2 Self-Study' },
+];
+
+const INTENSIVE_BULLETS = [
+  'Online + Live learning',
+  'Designed specifically for learners aiming to rapidly achieve French proficiency for TEF Canada',
+  'Flexible learning journey that accommodates your own schedule and speed',
+  'With frequent live sessions, expert mentorship, and a vibrant community of fellow learners',
 ];
 
 const ArrowIcon = () => (
@@ -295,20 +267,17 @@ export default function StoryScrollPrograms() {
             style={{ color: '#4B5563' }}
           >
             Our French programs are specially designed for French learners for
-            TEF/TCF/TEFAQ examinations. Choose between intensive programs with
-            live sessions or self-paced study courses.
+            TEF/TCF/TEFAQ examinations — intensive courses paired with live
+            sessions and expert mentorship.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <a href="#track-1" className="ssp-btn-primary">
-              Intensive Programs
-            </a>
-            <a href="#track-2" className="ssp-btn-secondary">
-              Self-Study Courses
+              Explore Intensive Programs
             </a>
           </div>
 
           {/* chapter index strip */}
-          <div className="mt-20 grid grid-cols-2 md:grid-cols-6 gap-6 border-t border-[#F3F4F6] pt-10">
+          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-[#F3F4F6] pt-10">
             {HERO_INDEX.map((it) => (
               <div key={it.num}>
                 <div className="text-xs tracking-[0.22em] uppercase text-[#6B7280] font-semibold">
@@ -328,7 +297,7 @@ export default function StoryScrollPrograms() {
         </div>
       </section>
 
-      {/* TRACK 1 INTRO */}
+      {/* TRACK 1 INTRO + INTENSIVE VIDEO */}
       <section data-flow-section className="paper-flow">
         <div className="flow-art-container">
           <section id="track-1" className="track-header paper">
@@ -346,6 +315,53 @@ export default function StoryScrollPrograms() {
               </p>
             </div>
           </section>
+
+          {/* intensive program video card */}
+          <div className="mt-12 max-w-[1100px] mx-auto w-full px-4">
+            <div className="bg-white rounded-2xl p-6 md:p-10 shadow-lg border border-gray-100">
+              <div className="grid lg:grid-cols-2 gap-8 items-center">
+                <div>
+                  <h3 className="font-display text-2xl md:text-3xl font-bold text-gray-900 mb-6 tracking-tight">
+                    Frenchify{' '}
+                    <span className="gradient-text">Intensive Programs</span>
+                  </h3>
+                  <ul className="space-y-4 mb-8">
+                    {INTENSIVE_BULLETS.map((b) => (
+                      <li key={b} className="flex items-start">
+                        <div className="bg-brand-blue/10 p-2 rounded-full mr-4 mt-0.5 flex-shrink-0 ring-1 ring-brand-blue/20">
+                          <CheckCircle2
+                            className="text-brand-blue w-4 h-4"
+                            strokeWidth={2.5}
+                          />
+                        </div>
+                        <span className="text-gray-700 leading-relaxed">
+                          {b}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  <a
+                    href="#chapter-01"
+                    className="ssp-btn-primary inline-block"
+                  >
+                    Learn More
+                  </a>
+                </div>
+                <div className="relative rounded-xl overflow-hidden bg-gray-100 aspect-video shadow-lg">
+                  <video
+                    controls
+                    className="absolute inset-0 w-full h-full object-cover"
+                  >
+                    <source
+                      src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6813e11ac9461a75076a2374.mp4"
+                      type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -374,41 +390,6 @@ export default function StoryScrollPrograms() {
       <section data-flow-section className="paper-flow">
         <div className="flow-art-container">
           <ChapterBlock chapter={CHAPTERS[3]} />
-        </div>
-      </section>
-
-      {/* TRACK 2 INTRO */}
-      <section data-flow-section>
-        <div className="flow-art-container">
-          <section id="track-2" className="track-header">
-            <div className="track-num">02</div>
-            <div className="track-intro">
-              <span className="level-badge">
-                <span className="dot"></span> Track Two — Self-Paced
-              </span>
-              <h3 className="mt-6">
-                Self Study Programs (Self-Paced Online Programs)
-              </h3>
-              <p>
-                Learn at your own pace with our comprehensive self-study
-                programs, perfect for busy learners.
-              </p>
-            </div>
-          </section>
-        </div>
-      </section>
-
-      {/* CHAPTER 5 */}
-      <section data-flow-section className="paper-flow">
-        <div className="flow-art-container">
-          <ChapterBlock chapter={CHAPTERS[4]} />
-        </div>
-      </section>
-
-      {/* CHAPTER 6 */}
-      <section data-flow-section>
-        <div className="flow-art-container">
-          <ChapterBlock chapter={CHAPTERS[5]} />
         </div>
       </section>
 
