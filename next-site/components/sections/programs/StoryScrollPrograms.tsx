@@ -399,84 +399,54 @@ export default function StoryScrollPrograms() {
       {/* WHY CHOOSE */}
       <section className="ssp-why">
         <div className="max-w-[1170px] mx-auto">
-          <div className="text-center max-w-3xl mx-auto">
-            <span className="level-badge">
-              <span className="dot"></span> The Frenchify Edge
-            </span>
-            <h2 className="ssp-why-title mt-6">Why Choose Frenchify Programs?</h2>
+          <div className="mb-12">
+            <p className="why-eyebrow">WHY FRENCHIFY</p>
+            <h2 className="ssp-why-title mt-3">
+              What Makes <span className="why-amber">Frenchify Different</span>
+            </h2>
           </div>
 
-          <div className="mt-16 grid md:grid-cols-3 gap-6">
-            <div className="why-card">
-              <div className="why-icon">
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <circle cx="12" cy="12" r="9" />
-                  <polyline points="12 7 12 12 15 14" />
-                </svg>
-              </div>
-              <h3 className="ssp-display text-[#111827] text-xl font-bold mb-3">
-                Flexible Classes
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="why-card-v2">
+              <h3 className="why-card-v2__title">
+                <span className="why-card-v2__emoji" aria-hidden="true">🎓</span>
+                Learn from Vyom Who Has Been There too
               </h3>
-              <p className="leading-relaxed" style={{ color: '#4B5563' }}>
-                Complete lectures &amp; classes whenever you want, at your own
-                pace, giving you complete flexibility and personalization.
+              <p className="why-card-v2__body">
+                Frenchify was founded by Vyom, who personally went through the TEF Canada journey in 2021-22 and achieved CLB 7/8+. Since then, he has helped students do same.
               </p>
             </div>
 
-            <div className="why-card">
-              <div className="why-icon">
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <rect x="3" y="4" width="18" height="16" rx="2" />
-                  <line x1="8" y1="2" x2="8" y2="6" />
-                  <line x1="16" y1="2" x2="16" y2="6" />
-                  <line x1="3" y1="10" x2="21" y2="10" />
-                </svg>
-              </div>
-              <h3 className="ssp-display text-[#111827] text-xl font-bold mb-3">
-                Intense &amp; Structured approach
+            <div className="why-card-v2">
+              <h3 className="why-card-v2__title">
+                <span className="why-card-v2__emoji" aria-hidden="true">🚀</span>
+                Complete Beginner to Exam-Ready in 9 to 10 Months
               </h3>
-              <p className="leading-relaxed" style={{ color: '#4B5563' }}>
-                Syllabus covered at an intensive pace to save valuable time on
-                Study/Work Permit. A step-by-step order of all topics to make
-                the syllabus easy to consume.
+              <p className="why-card-v2__body">
+                Frenchify&apos;s structured curriculum takes you from 0 to CLB 7+ in 9 to 10 months with consistent daily effort. CLB 5 prep takes about 4/5 months.
               </p>
             </div>
 
-            <div className="why-card">
-              <div className="why-icon">
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <circle cx="12" cy="12" r="6" />
-                  <circle cx="12" cy="12" r="2" />
-                </svg>
-              </div>
-              <h3 className="ssp-display text-[#111827] text-xl font-bold mb-3">
-                Exam focused training
+            <div className="why-card-v2 why-card-v2--highlight">
+              <h3 className="why-card-v2__title">
+                <span className="why-card-v2__emoji" aria-hidden="true">⭐</span>
+                Proven Student Results
               </h3>
-              <p className="leading-relaxed" style={{ color: '#4B5563' }}>
-                Complete focus on the concepts/topics which are essential for
-                the exams, right from the beginning.
+              <p className="why-card-v2__body">
+                Many Frenchify students have achieved CLB 5+ &amp; CLB 7+ and fulfilled their PR goals. See the real results and success stories for yourself.
+              </p>
+              <a href="/results-page" className="why-card-v2__btn">
+                View Student Results <span aria-hidden="true">→</span>
+              </a>
+            </div>
+
+            <div className="why-card-v2">
+              <h3 className="why-card-v2__title">
+                <span className="why-card-v2__emoji" aria-hidden="true">🏆</span>
+                Every Instructor is TEF Canada Certified
+              </h3>
+              <p className="why-card-v2__body">
+                Every single Frenchify instructor has cleared the TEF Canada exam themselves. You will always learn from someone who has real exam experience, not just theory.
               </p>
             </div>
           </div>
@@ -898,35 +868,83 @@ export default function StoryScrollPrograms() {
         .ssp-why-title {
           font-family: var(--font-display), 'Sora', sans-serif;
           font-size: clamp(2.1rem, 4vw, 3.25rem);
-          font-weight: 700;
+          font-weight: 800;
           letter-spacing: -0.025em;
           line-height: 1.05;
-          color: #111827;
+          color: #0c1d4e;
         }
-        .why-card {
-          border: 1px solid #f3f4f6;
+        .why-eyebrow {
+          font-family: var(--font-inter), 'Inter', sans-serif;
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          font-size: 12px;
+          font-weight: 600;
+          color: #2563eb;
+          margin: 0;
+        }
+        .why-amber {
+          color: #f59e0b;
+        }
+        .why-card-v2 {
+          border: 1px solid #e5e7eb;
           background: #ffffff;
-          padding: 2.5rem;
-          border-radius: 16px;
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06),
-            0 4px 6px -4px rgba(0, 0, 0, 0.05);
+          padding: 1.75rem 1.75rem 1.85rem;
+          border-radius: 14px;
+          display: flex;
+          flex-direction: column;
+          gap: 0.85rem;
           transition: box-shadow 0.4s ease, transform 0.4s ease;
         }
-        .why-card:hover {
-          box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.12),
-            0 10px 15px -6px rgba(0, 0, 0, 0.08);
-          transform: translateY(-4px);
+        .why-card-v2:hover {
+          box-shadow: 0 18px 30px -10px rgba(0, 0, 0, 0.08),
+            0 8px 14px -6px rgba(0, 0, 0, 0.06);
+          transform: translateY(-3px);
         }
-        .why-icon {
-          width: 48px;
-          height: 48px;
-          border-radius: 12px;
-          background: #eff6ff;
-          color: #2563eb;
+        .why-card-v2--highlight {
+          background: #fef3c7;
+          border-color: #fde68a;
+        }
+        .why-card-v2__title {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          color: #0c1d4e;
+          font-size: 1.1rem;
+          font-weight: 700;
+          line-height: 1.4;
+          letter-spacing: -0.01em;
+          margin: 0;
           display: flex;
+          align-items: flex-start;
+          gap: 0.55rem;
+        }
+        .why-card-v2__emoji {
+          font-size: 1.25rem;
+          line-height: 1.2;
+          flex-shrink: 0;
+        }
+        .why-card-v2__body {
+          color: #4b5563;
+          line-height: 1.65;
+          font-size: 0.95rem;
+          margin: 0;
+        }
+        .why-card-v2__btn {
+          display: inline-flex;
           align-items: center;
-          justify-content: center;
-          margin-bottom: 1.5rem;
+          gap: 6px;
+          background: #0c1d4e;
+          color: #ffffff;
+          padding: 10px 18px;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 0.9rem;
+          width: fit-content;
+          margin-top: 0.25rem;
+          text-decoration: none;
+          transition: background 0.25s ease, transform 0.25s ease;
+        }
+        .why-card-v2__btn:hover {
+          background: #14296b;
+          transform: translateY(-1px);
         }
 
         /* Chapter ornament + course typography */
