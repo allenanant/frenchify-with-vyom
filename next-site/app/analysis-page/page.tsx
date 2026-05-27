@@ -9,7 +9,6 @@ import {
   Mail,
   User,
   Phone,
-  MessageCircle,
   FileText,
   ExternalLink,
   Clock,
@@ -255,7 +254,7 @@ export default function AnalysisPage() {
               </div>
               <div className="bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 rounded-2xl p-6">
                 <h3 className="font-display font-bold text-gray-900 text-lg mb-2 tracking-tight">
-                  WhatsApp Your Details
+                  Email Your Details
                 </h3>
                 <p className="text-gray-600 mb-3">Send the screenshot along with your:</p>
                 <ul className="space-y-2 mb-4 text-gray-600">
@@ -271,17 +270,15 @@ export default function AnalysisPage() {
                 </ul>
                 <Magnetic>
                   <a
-                    href="https://wa.me/15147265114"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-green-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-600 transition-all shadow-md hover:shadow-lg"
+                    href="mailto:frenchifyfee@gmail.com"
+                    className="inline-flex items-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-emerald-700 transition-all shadow-md hover:shadow-lg"
                   >
-                    <MessageCircle className="w-5 h-5" />
-                    <span>Message on WhatsApp</span>
+                    <Mail className="w-5 h-5" />
+                    <span>Email Us</span>
                   </a>
                 </Magnetic>
-                <p className="text-sm text-gray-500 mt-3 flex items-center gap-1">
-                  <Phone className="w-3.5 h-3.5" /> 514-726-5114
+                <p className="text-sm text-gray-500 mt-3 flex items-center gap-1 break-all">
+                  <Mail className="w-3.5 h-3.5" /> frenchifyfee@gmail.com
                 </p>
               </div>
             </div>
@@ -357,13 +354,11 @@ export default function AnalysisPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Magnetic>
                 <a
-                  href="https://wa.me/15147265114"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="mailto:frenchifyfee@gmail.com"
                   className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all shadow-lg"
                 >
-                  <MessageCircle className="w-5 h-5" />
-                  <span>Register via WhatsApp</span>
+                  <Mail className="w-5 h-5" />
+                  <span>Register via Email</span>
                 </a>
               </Magnetic>
               <Magnetic>

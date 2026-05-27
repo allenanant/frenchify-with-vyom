@@ -4,7 +4,7 @@ import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion';
 const beforeJoining: FaqItem[] = [
   {
     q: 'How do I know if I’m ready for B2?',
-    a: 'Connect with Vyom on WhatsApp at 514-726-5114 for a quick analysis test. Based on your results, we’ll confirm if you’re ready for B2 or need to strengthen your B1 first.',
+    a: 'Connect with Vyom by email at frenchifyfee@gmail.com for a quick analysis test. Based on your results, we’ll confirm if you’re ready for B2 or need to strengthen your B1 first.',
   },
   {
     q: 'Is the analysis test paid?',
@@ -23,7 +23,7 @@ const programDetails: FaqItem[] = [
   },
   {
     q: 'How long is the B2 program?',
-    a: 'We offer two timelines — a 3-month plan and a 4-month plan — each with different pricing. Connect with Vyom at 5147265114 on Whatsapp for details and to choose the plan that best fits your schedule.',
+    a: 'We offer two timelines — a 3-month plan and a 4-month plan — each with different pricing. Connect with Vyom by email at frenchifyfee@gmail.com for details and to choose the plan that best fits your schedule.',
   },
   {
     q: 'Does Frenchify provide only speaking or listening classes individually?',
@@ -34,7 +34,7 @@ const programDetails: FaqItem[] = [
 const learningProcess: FaqItem[] = [
   {
     q: 'What if I have less time and can’t commit to 4 months?',
-    a: 'No problem — connect with Vyom at 5147265114 on Whatsapp to arrange a customized plan to suit your schedule.',
+    a: 'No problem — connect with Vyom by email at frenchifyfee@gmail.com to arrange a customized plan to suit your schedule.',
   },
   {
     q: 'Are assignments included?',
@@ -60,7 +60,7 @@ const promotions: FaqItem[] = [
   },
   {
     q: 'Is there a Combo Discount?',
-    a: 'Absolutely. We offer special combo pricing when you enroll in multiple programs together. For details, message on WhatsApp at 514-726-5114 directly.',
+    a: 'Absolutely. We offer special combo pricing when you enroll in multiple programs together. For details, email us at frenchifyfee@gmail.com.',
   },
 ];
 

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mail, MessageCircle } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -45,10 +45,6 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4 tracking-wide">Contact</h4>
             <ul className="space-y-2.5 text-sm">
-              <li className="flex items-center gap-2">
-                <MessageCircle className="w-4 h-4 text-green-400" />
-                <a href="https://wa.me/15147265114" className="hover:text-white transition-colors">514-726-5114</a>
-              </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-brand-amber" />
                 <a href="mailto:frenchifyfee@gmail.com" className="hover:text-white transition-colors break-all">frenchifyfee@gmail.com</a>

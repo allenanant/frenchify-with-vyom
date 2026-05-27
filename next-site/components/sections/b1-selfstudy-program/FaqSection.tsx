@@ -4,11 +4,11 @@ import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion';
 const beforeJoining: FaqItem[] = [
   {
     q: 'Is there a test to analyze my level?',
-    a: 'Yes! Before enrolling, you need to take a mandatory analysis test with Vyom to confirm your current level. To book your test, send a WhatsApp message to 514-726-5114. To book your test there is a 50$ deposit that you need to pay first that will be credited to your course later if you enroll.',
+    a: 'Yes! Before enrolling, you need to take a mandatory analysis test with Vyom to confirm your current level. To book your test, email us at frenchifyfee@gmail.com. To book your test there is a 50$ deposit that you need to pay first that will be credited to your course later if you enroll.',
   },
   {
     q: 'Can I buy the program directly from the website?',
-    a: 'No. This program is not available for direct purchase on the website. You must message 514-726-5114 on WhatsApp first to complete your analysis with Vyom. This ensures you are placed in the right program for your level and goals.',
+    a: 'No. This program is not available for direct purchase on the website. You must email us at frenchifyfee@gmail.com first to complete your analysis with Vyom. This ensures you are placed in the right program for your level and goals.',
   },
   {
     q: 'What if I’m not ready for B1 after the analysis?',

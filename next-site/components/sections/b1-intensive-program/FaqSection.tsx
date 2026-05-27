@@ -4,7 +4,7 @@ import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion';
 const beforeJoining: FaqItem[] = [
   {
     q: 'How do I know if I’m ready to start at B1?',
-    a: 'If you’ve completed A2 or have equivalent skills, you may be ready. Connect with Vyom on WhatsApp at 514-726-5114 to book a quick analysis test and confirm your starting level.',
+    a: 'If you’ve completed A2 or have equivalent skills, you may be ready. Connect with Vyom by email at frenchifyfee@gmail.com to book a quick analysis test and confirm your starting level.',
   },
   {
     q: 'Is the analysis test paid?',
@@ -57,7 +57,7 @@ const examReadiness: FaqItem[] = [
   },
   {
     q: 'What if I can’t commit 4 months to B1?',
-    a: 'No problem at all — connect with Vyom at 514-726-5114, and we’ll create a customized, fast-track plan to fit your timeline without compromising your results.',
+    a: 'No problem at all — connect with Vyom by email at frenchifyfee@gmail.com, and we’ll create a customized, fast-track plan to fit your timeline without compromising your results.',
   },
 ];
 
@@ -68,7 +68,7 @@ const promotions: FaqItem[] = [
   },
   {
     q: 'Is there a Combo Discount?',
-    a: 'Absolutely. We offer special combo pricing when you enroll in multiple programs together. For details, message on WhatsApp at 514-726-5114 directly.',
+    a: 'Absolutely. We offer special combo pricing when you enroll in multiple programs together. For details, email us at frenchifyfee@gmail.com.',
   },
 ];
 

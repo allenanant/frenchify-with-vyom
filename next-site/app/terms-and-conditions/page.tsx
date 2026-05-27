@@ -92,7 +92,7 @@ export default function TermsAndConditionsPage() {
 
               <h2 className="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">10. Renewal Policy</h2>
               <p className="text-gray-700 leading-relaxed mb-4">Students may renew course or live-session access upon expiry by paying a renewal fee.</p>
-              <p className="text-gray-700 leading-relaxed mb-4">Requests must be sent via email or WhatsApp before access ends or register for renewal before or on the day course access ends. Courses cannot be renewed after a long time of access expiration.</p>
+              <p className="text-gray-700 leading-relaxed mb-4">Requests must be sent via email before access ends or register for renewal before or on the day course access ends. Courses cannot be renewed after a long time of access expiration.</p>
 
               <h2 className="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">11. Enrollment &amp; Payment</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
@@ -137,11 +137,11 @@ export default function TermsAndConditionsPage() {
               <p className="text-gray-700 leading-relaxed mb-4">Copying, redistributing, or reselling content is strictly prohibited and will result in strict action or legal charges</p>
 
               <h2 className="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">18. Community &amp; Social Media Policy</h2>
-              <p className="text-gray-700 leading-relaxed mb-4">Official groups (WhatsApp, Telegram, etc.) are for academic communication only.</p>
+              <p className="text-gray-700 leading-relaxed mb-4">Official groups (Telegram, etc.) are for academic communication only.</p>
               <p className="text-gray-700 leading-relaxed mb-4">Unsolicited promotions or offensive content result in removal without refund.</p>
 
               <h2 className="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">19. Support &amp; Communication Policy</h2>
-              <p className="text-gray-700 leading-relaxed mb-4">Official communication: email or WhatsApp only.</p>
+              <p className="text-gray-700 leading-relaxed mb-4">Official communication: email only.</p>
               <p className="text-gray-700 leading-relaxed mb-4">Replies typically within 2&ndash;3 business days (Eastern Time).</p>
               <p className="text-gray-700 leading-relaxed mb-4">No/Less support on weekends or Canada holidays.</p>
 

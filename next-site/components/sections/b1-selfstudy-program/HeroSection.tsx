@@ -4,8 +4,7 @@ import Reveal from '@/components/motion/Reveal';
 import Magnetic from '@/components/motion/Magnetic';
 import FloatingOrbs from '@/components/motion/FloatingOrbs';
 
-const whatsappUrl =
-  "https://wa.me/15147265114?text=Hi%2C%20I'm%20interested%20in%20the%20B1%20Self-Study%20program%20and%20would%20like%20to%20book%20my%20analysis%20test.";
+const analysisTestUrl = '/a1-level-analysis-test';
 
 export default function HeroSection() {
   return (
@@ -30,9 +29,7 @@ export default function HeroSection() {
         <Reveal delay={0.35} duration={0.6}>
           <Magnetic>
             <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={analysisTestUrl}
               className="btn-primary"
             >
               Book my Analysis Test

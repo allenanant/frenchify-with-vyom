@@ -13,7 +13,7 @@ const groups = [
       },
       {
         q: 'How do I take the Placement & Analysis Test?',
-        a: 'Connect with Vyom at 514-726-5114 to schedule your test. The test costs $50 CAD, includes detailed feedback, and the amount will be credited towards your A2 program fee if you join.',
+        a: 'Connect with Vyom by email at frenchifyfee@gmail.com to schedule your test. The test costs $50 CAD, includes detailed feedback, and the amount will be credited towards your A2 program fee if you join.',
       },
       {
         q: 'Can I join if I’ve done A1 at another institute?',
@@ -81,7 +81,7 @@ const groups = [
       },
       {
         q: 'Is there a Combo Discount?',
-        a: 'Absolutely. We offer special combo pricing when you enroll in multiple programs together. For details, message on WhatsApp at 514-726-5114 directly.',
+        a: 'Absolutely. We offer special combo pricing when you enroll in multiple programs together. For details, email us at frenchifyfee@gmail.com.',
       },
     ],
   },

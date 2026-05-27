@@ -1,4 +1,4 @@
-import { MessageCircle, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
 import Stagger from '@/components/motion/Stagger';
 import Tilt from '@/components/motion/Tilt';
@@ -117,17 +117,15 @@ export default function A1CourseRenewalPage() {
                   <p className="text-gray-700 mb-3">
                     <strong>Send us a screenshot</strong> of the payment confirmation to begin your access
                   </p>
-                  <div className="bg-white p-4 rounded-lg border-2 border-green-200">
+                  <div className="bg-white p-4 rounded-lg border-2 border-blue-200">
                     <p className="text-gray-700 mb-2">
-                      <strong>Send via WhatsApp:</strong>
+                      <strong>Send via email:</strong>
                     </p>
                     <a
-                      href="https://wa.me/15147265114"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-green-600 font-bold text-lg hover:text-green-700 flex items-center gap-2"
+                      href="mailto:frenchifyfee@gmail.com"
+                      className="text-brand-blue font-bold text-lg underline break-all"
                     >
-                      <MessageCircle className="w-5 h-5" /> +1 (514) 726-5114
+                      frenchifyfee@gmail.com
                     </a>
                     <p className="text-gray-600 text-sm mt-2">Or send through the Frenchify Portal / App</p>
                   </div>

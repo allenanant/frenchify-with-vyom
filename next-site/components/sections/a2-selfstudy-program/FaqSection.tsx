@@ -42,7 +42,7 @@ const groups = [
       },
       {
         q: 'Is there a Combo Discount?',
-        a: 'Absolutely. We offer special combo pricing when you enroll in multiple programs together. For details, message on WhatsApp at 514-726-5114 directly.',
+        a: 'Absolutely. We offer special combo pricing when you enroll in multiple programs together. For details, email us at frenchifyfee@gmail.com.',
       },
     ],
   },
