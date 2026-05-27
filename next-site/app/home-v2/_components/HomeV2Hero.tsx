@@ -53,7 +53,7 @@ export default function HomeV2Hero() {
               </div>
             </Reveal>
 
-            <h1 className="font-display font-bold text-[#111827] tracking-[-0.04em] leading-[0.96] text-[44px] sm:text-[58px] md:text-[76px] lg:text-[88px] xl:text-[96px]">
+            <h1 className="font-display font-bold text-[#111827] tracking-[-0.04em] leading-[0.96] text-[44px] sm:text-[58px] md:text-[76px]">
               <TextReveal
                 as="span"
                 text="Becoming"
