@@ -860,6 +860,12 @@ export default function StoryScrollPrograms() {
           background: #f9fafb;
           padding: 6rem 1.5rem;
         }
+        @media (max-width: 767px) {
+          .ssp-why {
+            padding-top: 50px;
+            padding-bottom: 50px;
+          }
+        }
         @media (min-width: 1024px) {
           .ssp-why {
             padding: 6rem 2rem;
