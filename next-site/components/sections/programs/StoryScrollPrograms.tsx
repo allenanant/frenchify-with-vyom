@@ -402,7 +402,7 @@ export default function StoryScrollPrograms() {
           <div className="mb-12">
             <p className="why-eyebrow">WHY FRENCHIFY</p>
             <h2 className="ssp-why-title mt-3">
-              What Makes <span className="why-amber">Frenchify Different</span>
+              What Makes <span className="gradient-text">Frenchify Different</span>
             </h2>
           </div>
 
@@ -881,9 +881,6 @@ export default function StoryScrollPrograms() {
           font-weight: 600;
           color: #2563eb;
           margin: 0;
-        }
-        .why-amber {
-          color: #f59e0b;
         }
         .why-card-v2 {
           border: 1px solid #e5e7eb;
