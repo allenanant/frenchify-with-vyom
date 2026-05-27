@@ -1,0 +1,105 @@
+# Auth: direct GitHub OAuth (no Netlify).
+# Login works only AFTER the OAuth proxy is deployed.
+# See HANDOFF.md at the repo root for setup instructions.
+# Until proxy is set up, use local_backend mode below.
+#
+# IMPORTANT: After ownership transfer to Allen, change `repo:` to `allenanant/frenchify-with-vyom`.
+backend:
+  name: github
+  repo: allenanant/frenchify-with-vyom
+  branch: nextjs-homepage-redesign
+  base_url: https://frenchify-with-vyom.vercel.app
+  auth_endpoint: api/oauth/auth
+
+publish_mode: editorial_workflow
+
+# Local editing mode (uncomment when running `npx decap-server` locally):
+# local_backend: true
+
+media_folder: "next-site/public/announcements"
+public_folder: "/announcements"
+
+site_url: https://frenchifywithvyom.com
+display_url: https://frenchifywithvyom.com
+logo_url: https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png
+
+collections:
+
+  - name: "webinars"
+    label: "Webinars"
+    label_singular: "Webinar"
+    folder: "next-site/content/announcements/webinars"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} — {{webinarDate}}"
+    sortable_fields: ["createdAt", "webinarDate", "title"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Featured? (show as the big card at top of /announcements)", name: "featured", widget: "boolean", default: false }
+      - { label: "Webinar Date", name: "webinarDate", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { label: "Webinar Time (free text, e.g. 7:00 PM IST)", name: "webinarTime", widget: "string" }
+      - { label: "Short Description", name: "description", widget: "text", required: false }
+      - { label: "Images (optional, multiple allowed)", name: "images", widget: "list", required: false, field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Registration URL", name: "link", widget: "string", required: false }
+      - { label: "Button Text (default: Register Now)", name: "buttonText", widget: "string", required: false }
+      - { label: "Created Date (auto)", name: "createdAt", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+
+  - name: "discounts"
+    label: "Discounts & Offers"
+    label_singular: "Discount"
+    folder: "next-site/content/announcements/discounts"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} — {{discountAmount}}"
+    sortable_fields: ["createdAt", "expiryDate", "title"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Featured?", name: "featured", widget: "boolean", default: false }
+      - { label: "Discount Amount (e.g. 20% off, ₹500 off)", name: "discountAmount", widget: "string" }
+      - { label: "Coupon Code", name: "couponCode", widget: "string", required: false }
+      - { label: "Expiry Date", name: "expiryDate", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD", required: false }
+      - { label: "Short Description", name: "description", widget: "text", required: false }
+      - { label: "Images (optional)", name: "images", widget: "list", required: false, field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Link URL", name: "link", widget: "string", required: false }
+      - { label: "Button Text (default: Claim Offer)", name: "buttonText", widget: "string", required: false }
+      - { label: "Created Date (auto)", name: "createdAt", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+
+  - name: "results"
+    label: "Student Results"
+    label_singular: "Result"
+    folder: "next-site/content/announcements/results"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{studentName}} — {{achievement}}"
+    sortable_fields: ["createdAt", "studentName", "title"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Featured?", name: "featured", widget: "boolean", default: false }
+      - { label: "Student Name", name: "studentName", widget: "string" }
+      - { label: "Achievement", name: "achievement", widget: "string" }
+      - { label: "Student Quote (optional)", name: "quote", widget: "text", required: false }
+      - { label: "Photos (optional)", name: "images", widget: "list", required: false, field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Link URL (optional)", name: "link", widget: "string", required: false }
+      - { label: "Button Text (default: Read Story)", name: "buttonText", widget: "string", required: false }
+      - { label: "Created Date (auto)", name: "createdAt", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+
+  - name: "news"
+    label: "News & Updates"
+    label_singular: "News"
+    folder: "next-site/content/announcements/news"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}}"
+    sortable_fields: ["createdAt", "title"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Featured?", name: "featured", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Images (optional)", name: "images", widget: "list", required: false, field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Link URL (optional)", name: "link", widget: "string", required: false }
+      - { label: "Button Text (default: Read More)", name: "buttonText", widget: "string", required: false }
+      - { label: "Created Date (auto)", name: "createdAt", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }

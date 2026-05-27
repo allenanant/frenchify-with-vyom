@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Frenchify with Vyom B1 Program</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: { blue: '#2563eb', 'blue-deep': '#1d4ed8', amber: '#f59e0b', ink: '#252525' },
+        },
+        fontFamily: {
+          sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          display: ['Sora', 'Inter', 'ui-sans-serif', 'system-ui'],
+        },
+      }
+    }
+  }
+</script>
+<style>
+  body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; color: #252525; background: #fff; }
+  .font-display { font-family: 'Sora', 'Inter', ui-sans-serif, system-ui; }
+
+  /* Mobile-only: relax tight heading line-height so wrapped titles don't collide */
+  @media (max-width: 767px) {
+    h1, h2, h3 { line-height: 1.3em; }
+  }
+
+  .gradient-text {
+    background-clip: text; -webkit-background-clip: text; color: transparent;
+    background-image: linear-gradient(90deg, #2563eb, #f59e0b);
+  }
+
+  .hero-pattern-animated {
+    background-image: radial-gradient(rgba(37,99,235,0.12) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: heroPatternDrift 24s linear infinite;
+  }
+  @keyframes heroPatternDrift { 0% { background-position: 0 0; } 100% { background-position: 40px 40px; } }
+
+  .aurora-bg {
+    background:
+      radial-gradient(at 20% 20%, rgba(37, 99, 235, 0.18) 0px, transparent 50%),
+      radial-gradient(at 80% 30%, rgba(245, 158, 11, 0.14) 0px, transparent 50%),
+      radial-gradient(at 40% 80%, rgba(37, 99, 235, 0.12) 0px, transparent 50%);
+    background-size: 200% 200%;
+    animation: aurora 20s ease infinite;
+  }
+  @keyframes aurora { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+  .ghl-row { max-width: 1100px; }
+  .row-wide { max-width: 1200px; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    background: #2563eb; color: #fff; font-weight: 600;
+    padding: 0.95rem 2rem; border-radius: 0.75rem;
+    box-shadow: 0 10px 25px -8px rgba(37, 99, 235, 0.5);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s, background 0.3s;
+    text-decoration: none;
+  }
+  .btn-primary:hover { background: #1d4ed8; transform: translateY(-3px); box-shadow: 0 18px 35px -10px rgba(37, 99, 235, 0.6); }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* Sequential reveal — cards inside .seq-reveal fade in one after another */
+  .seq-reveal > .reveal:nth-child(1) { transition-delay: 0ms; }
+  .seq-reveal > .reveal:nth-child(2) { transition-delay: 350ms; }
+  .seq-reveal > .reveal:nth-child(3) { transition-delay: 700ms; }
+  .seq-reveal > .reveal:nth-child(4) { transition-delay: 1050ms; }
+
+  /* === FloatingOrbs (mirror of programs-v2: 3 soft orbs, framer-motion spec) === */
+  .orbs-wrap { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .orb { position: absolute; border-radius: 9999px; filter: blur(64px); will-change: transform; }
+  .orb--1 {
+    width: 420px; height: 420px; top: -10%; left: -8%;
+    background: rgba(147, 197, 253, 0.20); /* blue-300/20 */
+    animation: orbDrift 10s ease-in-out infinite;
+  }
+  .orb--2 {
+    width: 320px; height: 320px; top: 30%; right: -6%;
+    background: rgba(165, 180, 252, 0.20); /* indigo-300/20 */
+    animation: orbDrift 12s ease-in-out infinite;
+    animation-delay: -1.2s;
+  }
+  .orb--3 {
+    width: 260px; height: 260px; bottom: -10%; left: 30%;
+    background: rgba(253, 230, 138, 0.20); /* amber-200/20 */
+    animation: orbDrift 14s ease-in-out infinite;
+    animation-delay: -2.4s;
+  }
+  @keyframes orbDrift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(20px, -30px) scale(1.08); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .orb { animation: none; }
+  }
+
+  /* magnetic wrapper (mirror of programs-v2's Magnetic) */
+  .magnetic { transition: transform .35s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform; }
+
+  /* Special Offer animated counter-clockwise border */
+  .spin-border { position: relative; border-radius: 24px; padding: 4px; overflow: hidden; isolation: isolate; }
+  .spin-border::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    width: 200%; aspect-ratio: 1;
+    background: conic-gradient(from 0deg, #2563eb 0%, #f59e0b 25%, #2563eb 50%, #f59e0b 75%, #2563eb 100%);
+    transform: translate(-50%, -50%);
+    animation: spinACW 8s linear infinite;
+    z-index: -1;
+  }
+  .spin-border__inner { position: relative; border-radius: 22px; background: #fff; }
+  @keyframes spinACW { to { transform: translate(-50%, -50%) rotate(-360deg); } }
+  @media (prefers-reduced-motion: reduce) { .spin-border::before { animation: none; } }
+  /* Mobile: drop the rotating conic-gradient (it bleeds at edges on narrow viewports);
+     use a clean static linear-gradient border instead. */
+  @media (max-width: 767px) {
+    .spin-border::before {
+      animation: none;
+      background: linear-gradient(135deg, #2563eb 0%, #f59e0b 100%);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      aspect-ratio: auto;
+      transform: none;
+      border-radius: 24px;
+    }
+  }
+
+  /* Journey card icon chip (in front of each card) */
+  .journey-icon {
+    width: 48px; height: 48px; border-radius: 9999px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .journey-icon svg { width: 20px; height: 20px; }
+
+  /* Vertical timeline for "Your Full Journey" */
+  .tl { position: relative; padding: 16px 0 8px; }
+  .tl::before {
+    content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, transparent 0%, rgba(37,99,235,0.35) 8%, rgba(245,158,11,0.35) 92%, transparent 100%);
+    transform: translateX(-50%);
+  }
+  .tl__item {
+    position: relative; display: grid;
+    grid-template-columns: 1fr 64px 1fr;
+    grid-auto-flow: dense;
+    align-items: center; column-gap: 24px; padding: 18px 0;
+  }
+  .tl__node {
+    grid-column: 2; justify-self: center;
+    width: 56px; height: 56px; border-radius: 9999px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-family: 'Sora', system-ui, sans-serif;
+    font-weight: 700; font-size: 0.9rem; letter-spacing: 0.02em;
+    z-index: 2; position: relative;
+    box-shadow: 0 0 0 6px #fff, 0 12px 24px -8px rgba(37,99,235,0.35);
+  }
+  .tl__node--blue       { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+  .tl__node--amber      { background: linear-gradient(135deg, #f59e0b, #d97706); }
+  .tl__node--blue-amber { background: linear-gradient(135deg, #2563eb, #f59e0b);
+                          box-shadow: 0 0 0 6px #fff, 0 12px 24px -8px rgba(245,158,11,0.4); }
+  .tl__node--amber-blue { background: linear-gradient(135deg, #f59e0b, #2563eb);
+                          box-shadow: 0 0 0 6px #fff, 0 12px 24px -8px rgba(37,99,235,0.4); }
+  .tl__card {
+    background: #fff; border: 1px solid rgba(37, 99, 235, 0.10);
+    border-radius: 18px; padding: 20px 24px;
+    box-shadow: 0 4px 10px -6px rgba(17,24,39,0.10), 0 16px 30px -16px rgba(37,99,235,0.18);
+    transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease;
+    position: relative;
+  }
+  .tl__card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px -6px rgba(17,24,39,0.14), 0 24px 40px -16px rgba(37,99,235,0.28);
+  }
+  .tl__card::after {
+    content: ''; position: absolute; top: 50%; width: 18px; height: 2px;
+    background: linear-gradient(90deg, rgba(37,99,235,0.4), rgba(245,158,11,0.4));
+    transform: translateY(-50%);
+  }
+  .tl__item--left  .tl__card { grid-column: 1; text-align: left; }
+  .tl__item--left  .tl__card::after { right: -18px; }
+  .tl__item--right .tl__card { grid-column: 3; text-align: left; }
+  .tl__item--right .tl__card::after { left: -18px; }
+  .tl__node svg { width: 22px; height: 22px; }
+
+  .tl__step {
+    font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 700; color: #6b7280;
+  }
+  .tl__level {
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 1.85rem; font-weight: 800; line-height: 1.1;
+    letter-spacing: -0.02em; color: #2563eb; margin-top: 2px;
+  }
+  .tl__label { font-weight: 700; color: #111827; margin-top: 6px; font-size: 1.02rem; display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .tl__badge {
+    display: inline-flex; align-items: center;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #fff; padding: 3px 8px; border-radius: 9999px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    box-shadow: 0 4px 10px -4px rgba(245,158,11,0.5);
+  }
+  .tl__duration { margin-top: 4px; color: #6b7280; font-size: 0.92rem; }
+
+  @media (max-width: 767px) {
+    .tl::before { left: 28px; }
+    .tl__item { grid-template-columns: 56px 1fr; column-gap: 16px; }
+    .tl__node { grid-column: 1; }
+    .tl__item--left .tl__card, .tl__item--right .tl__card { grid-column: 2; text-align: left; }
+    .tl__item--left .tl__card::after, .tl__item--right .tl__card::after { left: -18px; right: auto; }
+  }
+
+  /* Float-up animation (organic, layered shadow + subtle tilt) */
+  @keyframes floatBob {
+    0%, 100% {
+      transform: translate3d(0,0,0) rotate(0deg);
+      box-shadow:
+        0 4px 10px -6px rgba(17, 24, 39, 0.10),
+        0 2px 4px -2px rgba(37, 99, 235, 0.06);
+    }
+    25% {
+      transform: translate3d(0,-4px,0) rotate(-0.25deg);
+      box-shadow:
+        0 14px 24px -10px rgba(17, 24, 39, 0.14),
+        0 4px 10px -3px rgba(37, 99, 235, 0.10);
+    }
+    50% {
+      transform: translate3d(0,-10px,0) rotate(0deg);
+      box-shadow:
+        0 28px 40px -14px rgba(17, 24, 39, 0.18),
+        0 8px 18px -4px rgba(37, 99, 235, 0.14);
+    }
+    75% {
+      transform: translate3d(0,-4px,0) rotate(0.25deg);
+      box-shadow:
+        0 16px 28px -12px rgba(17, 24, 39, 0.14),
+        0 4px 10px -3px rgba(37, 99, 235, 0.10);
+    }
+  }
+  .float-card {
+    will-change: transform, box-shadow;
+    animation: floatBob 5.6s cubic-bezier(.45,.05,.55,.95) infinite;
+  }
+  .float-card:nth-child(1) { animation-duration: 5.4s; animation-delay: -0.2s; }
+  .float-card:nth-child(2) { animation-duration: 6.2s; animation-delay: -1.4s; }
+  .float-card:nth-child(3) { animation-duration: 5.8s; animation-delay: -2.8s; }
+  .float-card:nth-child(4) { animation-duration: 6.6s; animation-delay: -3.6s; }
+  @media (prefers-reduced-motion: reduce) { .float-card { animation: none; } }
+
+  /* CTA links (Registration footer pair) */
+  .cta-link {
+    display: flex; align-items: center; justify-content: space-between;
+    border-radius: 1rem; padding: 1.25rem;
+    text-decoration: none;
+    transition: transform .35s cubic-bezier(.2,.7,.2,1),
+                box-shadow .35s ease, background-color .25s ease, border-color .25s ease;
+  }
+  .cta-link__arrow { transition: transform .35s cubic-bezier(.2,.7,.2,1); display: inline-block; }
+  .cta-link:hover .cta-link__arrow { transform: translateX(6px); }
+  .cta-link--light { background: #fff; color: #252525; }
+  .cta-link--light:hover {
+    background: #dbeafe;
+    transform: translateY(-3px);
+    box-shadow: 0 22px 44px -18px rgba(37, 99, 235, 0.40);
+  }
+  .cta-link--glass {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #fff;
+  }
+  .cta-link--glass:hover {
+    background: rgba(37, 99, 235, 0.22);
+    border-color: rgba(37, 99, 235, 0.55);
+    transform: translateY(-3px);
+    box-shadow: 0 22px 44px -18px rgba(37, 99, 235, 0.40);
+  }
+
+  /* Hero stat pills (gradient-ring + icon avatar) */
+  .stat-pill {
+    position: relative; display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 18px 8px 8px; border-radius: 9999px; background: #fff;
+    isolation: isolate;
+    transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease;
+    box-shadow: 0 10px 30px -14px rgba(30, 58, 138, 0.18);
+    font-size: 14px; line-height: 1.25; text-decoration: none; color: inherit;
+  }
+  .stat-pill::before {
+    content: ''; position: absolute; inset: 0; padding: 1.5px; border-radius: 9999px;
+    background: linear-gradient(90deg, #2563eb 0%, #f59e0b 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none; z-index: -1;
+  }
+  .stat-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px -16px rgba(37, 99, 235, 0.28);
+  }
+  .stat-pill__icon {
+    width: 32px; height: 32px; border-radius: 9999px;
+    display: flex; align-items: center; justify-content: center; color: #fff;
+    background: linear-gradient(135deg, #2563eb, #f59e0b);
+    box-shadow: 0 6px 14px -6px rgba(37, 99, 235, 0.45);
+    flex-shrink: 0;
+  }
+  .stat-pill__icon svg { width: 16px; height: 16px; }
+  .stat-pill--amber .stat-pill__icon {
+    background: linear-gradient(135deg, #f59e0b, #2563eb);
+    box-shadow: 0 6px 14px -6px rgba(245, 158, 11, 0.45);
+  }
+  .stat-pill__strong { color: #111827; font-weight: 700; }
+  .stat-pill__rest   { color: #6b7280; font-weight: 500; }
+  @media (max-width: 640px) { .stat-pill { font-size: 12px; } }
+
+  /* === Cambly-style editorial card (mirror of programs-v2.css) === */
+  .ed-card {
+    display: flex; flex-direction: column; border-radius: 18px; overflow: hidden;
+    background: var(--card-bg, #dbeafe);
+    transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s ease;
+    position: relative; text-decoration: none; color: inherit;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04); height: 100%;
+  }
+  .ed-card:hover { transform: translateY(-6px); box-shadow: 0 30px 40px -20px rgba(37, 99, 235, 0.22); }
+  .ed-card__media {
+    position: relative; background: var(--card-media-bg, #f8f5ef);
+    aspect-ratio: 4 / 3; overflow: hidden;
+  }
+  .ed-card__circle {
+    position: absolute; width: 58%; aspect-ratio: 1; border-radius: 9999px;
+    background: var(--card-accent, #f59e0b);
+    top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0;
+    transition: transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .ed-card:hover .ed-card__circle { transform: translate(-50%, -50%) scale(1.07); }
+  .ed-card__img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;
+    transition: transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .ed-card:hover .ed-card__img { transform: scale(1.04); }
+  .ed-card__level {
+    position: absolute; top: 16px; left: 16px; z-index: 2;
+    background: rgba(255,255,255,0.92); backdrop-filter: blur(6px);
+    color: #1d4ed8; font-weight: 600; font-size: 12px; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 6px 12px; border-radius: 999px;
+    box-shadow: 0 1px 0 rgba(37, 99, 235, 0.08);
+  }
+  .ed-card__body {
+    padding: 28px 40px 32px; display: flex; flex-direction: column;
+    justify-content: center; flex: 1; position: relative; overflow: hidden;
+  }
+  .ed-card__title {
+    font-family: 'Sora', system-ui, sans-serif; font-weight: 700;
+    font-size: clamp(1.5rem, 2.2vw, 1.85rem); line-height: 1.2;
+    letter-spacing: -0.015em; color: #111827; margin: 0 0 14px;
+  }
+  .ed-card__desc { font-size: 0.98rem; line-height: 1.55; color: #374151; margin: 0; }
+  .ed-card__price {
+    font-family: 'Sora', system-ui, sans-serif; font-weight: 800; font-size: 2.25rem;
+    color: #111827; margin: 14px 0 6px; letter-spacing: -0.02em;
+  }
+  .ed-card__bullets { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .ed-card__bullets li { font-size: 0.92rem; color: #1f2937; display: flex; align-items: flex-start; gap: 8px; }
+  .ed-card__bullets li::before { content: '✓'; color: #2563eb; font-weight: 700; line-height: 1.5; }
+
+  .ed-card__overlay {
+    position: absolute; inset: 0; background: var(--card-bg, #dbeafe);
+    opacity: 0; visibility: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 22px; padding: 32px; text-align: center;
+    transition: opacity .35s ease, visibility .35s ease; z-index: 5;
+  }
+  .ed-card__overlay::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(120% 90% at 50% 50%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 65%);
+    pointer-events: none;
+  }
+  .ed-card:hover .ed-card__overlay, .ed-card:focus-visible .ed-card__overlay { opacity: 1; visibility: visible; }
+  .ed-card__overlay-title {
+    font-family: 'Sora', system-ui, sans-serif; font-weight: 700;
+    font-size: clamp(1.6rem, 2.4vw, 2rem); line-height: 1.2;
+    letter-spacing: -0.015em; color: #111827; margin: 0; position: relative;
+    transform: translateY(8px); opacity: 0;
+    transition: transform .45s cubic-bezier(.2,.7,.2,1) .05s, opacity .45s ease .05s;
+  }
+  .ed-card__overlay-btn {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb 0%, #f59e0b 100%);
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; position: relative;
+    transform: translateY(12px) scale(0.85); opacity: 0;
+    transition: transform .5s cubic-bezier(.2,.7,.2,1) .12s, opacity .45s ease .12s, filter .25s ease, box-shadow .25s ease;
+    box-shadow: 0 14px 28px -10px rgba(37, 99, 235, 0.45), 0 8px 18px -10px rgba(245, 158, 11, 0.4);
+  }
+  .ed-card:hover .ed-card__overlay-title { transform: translateY(0); opacity: 1; }
+  .ed-card:hover .ed-card__overlay-btn   { transform: translateY(0) scale(1); opacity: 1; }
+  .ed-card .ed-card__overlay-btn:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 18px 32px -8px rgba(37, 99, 235, 0.55), 0 10px 22px -8px rgba(245, 158, 11, 0.5);
+  }
+
+  /* themed pastels */
+  .theme-sky    { --card-bg: #dbeafe; --card-media-bg: #f8f5ef; --card-accent: #f59e0b; }
+  .theme-pink   { --card-bg: #fef3c7; --card-media-bg: #f3f6fc; --card-accent: #2563eb; }
+  .theme-mint   { --card-bg: #bfdbfe; --card-media-bg: #fdf6e7; --card-accent: #f59e0b; }
+  .theme-cream  { --card-bg: #fde68a; --card-media-bg: #eef4fd; --card-accent: #1d4ed8; }
+  .theme-lilac  { --card-bg: #e0e7ff; --card-media-bg: #fdf3e0; --card-accent: #f59e0b; }
+  .theme-peach  { --card-bg: #fed7aa; --card-media-bg: #eef4fd; --card-accent: #2563eb; }
+
+  @media (min-width: 768px) {
+    .ed-card { flex-direction: row; min-height: 380px; }
+    .ed-card:nth-child(even) { flex-direction: row-reverse; }
+    .ed-card__media { flex: 0 0 42%; aspect-ratio: auto; }
+    .ed-card__body { flex: 1; }
+  }
+  @media (max-width: 640px) {
+    .ed-card__body { padding: 22px 22px 26px; }
+    .ed-card__title { font-size: 1.4rem; }
+  }
+
+  /* mini themed card (Why / Outcomes) */
+  .ed-mini {
+    border-radius: 18px; padding: 28px 26px;
+    background: var(--card-bg, #dbeafe);
+    border: 1px solid rgba(17,24,39,0.04);
+    transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s ease;
+    position: relative; overflow: hidden; height: 100%;
+  }
+  .ed-mini:hover { transform: translateY(-6px); box-shadow: 0 30px 40px -20px rgba(37, 99, 235, 0.22); }
+  .ed-mini__icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: rgba(255,255,255,0.7);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--card-accent, #2563eb); margin-bottom: 14px;
+    transition: transform .45s cubic-bezier(.2,.7,.2,1);
+  }
+  .ed-mini__icon svg { width: 24px; height: 24px; }
+  .ed-mini:hover .ed-mini__icon { transform: scale(1.08); }
+  .ed-mini__title {
+    font-family: 'Sora', system-ui, sans-serif; font-weight: 700;
+    font-size: 1.15rem; line-height: 1.3; color: #111827;
+    margin: 0 0 6px; letter-spacing: -0.01em;
+  }
+  .ed-mini__copy { font-size: 0.95rem; color: #374151; margin: 0; line-height: 1.5; }
+
+  /* day chip */
+  .ed-day {
+    border-radius: 18px; padding: 22px 18px;
+    background: var(--card-bg, #ffffff);
+    border: 1px solid rgba(17,24,39,0.06);
+    transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s ease;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .ed-day:hover { transform: translateY(-4px); box-shadow: 0 22px 36px -18px rgba(37, 99, 235, 0.22); }
+</style>
+</head>
+<body class="bg-white">
+
+  <!-- HERO -->
+  <section class="hero-pattern-animated py-[50px] md:py-20 relative overflow-hidden aurora-bg">
+    <div class="orbs-wrap" aria-hidden="true">
+      <div class="orb orb--1"></div>
+      <div class="orb orb--2"></div>
+      <div class="orb orb--3"></div>
+    </div>
+    <div class="ghl-row mx-auto px-6 relative z-10 text-center">
+      <div class="reveal">
+        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-brand-blue text-sm font-medium"
+              style="background:linear-gradient(135deg, rgba(37,99,235,0.08), rgba(245,158,11,0.06)); border:1px solid rgba(37,99,235,0.1);">
+          ✨ Frenchify with Vyom B1 Program
+        </span>
+      </div>
+      <h1 class="reveal font-display text-4xl md:text-[42px] lg:text-6xl font-bold text-brand-ink mt-6 tracking-tight leading-tight">
+        Your Foundation for <span class="gradient-text">TEF/TCF Canada</span>
+      </h1>
+      <p class="reveal text-lg md:text-xl text-gray-600 mt-6 max-w-2xl mx-auto leading-relaxed">
+        This program is strategically designed to help you build a strong foundation in advanced French concepts and begin focused TEF/TCF Canada preparation — all while keeping the learning flexible, structured, and mentorship-based.
+      </p>
+
+      <div class="reveal mt-8 flex flex-wrap items-center justify-center gap-3">
+        <span class="stat-pill">
+          <span class="stat-pill__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+          </span>
+          <span>
+            <span class="stat-pill__strong">3 to 4 Months</span>
+            <span class="stat-pill__rest">to complete B1 Intensive</span>
+          </span>
+        </span>
+        <span class="stat-pill stat-pill--amber">
+          <span class="stat-pill__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+          </span>
+          <span>
+            <span class="stat-pill__strong">2 to 3 Hours</span>
+            <span class="stat-pill__rest">daily study commitment</span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section class="py-[50px] md:py-20">
+    <div class="ghl-row mx-auto px-6">
+      <div class="text-center mb-12 reveal">
+        <h2 class="font-display text-3xl md:text-4xl lg:text-[50px] font-bold text-brand-ink tracking-tight">
+          Your Full <span class="gradient-text">Journey</span>
+        </h2>
+      </div>
+      <div class="tl max-w-3xl mx-auto">
+        <div class="reveal tl__item tl__item--left">
+          <div class="tl__node tl__node--blue">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          </div>
+          <div class="tl__card">
+            <div class="tl__step">Step 1</div>
+            <div class="tl__level">A1</div>
+            <div class="tl__label">Foundations</div>
+            <div class="tl__duration">5 weeks</div>
+          </div>
+        </div>
+        <div class="reveal tl__item tl__item--right">
+          <div class="tl__node tl__node--amber">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          </div>
+          <div class="tl__card">
+            <div class="tl__step">Step 2</div>
+            <div class="tl__level">A2</div>
+            <div class="tl__label">Grammar and Speaking</div>
+            <div class="tl__duration">1.5 to 2 months</div>
+          </div>
+        </div>
+        <div class="reveal tl__item tl__item--left">
+          <div class="tl__node tl__node--blue-amber">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+          </div>
+          <div class="tl__card">
+            <div class="tl__step">Step 3</div>
+            <div class="tl__level">B1</div>
+            <div class="tl__label">You Are Here <span class="tl__badge">Start</span></div>
+            <div class="tl__duration">3 to 4 months · 2 to 3 hrs/day</div>
+          </div>
+        </div>
+        <div class="reveal tl__item tl__item--right">
+          <div class="tl__node tl__node--amber-blue">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <div class="tl__card">
+            <div class="tl__step">Step 4</div>
+            <div class="tl__level">B2 <span>🎯</span></div>
+            <div class="tl__label">Final TEF Exam Prep</div>
+            <div class="tl__duration">3 months</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal mt-6 rounded-2xl border border-dashed p-5 flex items-center justify-center gap-3 text-brand-ink"
+           style="border-color:rgba(245,158,11,0.4);background:rgba(255,247,237,0.5);">
+        🎉 <span class="font-semibold">Goal: PR Goal Achieved</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY FRENCHIFY -->
+  <section class="py-[50px] md:py-20 bg-gray-50">
+    <div class="ghl-row mx-auto px-6">
+      <div class="text-center mb-12 reveal">
+        <h2 class="font-display text-3xl md:text-4xl lg:text-[50px] font-bold text-brand-ink tracking-tight">
+          Why <span class="gradient-text">Frenchify</span>
+        </h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="reveal ed-mini theme-sky">
+          <div class="ed-mini__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>
+          </div>
+          <h3 class="ed-mini__title">Learn from Vyom Who Has Been There too</h3>
+          <p class="ed-mini__copy">Frenchify was founded by Vyom, who personally went through the TEF Canada journey in 2021-22 and achieved CLB 7/8+. Since then, he has helped students do same.</p>
+        </div>
+        <div class="reveal ed-mini theme-cream">
+          <div class="ed-mini__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+          </div>
+          <h3 class="ed-mini__title">Complete Beginner to Exam-Ready in 9 to 10 Months</h3>
+          <p class="ed-mini__copy">Frenchify's structured curriculum takes you from 0 to CLB 7+ in 9 to 10 months with consistent daily effort. CLB 5 prep takes about 4/5 months.</p>
+        </div>
+        <div class="reveal ed-mini theme-mint">
+          <div class="ed-mini__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3 class="ed-mini__title">Proven Student Results</h3>
+          <p class="ed-mini__copy">Many Frenchify students have achieved CLB 5+ &amp; CLB 7+ and fulfilled their PR goals. See the real results and success stories for yourself.</p>
+          <a href="https://frenchifywithvyom.com/results-page" target="_blank" rel="noopener noreferrer" class="magnetic inline-flex items-center gap-1 text-brand-blue font-semibold text-sm mt-3 hover:underline underline-offset-4">View Student Results →</a>
+        </div>
+        <div class="reveal ed-mini theme-lilac">
+          <div class="ed-mini__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <h3 class="ed-mini__title">Every Instructor is TEF Canada Certified</h3>
+          <p class="ed-mini__copy">Every single Frenchify instructor has cleared the TEF Canada exam themselves. You will always learn from someone who has real exam experience, not just theory.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S INCLUDED -->
+  <section class="py-[50px] md:py-20">
+    <div class="ghl-row mx-auto px-6">
+      <div class="text-center mb-12 reveal">
+        <h2 class="font-display text-3xl md:text-4xl lg:text-[50px] font-bold text-brand-ink tracking-tight">
+          What's <span class="gradient-text">Included</span>
+        </h2>
+        <p class="mt-3 text-lg text-gray-600">B1 Program — Advanced Curriculum + TEF/TCF Preparation</p>
+        <p class="mt-2 text-base text-gray-500 max-w-2xl mx-auto">A complete advanced program covering B1 and B2 grammar, structured RSWL training, and exam-specific strategies for TEF/TCF Canada.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="reveal ed-day flex items-start gap-4" style="text-align:left;background:#fff;border-color:rgba(37,99,235,0.18);">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center text-xl flex-shrink-0" style="background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(245,158,11,0.06));color:#2563eb;">📘</div>
+          <div>
+            <div class="text-brand-ink font-semibold">Complete B1/B2 Grammar &amp; Vocabulary</div>
+            <div class="text-sm text-gray-600 mt-1">Access the full B1 and B2 grammar syllabus with structured vocabulary modules and exam-aligned exercises</div>
+          </div>
+        </div>
+        <div class="reveal ed-day flex items-start gap-4" style="text-align:left;background:#fff;border-color:rgba(37,99,235,0.18);">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center text-xl flex-shrink-0" style="background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(245,158,11,0.06));color:#2563eb;">✍️</div>
+          <div>
+            <div class="text-brand-ink font-semibold">Structured RSWL Training</div>
+            <div class="text-sm text-gray-600 mt-1">Reading, Speaking, Writing and Listening modules built around real TEF/TCF exam formats</div>
+          </div>
+        </div>
+        <div class="reveal ed-day flex items-start gap-4" style="text-align:left;background:#fff;border-color:rgba(37,99,235,0.18);">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center text-xl flex-shrink-0" style="background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(245,158,11,0.06));color:#2563eb;">🎤</div>
+          <div>
+            <div class="text-brand-ink font-semibold">Weekly Live Speaking Sessions</div>
+            <div class="text-sm text-gray-600 mt-1">Instructor-led mock group sessions to ask questions, clarify B1/B2 grammar, and practice for the TEF exam</div>
+          </div>
+        </div>
+        <div class="reveal ed-day flex items-start gap-4" style="text-align:left;background:#fff;border-color:rgba(37,99,235,0.18);">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center text-xl flex-shrink-0" style="background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(245,158,11,0.06));color:#2563eb;">📝</div>
+          <div>
+            <div class="text-brand-ink font-semibold">Personalized Writing Feedback</div>
+            <div class="text-sm text-gray-600 mt-1">Exam-focused corrections and improvement tips on your writing — up to 10 submissions over your 4-month access</div>
+          </div>
+        </div>
+        <div class="reveal ed-day flex items-start gap-4" style="text-align:left;background:#fff;border-color:rgba(37,99,235,0.18);">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center text-xl flex-shrink-0" style="background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(245,158,11,0.06));color:#2563eb;">🎯</div>
+          <div>
+            <div class="text-brand-ink font-semibold">TEF/TCF Mock Exam Practices</div>
+            <div class="text-sm text-gray-600 mt-1">Specific strategies to improve speed, accuracy, and confidence in each module of the exam</div>
+          </div>
+        </div>
+        <div class="reveal ed-day flex items-start gap-4" style="text-align:left;background:#fff;border-color:rgba(37,99,235,0.18);">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center text-xl flex-shrink-0" style="background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(245,158,11,0.06));color:#2563eb;">📚</div>
+          <div>
+            <div class="text-brand-ink font-semibold">Listening &amp; Reading Resources</div>
+            <div class="text-sm text-gray-600 mt-1">Extensive real TEF preparation resources and brochures to filter information and spot keywords confidently</div>
+          </div>
+        </div>
+        <div class="reveal ed-day flex items-start gap-4 sm:col-span-2" style="text-align:left;background:#fff;border-color:rgba(37,99,235,0.18);">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center text-xl flex-shrink-0" style="background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(245,158,11,0.06));color:#2563eb;">👥</div>
+          <div>
+            <div class="text-brand-ink font-semibold">Live Sessions Led by TEF/TCF Achievers</div>
+            <div class="text-sm text-gray-600 mt-1">Every instructor has cleared the exam themselves, sharing proven techniques and real exam insights — not just theory.</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal mt-6 rounded-2xl p-5 flex items-start gap-4"
+           style="background:rgba(255,247,237,0.6);border:1px solid rgba(245,158,11,0.3);">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(245,158,11,0.15);color:#f59e0b;">🔁</div>
+        <div>
+          <div class="font-semibold text-brand-ink">4-Month Full Access</div>
+          <div class="text-sm text-gray-600 mt-1">You get 4 months of full access to the online course and all live sessions, with an option to renew anytime if you need extra time or additional practice.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDENT PROGRESS -->
+  <section class="py-[50px] md:py-20 bg-gray-50">
+    <div class="ghl-row mx-auto px-6">
+      <div class="text-center mb-12 reveal">
+        <h2 class="font-display text-3xl md:text-4xl lg:text-[50px] font-bold text-brand-ink tracking-tight">
+          What Most Students <span class="gradient-text">Achieve at B1</span>
+        </h2>
+        <p class="mt-3 text-base text-gray-500 max-w-2xl mx-auto">By the end of B1, students are consistently meeting or exceeding exam-level benchmarks in mock tests, with trainer feedback confirming their readiness. Here is what you can expect.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 seq-reveal">
+        <div class="reveal ed-mini float-card theme-sky text-center">
+          <div class="ed-mini__icon mx-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+          </div>
+          <h3 class="ed-mini__title">Advanced Grammar Mastery</h3>
+          <p class="ed-mini__copy">Build a deep understanding of B1 and B2 level grammar with clear explanations and confident, accurate expression</p>
+        </div>
+        <div class="reveal ed-mini float-card theme-pink text-center">
+          <div class="ed-mini__icon mx-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+          </div>
+          <h3 class="ed-mini__title">Real Exam Confidence</h3>
+          <p class="ed-mini__copy">Practice in an exam-like environment with structured mock sessions and personalized feedback on speaking and writing</p>
+        </div>
+        <div class="reveal ed-mini float-card theme-mint text-center">
+          <div class="ed-mini__icon mx-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+          <h3 class="ed-mini__title">Ready for TEF / B2</h3>
+          <p class="ed-mini__copy">Step into B2 final exam prep already meeting CLB 5 benchmarks, with a clear path toward CLB 7+ and PR points</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSE OPTIONS — ed-card editorial pattern -->
+  <section id="course-options" class="py-[50px] md:py-20">
+    <div class="row-wide mx-auto px-6">
+      <div class="text-center mb-12 reveal">
+        <div class="text-sm font-semibold text-brand-amber uppercase tracking-widest">Choose Your Program</div>
+        <h2 class="font-display text-3xl md:text-4xl lg:text-[50px] font-bold text-brand-ink tracking-tight mt-2">
+          Two Ways to <span class="gradient-text">Join B1</span>
+        </h2>
+        <p class="mt-3 text-base text-gray-500 max-w-2xl mx-auto">Both programs follow the same B1/B2 curriculum and exam-aligned study material. The only difference is live group session access.</p>
+      </div>
+
+      <div class="reveal grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto mb-10">
+        <div class="ed-day flex items-start gap-4" style="text-align:left;background:#fff;border-color:rgba(37,99,235,0.18);">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center text-xl flex-shrink-0" style="background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(245,158,11,0.06));color:#2563eb;">📅</div>
+          <div>
+            <div class="text-brand-ink font-semibold">Course Duration</div>
+            <div class="text-sm text-gray-600 mt-1">4 months access. Extra access is given in case you need to revise or take a break in between.</div>
+          </div>
+        </div>
+        <div class="ed-day flex items-start gap-4" style="text-align:left;background:#fff;border-color:rgba(37,99,235,0.18);">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center text-xl flex-shrink-0" style="background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(245,158,11,0.06));color:#f59e0b;">🎯</div>
+          <div>
+            <div class="text-brand-ink font-semibold">Focus Weekly Study Plan</div>
+            <div class="text-sm text-gray-600 mt-1">Complete B1 in 3 to 4 months if you study 2 to 3 hours daily.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
+        <a href="#register" class="reveal ed-card theme-sky">
+          <div class="ed-card__media">
+            <span class="ed-card__circle"></span>
+            <span class="ed-card__level">⭐ Highly Suggested</span>
+            <img src="/images/programs-v2/b1-tef-tcf.png" alt="B1 Intensive" class="ed-card__img" />
+          </div>
+          <div class="ed-card__body">
+            <h3 class="ed-card__title">B1 Intensive</h3>
+            <p class="ed-card__desc">Online B1/B2 Curriculum + 4 Live Speaking Sessions per week + up to 10 personalized writing checks</p>
+            <div class="ed-card__price">$799</div>
+            <ul class="ed-card__bullets">
+              <li>Complete B1/B2 Grammar &amp; Vocabulary</li>
+              <li>4 Live Speaking Mock Sessions per week (1.5+ hours each)</li>
+              <li>Up to 10 personalized writing checks</li>
+              <li>TEF/TCF mock exam practices and strategies</li>
+              <li>Session recordings available if you miss one</li>
+            </ul>
+            <div class="ed-card__overlay">
+              <h4 class="ed-card__overlay-title">Register</h4>
+              <span class="ed-card__overlay-btn">→</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#register" class="reveal ed-card theme-cream">
+          <div class="ed-card__media">
+            <span class="ed-card__circle"></span>
+            <span class="ed-card__level">B1 · Self-Paced</span>
+            <img src="/images/programs-v2/b1-tef-tcf.png" alt="B1 Self-Paced" class="ed-card__img" />
+          </div>
+          <div class="ed-card__body">
+            <h3 class="ed-card__title">B1 Self-Paced</h3>
+            <p class="ed-card__desc">Complete Online B1/B2 Program with 3 one-on-one speaking sessions and 5 writing feedbacks included</p>
+            <div class="ed-card__price">$599</div>
+            <ul class="ed-card__bullets">
+              <li>Complete B1/B2 Curriculum (Grammar, Vocabulary, RSWL)</li>
+              <li>3 One-on-One Speaking Sessions (25 minutes each) included</li>
+              <li>5 Personalized Writing Feedbacks for Section A practice</li>
+              <li>Additional 25-min speaking sessions available at $15.99 each</li>
+              <li>⬆️ Can upgrade to Intensive anytime by paying the balance fee of $200</li>
+            </ul>
+            <div class="ed-card__overlay">
+              <h4 class="ed-card__overlay-title">Register</h4>
+              <span class="ed-card__overlay-btn">→</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMBO -->
+  <section class="py-[50px] md:py-20 bg-gray-50">
+    <div class="ghl-row mx-auto px-6">
+      <div class="reveal spin-border" style="box-shadow:0 20px 60px -20px rgba(245,158,11,0.28);">
+        <div class="spin-border__inner p-8 md:p-12">
+            <div class="grid md:grid-cols-3 gap-8 items-center">
+              <div class="md:col-span-2">
+                <div class="inline-flex items-center gap-2 text-brand-amber font-semibold text-sm uppercase tracking-widest">
+                  🎁 Special Offer
+                </div>
+                <h2 class="font-display text-3xl md:text-4xl lg:text-[50px] font-bold text-brand-ink mt-3 tracking-tight">
+                  B1 + B2 <span class="gradient-text">Combo Option</span>
+                </h2>
+                <p class="mt-3 text-gray-600 text-lg">Get a flat $100 discount when you register for both B1 and B2 together. Continue smoothly from B1 to B2 without interruption.</p>
+                <p class="mt-3 text-sm text-gray-700 font-semibold">🎁 B1 + B2 Combo — Save $100</p>
+                <p class="mt-1 text-sm text-gray-600">Register for both B1 and B2 together and get a flat $100 off. This helps you continue your exam preparation smoothly without needing to re-register when you move to B2.</p>
+                <p class="mt-3 text-sm text-gray-500">
+                  📌 B1 access is for 4 months. Your B2 4 months access begins right after you complete B1, or when your B1 4 months access ends, whichever comes first.
+                </p>
+              </div>
+              <div class="space-y-4">
+                <div class="ed-day" style="background:#f9fafb;text-align:left;">
+                  <div class="text-xs uppercase tracking-widest text-gray-500">Self-Paced Combo</div>
+                  <div class="mt-1 flex items-baseline gap-2">
+                    <span class="font-display text-3xl font-bold text-brand-ink">$1,098</span>
+                    <span class="text-sm text-gray-400 line-through">$1,198</span>
+                  </div>
+                </div>
+                <div class="ed-day" style="background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(245,158,11,0.06));border-color:rgba(37,99,235,0.2);text-align:left;">
+                  <div class="text-xs uppercase tracking-widest text-brand-blue">Intensive Combo</div>
+                  <div class="mt-1 flex items-baseline gap-2">
+                    <span class="font-display text-3xl font-bold text-brand-ink">$1,498</span>
+                    <span class="text-sm text-gray-400 line-through">$1,598</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE SCHEDULE -->
+  <section class="py-[50px] md:py-20">
+    <div class="ghl-row mx-auto px-6">
+      <div class="text-center mb-12 reveal">
+        <h2 class="font-display text-3xl md:text-4xl lg:text-[50px] font-bold text-brand-ink tracking-tight">
+          Live Session <span class="gradient-text">Schedule</span>
+        </h2>
+        <p class="mt-3 text-lg text-gray-700 font-semibold">B1 Intensive — Speaking Mock Group Sessions</p>
+        <p class="mt-2 text-base text-gray-500 max-w-2xl mx-auto">4 live sessions per week (1.5+ hours each). Recordings available if you miss a session.</p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="reveal ed-day float-card theme-sky">
+          <div class="text-brand-blue text-2xl">📅</div>
+          <div class="font-display text-lg font-bold text-brand-ink mt-3">Tuesday</div>
+          <div class="text-sm text-gray-700 mt-1">⏱ 8:00 PM EST</div>
+        </div>
+        <div class="reveal ed-day float-card theme-pink">
+          <div class="text-brand-blue text-2xl">📅</div>
+          <div class="font-display text-lg font-bold text-brand-ink mt-3">Thursday</div>
+          <div class="text-sm text-gray-700 mt-1">⏱ 8:00 AM EST</div>
+        </div>
+        <div class="reveal ed-day float-card theme-mint">
+          <div class="text-brand-blue text-2xl">📅</div>
+          <div class="font-display text-lg font-bold text-brand-ink mt-3">Saturday</div>
+          <div class="text-sm text-gray-700 mt-1">⏱ 10:30 AM EST</div>
+        </div>
+        <div class="reveal ed-day float-card theme-cream">
+          <div class="text-brand-blue text-2xl">📅</div>
+          <div class="font-display text-lg font-bold text-brand-ink mt-3">Sunday</div>
+          <div class="text-sm text-gray-700 mt-1">⏱ 11:30 AM EST</div>
+          <div class="text-xs uppercase tracking-widest text-brand-amber mt-2 font-semibold">Mock Session</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTRATION -->
+  <section id="register" class="py-[50px] md:py-20 text-white" style="background:#252525;">
+    <div class="ghl-row mx-auto px-6">
+      <div class="text-center mb-10 reveal">
+        <h2 class="font-display text-3xl md:text-4xl lg:text-[50px] font-bold tracking-tight" style="line-height:1.1;">
+          <span class="gradient-text">Registration</span>
+        </h2>
+        <p class="mt-3 text-xl text-white font-semibold">Ready to Begin B1?</p>
+        <p class="mt-2 text-base text-white/70 max-w-2xl mx-auto">E-Transfer to register. Mention which program you are choosing in the message area when sending the transfer.</p>
+      </div>
+
+      <div class="reveal grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-8">
+        <div class="ed-day text-center" style="background:rgba(255,255,255,0.05);border-color:rgba(37,99,235,0.35);color:#fff;">
+          <div class="text-xs uppercase tracking-widest text-brand-amber font-semibold">B1 Intensive</div>
+          <div class="font-display text-3xl font-bold text-white mt-1">$799</div>
+        </div>
+        <div class="ed-day text-center" style="background:rgba(255,255,255,0.05);border-color:rgba(245,158,11,0.35);color:#fff;">
+          <div class="text-xs uppercase tracking-widest text-brand-amber font-semibold">B1 Self-Paced</div>
+          <div class="font-display text-3xl font-bold text-white mt-1">$599</div>
+        </div>
+      </div>
+
+      <div class="grid gap-6">
+        <div class="reveal ed-day" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);text-align:left;color:#fff;">
+          <div class="text-brand-amber text-2xl">💳</div>
+          <div class="text-xs uppercase tracking-widest text-brand-amber font-semibold mt-3">Payment Method</div>
+          <h3 class="font-display text-lg font-bold mt-1 text-white">E-Transfer to
+            <a href="mailto:info@frenchifywithvyom.com" class="hover:underline underline-offset-4">info@frenchifywithvyom.com</a>
+          </h3>
+          <p class="text-white/70 mt-3 text-sm leading-relaxed">Send E-Transfer to this address to register. Mention program choice in the transfer message.</p>
+        </div>
+      </div>
+
+      <div class="reveal mt-10 grid md:grid-cols-2 gap-4">
+        <a href="https://learn.frenchifywithvyom.com/l/3f67c30cab" target="_blank" rel="noopener noreferrer" class="cta-link cta-link--light">
+          <div class="font-display text-lg font-bold">Demo Beginner Course</div>
+          <span class="text-brand-blue text-xl cta-link__arrow">→</span>
+        </a>
+        <a href="https://frenchifywithvyom.com/book-online" target="_blank" rel="noopener noreferrer" class="cta-link cta-link--glass">
+          <div class="font-display text-lg font-bold">Book a Consultation Call</div>
+          <span class="text-brand-amber text-xl cta-link__arrow">→</span>
+        </a>
+      </div>
+
+      <div class="reveal mt-8 rounded-2xl p-5 flex items-start gap-3 text-sm leading-relaxed"
+           style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.35); color:#fef3c7;">
+        <span class="text-brand-amber text-lg flex-shrink-0">⚠️</span>
+        <span><span class="font-semibold text-white">Please Note:</span> No refund is available once you register for any level or combo. It is advised to ask questions or check out the demo course before you begin. Feel free to reach out to the team with any questions before registering.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER (mirrors components/Footer.tsx) -->
+  <footer class="relative bg-[#0a1426] text-gray-300 px-6 pt-14 pb-6 lg:pb-14 overflow-hidden">
+    <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
+      <div class="absolute inset-0" style="background:linear-gradient(to bottom, #1c2e4a, #101f3a, #050b18);"></div>
+      <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[420px] rounded-[50%] blur-3xl" style="background:rgba(252,211,77,0.10);"></div>
+      <div class="absolute -bottom-44 -right-32 w-[520px] h-[520px] rounded-full blur-3xl" style="background:rgba(37,99,235,0.15);"></div>
+      <div class="absolute top-0 inset-x-0 h-px" style="background:linear-gradient(to right, transparent, rgba(251,191,36,0.4), transparent);"></div>
+    </div>
+
+    <div class="relative max-w-[1170px] mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mb-10">
+        <div class="col-span-2 md:col-span-2">
+          <img src="/footer-logo.png" alt="Frenchify Logo" width="200" height="50" class="h-10 w-auto mb-5" />
+          <p class="text-sm leading-relaxed max-w-md">
+            Helping students master French for Canadian immigration success. Specialized training for TEF Canada exam preparation.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-white font-semibold mb-4 tracking-wide">Quick Links</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="/programs" class="hover:text-white transition-colors">All Courses</a></li>
+            <li><a href="/about-us" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="/testimonials" class="hover:text-white transition-colors">Testimonials</a></li>
+            <li><a href="/faq" class="hover:text-white transition-colors">FAQs</a></li>
+            <li><a href="/privacy-policy" class="hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><a href="/terms-and-conditions" class="hover:text-white transition-colors">Terms &amp; Conditions</a></li>
+            <li><a href="/refund-policy" class="hover:text-white transition-colors">Refund Policy</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-semibold mb-4 tracking-wide">Contact</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li class="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-brand-amber" style="flex-shrink:0;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <a href="mailto:frenchifyfee@gmail.com" class="hover:text-white transition-colors break-all">frenchifyfee@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 pt-7 text-center text-sm">
+        <p>&copy; 2026 Frenchify with Vyom. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // Reveal on scroll — children of .seq-reveal are gated by the parent so they fire in lockstep
+  const inSeq = new Set();
+  document.querySelectorAll('.seq-reveal').forEach(parent => {
+    parent.querySelectorAll('.reveal').forEach(child => inSeq.add(child));
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !inSeq.has(e.target)) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // When a .seq-reveal parent intersects, flip all its .reveal children together
+  // so the per-child transition-delay gives a clean 1-2-3 staircase.
+  const seqIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.reveal').forEach(child => child.classList.add('in'));
+        seqIo.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.18 });
+  document.querySelectorAll('.seq-reveal').forEach(el => seqIo.observe(el));
+
+  // Magnetic hover effect — applied to all buttons across the page.
+  // Translates the element toward the cursor (max ±12px) while hovered,
+  // eases back to (0,0) on mouseleave. Honors prefers-reduced-motion.
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Magnetic only on actual buttons / button-like CTAs.
+  // Explicitly NOT on cards (.ed-card, .tl__card), badges (.stat-pill), or columns.
+  const magneticSelectors = [
+    '.cta-link',
+    'a.btn-primary',
+    '.ed-mini a',
+    'button.magnetic',
+    'a.magnetic',
+    '[data-magnetic]',
+  ];
+  const seen = new Set();
+  document.querySelectorAll(magneticSelectors.join(',')).forEach(el => {
+    if (seen.has(el)) return;
+    seen.add(el);
+    el.classList.add('magnetic');
+  });
+  // Also pick up anything the author opted-in via class or attribute.
+  document.querySelectorAll('.magnetic, [data-magnetic]').forEach(el => seen.add(el));
+
+  const MAX = 12; // max px offset on each axis
+  seen.forEach((el) => {
+    if (reduceMotion) return;
+    el.addEventListener('mousemove', (e) => {
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) return;
+      const x = ((e.clientX - r.left - r.width / 2) / (r.width / 2)) * MAX;
+      const y = ((e.clientY - r.top  - r.height / 2) / (r.height / 2)) * MAX;
+      el.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'translate(0, 0)';
+    });
+  });
+</script>
+</body>
+</html>

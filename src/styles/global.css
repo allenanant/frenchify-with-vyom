@@ -56,3 +56,259 @@ body.has-notice-bars {
 .full-bleed-section-ghl {
   width: 100%;
 }
+
+/* Selection color */
+::selection {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+/* Focus rings */
+:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Subtle hover lift utility for cards */
+.hover-lift {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.25);
+}
+
+/* Shimmer for highlighted text blocks */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer-text {
+  background: linear-gradient(90deg, #2563eb 0%, #f59e0b 50%, #2563eb 100%);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+/* Animated hero dot pattern */
+@keyframes heroPatternDrift {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
+}
+.hero-pattern-animated {
+  background-image: radial-gradient(#2563eb20 1px, transparent 1px);
+  background-size: 20px 20px;
+  animation: heroPatternDrift 24s linear infinite;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Path / Staircase section ─────────────────────────── */
+.path-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 10px 40px -12px rgba(30, 58, 138, 0.08);
+  border: 1.5px solid transparent;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s, opacity 0.4s, filter 0.4s;
+  position: relative;
+  max-width: 380px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.path-card-active {
+  border-color: #2563eb;
+  box-shadow: 0 20px 50px -12px rgba(37, 99, 235, 0.25);
+  animation: activePulse 3s ease-in-out infinite;
+}
+
+@keyframes activePulse {
+  0%, 100% { box-shadow: 0 20px 50px -12px rgba(37, 99, 235, 0.25); }
+  50% { box-shadow: 0 20px 50px -6px rgba(37, 99, 235, 0.4); }
+}
+
+.path-card-locked .path-title,
+.path-card-locked .path-desc {
+  color: #9ca3af;
+}
+
+.path-card-active .path-title { color: #111827; }
+.path-card-active .path-desc { color: #4b5563; }
+
+.path-card-dim {
+  opacity: 0.75;
+  filter: saturate(0.6);
+}
+
+.path-card-complete {
+  border-color: #16a34a;
+  box-shadow: 0 10px 30px -12px rgba(22, 163, 74, 0.2);
+  animation: none;
+}
+.path-card-complete .path-title,
+.path-card-complete .path-desc { color: #111827; }
+
+/* Step badges */
+.step-badge {
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  display: inline-block;
+}
+.step-badge-active {
+  background: #f59e0b;
+  color: #fff;
+}
+.step-badge-locked {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+.step-badge-complete {
+  background: #16a34a;
+  color: #fff;
+}
+
+/* Status pills */
+.status-pill {
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.status-pill-active {
+  background: #dcfce7;
+  color: #15803d;
+}
+.status-pill-locked {
+  background: #fef3c7;
+  color: #92400e;
+}
+.status-pill-complete {
+  background: #16a34a;
+  color: #fff;
+}
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #16a34a;
+  display: inline-block;
+  animation: statusDotPulse 2s ease-in-out infinite;
+}
+@keyframes statusDotPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
+}
+
+/* Info chips */
+.info-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #f3f4f6;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.path-card-active .info-chip {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+/* Action buttons */
+.path-action {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+.path-action-active {
+  background: #2563eb;
+  color: #fff;
+  box-shadow: 0 8px 20px -5px rgba(37, 99, 235, 0.5);
+}
+.path-action-active:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px -5px rgba(37, 99, 235, 0.6);
+}
+.path-action-locked {
+  background: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+.path-action-complete {
+  background: #16a34a;
+  color: #fff;
+  cursor: default;
+}
+
+/* Arrow connectors */
+.path-arrow {
+  transition: opacity 0.4s;
+}
+.path-arrow-dim { opacity: 0.45; }
+.path-arrow-active { opacity: 1; }
+.arrow-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 2px solid #93c5fd;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #60a5fa;
+  font-size: 14px;
+  transform: rotate(45deg);
+  transition: all 0.4s;
+}
+.arrow-circle i { transform: rotate(-45deg); }
+.path-arrow-active .arrow-circle {
+  border-color: #16a34a;
+  color: #16a34a;
+  animation: arrowUnlock 0.8s ease-out;
+}
+@keyframes arrowUnlock {
+  0% { transform: rotate(45deg) scale(1); }
+  50% { transform: rotate(45deg) scale(1.2); }
+  100% { transform: rotate(45deg) scale(1); }
+}
+.arrow-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #60a5fa;
+  letter-spacing: 0.1em;
+  margin-top: 6px;
+}
+.path-arrow-active .arrow-label { color: #16a34a; }
