@@ -1,6 +1,5 @@
 import BodyClass from '@/components/BodyClass';
 import NoticeBars from '@/components/NoticeBars';
-import FloatingLeadButton from '@/components/FloatingLeadButton';
 import HomeV2Hero from './_components/HomeV2Hero';
 import HomeV2Ticker from './_components/HomeV2Ticker';
 import HomeV2Stats from './_components/HomeV2Stats';
@@ -41,7 +40,6 @@ export default function HomeV2Page() {
       <HomeV2ReviewsWidget />
       <HomeV2Faq />
       <HomeV2MegaCta />
-      <FloatingLeadButton />
     </>
   );
 }

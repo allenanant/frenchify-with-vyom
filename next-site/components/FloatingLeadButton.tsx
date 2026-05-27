@@ -8,12 +8,6 @@ export default function FloatingLeadButton() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.innerWidth < 768) return;
-    const t = setTimeout(() => setOpen(true), 600);
-    return () => clearTimeout(t);
-  }, []);
-
-  useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setOpen(false);
     };
