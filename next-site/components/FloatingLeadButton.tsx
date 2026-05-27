@@ -34,11 +34,12 @@ export default function FloatingLeadButton() {
         className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[min(80vw,323px)] max-h-[min(68vh,512px)] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col transition-all duration-300 ${
           open
             ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
-            : 'opacity-0 translate-y-3 scale-95 pointer-events-none'
+            : 'opacity-0 translate-y-[120%] scale-95 pointer-events-none'
         }`}
         role="dialog"
         aria-label="Get in touch"
         aria-hidden={!open}
+        {...(!open && { inert: '' })}
       >
         <button
           type="button"
