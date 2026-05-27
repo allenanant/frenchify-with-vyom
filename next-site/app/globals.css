@@ -31,14 +31,14 @@
   }
 
   body.has-notice-bars {
-    /* Mobile: amber bar wraps to 2 lines (~52px) + header (69px) */
-    padding-top: 121px;
+    /* Mobile: clarity-call bar (36px) + amber bar wraps to 2 lines (~52px) + header (69px) */
+    padding-top: 157px;
   }
 
   @media (min-width: 768px) {
     body.has-notice-bars {
-      /* Desktop: amber bar single line (36px) + header (69px) */
-      padding-top: 105px;
+      /* Desktop: clarity-call bar (36px) + amber bar single line (36px) + header (69px) */
+      padding-top: 141px;
     }
   }
 
