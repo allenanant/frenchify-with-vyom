@@ -14,7 +14,7 @@ export default function NoticeBars() {
       </a>
       <Link
         href="/frenchify-beginner-program"
-        className="fixed top-[121px] md:top-[105px] left-0 right-0 bg-brand-amber text-gray-900 text-center py-2 px-[15px] text-sm font-semibold z-40 hover:bg-amber-600 transition-all duration-300"
+        className="fixed top-[105px] left-0 right-0 bg-brand-amber text-gray-900 text-center py-2 px-[15px] text-sm font-semibold z-40 hover:bg-amber-600 transition-all duration-300"
       >
         🎓 Frenchify Beginner Program Available for Free (Worth $150) — Sign up <span className="underline">Here</span> (Spots are limited)
       </Link>
