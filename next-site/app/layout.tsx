@@ -35,6 +35,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${sora.variable}`}>
       <head>
+        <link rel="preconnect" href="https://api.leadconnectorhq.com" />
+        <link rel="preconnect" href="https://link.msgsndr.com" />
+        <link rel="dns-prefetch" href="https://api.leadconnectorhq.com" />
+        <link rel="dns-prefetch" href="https://link.msgsndr.com" />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
