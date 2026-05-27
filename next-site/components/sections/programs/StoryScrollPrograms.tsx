@@ -16,6 +16,7 @@ type Chapter = {
   metaRightLabel: string;
   metaRightValue: string;
   cta: string;
+  href: string;
   image: string;
   imageLeft: boolean;
   paper: boolean;
@@ -34,6 +35,7 @@ const CHAPTERS: Chapter[] = [
     metaRightLabel: 'Format',
     metaRightValue: 'Live + Recorded',
     cta: 'Know More',
+    href: 'https://frenchify-with-vyom.vercel.app/a1-course',
     image:
       'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1400&q=80',
     imageLeft: true,
@@ -51,6 +53,7 @@ const CHAPTERS: Chapter[] = [
     metaRightLabel: 'Format',
     metaRightValue: 'Live + Recorded',
     cta: 'Know More',
+    href: 'https://frenchify-with-vyom.vercel.app/a2-course',
     image:
       'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1400&q=80',
     imageLeft: false,
@@ -68,6 +71,7 @@ const CHAPTERS: Chapter[] = [
     metaRightLabel: 'Exam',
     metaRightValue: 'TEF + TCF',
     cta: 'Know More',
+    href: 'https://frenchify-with-vyom.vercel.app/b1-course',
     image:
       'https://images.unsplash.com/photo-1431274172761-fca41d930114?auto=format&fit=crop&w=1400&q=80',
     imageLeft: true,
@@ -85,6 +89,7 @@ const CHAPTERS: Chapter[] = [
     metaRightLabel: 'Focus',
     metaRightValue: 'Exam Strategy',
     cta: 'Know More',
+    href: 'https://frenchify-with-vyom.vercel.app/b2-course',
     image:
       'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1400&q=80',
     imageLeft: false,
@@ -147,7 +152,7 @@ function ChapterBlock({ chapter }: { chapter: Chapter }) {
           </div>
         </div>
         <div className="mt-2">
-          <a href="#" className="ssp-btn-primary">
+          <a href={chapter.href} className="ssp-btn-primary">
             {chapter.cta}
             <ArrowIcon />
           </a>
@@ -493,7 +498,7 @@ export default function StoryScrollPrograms() {
           </p>
           <div className="mt-10">
             <a
-              href="#"
+              href="https://frenchifywithvyom.app.clientclub.net/"
               className="inline-flex items-center gap-3 text-white px-8 py-4 rounded-xl font-semibold transition"
               style={{
                 background: '#2563EB',
