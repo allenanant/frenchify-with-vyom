@@ -16,7 +16,7 @@ import HomeV2Faq from './_components/HomeV2Faq';
 import HomeV2MegaCta from './_components/HomeV2MegaCta';
 
 export const metadata = {
-  title: 'Home V2 — Becoming Fluent with Frenchify',
+  title: 'Home',
   description:
     'Learn French & clear TEF/TCF Canada exam with step-by-step methodologies. Become fluent in under 12 months with Frenchify with Vyom.',
 };
