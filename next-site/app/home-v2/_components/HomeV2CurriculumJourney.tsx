@@ -132,7 +132,7 @@ function MilestoneRow({ m, index }: { m: Milestone; index: number }) {
       className="relative"
     >
       {/* node — positioned relative to the timeline line, not the card */}
-      <div className="absolute -left-[36px] sm:-left-[44px] md:-left-[56px] top-7 grid h-8 w-8 md:h-10 md:w-10 place-items-center rounded-full bg-white border-2 border-[#2563eb] shadow-[0_10px_24px_-10px_rgba(37,99,235,0.55)] z-10">
+      <div className="absolute -left-[47px] sm:-left-[55px] md:-left-[67px] top-7 grid h-8 w-8 md:h-10 md:w-10 place-items-center rounded-full bg-white border-2 border-[#2563eb] shadow-[0_10px_24px_-10px_rgba(37,99,235,0.55)] z-10">
         <span className="h-2.5 w-2.5 md:h-3 md:w-3 rounded-full bg-[#2563eb]" />
       </div>
 
