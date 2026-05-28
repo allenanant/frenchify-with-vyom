@@ -32,7 +32,7 @@ export default function TermsAndConditionsPage() {
       {/* Body */}
       <section className="py-20 bg-gray-50">
         <div className="ghl-row-faq mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal direction="up" duration={0.6}>
+          <Reveal direction="up" duration={0.6} amount={0}>
             <article className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
               <p className="text-gray-700 leading-relaxed mb-4">
                 By enrolling in, accessing, or participating in any course, program, or service provided by Frenchify with Vyom Inc. (&ldquo;Frenchify,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;), you (&ldquo;student,&rdquo; &ldquo;participant,&rdquo; or &ldquo;user&rdquo;) agree to the following Terms &amp; Conditions.
