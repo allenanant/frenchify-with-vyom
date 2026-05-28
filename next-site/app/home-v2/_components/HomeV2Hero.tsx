@@ -9,8 +9,7 @@ import Magnetic from '@/components/motion/Magnetic';
 import Reveal from '@/components/motion/Reveal';
 import TextReveal from '@/components/motion/TextReveal';
 
-const HERO_IMAGE_SRC =
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6808e5afbcc5c4159279e282.jpeg';
+const HERO_IMAGE_SRC = '/vyom-hero-bg.png';
 
 export default function HomeV2Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -40,9 +39,8 @@ export default function HomeV2Hero() {
           alt=""
           fill
           priority
-          unoptimized
           sizes="100vw"
-          className="object-cover object-[78%_center] md:object-[82%_center] lg:object-[85%_center] scale-[1.02] [filter:blur(2px)]"
+          className="object-cover object-[65%_center] md:object-[70%_center] lg:object-[center_center] scale-[1.02] [filter:blur(1.5px)]"
         />
         {/* Brand-tinted overlays — keep heading readable on the left, soften Vyom on the right */}
         <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-white/30 md:from-white md:via-white/80 md:to-white/10" />
