@@ -48,14 +48,14 @@ export default function FloatingLeadButton() {
       )}
 
       {/* Always-mounted dialog so the iframe loads once and never re-loads.
-          When closed: physically positioned off-screen (top:-9999) so it cannot overlap the button or intercept clicks.
-          When open: snaps into bottom-right position with the already-loaded form. */}
+          When closed: anchored to bottom-right but visually pushed offscreen via transform so it cannot overlap the button or intercept clicks (transform avoids creating phantom document scroll height).
+          When open: snaps into view with the already-loaded form. */}
       <div
         className="fixed z-[100] w-[min(80vw,323px)] max-h-[min(68vh,512px)] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col"
         style={
           open
-            ? { bottom: 16, right: 16, opacity: 1, pointerEvents: 'auto' }
-            : { top: -9999, left: -9999, opacity: 0, pointerEvents: 'none' }
+            ? { bottom: 16, right: 16, opacity: 1, pointerEvents: 'auto', transform: 'translate3d(0,0,0)' }
+            : { bottom: 16, right: 16, opacity: 0, pointerEvents: 'none', transform: 'translate3d(120vw, 0, 0)' }
         }
         role="dialog"
         aria-label="Get in touch"
