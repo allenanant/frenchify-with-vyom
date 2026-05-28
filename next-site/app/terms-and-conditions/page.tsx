@@ -93,6 +93,11 @@ export default function TermsAndConditionsPage() {
               <h2 className="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">10. Renewal Policy</h2>
               <p className="text-gray-700 leading-relaxed mb-4">Students may renew course or live-session access upon expiry by paying a renewal fee.</p>
               <p className="text-gray-700 leading-relaxed mb-4">Requests must be sent via email before access ends or register for renewal before or on the day course access ends. Courses cannot be renewed after a long time of access expiration.</p>
+              <p className="text-gray-700 leading-relaxed mb-4">Course access cannot be renewed multiple times. A student may renew once, or a maximum of two times, after the original tenure ends, and the total extension cannot exceed 2 months at any given time in total. All renewals must be consecutive &mdash; there can be no gap between the original access period and any renewal.</p>
+              <p className="text-gray-700 leading-relaxed mb-4">For example: if a student renews for 1 month and then renews for another 1 month consecutively, this is allowed.</p>
+              <p className="text-gray-700 leading-relaxed mb-4">For example: if a student renews once for 2 months, no further renewal is possible past that.</p>
+              <p className="text-gray-700 leading-relaxed mb-4">For example: if a student renews once for 2 months and then asks for another 1-month renewal, this is not possible.</p>
+              <p className="text-gray-700 leading-relaxed mb-4">In all such cases, students will need to re-register for the course as a new enrolment, or take guidance from the Frenchify Team on next steps.</p>
 
               <h2 className="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">11. Enrollment &amp; Payment</h2>
               <p className="text-gray-700 leading-relaxed mb-4">

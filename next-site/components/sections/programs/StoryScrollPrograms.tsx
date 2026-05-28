@@ -343,12 +343,6 @@ export default function StoryScrollPrograms() {
                       </li>
                     ))}
                   </ul>
-                  <a
-                    href="#chapter-01"
-                    className="ssp-btn-primary inline-block"
-                  >
-                    Learn More
-                  </a>
                 </div>
                 <div className="relative rounded-xl overflow-hidden bg-gray-100 aspect-video shadow-lg">
                   <video
