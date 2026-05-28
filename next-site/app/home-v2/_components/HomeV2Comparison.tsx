@@ -91,7 +91,7 @@ export default function HomeV2Comparison() {
         <Reveal delay={0.15}>
           <div className="overflow-hidden rounded-3xl border border-[#e5e7eb] bg-white shadow-[0_30px_60px_-30px_rgba(15,23,42,0.15)]">
             {/* Header */}
-            <div className="grid grid-cols-[1.4fr_1fr_1fr] md:grid-cols-[2fr_1fr_1fr] bg-[#F9FAFB] border-b border-[#e5e7eb] items-center">
+            <div className="grid grid-cols-[1.8fr_0.9fr_0.9fr] md:grid-cols-[2fr_1fr_1fr] bg-[#F9FAFB] border-b border-[#e5e7eb] items-center">
               <div className="p-2.5 md:p-6 text-[10px] md:text-[11px] font-extrabold uppercase tracking-[0.14em] md:tracking-[0.18em] text-[#6B7280]">
                 Feature
               </div>
@@ -121,9 +121,9 @@ export default function HomeV2Comparison() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ duration: 0.45, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                  className="grid grid-cols-[1.4fr_1fr_1fr] md:grid-cols-[2fr_1fr_1fr] hover:bg-[#F9FAFB]/50 transition-colors items-center"
+                  className="grid grid-cols-[1.8fr_0.9fr_0.9fr] md:grid-cols-[2fr_1fr_1fr] hover:bg-[#F9FAFB]/50 transition-colors items-center"
                 >
-                  <div className="p-2.5 md:p-6 text-[11.5px] md:text-[14.5px] font-semibold text-[#252525] leading-snug">
+                  <div className="p-2 md:p-6 text-[11px] md:text-[14.5px] font-semibold text-[#252525] leading-[1.25] md:leading-snug break-words">
                     {r.label}
                   </div>
                   <div className="p-2.5 md:p-6 border-l border-[#e5e7eb] bg-[#EFF6FF]/30 flex justify-center md:justify-start">
@@ -137,7 +137,7 @@ export default function HomeV2Comparison() {
             </div>
 
             {/* Footer */}
-            <div className="grid grid-cols-[1.4fr_1fr_1fr] md:grid-cols-[2fr_1fr_1fr] bg-gradient-to-r from-[#0A1426] to-[#0b1d3a] text-white items-center">
+            <div className="grid grid-cols-[1.8fr_0.9fr_0.9fr] md:grid-cols-[2fr_1fr_1fr] bg-gradient-to-r from-[#0A1426] to-[#0b1d3a] text-white items-center">
               <div className="p-2.5 md:p-6 text-[11.5px] md:text-[14.5px] font-bold leading-snug">
                 The score that matters
               </div>
