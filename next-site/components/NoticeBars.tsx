@@ -4,7 +4,7 @@ export default function NoticeBars() {
   return (
     <>
       <a
-        href="https://frenchifywithvyom.com/tef-success--clarity-call"
+        href="/tef-success-clarity-call.html"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed top-[69px] left-0 right-0 bg-gradient-to-r from-brand-blue via-brand-blue-deep to-brand-blue text-white text-center py-2 px-[15px] text-sm font-semibold z-40 hover:from-brand-blue-deep hover:to-brand-blue-deep transition-all duration-300 flex items-center justify-center gap-2 group"
