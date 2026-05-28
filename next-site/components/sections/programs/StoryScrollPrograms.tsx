@@ -296,10 +296,6 @@ export default function StoryScrollPrograms() {
           </div>
         </div>
 
-        <div className="scroll-cue">
-          <span>Scroll to begin</span>
-          <span className="line"></span>
-        </div>
       </section>
 
       {/* TRACK 1 INTRO + INTENSIVE VIDEO */}
