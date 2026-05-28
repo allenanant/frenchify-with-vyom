@@ -60,7 +60,7 @@ export default function FloatingLeadButton() {
         role="dialog"
         aria-label="Get in touch"
         aria-hidden={!open}
-        {...(!open && { inert: '' })}
+        inert={!open}
       >
         <button
           type="button"
