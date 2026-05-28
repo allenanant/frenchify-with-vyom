@@ -40,7 +40,7 @@ export default function HomeV2Hero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[65%_center] md:object-[70%_center] lg:object-[center_center] scale-[1.02] [filter:blur(1.5px)]"
+          className="object-cover object-[65%_center] md:object-[70%_center] lg:object-[center_center]"
         />
         {/* White wash only on the LEFT, fully transparent on the right so Vyom stays crisp */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,0.96)_28%,rgba(255,255,255,0.6)_46%,rgba(255,255,255,0)_62%)] md:bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,0.95)_32%,rgba(255,255,255,0.55)_50%,rgba(255,255,255,0)_65%)]" />
