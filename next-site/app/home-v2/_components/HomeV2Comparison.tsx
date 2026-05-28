@@ -25,28 +25,28 @@ function Cell({ value, highlight }: { value: boolean | string; highlight?: boole
   if (value === true) {
     return (
       <span
-        className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[12px] font-bold tracking-tight ${
+        className={`inline-flex items-center gap-1 md:gap-2 rounded-full px-2 py-1 md:px-3 md:py-1.5 text-[10.5px] md:text-[12px] font-bold tracking-tight ${
           highlight
             ? 'bg-emerald-50 text-emerald-700'
             : 'bg-[#F3F6F8] text-[#6B7280]'
         }`}
       >
-        <Check className={`h-3.5 w-3.5 ${highlight ? 'text-emerald-600' : 'text-[#9CA3AF]'}`} strokeWidth={3} />
+        <Check className={`h-3 w-3 md:h-3.5 md:w-3.5 ${highlight ? 'text-emerald-600' : 'text-[#9CA3AF]'}`} strokeWidth={3} />
         Yes
       </span>
     );
   }
   if (value === false) {
     return (
-      <span className="inline-flex items-center gap-2 rounded-full bg-rose-50 text-rose-600 px-3 py-1.5 text-[12px] font-bold tracking-tight">
-        <X className="h-3.5 w-3.5" strokeWidth={3} />
+      <span className="inline-flex items-center gap-1 md:gap-2 rounded-full bg-rose-50 text-rose-600 px-2 py-1 md:px-3 md:py-1.5 text-[10.5px] md:text-[12px] font-bold tracking-tight">
+        <X className="h-3 w-3 md:h-3.5 md:w-3.5" strokeWidth={3} />
         No
       </span>
     );
   }
   return (
     <span
-      className={`inline-flex items-center rounded-full px-3 py-1.5 text-[12px] font-bold tracking-tight ${
+      className={`inline-flex items-center rounded-full px-2 py-1 md:px-3 md:py-1.5 text-[10.5px] md:text-[12px] font-bold tracking-tight text-center leading-tight ${
         highlight ? 'bg-blue-50 text-[#2667FF]' : 'bg-[#F3F6F8] text-[#6B7280]'
       }`}
     >
@@ -90,25 +90,23 @@ export default function HomeV2Comparison() {
 
         <Reveal delay={0.15}>
           <div className="overflow-hidden rounded-3xl border border-[#e5e7eb] bg-white shadow-[0_30px_60px_-30px_rgba(15,23,42,0.15)]">
-            <div className="overflow-x-auto">
-              <div className="min-w-[640px] md:min-w-0">
             {/* Header */}
-            <div className="grid grid-cols-[2fr_1fr_1fr] bg-[#F9FAFB] border-b border-[#e5e7eb]">
-              <div className="p-5 md:p-6 flex items-center text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#6B7280]">
+            <div className="grid grid-cols-3 md:grid-cols-[2fr_1fr_1fr] bg-[#F9FAFB] border-b border-[#e5e7eb]">
+              <div className="p-3 md:p-6 flex items-center text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#6B7280]">
                 Feature
               </div>
-              <div className="p-5 md:p-6 flex items-center border-l border-[#e5e7eb] bg-gradient-to-b from-[#EFF6FF] to-white">
-                <div className="flex items-center gap-2">
-                  <span className="grid h-7 w-7 place-items-center rounded-lg bg-[#2563eb] text-white shadow-[0_8px_18px_-8px_rgba(37,99,235,0.5)]">
-                    <Sparkles className="h-3.5 w-3.5" />
+              <div className="p-3 md:p-6 flex items-center border-l border-[#e5e7eb] bg-gradient-to-b from-[#EFF6FF] to-white">
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <span className="grid h-5 w-5 md:h-7 md:w-7 place-items-center rounded-md md:rounded-lg bg-[#2563eb] text-white shadow-[0_8px_18px_-8px_rgba(37,99,235,0.5)]">
+                    <Sparkles className="h-2.5 w-2.5 md:h-3.5 md:w-3.5" />
                   </span>
-                  <span className="font-display text-[15px] md:text-[17px] font-extrabold text-[#111827] tracking-tight">
+                  <span className="font-display text-[12.5px] md:text-[17px] font-extrabold text-[#111827] tracking-tight">
                     Frenchify
                   </span>
                 </div>
               </div>
-              <div className="p-5 md:p-6 flex items-center border-l border-[#e5e7eb]">
-                <span className="font-display text-[14px] md:text-[15px] font-semibold text-[#6B7280] tracking-tight">
+              <div className="p-3 md:p-6 flex items-center border-l border-[#e5e7eb]">
+                <span className="font-display text-[11.5px] md:text-[15px] font-semibold text-[#6B7280] tracking-tight leading-snug">
                   Traditional French class
                 </span>
               </div>
@@ -123,15 +121,15 @@ export default function HomeV2Comparison() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ duration: 0.45, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                  className="grid grid-cols-[2fr_1fr_1fr] hover:bg-[#F9FAFB]/50 transition-colors"
+                  className="grid grid-cols-3 md:grid-cols-[2fr_1fr_1fr] hover:bg-[#F9FAFB]/50 transition-colors"
                 >
-                  <div className="p-5 md:p-6 flex items-center text-[13.5px] md:text-[14.5px] font-semibold text-[#252525] leading-snug">
+                  <div className="p-3 md:p-6 flex items-center text-[12px] md:text-[14.5px] font-semibold text-[#252525] leading-snug">
                     {r.label}
                   </div>
-                  <div className="p-5 md:p-6 flex items-center border-l border-[#e5e7eb] bg-[#EFF6FF]/30">
+                  <div className="p-3 md:p-6 flex items-center border-l border-[#e5e7eb] bg-[#EFF6FF]/30">
                     <Cell value={r.frenchify} highlight />
                   </div>
-                  <div className="p-5 md:p-6 flex items-center border-l border-[#e5e7eb]">
+                  <div className="p-3 md:p-6 flex items-center border-l border-[#e5e7eb]">
                     <Cell value={r.traditional} />
                   </div>
                 </motion.div>
@@ -139,19 +137,17 @@ export default function HomeV2Comparison() {
             </div>
 
             {/* Footer */}
-            <div className="grid grid-cols-[2fr_1fr_1fr] bg-gradient-to-r from-[#0A1426] to-[#0b1d3a] text-white">
-              <div className="p-5 md:p-6 flex items-center text-[13.5px] md:text-[14.5px] font-bold">
+            <div className="grid grid-cols-3 md:grid-cols-[2fr_1fr_1fr] bg-gradient-to-r from-[#0A1426] to-[#0b1d3a] text-white">
+              <div className="p-3 md:p-6 flex items-center text-[12px] md:text-[14.5px] font-bold leading-snug">
                 The score that matters
               </div>
-              <div className="p-5 md:p-6 flex items-center border-l border-white/10 bg-white/[0.04]">
-                <span className="inline-flex items-center gap-2 rounded-full bg-[#f59e0b] text-[#111827] px-3 py-1.5 text-[12px] font-extrabold tracking-tight">
+              <div className="p-3 md:p-6 flex items-center border-l border-white/10 bg-white/[0.04]">
+                <span className="inline-flex items-center gap-1 md:gap-2 rounded-full bg-[#f59e0b] text-[#111827] px-2 py-1 md:px-3 md:py-1.5 text-[10px] md:text-[12px] font-extrabold tracking-tight text-center leading-tight">
                   CLB 7+ guaranteed path
                 </span>
               </div>
-              <div className="p-5 md:p-6 flex items-center border-l border-white/10 text-white/60 text-[13px]">
+              <div className="p-3 md:p-6 flex items-center border-l border-white/10 text-white/60 text-[11px] md:text-[13px] leading-snug">
                 Not the focus.
-              </div>
-            </div>
               </div>
             </div>
           </div>
