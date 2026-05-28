@@ -9,6 +9,8 @@ import Magnetic from '@/components/motion/Magnetic';
 import Reveal from '@/components/motion/Reveal';
 import TextReveal from '@/components/motion/TextReveal';
 
+const HERO_IMAGE_SRC = '/vyom-hero-bg.png';
+
 export default function HomeV2Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -16,30 +18,43 @@ export default function HomeV2Hero() {
     offset: ['start start', 'end start'],
   });
 
-  const mediaY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.06]);
   const titleY = useTransform(scrollYProgress, [0, 1], [0, -60]);
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, 180]);
 
   return (
     <section
       ref={sectionRef}
       id="home-v2-hero"
-      className="relative overflow-hidden bg-white"
+      className="relative overflow-hidden bg-white min-h-[88vh] lg:min-h-[92vh]"
     >
+      {/* Background photo — anchored to the right so Vyom sits in the right half */}
       <motion.div
-        style={{ y: bgY }}
         aria-hidden
+        style={{ y: bgY, scale: bgScale }}
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute -top-40 -left-32 h-[560px] w-[560px] rounded-full bg-[#2563eb] opacity-[0.08] blur-[160px]" />
-        <div className="absolute top-[40%] -right-40 h-[600px] w-[600px] rounded-full bg-[#f59e0b] opacity-[0.10] blur-[180px]" />
-        <div className="absolute inset-0 hero-pattern-animated opacity-60" />
+        <Image
+          src={HERO_IMAGE_SRC}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[65%_center] md:object-[70%_center] lg:object-[center_center]"
+        />
+        {/* White wash only on the LEFT, fully transparent on the right so Vyom stays crisp */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,0.96)_28%,rgba(255,255,255,0.6)_46%,rgba(255,255,255,0)_62%)] md:bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,0.95)_32%,rgba(255,255,255,0.55)_50%,rgba(255,255,255,0)_65%)]" />
       </motion.div>
+
+      {/* Decorative blurs — keep the original brand glow but lighter now that there's a photo */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-40 -left-32 h-[480px] w-[480px] rounded-full bg-[#2563eb] opacity-[0.06] blur-[160px]" />
+        <div className="absolute inset-0 hero-pattern-animated opacity-30" />
+      </div>
 
       <div className="relative mx-auto w-full max-w-[1440px] px-5 md:px-10 lg:px-14 pt-12 pb-20 md:pt-20 md:pb-28 lg:pt-24 lg:pb-32">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
-          {/* LEFT: Headline + CTA */}
+          {/* LEFT: Headline + CTA (kept on left so it doesn't overlap Vyom) */}
           <motion.div style={{ y: titleY }} className="lg:col-span-7 relative z-10">
             <Reveal direction="up">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-7 rounded-full bg-white border border-blue-100 shadow-[0_8px_24px_-12px_rgba(37,99,235,0.25)]">
@@ -136,82 +151,6 @@ export default function HomeV2Hero() {
             </Reveal>
           </motion.div>
 
-          {/* RIGHT: Cinematic media frame */}
-          <Reveal direction="right" delay={0.3} duration={1} className="lg:col-span-5">
-            <motion.div
-              style={{ y: mediaY, scale: mediaScale }}
-              className="relative"
-            >
-              {/* floating result chips */}
-              <motion.div
-                initial={{ opacity: 0, y: 16, scale: 0.92 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.8, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute -left-6 top-12 z-30 hidden md:flex items-center gap-3 rounded-2xl bg-white p-3 pr-5 shadow-[0_24px_60px_-20px_rgba(15,23,42,0.18)] border border-gray-100"
-              >
-                <div className="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600 font-display font-bold">
-                  9
-                </div>
-                <div>
-                  <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#16a34a]">
-                    CLB 9 · Speaking
-                  </div>
-                  <div className="text-[12px] font-semibold text-[#111827]">
-                    Simran — TEF Canada
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 24, scale: 0.92 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.8, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute -right-3 bottom-10 z-30 hidden md:flex items-center gap-3 rounded-2xl bg-[#0A1426] p-3 pr-5 shadow-[0_24px_60px_-20px_rgba(15,23,42,0.4)]"
-              >
-                <div className="grid h-10 w-10 place-items-center rounded-xl bg-blue-500/20 text-blue-300 font-display font-bold">
-                  +PR
-                </div>
-                <div>
-                  <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-blue-300">
-                    Express Entry
-                  </div>
-                  <div className="text-[12px] font-semibold text-white">
-                    Bonus points unlocked
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* gradient outline */}
-              <div className="absolute -inset-2 rounded-[28px] bg-gradient-to-br from-[#2563eb] via-[#3b82f6] to-[#f59e0b] opacity-90 blur-[2px]" />
-              <div className="absolute -inset-[2px] rounded-[24px] bg-white" />
-
-              <div className="relative overflow-hidden rounded-[22px] bg-white">
-                <Image
-                  src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6808e5afbcc5c4159279e282.jpeg"
-                  alt="French Learning Session with Vyom"
-                  width={760}
-                  height={920}
-                  priority
-                  unoptimized
-                  className="w-full h-[440px] md:h-[520px] lg:h-[600px] object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1426]/55 via-transparent to-transparent" />
-                <div className="absolute left-5 bottom-5 right-5 flex items-end justify-between">
-                  <div>
-                    <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/80">
-                      Live cohort · A1 → B2
-                    </div>
-                    <div className="mt-1 font-display text-[18px] font-bold text-white tracking-tight">
-                      Frenchify Intensive
-                    </div>
-                  </div>
-                  <div className="grid h-11 w-11 place-items-center rounded-full bg-white/95 text-[#2563eb] shadow-lg">
-                    <Play className="h-4 w-4 fill-current" />
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </Reveal>
         </div>
       </div>
 
