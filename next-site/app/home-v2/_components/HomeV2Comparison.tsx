@@ -93,11 +93,11 @@ export default function HomeV2Comparison() {
             <div className="overflow-x-auto">
               <div className="min-w-[640px] md:min-w-0">
             {/* Header */}
-            <div className="grid grid-cols-[2fr_1fr_1fr] bg-[#F9FAFB] border-b border-[#e5e7eb] items-center">
-              <div className="p-5 md:p-6 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#6B7280]">
+            <div className="grid grid-cols-[2fr_1fr_1fr] bg-[#F9FAFB] border-b border-[#e5e7eb]">
+              <div className="p-5 md:p-6 flex items-center text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#6B7280]">
                 Feature
               </div>
-              <div className="p-5 md:p-6 border-l border-[#e5e7eb] bg-gradient-to-b from-[#EFF6FF] to-white">
+              <div className="p-5 md:p-6 flex items-center border-l border-[#e5e7eb] bg-gradient-to-b from-[#EFF6FF] to-white">
                 <div className="flex items-center gap-2">
                   <span className="grid h-7 w-7 place-items-center rounded-lg bg-[#2563eb] text-white shadow-[0_8px_18px_-8px_rgba(37,99,235,0.5)]">
                     <Sparkles className="h-3.5 w-3.5" />
@@ -107,7 +107,7 @@ export default function HomeV2Comparison() {
                   </span>
                 </div>
               </div>
-              <div className="p-5 md:p-6 border-l border-[#e5e7eb]">
+              <div className="p-5 md:p-6 flex items-center border-l border-[#e5e7eb]">
                 <span className="font-display text-[14px] md:text-[15px] font-semibold text-[#6B7280] tracking-tight">
                   Traditional French class
                 </span>
@@ -123,15 +123,15 @@ export default function HomeV2Comparison() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ duration: 0.45, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                  className="grid grid-cols-[2fr_1fr_1fr] hover:bg-[#F9FAFB]/50 transition-colors items-center"
+                  className="grid grid-cols-[2fr_1fr_1fr] hover:bg-[#F9FAFB]/50 transition-colors"
                 >
-                  <div className="p-5 md:p-6 text-[13.5px] md:text-[14.5px] font-semibold text-[#252525] leading-snug">
+                  <div className="p-5 md:p-6 flex items-center text-[13.5px] md:text-[14.5px] font-semibold text-[#252525] leading-snug">
                     {r.label}
                   </div>
-                  <div className="p-5 md:p-6 border-l border-[#e5e7eb] bg-[#EFF6FF]/30">
+                  <div className="p-5 md:p-6 flex items-center border-l border-[#e5e7eb] bg-[#EFF6FF]/30">
                     <Cell value={r.frenchify} highlight />
                   </div>
-                  <div className="p-5 md:p-6 border-l border-[#e5e7eb]">
+                  <div className="p-5 md:p-6 flex items-center border-l border-[#e5e7eb]">
                     <Cell value={r.traditional} />
                   </div>
                 </motion.div>
@@ -139,16 +139,16 @@ export default function HomeV2Comparison() {
             </div>
 
             {/* Footer */}
-            <div className="grid grid-cols-[2fr_1fr_1fr] bg-gradient-to-r from-[#0A1426] to-[#0b1d3a] text-white items-center">
-              <div className="p-5 md:p-6 text-[13.5px] md:text-[14.5px] font-bold">
+            <div className="grid grid-cols-[2fr_1fr_1fr] bg-gradient-to-r from-[#0A1426] to-[#0b1d3a] text-white">
+              <div className="p-5 md:p-6 flex items-center text-[13.5px] md:text-[14.5px] font-bold">
                 The score that matters
               </div>
-              <div className="p-5 md:p-6 border-l border-white/10 bg-white/[0.04]">
+              <div className="p-5 md:p-6 flex items-center border-l border-white/10 bg-white/[0.04]">
                 <span className="inline-flex items-center gap-2 rounded-full bg-[#f59e0b] text-[#111827] px-3 py-1.5 text-[12px] font-extrabold tracking-tight">
                   CLB 7+ guaranteed path
                 </span>
               </div>
-              <div className="p-5 md:p-6 border-l border-white/10 text-white/60 text-[13px]">
+              <div className="p-5 md:p-6 flex items-center border-l border-white/10 text-white/60 text-[13px]">
                 Not the focus.
               </div>
             </div>
