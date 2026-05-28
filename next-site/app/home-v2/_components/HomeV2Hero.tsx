@@ -40,10 +40,10 @@ export default function HomeV2Hero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[88%_center] md:object-[75%_center] lg:object-[center_center]"
+          className="object-cover object-[78%_center] md:object-[75%_center] lg:object-[center_center]"
         />
         {/* White wash only on the LEFT, fully transparent on the right so Vyom stays crisp */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,0.97)_50%,rgba(255,255,255,0.55)_70%,rgba(255,255,255,0)_88%)] md:bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,0.95)_32%,rgba(255,255,255,0.55)_50%,rgba(255,255,255,0)_65%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.98)_0%,rgba(255,255,255,0.9)_38%,rgba(255,255,255,0.35)_55%,rgba(255,255,255,0)_72%)] md:bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,0.95)_32%,rgba(255,255,255,0.55)_50%,rgba(255,255,255,0)_65%)]" />
       </motion.div>
 
       {/* Decorative blurs — keep the original brand glow but lighter now that there's a photo */}
