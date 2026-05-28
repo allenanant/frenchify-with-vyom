@@ -35,24 +35,6 @@ export default function FloatingLeadButton() {
 
   return (
     <>
-      {/* Hidden preloader iframe — warms the form cache without sitting on top of the button */}
-      <iframe
-        src={FORM_URL}
-        title=""
-        aria-hidden="true"
-        tabIndex={-1}
-        style={{
-          position: 'fixed',
-          top: '-10000px',
-          left: '-10000px',
-          width: '1px',
-          height: '1px',
-          opacity: 0,
-          pointerEvents: 'none',
-          border: 0,
-        }}
-      />
-
       {!open && (
         <button
           type="button"
@@ -65,52 +47,60 @@ export default function FloatingLeadButton() {
         </button>
       )}
 
-      {open && (
-        <div
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[100] w-[min(80vw,323px)] max-h-[min(68vh,512px)] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col"
-          role="dialog"
-          aria-label="Get in touch"
+      {/* Always-mounted dialog so the iframe loads once and never re-loads.
+          When closed: physically positioned off-screen (top:-9999) so it cannot overlap the button or intercept clicks.
+          When open: snaps into bottom-right position with the already-loaded form. */}
+      <div
+        className="fixed z-[100] w-[min(80vw,323px)] max-h-[min(68vh,512px)] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col"
+        style={
+          open
+            ? { bottom: 16, right: 16, opacity: 1, pointerEvents: 'auto' }
+            : { top: -9999, left: -9999, opacity: 0, pointerEvents: 'none' }
+        }
+        role="dialog"
+        aria-label="Get in touch"
+        aria-hidden={!open}
+        {...(!open && { inert: '' })}
+      >
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          aria-label="Close form"
+          className="absolute top-2 right-2 z-10 w-[25px] h-[25px] rounded-full bg-white/90 hover:bg-gray-100 flex items-center justify-center text-gray-700 transition-colors"
         >
-          <button
-            type="button"
-            onClick={() => setOpen(false)}
-            aria-label="Close form"
-            className="absolute top-2 right-2 z-10 w-[25px] h-[25px] rounded-full bg-white/90 hover:bg-gray-100 flex items-center justify-center text-gray-700 transition-colors"
-          >
-            <X className="w-[14px] h-[14px]" aria-hidden="true" />
-          </button>
+          <X className="w-[14px] h-[14px]" aria-hidden="true" />
+        </button>
 
-          <div className="bg-brand-gradient text-white px-4 pt-3 pb-2.5 shrink-0">
-            <h3 className="font-display text-base font-semibold tracking-tight pr-10 leading-tight">
-              Contact Us
-            </h3>
-            <p className="text-white/90 text-[11px] mt-0.5 leading-snug">
-              Drop your details &mdash; we&apos;ll get back to you shortly.
-            </p>
-          </div>
-
-          <div className="px-2 py-1 overflow-y-auto">
-            <iframe
-              src={FORM_URL}
-              style={{ width: '100%', height: '440px', border: 'none', borderRadius: '3px' }}
-              id="inline-hNHsUQGDYnwiWeSJKXSe-floating"
-              loading="eager"
-              data-layout="{'id':'INLINE'}"
-              data-trigger-type="alwaysShow"
-              data-trigger-value=""
-              data-activation-type="alwaysActivated"
-              data-activation-value=""
-              data-deactivation-type="neverDeactivate"
-              data-deactivation-value=""
-              data-form-name="Contact us form"
-              data-height="440"
-              data-layout-iframe-id="inline-hNHsUQGDYnwiWeSJKXSe-floating"
-              data-form-id="hNHsUQGDYnwiWeSJKXSe"
-              title="Contact us form"
-            />
-          </div>
+        <div className="bg-brand-gradient text-white px-4 pt-3 pb-2.5 shrink-0">
+          <h3 className="font-display text-base font-semibold tracking-tight pr-10 leading-tight">
+            Contact Us
+          </h3>
+          <p className="text-white/90 text-[11px] mt-0.5 leading-snug">
+            Drop your details &mdash; we&apos;ll get back to you shortly.
+          </p>
         </div>
-      )}
+
+        <div className="px-2 py-1 overflow-y-auto">
+          <iframe
+            src={FORM_URL}
+            style={{ width: '100%', height: '440px', border: 'none', borderRadius: '3px' }}
+            id="inline-hNHsUQGDYnwiWeSJKXSe-floating"
+            loading="eager"
+            data-layout="{'id':'INLINE'}"
+            data-trigger-type="alwaysShow"
+            data-trigger-value=""
+            data-activation-type="alwaysActivated"
+            data-activation-value=""
+            data-deactivation-type="neverDeactivate"
+            data-deactivation-value=""
+            data-form-name="Contact us form"
+            data-height="440"
+            data-layout-iframe-id="inline-hNHsUQGDYnwiWeSJKXSe-floating"
+            data-form-id="hNHsUQGDYnwiWeSJKXSe"
+            title="Contact us form"
+          />
+        </div>
+      </div>
 
       <Script src="https://link.msgsndr.com/js/form_embed.js" strategy="afterInteractive" />
     </>
