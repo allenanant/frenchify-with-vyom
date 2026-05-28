@@ -15,10 +15,10 @@ const stats = [
   },
   {
     Icon: Award,
-    value: 28,
+    value: 75,
     suffix: '+',
-    label: 'Verified CLB 7+ results',
-    sub: 'Public scorecards & screenshots',
+    label: 'Verified TEF/TCF results',
+    sub: 'CLB 5 + CLB 7+ scorecards on public page',
     accent: 'from-[#f59e0b] to-[#fbbf24]',
   },
   {
