@@ -166,7 +166,7 @@ export default function HomeV2StudentShowcase() {
             className="flex gap-6 w-max"
             animate={{ x: ['0%', '-33.333%'] }}
             transition={{
-              duration: 60,
+              duration: 45,
               repeat: Infinity,
               ease: 'linear',
             }}
