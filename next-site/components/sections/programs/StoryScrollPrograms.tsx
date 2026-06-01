@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CheckCircle2 } from 'lucide-react';
@@ -27,7 +27,7 @@ const CHAPTERS: Chapter[] = [
     index: '01',
     tag: 'Chapter 01 — Beginner',
     badge: 'A1 · Intensive · Live',
-    title: 'Frenchify A1 Intensive Program',
+    title: 'Frenchify A1 Program',
     body:
       'New to French? This is your starting point. Build a solid foundation and kickstart your TEF Canada journey with our step-by-step A1 French Program—perfect for absolute beginners.',
     metaLeftLabel: 'Level',
@@ -45,7 +45,7 @@ const CHAPTERS: Chapter[] = [
     index: '02',
     tag: 'Chapter 02 — Elementary',
     badge: 'A2 · Intensive · Live',
-    title: 'Frenchify A2 Intensive Program',
+    title: 'Frenchify A2 Program',
     body:
       "Already mastered the basics and completed A1? Now it's time to deepen your skills, expand your French knowledge with real-life language learning inputs.",
     metaLeftLabel: 'Level',
@@ -97,11 +97,11 @@ const CHAPTERS: Chapter[] = [
   },
 ];
 
-const HERO_INDEX = [
-  { num: '01', label: 'A1 Intensive' },
-  { num: '02', label: 'A2 Intensive' },
-  { num: '03', label: 'B1 TEF/TCF' },
-  { num: '04', label: 'B2 TEF/TCF' },
+const HERO_JOURNEY = [
+  { num: '01', level: 'A1', track: 'Intensive' },
+  { num: '02', level: 'A2', track: 'Intensive' },
+  { num: '03', level: 'B1', track: 'TEF/TCF' },
+  { num: '04', level: 'B2', track: 'TEF/TCF' },
 ];
 
 const INTENSIVE_BULLETS = [
@@ -126,13 +126,13 @@ const ArrowIcon = () => (
 
 function ChapterBlock({ chapter }: { chapter: Chapter }) {
   const media = (
-    <div className="chapter-media">
+    <div className={`chapter-media ${chapter.imageLeft ? '' : 'md:order-2'}`}>
       <img src={chapter.image} alt="" loading="lazy" />
     </div>
   );
 
   const text = (
-    <div className="chapter-text relative">
+    <div className={`chapter-text relative ${chapter.imageLeft ? '' : 'md:order-1'}`}>
       <div className="chap-index">{chapter.index}</div>
       <span className="side-tag">{chapter.tag}</span>
       <div className="max-w-xl">
@@ -163,17 +163,8 @@ function ChapterBlock({ chapter }: { chapter: Chapter }) {
 
   return (
     <section className="chapter grid md:grid-cols-2">
-      {chapter.imageLeft ? (
-        <>
-          {media}
-          {text}
-        </>
-      ) : (
-        <>
-          {text}
-          {media}
-        </>
-      )}
+      {media}
+      {text}
     </section>
   );
 }
@@ -186,6 +177,8 @@ export default function StoryScrollPrograms() {
     gsap.registerPlugin(ScrollTrigger);
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) return;
+    // Skip pin/rotation scroll-trigger on mobile — sections flow naturally below 768px
+    if (window.innerWidth < 768) return;
 
     const root = rootRef.current;
     if (!root) return;
@@ -277,22 +270,39 @@ export default function StoryScrollPrograms() {
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <a href="#track-1" className="ssp-btn-primary">
-              Explore Intensive Programs
+              Explore Programs
             </a>
           </div>
 
-          {/* chapter index strip */}
-          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-[#F3F4F6] pt-10">
-            {HERO_INDEX.map((it) => (
-              <div key={it.num}>
-                <div className="text-xs tracking-[0.22em] uppercase text-[#6B7280] font-semibold">
-                  {it.num}
-                </div>
-                <div className="ssp-display text-[#111827] mt-2 text-sm font-semibold">
-                  {it.label}
-                </div>
-              </div>
-            ))}
+          {/* learning journey */}
+          <div className="hero-journey-wrap mt-14">
+            <span className="hero-journey-eyebrow">Your Learning Journey</span>
+            <div className="hero-journey">
+              {HERO_JOURNEY.map((it, i) => (
+                <Fragment key={it.num}>
+                  <div className="hero-journey-card">
+                    <span className="hjc-badge">{it.level}</span>
+                    <span className="hjc-track">{it.track}</span>
+                  </div>
+                  {i < HERO_JOURNEY.length - 1 && (
+                    <span className="hero-journey-arrow" aria-hidden="true">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M5 12h14M13 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                  )}
+                </Fragment>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -308,7 +318,7 @@ export default function StoryScrollPrograms() {
                 <span className="dot"></span> Track One — Live + Online
               </span>
               <h3 className="mt-5">
-                Intensive Courses (Online Course + Live Sessions)
+                Frenchify program (online course + live session)
               </h3>
               <p>
                 Accelerate your French learning with structured guidance, live
@@ -551,10 +561,20 @@ export default function StoryScrollPrograms() {
         .hero-headline {
           font-family: var(--font-display), 'Sora', sans-serif;
           font-weight: 700;
-          line-height: 1;
+          line-height: 1.08;
           letter-spacing: -0.025em;
-          font-size: clamp(2.5rem, 7vw, 5.25rem);
+          font-size: 64px;
           color: #111827;
+        }
+        @media (max-width: 1023px) {
+          .hero-headline {
+            font-size: 48px;
+          }
+        }
+        @media (max-width: 767px) {
+          .hero-headline {
+            font-size: 36px;
+          }
         }
 
         .gradient-text {
@@ -572,6 +592,139 @@ export default function StoryScrollPrograms() {
           font-size: 12px;
           font-weight: 600;
           color: #2563eb;
+        }
+
+        /* Learning journey */
+        .hero-journey-wrap {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 18px;
+        }
+        .hero-journey-eyebrow {
+          font-family: var(--font-inter), 'Inter', sans-serif;
+          text-transform: uppercase;
+          letter-spacing: 0.24em;
+          font-size: 11px;
+          font-weight: 700;
+          color: #9ca3af;
+        }
+        .hero-journey {
+          display: flex;
+          align-items: stretch;
+          justify-content: center;
+          width: 100%;
+          gap: 8px;
+        }
+        .hero-journey-card {
+          position: relative;
+          flex: 1 1 0;
+          max-width: 208px;
+          min-width: 0;
+          background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+          border: 1px solid #eef0f4;
+          border-radius: 20px;
+          padding: 24px 16px 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+          text-align: center;
+          overflow: hidden;
+          box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04),
+            0 16px 36px -24px rgba(17, 24, 39, 0.3);
+          transition: transform 0.32s cubic-bezier(0.2, 0.7, 0.3, 1),
+            box-shadow 0.32s ease, border-color 0.32s ease;
+        }
+        .hero-journey-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, #2563eb 0%, #f59e0b 100%);
+        }
+        .hero-journey-card:hover {
+          transform: translateY(-6px);
+          border-color: #d7e0fb;
+          box-shadow: 0 1px 2px rgba(17, 24, 39, 0.05),
+            0 26px 50px -26px rgba(37, 99, 235, 0.45);
+        }
+        .hjc-badge {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 60px;
+          height: 60px;
+          border-radius: 999px;
+          background: linear-gradient(
+            135deg,
+            #2563eb 0%,
+            #4f7cf7 45%,
+            #f59e0b 135%
+          );
+          color: #ffffff;
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-size: 23px;
+          font-weight: 800;
+          letter-spacing: -0.01em;
+          box-shadow: 0 10px 22px -10px rgba(37, 99, 235, 0.6);
+          transition: transform 0.32s cubic-bezier(0.2, 0.7, 0.3, 1);
+        }
+        .hero-journey-card:hover .hjc-badge {
+          transform: scale(1.07);
+        }
+        .hjc-track {
+          font-family: var(--font-inter), 'Inter', sans-serif;
+          font-size: 12.5px;
+          font-weight: 600;
+          color: #2563eb;
+          background: #eff4ff;
+          border: 1px solid #e2eaff;
+          padding: 5px 13px;
+          border-radius: 999px;
+          white-space: nowrap;
+        }
+        .hero-journey-arrow {
+          flex: 0 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #b7c4e3;
+        }
+        @media (max-width: 640px) {
+          .hero-journey {
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+          }
+          .hero-journey-card {
+            flex: 0 0 auto;
+            width: auto;
+            max-width: 100%;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            padding: 12px 22px 12px 14px;
+            border-radius: 999px;
+          }
+          .hero-journey-card::before {
+            display: none;
+          }
+          .hjc-badge {
+            width: 46px;
+            height: 46px;
+            font-size: 18px;
+          }
+          .hjc-track {
+            font-size: 14px;
+          }
+          .hero-journey-arrow {
+            transform: rotate(90deg);
+            padding: 7px 0;
+          }
         }
 
         /* Scroll cue */
@@ -663,7 +816,8 @@ export default function StoryScrollPrograms() {
           }
           .chapter-media {
             position: relative;
-            height: 60vh;
+            height: auto;
+            aspect-ratio: 4 / 3;
           }
         }
 
@@ -1056,7 +1210,29 @@ export default function StoryScrollPrograms() {
             font-size: 16px;
           }
           .ssp-hero {
-            padding: 5rem 1.25rem 5rem;
+            padding: 50px 1.25rem;
+            min-height: auto;
+          }
+          /* cap hero content spacing at 25px on mobile */
+          .ssp-hero > div > * + * {
+            margin-top: 25px;
+          }
+          /* Drop 100vh chapter heights on mobile — sections flow naturally */
+          [data-flow-section],
+          [data-flow-section] .flow-art-container,
+          .chapter {
+            min-height: auto;
+          }
+          /* meta-row stacks to one column on mobile */
+          .meta-row {
+            grid-template-columns: 1fr;
+          }
+          .meta-cell + .meta-cell {
+            border-left: 0;
+            border-top: 1px solid #f3f4f6;
+          }
+          .meta-cell {
+            padding: 0.95rem 1.1rem;
           }
         }
       `}</style>
