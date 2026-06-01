@@ -14,8 +14,6 @@ const rows: Row[] = [
   { label: 'TEF / TCF exam-focused syllabus from day one', frenchify: true, traditional: false },
   { label: 'Live doubt sessions every week', frenchify: '4 per week', traditional: 'Rare' },
   { label: 'Self-paced lectures (study around work)', frenchify: true, traditional: false },
-  { label: 'Full mock exams with feedback', frenchify: 'B1 onwards', traditional: 'B2 only' },
-  { label: 'Personalised CLB target tracking', frenchify: true, traditional: false },
   { label: 'A1 → B2 completion timeline', frenchify: '6 months', traditional: '12-18 months' },
   { label: 'One mentor for the full journey', frenchify: 'Vyom', traditional: 'Rotating tutors' },
   { label: 'Public CLB 7+ verified scorecards', frenchify: '28+', traditional: '—' },
@@ -91,7 +89,7 @@ export default function HomeV2Comparison() {
         <Reveal delay={0.15}>
           <div className="overflow-hidden rounded-3xl border border-[#e5e7eb] bg-white shadow-[0_30px_60px_-30px_rgba(15,23,42,0.15)]">
             {/* Header */}
-            <div className="grid grid-cols-3 md:grid-cols-[2fr_1fr_1fr] bg-[#F9FAFB] border-b border-[#e5e7eb]">
+            <div className="grid grid-cols-[1.7fr_1fr_1fr] md:grid-cols-[2fr_1fr_1fr] bg-[#F9FAFB] border-b border-[#e5e7eb]">
               <div className="p-3 md:p-6 flex items-center text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#6B7280]">
                 Feature
               </div>
@@ -121,7 +119,7 @@ export default function HomeV2Comparison() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ duration: 0.45, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                  className="grid grid-cols-3 md:grid-cols-[2fr_1fr_1fr] hover:bg-[#F9FAFB]/50 transition-colors"
+                  className="grid grid-cols-[1.7fr_1fr_1fr] md:grid-cols-[2fr_1fr_1fr] hover:bg-[#F9FAFB]/50 transition-colors"
                 >
                   <div className="p-3 md:p-6 flex items-center text-[12px] md:text-[14.5px] font-semibold text-[#252525] leading-snug">
                     {r.label}
@@ -137,7 +135,7 @@ export default function HomeV2Comparison() {
             </div>
 
             {/* Footer */}
-            <div className="grid grid-cols-3 md:grid-cols-[2fr_1fr_1fr] bg-gradient-to-r from-[#0A1426] to-[#0b1d3a] text-white">
+            <div className="grid grid-cols-[1.7fr_1fr_1fr] md:grid-cols-[2fr_1fr_1fr] bg-gradient-to-r from-[#0A1426] to-[#0b1d3a] text-white">
               <div className="p-3 md:p-6 flex items-center text-[12px] md:text-[14.5px] font-bold leading-snug">
                 The score that matters
               </div>

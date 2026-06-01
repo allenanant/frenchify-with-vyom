@@ -6,7 +6,7 @@ const items = [
   'TEF Canada',
   'CLB 7+',
   'Express Entry',
-  '28+ Verified Results',
+  '100+ verified',
   'TCF Canada',
   'CLB 9 Speaking',
   '4+ Years Training',

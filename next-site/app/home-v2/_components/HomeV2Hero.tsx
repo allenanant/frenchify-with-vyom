@@ -26,13 +26,13 @@ export default function HomeV2Hero() {
     <section
       ref={sectionRef}
       id="home-v2-hero"
-      className="relative overflow-hidden bg-white min-h-[88vh] lg:min-h-[92vh]"
+      className="relative overflow-hidden bg-white md:min-h-[88vh] lg:min-h-[92vh]"
     >
-      {/* Background photo — anchored to the right so Vyom sits in the right half */}
+      {/* Background photo — desktop & tablet only; mobile uses a plain white bg */}
       <motion.div
         aria-hidden
         style={{ y: bgY, scale: bgScale }}
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 hidden md:block"
       >
         <Image
           src={HERO_IMAGE_SRC}
@@ -46,13 +46,13 @@ export default function HomeV2Hero() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.98)_0%,rgba(255,255,255,0.9)_38%,rgba(255,255,255,0.35)_55%,rgba(255,255,255,0)_72%)] md:bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,0.95)_32%,rgba(255,255,255,0.55)_50%,rgba(255,255,255,0)_65%)]" />
       </motion.div>
 
-      {/* Decorative blurs — keep the original brand glow but lighter now that there's a photo */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
+      {/* Decorative blurs — desktop & tablet only; mobile stays plain white */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 hidden md:block">
         <div className="absolute -top-40 -left-32 h-[480px] w-[480px] rounded-full bg-[#2563eb] opacity-[0.06] blur-[160px]" />
         <div className="absolute inset-0 hero-pattern-animated opacity-30" />
       </div>
 
-      <div className="relative mx-auto w-full max-w-[1440px] px-5 md:px-10 lg:px-14 pt-12 pb-20 md:pt-20 md:pb-28 lg:pt-24 lg:pb-32">
+      <div className="relative mx-auto w-full max-w-[1440px] px-5 md:px-10 lg:px-14 pt-12 pb-0 md:pt-20 md:pb-28 lg:pt-24 lg:pb-32">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
           {/* LEFT: Headline + CTA (kept on left so it doesn't overlap Vyom) */}
           <motion.div style={{ y: titleY }} className="lg:col-span-7 relative z-10">
@@ -137,7 +137,7 @@ export default function HomeV2Hero() {
               <div className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-3 text-[13px] text-[#4b5563]">
                 <span className="inline-flex items-center gap-1.5">
                   <BadgeCheck className="h-4 w-4 text-[#16a34a]" />
-                  <span className="font-medium">28+ CLB 7+ verified results</span>
+                  <span className="font-medium">100+ verified</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <Globe2 className="h-4 w-4 text-[#2563eb]" />
@@ -149,28 +149,22 @@ export default function HomeV2Hero() {
                 </span>
               </div>
             </Reveal>
+
+            {/* Mobile-only full-width hero image (below the content) */}
+            <div className="md:hidden -mx-5 mt-8">
+              <Image
+                src="/hero-bg-sm.jpg"
+                alt="Vyom mentoring a live French class"
+                width={770}
+                height={726}
+                priority
+                unoptimized
+                className="block w-full h-auto"
+              />
+            </div>
           </motion.div>
 
         </div>
-      </div>
-
-      {/* Scroll cue */}
-      <div className="relative pb-6 flex justify-center">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.4, duration: 0.6 }}
-          className="flex flex-col items-center gap-2 text-[#6B7280]"
-        >
-          <span className="text-[10px] font-bold uppercase tracking-[0.24em]">
-            Scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-            className="h-8 w-[1px] bg-gradient-to-b from-[#2563eb] to-transparent"
-          />
-        </motion.div>
       </div>
     </section>
   );
