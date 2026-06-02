@@ -419,6 +419,25 @@
     .ed-card__title { font-size: 1.4rem; }
   }
 
+  /* === A1 program comparison: two cards side-by-side (vertical), equal height, compact === */
+  .ed-compare { align-items: stretch; }
+  .ed-compare .ed-card { height: 100%; }
+  .ed-compare .ed-card__body { justify-content: flex-start; padding: 22px 26px 24px; }
+  /* slim image banner keeps the photo but cuts the section height */
+  .ed-compare .ed-card__media { aspect-ratio: auto; height: 168px; }
+  .ed-compare .ed-card__title { margin-bottom: 8px; }
+  .ed-compare .ed-card__price { margin: 10px 0 2px; }
+  .ed-compare .ed-card__bullets { margin-top: 10px; }
+  @media (min-width: 768px) {
+    /* keep comparison cards vertical (image on top) instead of the alternating editorial row */
+    .ed-compare .ed-card,
+    .ed-compare .ed-card:nth-child(even) { flex-direction: column; min-height: 0; }
+    .ed-compare .ed-card__media { flex: 0 0 auto; height: 176px; }
+    .ed-compare .ed-card__body { flex: 1; padding: 24px 30px 28px; }
+    /* reserve two lines for the short description so the price rows line up for comparison */
+    .ed-compare .ed-card__desc { min-height: 3.04em; }
+  }
+
   /* mini themed card (Why / Outcomes) */
   .ed-mini {
     border-radius: 18px; padding: 28px 26px;
@@ -697,7 +716,7 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
+      <div class="ed-compare grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto items-stretch">
         <a href="https://link.fastpaydirect.com/payment-link/67e8ba24717876a0a6a43b45" target="_blank" rel="noopener noreferrer" class="reveal ed-card theme-sky">
           <div class="ed-card__media">
             <span class="ed-card__circle"></span>
