@@ -3,7 +3,7 @@ import path from 'path';
 import Script from 'next/script';
 
 export const metadata = {
-  title: 'Frenchify with Vyom A1 Program',
+  title: 'Frenchify with Vyom A1 Level',
   description:
     'Start Your French Journey with A1. Build your French foundation the right way — grammar, pronunciation and daily practice structured to get you exam-ready faster than you think.',
 };

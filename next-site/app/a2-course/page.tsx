@@ -3,7 +3,7 @@ import path from 'path';
 import Script from 'next/script';
 
 export const metadata = {
-  title: 'Frenchify with Vyom A2 Program',
+  title: 'Frenchify with Vyom A2 Level',
   description:
     'Speak French with Confidence by the End of A2. Complete step-by-step system to build real grammar, pronunciation and speaking fluency from A2 all the way to TEF Canada Exam Preparation.',
 };

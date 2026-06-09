@@ -3,7 +3,7 @@ import path from 'path';
 import Script from 'next/script';
 
 export const metadata = {
-  title: 'Frenchify with Vyom B1 Program',
+  title: 'Frenchify with Vyom B1 Level',
   description:
     'Your Foundation for TEF/TCF Canada. Build a strong foundation in advanced French and begin focused TEF/TCF Canada preparation — flexible, structured, and mentorship-based.',
 };
