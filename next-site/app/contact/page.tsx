@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Script from 'next/script';
-import { Calendar, Phone, Mail } from 'lucide-react';
+import { Calendar, MessageCircle, Mail } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
 import Magnetic from '@/components/motion/Magnetic';
 
@@ -9,6 +9,16 @@ export const metadata = {
   description:
     "Get in touch with Frenchify. Send us your details and we'll get back to you shortly.",
 };
+
+// Specific instructor meets shown on the contact page. Only meets with an
+// existing GHL booking link are clickable; others are placeholders until their
+// links are provided.
+const meets: { label: string; href: string | null }[] = [
+  { label: 'Clarity Calls', href: 'https://frenchifywithvyom.com/tef-success--clarity-call' },
+  { label: 'TEF Guidance', href: 'https://api.leadconnectorhq.com/widget/booking/WATTU6fLCIqmDmFUuB4k' },
+  { label: 'Analysis Test', href: 'https://frenchifywithvyom.com/analysis-page' },
+  { label: 'Meeting with Karan', href: null },
+];
 
 export default function ContactPage() {
   return (
@@ -65,25 +75,61 @@ export default function ContactPage() {
                   <Magnetic>
                     <Link
                       href="/book-a-meet"
-                      className="inline-flex items-center gap-2 bg-brand-blue hover:bg-brand-blue-deep text-white font-semibold px-6 py-3 rounded-full shadow-[0_12px_28px_-8px_rgba(37,99,235,0.55)] hover:shadow-[0_18px_36px_-10px_rgba(37,99,235,0.65)] transform hover:-translate-y-0.5 transition-all duration-300"
+                      className="mt-2.5 inline-flex items-center gap-2 bg-brand-blue hover:bg-brand-blue-deep text-white font-semibold px-6 py-3 rounded-full shadow-[0_12px_28px_-8px_rgba(37,99,235,0.55)] hover:shadow-[0_18px_36px_-10px_rgba(37,99,235,0.65)] transform hover:-translate-y-0.5 transition-all duration-300"
                     >
                       <Calendar className="w-5 h-5" />
                       Click here to book a meet
                     </Link>
                   </Magnetic>
+
+                  {/* Specific instructor meets */}
+                  <div className="mt-6">
+                    <p className="text-gray-700 text-sm md:text-base mb-3 font-medium">
+                      Or book a specific session:
+                    </p>
+                    <div className="flex flex-wrap gap-2.5">
+                      {meets.map((meet) =>
+                        meet.href ? (
+                          <a
+                            key={meet.label}
+                            href={meet.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center text-sm font-medium text-brand-blue bg-blue-50 hover:bg-blue-100 border border-blue-100 px-4 py-2 rounded-full transition-colors"
+                          >
+                            {meet.label}
+                          </a>
+                        ) : (
+                          <span
+                            key={meet.label}
+                            className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 bg-gray-50 border border-gray-100 px-4 py-2 rounded-full cursor-not-allowed"
+                          >
+                            {meet.label}
+                            <span className="text-[10px] font-semibold uppercase tracking-wide">soon</span>
+                          </span>
+                        )
+                      )}
+                    </div>
+                  </div>
                 </div>
 
-                {/* Phone + email */}
+                {/* WhatsApp + email */}
                 <div className="border-t border-gray-100 pt-6 space-y-4">
                   <div className="flex items-start gap-3">
                     <div className="bg-blue-100 w-11 h-11 rounded-full flex items-center justify-center text-brand-blue shrink-0">
-                      <Phone className="w-5 h-5" />
+                      <MessageCircle className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="font-display font-semibold text-gray-900">Phone</p>
-                      <a href="tel:5147265114" className="text-gray-600 hover:text-brand-blue">
-                        (514) 726-5114
+                      <p className="font-display font-semibold text-gray-900">WhatsApp</p>
+                      <a
+                        href="https://wa.me/14388131377"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-600 hover:text-brand-blue"
+                      >
+                        +1 438-813-1377
                       </a>
+                      <p className="text-gray-500 text-sm">Text only &mdash; please message, no calls</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
