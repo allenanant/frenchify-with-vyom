@@ -13,10 +13,11 @@ type Row = {
 const rows: Row[] = [
   { label: 'TEF / TCF exam-focused syllabus from day one', frenchify: true, traditional: false },
   { label: 'Live doubt sessions every week', frenchify: '4 per week', traditional: 'Rare' },
-  { label: 'Self-paced lectures (study around work)', frenchify: true, traditional: false },
-  { label: 'A1 → B2 completion timeline', frenchify: '6 months', traditional: '12-18 months' },
-  { label: 'One mentor for the full journey', frenchify: 'Vyom', traditional: 'Rotating tutors' },
+  { label: 'Flexible Classes and Curriculum', frenchify: true, traditional: false },
+  { label: 'A1 → B2 completion timeline', frenchify: '8+ Months', traditional: '8-10 Months' },
+  { label: 'TEF Certified Instructors', frenchify: '10+', traditional: 'No certification' },
   { label: 'Public CLB 7+ verified scorecards', frenchify: '28+', traditional: '—' },
+  { label: 'Real results', frenchify: '75+', traditional: 'No real results' },
 ];
 
 function Cell({ value, highlight }: { value: boolean | string; highlight?: boolean }) {

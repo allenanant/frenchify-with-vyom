@@ -23,7 +23,7 @@ const stats = [
   },
   {
     Icon: TrendingUp,
-    value: 12,
+    value: 10,
     suffix: ' mo',
     label: 'Average time to fluency',
     sub: 'Beginner → exam-ready',

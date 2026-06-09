@@ -78,7 +78,7 @@ export default function HomeV2BentoFeatures() {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
                   </span>
                   <div className="text-[12.5px] font-semibold text-white/85 leading-tight">
-                    Lecture replays on-demand · Live doubt calls 4×/week
+                    Lecture replays on-demand · sessions 4×/week
                   </div>
                 </div>
               </div>
@@ -108,19 +108,59 @@ export default function HomeV2BentoFeatures() {
                 Work Permit. A step-by-step order makes the syllabus easy to consume.
               </p>
 
-              <div className="relative mt-8 rounded-2xl border border-dashed border-[#dbeafe] bg-[#F5FBFF] p-4">
-                <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-[0.16em] text-[#2667FF]">
-                  <span>Pace</span>
-                  <span>2.4× faster</span>
+              <div className="relative mt-8 overflow-hidden rounded-2xl border border-[#e6eefb] bg-gradient-to-br from-[#F5FBFF] via-white to-[#FFF7EC] p-5">
+                <div className="absolute -top-10 -right-8 h-28 w-28 rounded-full bg-[#f59e0b]/10 blur-2xl" />
+                <div className="relative flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#2667FF]">
+                    Fast-track roadmap
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-[0.12em] text-[#f59e0b]">
+                    <Zap className="h-3 w-3" strokeWidth={2.8} />
+                    Exam-ready
+                  </span>
                 </div>
-                <div className="mt-3 h-2 w-full rounded-full bg-white overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: '78%' }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                    className="h-full rounded-full bg-gradient-to-r from-[#2563eb] to-[#f59e0b]"
-                  />
+
+                <div className="relative mt-7 mb-1">
+                  {/* connecting track + animated gradient progress, inset to node centres */}
+                  <div className="absolute left-[18px] right-[18px] top-[15px] h-[3px] rounded-full bg-[#e2e9f6] overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: '100%' }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+                      className="h-full rounded-full bg-gradient-to-r from-[#2563eb] via-[#3b82f6] to-[#f59e0b]"
+                    />
+                  </div>
+                  <div className="relative flex items-start justify-between">
+                    {[
+                      { lvl: 'A1', tag: 'Start' },
+                      { lvl: 'A2', tag: 'Build' },
+                      { lvl: 'B1', tag: 'Refine' },
+                      { lvl: 'B2', tag: 'Exam' },
+                    ].map((s, i) => (
+                      <motion.div
+                        key={s.lvl}
+                        initial={{ opacity: 0, y: 10, scale: 0.7 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.25 + i * 0.18, type: 'spring', stiffness: 320, damping: 20 }}
+                        className="relative flex flex-col items-center gap-2"
+                      >
+                        <span
+                          className={`grid h-9 w-9 place-items-center rounded-full text-[11px] font-extrabold text-white ring-4 ring-white ${
+                            i === 3
+                              ? 'bg-gradient-to-br from-[#f59e0b] to-[#fbbf24] shadow-[0_10px_20px_-8px_rgba(245,158,11,0.65)]'
+                              : 'bg-gradient-to-br from-[#2563eb] to-[#3b82f6] shadow-[0_10px_20px_-8px_rgba(37,99,235,0.6)]'
+                          }`}
+                        >
+                          {s.lvl}
+                        </span>
+                        <span className="text-[9.5px] font-bold uppercase tracking-[0.1em] text-[#6B7280]">
+                          {s.tag}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -197,10 +237,10 @@ export default function HomeV2BentoFeatures() {
 
               <div className="relative mt-10 grid grid-cols-2 gap-3 max-w-md">
                 {[
-                  { l: 'Live doubt sessions', v: '4 / week' },
-                  { l: 'Speaking labs', v: 'Weekly' },
-                  { l: 'Mock exams', v: 'B1 onward' },
-                  { l: 'Direct mentor reply', v: '<24 hrs' },
+                  { l: 'Live Sessions and Community Access', v: '3 months per level' },
+                  { l: 'Speaking & Writing Assignments', v: 'At every level' },
+                  { l: 'TEF/TCF Intensive Prep.', v: 'B1 onwards' },
+                  { l: 'Direct support & community engagement', v: 'In student community portal' },
                 ].map((p, i) => (
                   <motion.div
                     key={p.l}
