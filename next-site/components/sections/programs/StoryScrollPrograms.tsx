@@ -27,13 +27,13 @@ const CHAPTERS: Chapter[] = [
     index: '01',
     tag: 'Chapter 01 — Beginner',
     badge: 'A1 · Intensive · Live',
-    title: 'Frenchify A1 Program',
+    title: 'Frenchify A1 Level',
     body:
       'New to French? This is your starting point. Build a solid foundation and kickstart your TEF Canada journey with our step-by-step A1 French Program—perfect for absolute beginners.',
     metaLeftLabel: 'Level',
     metaLeftValue: 'A1 — Beginner',
     metaRightLabel: 'Format',
-    metaRightValue: 'Live + Recorded',
+    metaRightValue: 'Intensive or Flex',
     cta: 'Know More',
     href: 'https://frenchify-with-vyom.vercel.app/a1-course',
     image:
@@ -45,13 +45,13 @@ const CHAPTERS: Chapter[] = [
     index: '02',
     tag: 'Chapter 02 — Elementary',
     badge: 'A2 · Intensive · Live',
-    title: 'Frenchify A2 Program',
+    title: 'Frenchify A2 Level',
     body:
       "Already mastered the basics and completed A1? Now it's time to deepen your skills, expand your French knowledge with real-life language learning inputs.",
     metaLeftLabel: 'Level',
     metaLeftValue: 'A2 — Elementary',
     metaRightLabel: 'Format',
-    metaRightValue: 'Live + Recorded',
+    metaRightValue: 'Intensive or Flex',
     cta: 'Know More',
     href: 'https://frenchify-with-vyom.vercel.app/a2-course',
     image:
@@ -63,13 +63,13 @@ const CHAPTERS: Chapter[] = [
     index: '03',
     tag: 'Chapter 03 — Intermediate',
     badge: 'B1 · TEF/TCF · Live',
-    title: 'Frenchify B1 TEF/TCF Program',
+    title: 'Frenchify B1 Level',
     body:
       'Strengthen advanced grammar, expand vocabulary, and elevate all four TEF/TCF modules—Reading, Listening, Speaking, and Writing—with targeted practice and structured guidance.',
     metaLeftLabel: 'Level',
     metaLeftValue: 'B1 — Intermediate',
-    metaRightLabel: 'Exam',
-    metaRightValue: 'TEF + TCF',
+    metaRightLabel: 'Format',
+    metaRightValue: 'Intensive or Flex',
     cta: 'Know More',
     href: 'https://frenchify-with-vyom.vercel.app/b1-course',
     image:
@@ -81,13 +81,13 @@ const CHAPTERS: Chapter[] = [
     index: '04',
     tag: 'Chapter 04 — Upper Intermediate',
     badge: 'B2 · TEF/TCF · The All-In',
-    title: 'Frenchify B2 TEF/TCF Program',
+    title: 'Frenchify B2 Level',
     body:
       'The "All-In" —where strategy meets fluency for exam-specific preparation: mastering formats, perfecting timing, and practicing with real exam type questions to ace your test.',
     metaLeftLabel: 'Level',
     metaLeftValue: 'B2 — Upper Int.',
-    metaRightLabel: 'Focus',
-    metaRightValue: 'Exam Strategy',
+    metaRightLabel: 'Format',
+    metaRightValue: 'Intensive or Flex',
     cta: 'Know More',
     href: 'https://frenchify-with-vyom.vercel.app/b2-course',
     image:
@@ -105,10 +105,10 @@ const HERO_JOURNEY = [
 ];
 
 const INTENSIVE_BULLETS = [
-  'Online + Live learning',
-  'Designed specifically for learners aiming to rapidly achieve French proficiency for TEF Canada',
-  'Flexible learning journey that accommodates your own schedule and speed',
-  'With frequent live sessions, expert mentorship, and a vibrant community of fellow learners',
+  'Learn online at your own pace, backed by live sessions that keep you on track',
+  'TEF/TCF focused learning built into every unit, right from day one',
+  'Access everything — live sessions, lessons, and resources — through one dedicated portal and mobile app',
+  'A structured, easy to follow curriculum designed to work for every type of learner, regardless of background',
 ];
 
 const ArrowIcon = () => (
@@ -171,6 +171,9 @@ function ChapterBlock({ chapter }: { chapter: Chapter }) {
 
 export default function StoryScrollPrograms() {
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const journeyRef = useRef<HTMLDivElement | null>(null);
+  const hopperRef = useRef<HTMLDivElement | null>(null);
+  const spriteRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -229,6 +232,118 @@ export default function StoryScrollPrograms() {
     };
   }, []);
 
+  // Hero "Your Learning Journey" — a small character that hops across the
+  // level boxes (A1 -> A2 -> B1 -> B2) and bounces happily on the B2 box.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const journey = journeyRef.current;
+    const hopper = hopperRef.current;
+    const sprite = spriteRef.current;
+    if (!journey || !hopper || !sprite) return;
+    if (window.innerWidth < 641) {
+      hopper.style.display = 'none';
+      return;
+    }
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Two contrasting stride poses (legs gathered <-> legs extended) make a
+    // clean, readable run cycle; the other reference poses are near-duplicates.
+    const FRAMES = ['/journey/runner-1.png', '/journey/runner-2.png'];
+    FRAMES.forEach((f) => {
+      const pre = new Image();
+      pre.src = f;
+    });
+    let frameRAF = 0;
+    let fi = 0;
+    let last = 0;
+    const FRAME_MS = 130;
+    const cycle = (t: number) => {
+      if (!last) last = t;
+      if (t - last >= FRAME_MS) {
+        last = t;
+        fi = (fi + 1) % FRAMES.length;
+        sprite.src = FRAMES[fi];
+      }
+      frameRAF = window.requestAnimationFrame(cycle);
+    };
+
+    let tl: gsap.core.Timeline | null = null;
+    let cancelled = false;
+    let resizeRAF = 0;
+
+    const build = () => {
+      if (cancelled) return;
+      if (tl) {
+        tl.kill();
+        tl = null;
+      }
+      const cards = Array.from(
+        journey.querySelectorAll<HTMLElement>('.hero-journey-card')
+      );
+      if (cards.length < 2) return;
+      const jRect = journey.getBoundingClientRect();
+      const hw = hopper.getBoundingClientRect().width;
+      const xs = cards.map((c) => {
+        const r = c.getBoundingClientRect();
+        return r.left - jRect.left + r.width / 2 - hw / 2;
+      });
+
+      const APEX = -30; // jump height (kept inside the reserved lane)
+      gsap.set(hopper, { x: xs[0], y: 0, opacity: 1 });
+      if (reduce) return; // honour reduced-motion: place the runner, no motion
+
+      // One running leap to `toX`: a smooth parabolic arc with a soft landing.
+      const makeHop = (toX: number) => {
+        const h = gsap.timeline();
+        const flight = 0.55;
+        h.to(hopper, { x: toX, duration: flight, ease: 'sine.inOut' }, 0);
+        h.to(hopper, { y: APEX, duration: flight / 2, ease: 'power2.out' }, 0);
+        h.to(hopper, { y: 0, duration: flight / 2, ease: 'power2.in' }, flight / 2);
+        h.to(hopper, { y: -7, duration: 0.12, ease: 'power2.out' }, flight); // landing rebound
+        h.to(hopper, { y: 0, duration: 0.16, ease: 'power2.in' }, flight + 0.12);
+        h.to(hopper, { duration: 0.12 }, flight + 0.28); // brief beat on the box
+        return h;
+      };
+
+      // Joyful in-place celebration on the finish line (B2).
+      const makeCheer = (peak: number) => {
+        const c = gsap.timeline();
+        c.to(hopper, { y: peak, duration: 0.28, ease: 'power2.out' }, 0);
+        c.to(hopper, { y: 0, duration: 0.26, ease: 'power2.in' }, 0.28);
+        return c;
+      };
+
+      tl = gsap.timeline({ repeat: -1 });
+      for (let i = 1; i < xs.length; i++) tl.add(makeHop(xs[i]));
+      tl.add(makeCheer(-26));
+      tl.add(makeCheer(-14));
+      // Seamless loop — hold, fade out, reset to the start box while invisible,
+      // then fade back in so the restart is never seen.
+      tl.to(hopper, { duration: 0.7 });
+      tl.to(hopper, { opacity: 0, duration: 0.4, ease: 'power1.inOut' });
+      tl.set(hopper, { x: xs[0], y: 0 });
+      tl.to(hopper, { opacity: 1, duration: 0.4, ease: 'power1.inOut' });
+      tl.to(hopper, { duration: 0.4 });
+    };
+
+    const id = window.setTimeout(build, 350);
+    if (!reduce) frameRAF = window.requestAnimationFrame(cycle);
+    const onResize = () => {
+      window.cancelAnimationFrame(resizeRAF);
+      resizeRAF = window.requestAnimationFrame(build);
+    };
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(id);
+      window.cancelAnimationFrame(frameRAF);
+      window.cancelAnimationFrame(resizeRAF);
+      window.removeEventListener('resize', onResize);
+      if (tl) tl.kill();
+    };
+  }, []);
+
   // Progress bar
   const [progress, setProgress] = useState(0);
   useEffect(() => {
@@ -277,7 +392,16 @@ export default function StoryScrollPrograms() {
           {/* learning journey */}
           <div className="hero-journey-wrap mt-14">
             <span className="hero-journey-eyebrow">Your Learning Journey</span>
-            <div className="hero-journey">
+            <div className="hero-journey" ref={journeyRef}>
+              <div className="hjc-hopper" ref={hopperRef} aria-hidden="true">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  ref={spriteRef}
+                  className="hjc-hopper-sprite"
+                  src="/journey/runner-1.png"
+                  alt=""
+                />
+              </div>
               {HERO_JOURNEY.map((it, i) => (
                 <Fragment key={it.num}>
                   <div className="hero-journey-card">
@@ -318,7 +442,7 @@ export default function StoryScrollPrograms() {
                 <span className="dot"></span> Track One — Live + Online
               </span>
               <h3 className="mt-5">
-                Frenchify program (online course + live session)
+                Frenchify Programs — Explained in detail
               </h3>
               <p>
                 Accelerate your French learning with structured guidance, live
@@ -332,7 +456,7 @@ export default function StoryScrollPrograms() {
                 <div className="text-left">
                   <h3 className="font-display text-2xl md:text-3xl font-bold text-gray-900 mb-6 tracking-tight">
                     Frenchify{' '}
-                    <span className="gradient-text">Intensive Programs</span>
+                    <span className="gradient-text">Curriculum</span>
                   </h3>
                   <ul className="space-y-4 mb-8">
                     {INTENSIVE_BULLETS.map((b) => (
@@ -614,7 +738,40 @@ export default function StoryScrollPrograms() {
           align-items: stretch;
           justify-content: center;
           width: 100%;
-          gap: 8px;
+          gap: 20px;
+          position: relative;
+          /* reserved lane above the cards so the running character has room
+             and never overlaps the eyebrow / heading above it */
+          padding-top: 100px;
+        }
+        .hjc-hopper {
+          position: absolute;
+          top: 34px;
+          left: 0;
+          width: 80px;
+          height: 66px;
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+          pointer-events: none;
+          opacity: 0;
+          z-index: 5;
+          will-change: transform;
+        }
+        .hjc-hopper-sprite {
+          height: 66px;
+          width: auto;
+          display: block;
+          image-rendering: auto;
+          filter: drop-shadow(0 9px 7px rgba(17, 24, 39, 0.22));
+        }
+        @media (max-width: 640px) {
+          .hero-journey {
+            padding-top: 0;
+          }
+          .hjc-hopper {
+            display: none;
+          }
         }
         .hero-journey-card {
           position: relative;
