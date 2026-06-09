@@ -173,7 +173,6 @@ export default function StoryScrollPrograms() {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const journeyRef = useRef<HTMLDivElement | null>(null);
   const hopperRef = useRef<HTMLDivElement | null>(null);
-  const spriteRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -238,38 +237,15 @@ export default function StoryScrollPrograms() {
     if (typeof window === 'undefined') return;
     const journey = journeyRef.current;
     const hopper = hopperRef.current;
-    const sprite = spriteRef.current;
-    if (!journey || !hopper || !sprite) return;
-    if (window.innerWidth < 641) {
+    if (!journey || !hopper) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || window.innerWidth < 641) {
       hopper.style.display = 'none';
       return;
     }
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Two contrasting stride poses (legs gathered <-> legs extended) make a
-    // clean, readable run cycle; the other reference poses are near-duplicates.
-    const FRAMES = ['/journey/runner-1.png', '/journey/runner-2.png'];
-    FRAMES.forEach((f) => {
-      const pre = new Image();
-      pre.src = f;
-    });
-    let frameRAF = 0;
-    let fi = 0;
-    let last = 0;
-    const FRAME_MS = 130;
-    const cycle = (t: number) => {
-      if (!last) last = t;
-      if (t - last >= FRAME_MS) {
-        last = t;
-        fi = (fi + 1) % FRAMES.length;
-        sprite.src = FRAMES[fi];
-      }
-      frameRAF = window.requestAnimationFrame(cycle);
-    };
 
     let tl: gsap.core.Timeline | null = null;
     let cancelled = false;
-    let resizeRAF = 0;
 
     const build = () => {
       if (cancelled) return;
@@ -280,7 +256,8 @@ export default function StoryScrollPrograms() {
       const cards = Array.from(
         journey.querySelectorAll<HTMLElement>('.hero-journey-card')
       );
-      if (cards.length < 2) return;
+      const emoji = hopper.querySelector<HTMLElement>('.hjc-hopper-emoji');
+      if (cards.length < 2 || !emoji) return;
       const jRect = journey.getBoundingClientRect();
       const hw = hopper.getBoundingClientRect().width;
       const xs = cards.map((c) => {
@@ -288,57 +265,66 @@ export default function StoryScrollPrograms() {
         return r.left - jRect.left + r.width / 2 - hw / 2;
       });
 
-      const APEX = -30; // jump height (kept inside the reserved lane)
+      const APEX = -42; // peak of each jump (kept inside the reserved lane)
       gsap.set(hopper, { x: xs[0], y: 0, opacity: 1 });
-      if (reduce) return; // honour reduced-motion: place the runner, no motion
+      gsap.set(emoji, { scaleX: 1, scaleY: 1, transformOrigin: 'bottom center' });
 
-      // One running leap to `toX`: a smooth parabolic arc with a soft landing.
+      // One smooth, gravity-shaped hop to `toX`: squat -> spring up ->
+      // parabolic arc across -> soft squash landing -> elastic settle.
       const makeHop = (toX: number) => {
         const h = gsap.timeline();
-        const flight = 0.55;
-        h.to(hopper, { x: toX, duration: flight, ease: 'sine.inOut' }, 0);
-        h.to(hopper, { y: APEX, duration: flight / 2, ease: 'power2.out' }, 0);
-        h.to(hopper, { y: 0, duration: flight / 2, ease: 'power2.in' }, flight / 2);
-        h.to(hopper, { y: -7, duration: 0.12, ease: 'power2.out' }, flight); // landing rebound
-        h.to(hopper, { y: 0, duration: 0.16, ease: 'power2.in' }, flight + 0.12);
-        h.to(hopper, { duration: 0.12 }, flight + 0.28); // brief beat on the box
+        const crouch = 0.12;
+        const flight = 0.5;
+        const land = crouch + flight;
+        h.to(emoji, { scaleX: 1.14, scaleY: 0.86, duration: crouch, ease: 'power2.inOut' }, 0);
+        h.to(hopper, { x: toX, duration: flight, ease: 'sine.inOut' }, crouch);
+        h.to(hopper, { y: APEX, duration: flight / 2, ease: 'power2.out' }, crouch);
+        h.to(hopper, { y: 0, duration: flight / 2, ease: 'power2.in' }, crouch + flight / 2);
+        h.to(emoji, { scaleX: 0.9, scaleY: 1.12, duration: 0.18, ease: 'power1.out' }, crouch);
+        h.to(emoji, { scaleX: 1, scaleY: 1, duration: 0.18, ease: 'sine.inOut' }, crouch + flight * 0.55);
+        h.to(emoji, { scaleX: 1.18, scaleY: 0.82, duration: 0.09, ease: 'power2.out' }, land);
+        h.to(emoji, { scaleX: 1, scaleY: 1, duration: 0.34, ease: 'elastic.out(1, 0.5)' }, land + 0.09);
         return h;
       };
 
-      // Joyful in-place celebration on the finish line (B2).
+      // A joyful in-place bounce for the finish line (B2).
       const makeCheer = (peak: number) => {
         const c = gsap.timeline();
-        c.to(hopper, { y: peak, duration: 0.28, ease: 'power2.out' }, 0);
-        c.to(hopper, { y: 0, duration: 0.26, ease: 'power2.in' }, 0.28);
+        c.to(emoji, { scaleX: 1.1, scaleY: 0.9, duration: 0.1, ease: 'power2.inOut' }, 0);
+        c.to(hopper, { y: peak, duration: 0.26, ease: 'power2.out' }, 0.1);
+        c.to(emoji, { scaleX: 0.94, scaleY: 1.08, duration: 0.2, ease: 'power1.out' }, 0.1);
+        c.to(hopper, { y: 0, duration: 0.24, ease: 'power2.in' }, 0.36);
+        c.to(emoji, { scaleX: 1.12, scaleY: 0.86, duration: 0.09, ease: 'power2.out' }, 0.6);
+        c.to(emoji, { scaleX: 1, scaleY: 1, duration: 0.34, ease: 'elastic.out(1, 0.5)' }, 0.69);
         return c;
       };
 
       tl = gsap.timeline({ repeat: -1 });
       for (let i = 1; i < xs.length; i++) tl.add(makeHop(xs[i]));
-      tl.add(makeCheer(-26));
-      tl.add(makeCheer(-14));
-      // Seamless loop — hold, fade out, reset to the start box while invisible,
-      // then fade back in so the restart is never seen.
+      tl.add(makeCheer(-36));
+      tl.add(makeCheer(-22));
+      // Seamless loop: hold, fade out, teleport back to the start box while
+      // invisible, then fade in — so the restart is never seen.
       tl.to(hopper, { duration: 0.7 });
-      tl.to(hopper, { opacity: 0, duration: 0.4, ease: 'power1.inOut' });
+      tl.to(hopper, { opacity: 0, duration: 0.45, ease: 'power1.inOut' });
       tl.set(hopper, { x: xs[0], y: 0 });
-      tl.to(hopper, { opacity: 1, duration: 0.4, ease: 'power1.inOut' });
-      tl.to(hopper, { duration: 0.4 });
+      tl.set(emoji, { scaleX: 1, scaleY: 1 });
+      tl.to(hopper, { opacity: 1, duration: 0.45, ease: 'power1.inOut' });
+      tl.to(hopper, { duration: 0.5 });
     };
 
     const id = window.setTimeout(build, 350);
-    if (!reduce) frameRAF = window.requestAnimationFrame(cycle);
+    let rAF = 0;
     const onResize = () => {
-      window.cancelAnimationFrame(resizeRAF);
-      resizeRAF = window.requestAnimationFrame(build);
+      window.cancelAnimationFrame(rAF);
+      rAF = window.requestAnimationFrame(build);
     };
     window.addEventListener('resize', onResize);
 
     return () => {
       cancelled = true;
       window.clearTimeout(id);
-      window.cancelAnimationFrame(frameRAF);
-      window.cancelAnimationFrame(resizeRAF);
+      window.cancelAnimationFrame(rAF);
       window.removeEventListener('resize', onResize);
       if (tl) tl.kill();
     };
@@ -394,13 +380,7 @@ export default function StoryScrollPrograms() {
             <span className="hero-journey-eyebrow">Your Learning Journey</span>
             <div className="hero-journey" ref={journeyRef}>
               <div className="hjc-hopper" ref={hopperRef} aria-hidden="true">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  ref={spriteRef}
-                  className="hjc-hopper-sprite"
-                  src="/journey/runner-1.png"
-                  alt=""
-                />
+                <span className="hjc-hopper-emoji">🧑‍🎓</span>
               </div>
               {HERO_JOURNEY.map((it, i) => (
                 <Fragment key={it.num}>
@@ -742,14 +722,14 @@ export default function StoryScrollPrograms() {
           position: relative;
           /* reserved lane above the cards so the running character has room
              and never overlaps the eyebrow / heading above it */
-          padding-top: 100px;
+          padding-top: 88px;
         }
         .hjc-hopper {
           position: absolute;
-          top: 34px;
+          top: 46px;
           left: 0;
-          width: 80px;
-          height: 66px;
+          width: 40px;
+          height: 42px;
           display: flex;
           align-items: flex-end;
           justify-content: center;
@@ -758,12 +738,13 @@ export default function StoryScrollPrograms() {
           z-index: 5;
           will-change: transform;
         }
-        .hjc-hopper-sprite {
-          height: 66px;
-          width: auto;
-          display: block;
-          image-rendering: auto;
-          filter: drop-shadow(0 9px 7px rgba(17, 24, 39, 0.22));
+        .hjc-hopper-emoji {
+          display: inline-block;
+          font-size: 30px;
+          line-height: 1;
+          transform-origin: bottom center;
+          filter: drop-shadow(0 7px 6px rgba(17, 24, 39, 0.18));
+          will-change: transform;
         }
         @media (max-width: 640px) {
           .hero-journey {
