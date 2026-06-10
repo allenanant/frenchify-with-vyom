@@ -356,27 +356,27 @@ export default function StoryScrollPrograms() {
           <div className="text-center">
             <span className="hero-kicker">Programs 2026</span>
           </div>
-          <h1 className="hero-headline mt-6 text-center">
+          <h1 className="hero-headline mt-5 text-center">
             Our <span className="gradient-text">TEF/TCF Specific</span>
             <br />
             <span className="gradient-text">French Programs</span>
           </h1>
           <p
-            className="mt-8 max-w-3xl mx-auto text-center text-lg"
+            className="mt-5 max-w-3xl mx-auto text-center text-lg"
             style={{ color: '#4B5563' }}
           >
             Our French programs are specially designed for French learners for
             TEF/TCF/TEFAQ examinations — intensive courses paired with live
             sessions and expert mentorship.
           </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <a href="#track-1" className="ssp-btn-primary">
               Explore Programs
             </a>
           </div>
 
           {/* learning journey */}
-          <div className="hero-journey-wrap mt-14">
+          <div className="hero-journey-wrap mt-7">
             <span className="hero-journey-eyebrow">Your Learning Journey</span>
             <div className="hero-journey" ref={journeyRef}>
               <div className="hjc-hopper" ref={hopperRef} aria-hidden="true">
@@ -642,7 +642,7 @@ export default function StoryScrollPrograms() {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          padding: 6rem 2rem 6rem;
+          padding: clamp(4.5rem, 5vh, 6rem) 2rem clamp(2rem, 3.5vh, 3rem);
           background: #ffffff;
           overflow: hidden;
         }
@@ -661,11 +661,21 @@ export default function StoryScrollPrograms() {
           position: relative;
           z-index: 1;
         }
+        /* Short viewports (typical laptops, e.g. 1080p at 150% scaling):
+           anchor the hero to the top instead of vertically centering, so the
+           Journey cards always clear the fold. Taller screens stay centered. */
+        @media (min-width: 641px) and (max-height: 860px) {
+          .ssp-hero {
+            justify-content: flex-start;
+            padding-top: clamp(2rem, 5.5vh, 4.5rem);
+            padding-bottom: 2rem;
+          }
+        }
 
         .hero-headline {
           font-family: var(--font-display), 'Sora', sans-serif;
           font-weight: 700;
-          line-height: 1.08;
+          line-height: 1.03;
           letter-spacing: -0.025em;
           font-size: 64px;
           color: #111827;
@@ -703,7 +713,7 @@ export default function StoryScrollPrograms() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 18px;
+          gap: 12px;
         }
         .hero-journey-eyebrow {
           font-family: var(--font-inter), 'Inter', sans-serif;
@@ -722,11 +732,11 @@ export default function StoryScrollPrograms() {
           position: relative;
           /* reserved lane above the cards so the running character has room
              and never overlaps the eyebrow / heading above it */
-          padding-top: 88px;
+          padding-top: 64px;
         }
         .hjc-hopper {
           position: absolute;
-          top: 46px;
+          top: 22px;
           left: 0;
           width: 40px;
           height: 42px;
@@ -762,11 +772,11 @@ export default function StoryScrollPrograms() {
           background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
           border: 1px solid #eef0f4;
           border-radius: 20px;
-          padding: 24px 16px 20px;
+          padding: 16px 16px 15px;
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 12px;
+          gap: 9px;
           text-align: center;
           overflow: hidden;
           box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04),
@@ -793,8 +803,8 @@ export default function StoryScrollPrograms() {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: 60px;
-          height: 60px;
+          width: 54px;
+          height: 54px;
           border-radius: 999px;
           background: linear-gradient(
             135deg,
@@ -804,7 +814,7 @@ export default function StoryScrollPrograms() {
           );
           color: #ffffff;
           font-family: var(--font-display), 'Sora', sans-serif;
-          font-size: 23px;
+          font-size: 21px;
           font-weight: 800;
           letter-spacing: -0.01em;
           box-shadow: 0 10px 22px -10px rgba(37, 99, 235, 0.6);
