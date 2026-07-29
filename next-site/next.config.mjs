@@ -3,6 +3,10 @@ const isPages = process.env.GITHUB_PAGES === 'true';
 
 const nextConfig = {
   reactStrictMode: true,
+  experimental: {
+    // Three 400 KB screenshots plus the form text exceed the 1 MB default.
+    serverActions: { bodySizeLimit: '3mb' },
+  },
   output: isPages ? 'export' : undefined,
   basePath: isPages ? '/frenchify-with-vyom' : undefined,
   assetPrefix: isPages ? '/frenchify-with-vyom/' : undefined,
