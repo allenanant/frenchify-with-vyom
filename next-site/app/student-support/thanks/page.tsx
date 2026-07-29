@@ -16,14 +16,25 @@ export default async function ThanksPage({
   const { ref } = await searchParams;
   const raw = Array.isArray(ref) ? ref[0] : ref;
   const candidate = (raw || '').replace(/[^A-Z0-9-]/gi, '').slice(0, 20);
-  // Never confirm a reference someone pasted in by hand.
-  const clean = candidate && (await refExists(candidate).catch(() => false)) ? candidate : '';
+
+  // Three outcomes, not two. A lookup that fails is not the same as a ticket
+  // that does not exist: telling a student nothing was submitted because the
+  // database blinked would send them off to raise the whole thing again.
+  let state: 'found' | 'absent' | 'unverified' = 'absent';
+  if (candidate) {
+    try {
+      state = (await refExists(candidate)) ? 'found' : 'absent';
+    } catch {
+      state = 'unverified';
+    }
+  }
+  const clean = state === 'found' || state === 'unverified' ? candidate : '';
 
   return (
     <main className="flex min-h-[70vh] items-center justify-center bg-white px-4 py-16">
       <div className="mx-auto max-w-lg text-center">
         <h1 className="font-display text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          {clean ? 'Got it, thank you.' : 'We could not find that ticket'}
+          {state === 'absent' ? 'We could not find that ticket' : 'Got it, thank you.'}
         </h1>
 
         {clean && (
@@ -32,7 +43,7 @@ export default async function ThanksPage({
           </p>
         )}
 
-        {clean ? (
+        {state === 'found' ? (
           <>
             <p className="mt-5 text-base text-gray-600">
               Your issue is with the Frenchify team under the number above. Someone will reach out on the email
@@ -42,6 +53,11 @@ export default async function ThanksPage({
               Quote that number if you follow up, it pulls up everything you sent including your screenshot.
             </p>
           </>
+        ) : state === 'unverified' ? (
+          <p className="mt-5 text-base text-gray-600">
+            Your ticket was raised under the number above. We could not load its details just now, but nothing is
+            lost. Quote that number if you follow up, and there is no need to send it again.
+          </p>
         ) : (
           <p className="mt-5 text-base text-gray-600">
             That reference does not match anything on our side, so nothing has been submitted. Raise the issue
@@ -53,7 +69,7 @@ export default async function ThanksPage({
           href="/student-support"
           className="mt-8 inline-block rounded-xl bg-brand-blue px-6 py-3.5 font-semibold text-white shadow-premium transition hover:bg-brand-blue-deep"
         >
-          {clean ? 'Raise another issue' : 'Go to the support form'}
+          {state === 'absent' ? 'Go to the support form' : 'Raise another issue'}
         </Link>
       </div>
     </main>

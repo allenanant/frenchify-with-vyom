@@ -130,8 +130,15 @@ export function ensureSchema(): Promise<void> {
           updated_at         TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )`;
 
-      // Added after the table shipped, so this has to be a separate step.
-      await sql`ALTER TABLE support_tickets ADD COLUMN IF NOT EXISTS version BIGINT NOT NULL DEFAULT 1`;
+      // Added after the table shipped. Checked first because ALTER TABLE takes
+      // ACCESS EXCLUSIVE even when it is a no-op, and every cold start running
+      // that can queue behind an upload and stall live reads.
+      const hasVersion = (await sql`
+        SELECT 1 FROM information_schema.columns
+         WHERE table_name = 'support_tickets' AND column_name = 'version'`) as any[];
+      if (!hasVersion.length) {
+        await sql`ALTER TABLE support_tickets ADD COLUMN version BIGINT NOT NULL DEFAULT 1`;
+      }
 
       await sql`
         CREATE TABLE IF NOT EXISTS support_attachments (
@@ -171,6 +178,13 @@ export function ensureSchema(): Promise<void> {
 
       // Sign-in throttle. Serverless instances are not shared, so the counter
       // has to live in the database or it resets on every cold start.
+      // One row, one primary key. Whoever inserts it owns the first admin slot.
+      await sql`
+        CREATE TABLE IF NOT EXISTS support_bootstrap (
+          id         INTEGER PRIMARY KEY,
+          claimed_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )`;
+
       await sql`
         CREATE TABLE IF NOT EXISTS support_login_attempts (
           key         TEXT PRIMARY KEY,
@@ -235,10 +249,24 @@ export type NewAttachment = {
  * Image bytes travel as base64 text and are decoded in SQL, which is the one
  * shape the HTTP driver serialises reliably for a bytea array.
  *
- * The rate and storage guards are also here, evaluated against the same
- * snapshot as the insert, so concurrent submissions cannot both slip past a
- * limit that a separate SELECT had already approved. No row back means the
- * guard refused.
+ * The rate and storage guards are evaluated in the same statement as the
+ * insert. What that buys, precisely: no window between approving a submission
+ * and writing it, so a guard can never approve something the insert then fails
+ * to record, or vice versa.
+ *
+ * What it does NOT buy: cross-request serialisation. Every CTE here shares one
+ * snapshot, so two submissions arriving together can both read the same
+ * pre-insert totals and both pass. An advisory lock was tried and removed,
+ * because the snapshot is taken before the lock is acquired and so the queued
+ * request still reads stale counts - it looked safe without being safe.
+ *
+ * That residual race is accepted deliberately. The overshoot is bounded by
+ * (concurrent submissions x 1.2 MB), against 212 MB of headroom between this
+ * 300 MB ceiling and the plan's 512 MB limit. Exhausting it would take about
+ * 176 simultaneous maximum-size uploads to a language school's support form.
+ * If this ever becomes a busy queue, replace the SUM with a counter row
+ * updated conditionally - an UPDATE re-checks its WHERE after waiting, which
+ * a CTE read does not.
  */
 export async function createTicket(
   input: NewTicket,
@@ -255,15 +283,12 @@ export async function createTicket(
   const incoming = sizes.reduce((n, b) => n + b, 0);
 
   const rows = (await sql`
-    WITH lock AS (
-      SELECT pg_advisory_xact_lock(hashtext('support_ticket_create')) AS held
-    ), guard AS (
+    WITH guard AS (
       SELECT
         (SELECT COUNT(*) FROM support_tickets
           WHERE ip_hash = ${input.ip_hash ?? null}
             AND created_at > NOW() - (${guards.rateWindowMin} * INTERVAL '1 minute')) AS recent,
         (SELECT COALESCE(SUM(bytes), 0) FROM support_attachments) AS used
-        FROM lock
     ), allowed AS (
       SELECT nextval(pg_get_serial_sequence('support_tickets', 'id')) AS id
         FROM guard
@@ -334,12 +359,19 @@ export async function purgeExpired() {
 /**
  * Housekeeping without a cron. Roughly one queue load in twenty does the
  * cleanup, which on a desk this size is several times a day and costs nothing
- * the rest of the time. Failures are swallowed: tidying is never worth failing
- * a page load over.
+ * the rest of the time.
+ *
+ * Awaited by the caller rather than fired and forgotten: a serverless
+ * invocation can be frozen the instant the response is sent, which would leave
+ * the deletes half done. Failures are swallowed, since tidying is never worth
+ * failing a page load over.
  */
-export function purgeOccasionally() {
-  if (Math.random() < 0.05) {
-    purgeExpired().catch((e) => console.error('[purgeExpired]', e));
+export async function purgeOccasionally() {
+  if (Math.random() >= 0.05) return;
+  try {
+    await purgeExpired();
+  } catch (e) {
+    console.error('[purgeExpired]', e);
   }
 }
 
@@ -365,19 +397,26 @@ export async function reserveLoginAttempt(key: string): Promise<number> {
     INSERT INTO support_login_attempts (key, fails, updated_at)
     VALUES (${key}, 1, NOW())
     ON CONFLICT (key) DO UPDATE SET
+      -- One counter drives both columns, and a served lock or an idle hour
+      -- resets it. Without the reset, fails stays at the threshold and every
+      -- attempt after the cooldown relocks immediately: a permanent lockout
+      -- wearing a fifteen minute label.
       fails = CASE
         WHEN support_login_attempts.locked_until > NOW() THEN support_login_attempts.fails
-        WHEN support_login_attempts.updated_at < NOW() - INTERVAL '1 hour' THEN 1
+        WHEN support_login_attempts.locked_until IS NOT NULL
+          OR support_login_attempts.updated_at < NOW() - INTERVAL '1 hour' THEN 1
         ELSE support_login_attempts.fails + 1
       END,
       locked_until = CASE
         WHEN support_login_attempts.locked_until > NOW() THEN support_login_attempts.locked_until
+        WHEN support_login_attempts.locked_until IS NOT NULL
+          OR support_login_attempts.updated_at < NOW() - INTERVAL '1 hour' THEN NULL
         WHEN support_login_attempts.fails + 1 >= ${LOCK_AFTER}
           THEN NOW() + (${LOCK_MINUTES} * INTERVAL '1 minute')
-        ELSE support_login_attempts.locked_until
+        ELSE NULL
       END,
       updated_at = NOW()
-    RETURNING GREATEST(0, CEIL(EXTRACT(EPOCH FROM (locked_until - NOW()))))::int AS secs`) as any[];
+    RETURNING COALESCE(GREATEST(0, CEIL(EXTRACT(EPOCH FROM (locked_until - NOW())))), 0)::int AS secs`) as any[];
   return rows[0]?.secs ?? 0;
 }
 
@@ -392,10 +431,17 @@ export async function clearLoginFailures(key: string) {
  */
 export async function claimFirstAdminAtomic(u: { email: string; name: string; password_hash: string }) {
   await ensureSchema();
+  // The claim hangs off a primary key, not a NOT EXISTS read. Two setup
+  // requests arriving together both see an empty users table, so only a unique
+  // constraint can actually pick a winner.
   const rows = (await sql`
+    WITH claim AS (
+      INSERT INTO support_bootstrap (id) VALUES (1)
+      ON CONFLICT (id) DO NOTHING
+      RETURNING id
+    )
     INSERT INTO support_users (email, name, password_hash, role, must_change)
-    SELECT ${u.email}, ${u.name}, ${u.password_hash}, 'admin', FALSE
-     WHERE NOT EXISTS (SELECT 1 FROM support_users)
+    SELECT ${u.email}, ${u.name}, ${u.password_hash}, 'admin', FALSE FROM claim
     RETURNING id`) as any[];
   return rows.length ? Number(rows[0].id) : null;
 }
@@ -641,14 +687,22 @@ export async function setPassword(id: number, hash: string, mustChange: boolean)
  * old sessions are still live, which is precisely the window a stolen starter
  * session would use.
  */
-export async function setPasswordAndRevoke(id: number, hash: string, mustChange: boolean) {
-  await sql`
+export async function setPasswordAndRevoke(
+  id: number,
+  hash: string,
+  mustChange: boolean,
+  expectedHash?: string
+): Promise<boolean> {
+  const rows = (await sql`
     WITH revoked AS (
       DELETE FROM support_sessions WHERE user_id = ${id} RETURNING 1
     )
     UPDATE support_users
        SET password_hash = ${hash}, must_change = ${mustChange}
-     WHERE id = ${id}`;
+     WHERE id = ${id}
+       AND (${expectedHash ?? null}::text IS NULL OR password_hash = ${expectedHash ?? null})
+    RETURNING id`) as any[];
+  return rows.length > 0;
 }
 
 export async function setUserActive(id: number, active: boolean) {

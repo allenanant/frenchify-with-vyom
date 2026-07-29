@@ -49,7 +49,7 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
         <div className="space-y-5">
           <section className={card}>
             <h2 className="text-lg font-extrabold leading-snug text-gray-900 [overflow-wrap:anywhere]">{t.subject}</h2>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-gray-500 [overflow-wrap:anywhere]">
               {t.category}
               {t.course ? ` · ${t.course}` : ''}
             </p>

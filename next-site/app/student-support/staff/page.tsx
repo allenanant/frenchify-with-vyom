@@ -28,7 +28,9 @@ export default async function QueuePage({
   const one = (v?: string | string[]) => (Array.isArray(v) ? v[0] : v);
   const status = one(sp.status) || 'open';
   const q = (one(sp.q) || '').slice(0, 100);
-  const page = Math.max(1, Number(one(sp.page)) || 1);
+  // Bounded and finite: `?page=1e309` becomes Infinity and Postgres rejects it.
+  const raw = Number(one(sp.page));
+  const page = Number.isFinite(raw) ? Math.min(Math.max(Math.trunc(raw) || 1, 1), 1000) : 1;
   const PER = 50;
 
   purgeOccasionally();

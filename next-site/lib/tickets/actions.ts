@@ -38,7 +38,7 @@ function inspect(buf: Buffer): { mime: string; width: number; height: number } |
   // PNG. The trailing IEND chunk is what proves the file is not truncated.
   if (buf.length > 24 && buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47) {
     if (buf.toString('ascii', 12, 16) !== 'IHDR') return null;
-    if (buf.subarray(-8).toString('ascii', 4, 8) !== 'IEND') return null;
+    if (buf.subarray(-8).toString('ascii', 0, 4) !== 'IEND') return null;
     return { mime: 'image/png', width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
   }
 
@@ -187,6 +187,15 @@ export async function signIn(_prev: FormState, fd: FormData): Promise<FormState>
   // Hash the email into the key so one row cannot be grown by a long address.
   const key = `${await auth.ipHash()}|${createHash('sha256').update(email).digest('hex').slice(0, 24)}`;
 
+  // Two budgets. The per-account one stops someone grinding a known email; the
+  // per-IP one stops them dodging it by inventing a new email every request,
+  // which would otherwise buy an unmetered bcrypt call and a fresh table row
+  // on every try.
+  const ipLocked = await db.reserveLoginAttempt(`ip|${await auth.ipHash()}`);
+  if (ipLocked > 0) {
+    return { error: `Too many attempts from this connection. Try again in about ${Math.ceil(ipLocked / 60)} minutes.` };
+  }
+
   const locked = await db.reserveLoginAttempt(key);
   if (locked > 0) {
     return { error: `Too many attempts. Try again in about ${Math.ceil(locked / 60)} minutes.` };
@@ -222,7 +231,13 @@ export async function changePassword(_prev: FormState, fd: FormData): Promise<Fo
   if (next !== confirm) return { error: 'The two new passwords do not match.' };
   if (next === current) return { error: 'Pick a password different from the current one.' };
 
-  await db.setPasswordAndRevoke(me.id, auth.hash(next), false);
+  // Conditional on the hash we just verified still being current. Two
+  // concurrent changes would otherwise both pass the check and the loser would
+  // silently overwrite the winner.
+  const changed = await db.setPasswordAndRevoke(me.id, auth.hash(next), false, row.password_hash);
+  if (!changed) {
+    return { error: 'Your password was changed somewhere else a moment ago. Sign in again with the new one.' };
+  }
   await auth.startSession(me.id);
   redirect('/student-support/staff/');
 }
@@ -326,7 +341,7 @@ export async function resetTeamMember(_prev: FormState, fd: FormData): Promise<F
   if (!target) return { error: 'No such account.' };
 
   const password = auth.suggestPassword();
-  await db.setPasswordAndRevoke(target.id, auth.hash(password), true);
+  await db.setPasswordAndRevoke(target.id, auth.hash(password), true, target.password_hash);
   revalidatePath('/student-support/staff/team');
   return {
     ok: `Password reset. ${target.name} is signed out everywhere.`,
