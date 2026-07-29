@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { currentUser } from '@/lib/tickets/auth';
-import { listTickets, counts, STATUS_LABELS, type Ticket } from '@/lib/tickets/db';
+import { listTickets, counts, purgeOccasionally, STATUS_LABELS, type Ticket } from '@/lib/tickets/db';
 import { ago, card, pill } from './ui';
 import { STATUS_CLASSES } from '@/lib/tickets/constants';
 
@@ -18,7 +18,7 @@ const FILTERS = [
 export default async function QueuePage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string | string[]; q?: string | string[] }>;
+  searchParams: Promise<{ status?: string | string[]; q?: string | string[]; page?: string | string[] }>;
 }) {
   const user = await currentUser();
   if (!user) redirect('/student-support/staff/login/');
@@ -28,7 +28,15 @@ export default async function QueuePage({
   const one = (v?: string | string[]) => (Array.isArray(v) ? v[0] : v);
   const status = one(sp.status) || 'open';
   const q = (one(sp.q) || '').slice(0, 100);
-  const [tickets, c] = await Promise.all([listTickets({ status, q }), counts()]);
+  const page = Math.max(1, Number(one(sp.page)) || 1);
+  const PER = 50;
+
+  purgeOccasionally();
+  const [list, c] = await Promise.all([
+    listTickets({ status, q, offset: (page - 1) * PER, limit: PER }),
+    counts(),
+  ]);
+  const tickets = list.rows;
 
   return (
     <>
@@ -75,14 +83,14 @@ export default async function QueuePage({
           <div className="flex gap-2.5">
             <button
               type="submit"
-              className="flex-1 rounded-xl bg-brand-blue px-5 py-2.5 text-[15px] font-semibold text-white sm:flex-none"
+              className="min-h-11 flex-1 rounded-xl bg-brand-blue px-5 text-[15px] font-semibold text-white sm:flex-none"
             >
               Search
             </button>
             {q && (
               <Link
                 href={`/student-support/staff?status=${status}`}
-                className="flex-1 rounded-xl border border-gray-300 px-5 py-2.5 text-center text-[15px] text-gray-700 sm:flex-none"
+                className="flex min-h-11 flex-1 items-center justify-center rounded-xl border border-gray-300 px-5 text-center text-[15px] text-gray-700 sm:flex-none"
               >
                 Clear
               </Link>
@@ -120,6 +128,28 @@ export default async function QueuePage({
               </li>
             ))}
           </ul>
+        )}
+
+        {(page > 1 || list.hasMore) && (
+          <nav className="mt-5 flex items-center justify-between border-t border-gray-100 pt-4">
+            {page > 1 ? (
+              <Link
+                href={`/student-support/staff?status=${status}${q ? `&q=${encodeURIComponent(q)}` : ''}&page=${page - 1}`}
+                className="flex min-h-11 items-center rounded-lg border border-gray-300 px-4 text-sm text-gray-700"
+              >
+                Newer
+              </Link>
+            ) : <span />}
+            <span className="text-sm text-gray-500">Page {page}</span>
+            {list.hasMore ? (
+              <Link
+                href={`/student-support/staff?status=${status}${q ? `&q=${encodeURIComponent(q)}` : ''}&page=${page + 1}`}
+                className="flex min-h-11 items-center rounded-lg border border-gray-300 px-4 text-sm text-gray-700"
+              >
+                Older
+              </Link>
+            ) : <span />}
+          </nav>
         )}
       </div>
     </>

@@ -19,7 +19,7 @@ import * as db from './db';
 import * as auth from './auth';
 import {
   CATEGORIES, MAX_IMAGES, MAX_IMAGE_BYTES, STORAGE_CEILING_BYTES,
-  RATE_MAX, RATE_WINDOW_MIN, SUPPORT_EMAIL,
+  RATE_MAX, RATE_WINDOW_MIN, SUPPORT_EMAIL, MAX_PIXELS, MAX_PIXEL_EDGE,
 } from './constants';
 
 export type FormState = {
@@ -35,9 +35,10 @@ const str = (fd: FormData, key: string) => String(fd.get(key) ?? '').trim();
  * starts with the right header cannot pass as a screenshot.
  */
 function inspect(buf: Buffer): { mime: string; width: number; height: number } | null {
-  // PNG
+  // PNG. The trailing IEND chunk is what proves the file is not truncated.
   if (buf.length > 24 && buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47) {
     if (buf.toString('ascii', 12, 16) !== 'IHDR') return null;
+    if (buf.subarray(-8).toString('ascii', 4, 8) !== 'IEND') return null;
     return { mime: 'image/png', width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
   }
 
@@ -48,6 +49,8 @@ function inspect(buf: Buffer): { mime: string; width: number; height: number } |
       if (buf[i] !== 0xff) { i++; continue; }
       const marker = buf[i + 1];
       if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
+        // EOI at the tail means the scan data is actually there.
+        if (buf[buf.length - 2] !== 0xff || buf[buf.length - 1] !== 0xd9) return null;
         return { mime: 'image/jpeg', height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) };
       }
       const len = buf.readUInt16BE(i + 2);
@@ -63,6 +66,8 @@ function inspect(buf: Buffer): { mime: string; width: number; height: number } |
     buf.toString('ascii', 0, 4) === 'RIFF' &&
     buf.toString('ascii', 8, 12) === 'WEBP'
   ) {
+    // The RIFF header declares the payload length; a truncated file will not match.
+    if (buf.readUInt32LE(4) + 8 !== buf.length) return null;
     const chunk = buf.toString('ascii', 12, 16);
     if (chunk === 'VP8X') {
       if ((buf[20] & 0x02) !== 0) return null; // animated, which is a recording
@@ -123,6 +128,13 @@ export async function submitTicket(_prev: FormState, fd: FormData): Promise<Form
     if (img.width < 40 || img.height < 40) {
       return { error: `"${f.name}" is too small to show anything. Send the actual screenshot.` };
     }
+    // Size on disk says nothing about size in memory: a heavily compressed PNG
+    // can be tiny as a file and enormous once decoded. Staff open these in a
+    // browser, so bound the pixels, not just the bytes.
+    if (img.width > MAX_PIXEL_EDGE || img.height > MAX_PIXEL_EDGE ||
+        img.width * img.height > MAX_PIXELS) {
+      return { error: `"${f.name}" has unusually large dimensions. Send a normal screenshot.` };
+    }
     files.push({
       original_name: (f.name || 'screenshot').slice(0, 180),
       mime: img.mime,
@@ -170,11 +182,12 @@ export async function submitTicket(_prev: FormState, fd: FormData): Promise<Form
 const DUMMY_HASH = '$2a$12$C6UzMDM.H6dfI/f/IKcEe.7oQ4Nq0BOhVvJZ0aTfLRy0oPPQFOa9K';
 
 export async function signIn(_prev: FormState, fd: FormData): Promise<FormState> {
-  const email = str(fd, 'email').toLowerCase();
+  const email = str(fd, 'email').toLowerCase().slice(0, 180);
   const password = String(fd.get('password') ?? '');
-  const key = `${await auth.ipHash()}|${email}`;
+  // Hash the email into the key so one row cannot be grown by a long address.
+  const key = `${await auth.ipHash()}|${createHash('sha256').update(email).digest('hex').slice(0, 24)}`;
 
-  const locked = await db.loginLockedFor(key);
+  const locked = await db.reserveLoginAttempt(key);
   if (locked > 0) {
     return { error: `Too many attempts. Try again in about ${Math.ceil(locked / 60)} minutes.` };
   }
@@ -182,10 +195,7 @@ export async function signIn(_prev: FormState, fd: FormData): Promise<FormState>
   const user = await db.getUserByEmail(email);
   const ok = auth.verify(password, user?.password_hash ?? DUMMY_HASH) && !!user && user.active;
 
-  if (!ok) {
-    await db.noteLoginFailure(key);
-    return { error: 'That email and password did not match.' };
-  }
+  if (!ok) return { error: 'That email and password did not match.' };
 
   await db.clearLoginFailures(key);
   await auth.startSession(user.id);
@@ -212,8 +222,7 @@ export async function changePassword(_prev: FormState, fd: FormData): Promise<Fo
   if (next !== confirm) return { error: 'The two new passwords do not match.' };
   if (next === current) return { error: 'Pick a password different from the current one.' };
 
-  await db.setPassword(me.id, auth.hash(next), false);
-  await db.deleteUserSessions(me.id);
+  await db.setPasswordAndRevoke(me.id, auth.hash(next), false);
   await auth.startSession(me.id);
   redirect('/student-support/staff/');
 }
@@ -241,11 +250,12 @@ export async function saveTicket(_prev: FormState, fd: FormData): Promise<FormSt
   }
 
   if (!result.ok) {
-    return {
-      error: result.reason === 'conflict'
-        ? 'Someone else updated this ticket while you had it open. Reload to see their changes, then redo yours.'
-        : 'That ticket does not exist.',
-    };
+    const message = {
+      conflict: 'Someone else updated this ticket while you had it open. Reload to see their changes, then redo yours.',
+      bad_assignee: 'That owner is no longer an active account. Reload and pick someone else.',
+      missing: 'That ticket does not exist.',
+    }[result.reason];
+    return { error: message };
   }
 
   revalidatePath('/student-support/staff');
@@ -316,10 +326,7 @@ export async function resetTeamMember(_prev: FormState, fd: FormData): Promise<F
   if (!target) return { error: 'No such account.' };
 
   const password = auth.suggestPassword();
-  // Sessions go first. If the second call fails the account is merely locked
-  // out, which is recoverable; the reverse would leave stolen sessions live.
-  await db.deleteUserSessions(target.id);
-  await db.setPassword(target.id, auth.hash(password), true);
+  await db.setPasswordAndRevoke(target.id, auth.hash(password), true);
   revalidatePath('/student-support/staff/team');
   return {
     ok: `Password reset. ${target.name} is signed out everywhere.`,

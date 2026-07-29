@@ -44,6 +44,14 @@ export const MAX_IMAGE_EDGE = 1600;
 /** Quality passed to the browser's WebP encoder. */
 export const IMAGE_QUALITY = 0.72;
 
+/**
+ * Decoded-size guard. File size alone does not bound memory: a heavily
+ * compressed PNG can be a few hundred KB and still decode to hundreds of
+ * megapixels. Generous enough for a full-resolution phone screenshot.
+ */
+export const MAX_PIXEL_EDGE = 6000;
+export const MAX_PIXELS = 12_000_000;
+
 /** Hard ceiling per stored image after compression. */
 export const MAX_IMAGE_BYTES = 400 * 1024;
 

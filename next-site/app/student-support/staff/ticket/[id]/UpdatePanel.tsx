@@ -24,8 +24,9 @@ export default function UpdatePanel({
   assignedTo: number | null;
   resolutionNote: string | null;
   staff: { id: number; name: string }[];
-  /** The row's updated_at when this form was rendered. Guards against
-      one agent's save silently overwriting another's. */
+  /** The row's version counter when this form was rendered. Guards against
+      one agent's save silently overwriting another's. A counter rather than a
+      timestamp because the driver drops microseconds. */
   version: string;
 }) {
   const [state, action] = useActionState<FormState, FormData>(saveTicket, {});

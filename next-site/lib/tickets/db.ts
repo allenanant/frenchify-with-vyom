@@ -57,6 +57,7 @@ export type Ticket = {
   resolved_by: number | null;
   created_at: string;
   updated_at: string;
+  version: number;
   attachment_count?: number;
 };
 
@@ -124,9 +125,13 @@ export function ensureSchema(): Promise<void> {
           ghl_contact_id     TEXT,
           ghl_opportunity_id TEXT,
           ghl_synced_at      TIMESTAMPTZ,
+          version            BIGINT NOT NULL DEFAULT 1,
           created_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
           updated_at         TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )`;
+
+      // Added after the table shipped, so this has to be a separate step.
+      await sql`ALTER TABLE support_tickets ADD COLUMN IF NOT EXISTS version BIGINT NOT NULL DEFAULT 1`;
 
       await sql`
         CREATE TABLE IF NOT EXISTS support_attachments (
@@ -250,12 +255,15 @@ export async function createTicket(
   const incoming = sizes.reduce((n, b) => n + b, 0);
 
   const rows = (await sql`
-    WITH guard AS (
+    WITH lock AS (
+      SELECT pg_advisory_xact_lock(hashtext('support_ticket_create')) AS held
+    ), guard AS (
       SELECT
         (SELECT COUNT(*) FROM support_tickets
           WHERE ip_hash = ${input.ip_hash ?? null}
             AND created_at > NOW() - (${guards.rateWindowMin} * INTERVAL '1 minute')) AS recent,
         (SELECT COALESCE(SUM(bytes), 0) FROM support_attachments) AS used
+        FROM lock
     ), allowed AS (
       SELECT nextval(pg_get_serial_sequence('support_tickets', 'id')) AS id
         FROM guard
@@ -323,33 +331,54 @@ export async function purgeExpired() {
   await sql`DELETE FROM support_login_attempts WHERE updated_at < NOW() - INTERVAL '1 day'`;
 }
 
+/**
+ * Housekeeping without a cron. Roughly one queue load in twenty does the
+ * cleanup, which on a desk this size is several times a day and costs nothing
+ * the rest of the time. Failures are swallowed: tidying is never worth failing
+ * a page load over.
+ */
+export function purgeOccasionally() {
+  if (Math.random() < 0.05) {
+    purgeExpired().catch((e) => console.error('[purgeExpired]', e));
+  }
+}
+
 // --- sign-in throttle ------------------------------------------------------
 
 const LOCK_AFTER = 6;
 const LOCK_MINUTES = 15;
 
-/** Seconds remaining on a lock, or 0 when the caller may try. */
-export async function loginLockedFor(key: string): Promise<number> {
+/**
+ * Reserves one sign-in attempt.
+ *
+ * Counting up front rather than only on failure is what makes this safe: a
+ * separate "am I locked?" read followed by a later "record a failure" write
+ * lets a burst of parallel guesses all pass the gate before any of them
+ * increments. Here the increment IS the check, in one statement, so the
+ * seventh concurrent request is refused even if all seven arrive together.
+ *
+ * Returns 0 when the caller may proceed, otherwise seconds until it can.
+ */
+export async function reserveLoginAttempt(key: string): Promise<number> {
   await ensureSchema();
   const rows = (await sql`
-    SELECT GREATEST(0, CEIL(EXTRACT(EPOCH FROM (locked_until - NOW()))))::int AS secs
-      FROM support_login_attempts WHERE key = ${key} AND locked_until > NOW()`) as any[];
-  return rows[0]?.secs ?? 0;
-}
-
-/** Records a failure and locks the key once the threshold is crossed. */
-export async function noteLoginFailure(key: string) {
-  await sql`
     INSERT INTO support_login_attempts (key, fails, updated_at)
     VALUES (${key}, 1, NOW())
     ON CONFLICT (key) DO UPDATE SET
-      fails = support_login_attempts.fails + 1,
+      fails = CASE
+        WHEN support_login_attempts.locked_until > NOW() THEN support_login_attempts.fails
+        WHEN support_login_attempts.updated_at < NOW() - INTERVAL '1 hour' THEN 1
+        ELSE support_login_attempts.fails + 1
+      END,
       locked_until = CASE
+        WHEN support_login_attempts.locked_until > NOW() THEN support_login_attempts.locked_until
         WHEN support_login_attempts.fails + 1 >= ${LOCK_AFTER}
-        THEN NOW() + (${LOCK_MINUTES} * INTERVAL '1 minute')
+          THEN NOW() + (${LOCK_MINUTES} * INTERVAL '1 minute')
         ELSE support_login_attempts.locked_until
       END,
-      updated_at = NOW()`;
+      updated_at = NOW()
+    RETURNING GREATEST(0, CEIL(EXTRACT(EPOCH FROM (locked_until - NOW()))))::int AS secs`) as any[];
+  return rows[0]?.secs ?? 0;
 }
 
 export async function clearLoginFailures(key: string) {
@@ -371,12 +400,14 @@ export async function claimFirstAdminAtomic(u: { email: string; name: string; pa
   return rows.length ? Number(rows[0].id) : null;
 }
 
-export async function listTickets(opts: { status?: string; q?: string } = {}) {
+export async function listTickets(opts: { status?: string; q?: string; offset?: number; limit?: number } = {}) {
   await ensureSchema();
   const status = opts.status ?? 'open';
   const q = opts.q?.trim() ? `%${opts.q.trim()}%` : null;
+  const limit = Math.min(Math.max(opts.limit ?? 50, 1), 200);
+  const offset = Math.max(opts.offset ?? 0, 0);
 
-  return (await sql`
+  const rows = (await sql`
     SELECT t.*, u.name AS assignee_name,
            (SELECT COUNT(*) FROM support_attachments a WHERE a.ticket_id = t.id)::int AS attachment_count
       FROM support_tickets t
@@ -390,9 +421,12 @@ export async function listTickets(opts: { status?: string; q?: string } = {}) {
      ORDER BY CASE t.status WHEN 'new' THEN 0 WHEN 'in_progress' THEN 1
                             WHEN 'waiting_on_student' THEN 2 ELSE 3 END,
               CASE t.priority WHEN 'high' THEN 0 ELSE 1 END,
-              t.created_at DESC
-     LIMIT 300
+              t.created_at DESC, t.id DESC
+     LIMIT ${limit + 1} OFFSET ${offset}
   `) as unknown as Ticket[];
+
+  // One extra row is fetched purely to know whether a next page exists.
+  return { rows: rows.slice(0, limit), hasMore: rows.length > limit, offset, limit };
 }
 
 export async function getTicket(id: number) {
@@ -436,7 +470,7 @@ export async function addEvent(ticketId: number, userId: number | null, type: st
 
 export type UpdateResult =
   | { ok: true; ticket: Ticket }
-  | { ok: false; reason: 'missing' | 'conflict' };
+  | { ok: false; reason: 'missing' | 'conflict' | 'bad_assignee' };
 
 /**
  * Applies a staff edit in one statement: the ticket row, the resolved-by
@@ -469,22 +503,32 @@ export async function updateTicket(
 
   const status = STATUSES.includes(changes.status as Status) ? (changes.status as Status) : null;
   const priority = changes.priority === 'high' ? 'high' : 'normal';
-  const assigned = changes.assigned_to ? Number(changes.assigned_to) : null;
   const note = changes.note?.trim() || null;
   const resolution = changes.resolution_note ?? null;
-  const version = changes.expectedVersion || null;
+  const version = Number(changes.expectedVersion);
+
+  // A blank selection means "unassign". Anything else must resolve to a real,
+  // still-active account, otherwise a stale or forged form would quietly
+  // unassign the ticket and log it as a deliberate action.
+  const wantsUnassigned = !changes.assigned_to;
+  const assigned = wantsUnassigned ? null : Number(changes.assigned_to);
+  if (!wantsUnassigned && !Number.isInteger(assigned)) return { ok: false, reason: 'bad_assignee' };
+  if (assigned !== null) {
+    const rows = (await sql`SELECT 1 FROM support_users WHERE id = ${assigned} AND active`) as any[];
+    if (!rows.length) return { ok: false, reason: 'bad_assignee' };
+  }
+  if (!Number.isFinite(version)) return { ok: false, reason: 'conflict' };
 
   const rows = (await sql`
     WITH before AS (
       SELECT id, status, priority, assigned_to, updated_at FROM support_tickets WHERE id = ${id}
     ), target AS (
-      -- Only an existing, still-active account may own a ticket.
-      SELECT u.id FROM support_users u WHERE u.id = ${assigned} AND u.active
+      SELECT u.id, u.name FROM support_users u WHERE u.id = ${assigned}
     ), upd AS (
       UPDATE support_tickets t SET
         status   = COALESCE(${status}, t.status),
         priority = ${priority},
-        assigned_to = (SELECT id FROM target),
+        assigned_to = ${assigned},
         resolution_note = CASE
           WHEN ${resolution}::text IS NULL THEN t.resolution_note
           ELSE NULLIF(${resolution}, '')
@@ -499,10 +543,14 @@ export async function updateTicket(
           WHEN COALESCE(${status}, t.status) <> 'resolved' THEN NULL
           ELSE t.resolved_by
         END,
-        updated_at = NOW()
+        updated_at = NOW(),
+        version = t.version + 1
       FROM before b
       WHERE t.id = b.id
-        AND (${version}::timestamptz IS NULL OR b.updated_at = ${version}::timestamptz)
+        -- Compare against the UPDATE target, not the snapshot alias. Postgres
+        -- re-reads t after waiting on a concurrent writer; b would still hold
+        -- this request's original view and would wave the clash through.
+        AND t.version = ${version}
       RETURNING t.id, b.status AS old_status, b.priority AS old_priority, b.assigned_to AS old_assigned
     ), logged AS (
       INSERT INTO support_events (ticket_id, user_id, type, body)
@@ -510,13 +558,14 @@ export async function updateTicket(
         CASE WHEN COALESCE(${status}, u.old_status) <> u.old_status
              THEN 'Status ' || ${status ? STATUS_LABELS[status] : ''} END,
         CASE WHEN ${priority} <> u.old_priority THEN 'Priority set to ' || ${priority} END,
-        CASE WHEN (SELECT id FROM target) IS DISTINCT FROM u.old_assigned
-             THEN CASE WHEN (SELECT id FROM target) IS NULL THEN 'Unassigned' ELSE 'Assigned' END END
+        CASE WHEN ${assigned}::int IS DISTINCT FROM u.old_assigned
+             THEN CASE WHEN ${assigned}::int IS NULL THEN 'Unassigned'
+                       ELSE 'Assigned to ' || COALESCE((SELECT name FROM target), 'someone') END END
       ))
       FROM upd u
       WHERE COALESCE(${status}, u.old_status) <> u.old_status
          OR ${priority} <> u.old_priority
-         OR (SELECT id FROM target) IS DISTINCT FROM u.old_assigned
+         OR ${assigned}::int IS DISTINCT FROM u.old_assigned
       RETURNING 1
     ), noted AS (
       INSERT INTO support_events (ticket_id, user_id, type, body)
@@ -584,6 +633,22 @@ export async function createUser(u: { email: string; name: string; password_hash
 
 export async function setPassword(id: number, hash: string, mustChange: boolean) {
   await sql`UPDATE support_users SET password_hash = ${hash}, must_change = ${mustChange} WHERE id = ${id}`;
+}
+
+/**
+ * Changes the password AND kills every existing session in one statement.
+ * Done as two calls there is a window where the password has changed but the
+ * old sessions are still live, which is precisely the window a stolen starter
+ * session would use.
+ */
+export async function setPasswordAndRevoke(id: number, hash: string, mustChange: boolean) {
+  await sql`
+    WITH revoked AS (
+      DELETE FROM support_sessions WHERE user_id = ${id} RETURNING 1
+    )
+    UPDATE support_users
+       SET password_hash = ${hash}, must_change = ${mustChange}
+     WHERE id = ${id}`;
 }
 
 export async function setUserActive(id: number, active: boolean) {

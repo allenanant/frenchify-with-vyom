@@ -113,7 +113,7 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
             <dl className="space-y-3 text-[15px]">
               <div>
                 <dt className="text-sm text-gray-500">Name</dt>
-                <dd className="font-medium text-gray-900">{t.student_name}</dd>
+                <dd className="font-medium text-gray-900 [overflow-wrap:anywhere]">{t.student_name}</dd>
               </div>
 
               <div>
@@ -134,7 +134,7 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
                 <dd>
                   {t.student_phone ? (
                     <div className="flex flex-wrap items-center gap-2">
-                      <a className="font-medium text-brand-blue hover:underline" href={`tel:${t.student_phone}`}>
+                      <a className="font-medium text-brand-blue [overflow-wrap:anywhere] hover:underline" href={`tel:${t.student_phone}`}>
                         {t.student_phone}
                       </a>
                       <CopyButton value={t.student_phone} />
@@ -147,7 +147,7 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
 
               <div>
                 <dt className="text-sm text-gray-500">Course</dt>
-                <dd className="font-medium text-gray-900">{t.course || <span className="text-gray-400">Not given</span>}</dd>
+                <dd className="font-medium text-gray-900 [overflow-wrap:anywhere]">{t.course || <span className="text-gray-400">Not given</span>}</dd>
               </div>
             </dl>
 
@@ -156,7 +156,7 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
                 href={`https://wa.me/${digits}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 block rounded-xl bg-green-600 px-4 py-2.5 text-center text-[15px] font-semibold text-white transition hover:bg-green-700"
+                className="mt-4 flex min-h-11 items-center justify-center rounded-xl bg-green-600 px-4 text-center text-[15px] font-semibold text-white transition hover:bg-green-700"
               >
                 Message on WhatsApp
               </a>
@@ -174,7 +174,7 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
             assignedTo={t.assigned_to}
             resolutionNote={t.resolution_note}
             staff={staff}
-            version={t.updated_at}
+            version={String(t.version)}
           />
 
           {t.resolved_at && (
