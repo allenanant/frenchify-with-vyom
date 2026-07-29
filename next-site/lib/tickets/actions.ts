@@ -20,7 +20,11 @@ import * as auth from './auth';
 import {
   CATEGORIES, MAX_IMAGES, MAX_IMAGE_BYTES, STORAGE_CEILING_BYTES,
   RATE_MAX, RATE_WINDOW_MIN, SUPPORT_EMAIL, MAX_PIXELS, MAX_PIXEL_EDGE,
+  MAX_EMAIL, MAX_PASSWORD,
 } from './constants';
+
+/** One definition of a usable email, used everywhere an account is touched. */
+const validEmail = (e: string) => e.length <= MAX_EMAIL && /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(e);
 
 export type FormState = {
   error?: string;
@@ -182,19 +186,24 @@ export async function submitTicket(_prev: FormState, fd: FormData): Promise<Form
 const DUMMY_HASH = '$2a$12$C6UzMDM.H6dfI/f/IKcEe.7oQ4Nq0BOhVvJZ0aTfLRy0oPPQFOa9K';
 
 export async function signIn(_prev: FormState, fd: FormData): Promise<FormState> {
-  const email = str(fd, 'email').toLowerCase().slice(0, 180);
+  const email = str(fd, 'email').toLowerCase().slice(0, MAX_EMAIL);
   const password = String(fd.get('password') ?? '');
-  // Hash the email into the key so one row cannot be grown by a long address.
-  const key = `${await auth.ipHash()}|${createHash('sha256').update(email).digest('hex').slice(0, 24)}`;
+  // Keyed on the account alone. Including the IP gave every source address a
+  // fresh budget for the same email, which is exactly the shape a distributed
+  // password grind takes. Hashed so one row cannot be grown by a long address.
+  const key = `acct|${createHash('sha256').update(email).digest('hex').slice(0, 32)}`;
 
-  // Two budgets. The per-account one stops someone grinding a known email; the
-  // per-IP one stops them dodging it by inventing a new email every request,
-  // which would otherwise buy an unmetered bcrypt call and a fresh table row
-  // on every try.
+  // Two budgets with different jobs.
+  //
+  // The per-account one reserves on every ATTEMPT, which is what stops a burst
+  // of parallel guesses all clearing the gate before any of them records a
+  // failure. The shared-address one counts only FAILURES, so a roomful of
+  // people signing in normally never trips it, and it is never cleared by a
+  // success - otherwise one valid account could keep wiping the failures it
+  // racked up spraying every other account.
   const ipKey = `ip|${await auth.ipHash()}`;
-  const ipLocked = await db.reserveLoginAttempt(ipKey, db.IP_LOCK_AFTER);
-  if (ipLocked > 0) {
-    return { error: `Too many attempts from this connection. Try again in about ${Math.ceil(ipLocked / 60)} minutes.` };
+  if ((await db.ipFailuresRecently(ipKey)) >= db.IP_LOCK_AFTER) {
+    return { error: 'Too many failed attempts from this connection. Try again shortly.' };
   }
 
   const locked = await db.reserveLoginAttempt(key);
@@ -205,13 +214,19 @@ export async function signIn(_prev: FormState, fd: FormData): Promise<FormState>
   const user = await db.getUserByEmail(email);
   const ok = auth.verify(password, user?.password_hash ?? DUMMY_HASH) && !!user && user.active;
 
-  if (!ok) return { error: 'That email and password did not match.' };
+  if (!ok) {
+    await db.noteIpFailure(ipKey);
+    return { error: 'That email and password did not match.' };
+  }
 
-  // Clear both, otherwise the shared-address counter creeps up on ordinary
-  // successful sign-ins until it locks the whole office out.
   await db.clearLoginFailures(key);
-  await db.clearLoginFailures(ipKey);
-  await auth.startSession(user.id);
+
+  // 2: bind the session to the hash that was just verified. Without this a
+  // request could check the old password, pause while an admin resets the
+  // account, then resume and mint a session the reset was meant to prevent.
+  const minted = await auth.startSessionIfUnchanged(user.id, user.password_hash);
+  if (!minted) return { error: 'Your password was just changed. Sign in again with the new one.' };
+
   redirect(user.must_change ? '/student-support/staff/password/' : '/student-support/staff/');
 }
 
@@ -232,6 +247,7 @@ export async function changePassword(_prev: FormState, fd: FormData): Promise<Fo
   const row = await db.getUserById(me.id);
   if (!row || !auth.verify(current, row.password_hash)) return { error: 'Current password is wrong.' };
   if (next.length < 10) return { error: 'New password must be at least 10 characters.' };
+  if (next.length > MAX_PASSWORD) return { error: `New password must be under ${MAX_PASSWORD} characters.` };
   if (next !== confirm) return { error: 'The two new passwords do not match.' };
   if (next === current) return { error: 'Pick a password different from the current one.' };
 
@@ -310,8 +326,9 @@ export async function claimFirstAdmin(_prev: FormState, fd: FormData): Promise<F
   const password = String(fd.get('password') ?? '');
 
   if (name.length < 2) return { error: 'Enter a name.' };
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) return { error: 'Enter a valid email address.' };
+  if (!validEmail(email)) return { error: `Enter a valid email address, under ${MAX_EMAIL} characters.` };
   if (password.length < 10) return { error: 'Password must be at least 10 characters.' };
+  if (password.length > MAX_PASSWORD) return { error: `Password must be under ${MAX_PASSWORD} characters.` };
 
   const id = await db.claimFirstAdminAtomic({ email, name, password_hash: auth.hash(password) });
   if (id === null) return { error: 'Someone already set this up. Sign in instead.' };
@@ -328,7 +345,7 @@ export async function addTeamMember(_prev: FormState, fd: FormData): Promise<For
   const email = str(fd, 'email').toLowerCase();
   const role = fd.get('role') === 'admin' ? 'admin' : 'agent';
 
-  if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) return { error: 'Need a name and a valid email.' };
+  if (!name || !validEmail(email)) return { error: `Need a name and a valid email under ${MAX_EMAIL} characters.` };
   if (await db.getUserByEmail(email)) return { error: 'Someone already uses that email.' };
 
   const password = auth.suggestPassword();

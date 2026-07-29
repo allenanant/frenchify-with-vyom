@@ -42,7 +42,7 @@ export default function SetupForm() {
       </div>
       <div>
         <label className={label} htmlFor="password">Password</label>
-        <input id="password" name="password" type="password" required minLength={10} autoComplete="new-password" className={field} />
+        <input id="password" name="password" type="password" required minLength={10} maxLength={72} autoComplete="new-password" className={field} />
         <p className="mt-1.5 text-[13px] text-gray-500">At least 10 characters.</p>
       </div>
       <Submit />

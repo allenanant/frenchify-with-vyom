@@ -38,6 +38,16 @@ export const CATEGORIES = [
 
 export const SUPPORT_EMAIL = 'Admin@frenchifywithvyom.com';
 
+/** Shared by account creation and sign-in, so a stored address always matches. */
+export const MAX_EMAIL = 180;
+
+/**
+ * bcrypt only reads the first 72 bytes. Left unbounded, two passwords sharing
+ * a 72-byte prefix authenticate identically and a "change" that only alters a
+ * later character silently leaves the credential as it was.
+ */
+export const MAX_PASSWORD = 72;
+
 /** Longest edge a stored screenshot is allowed, in pixels. */
 export const MAX_IMAGE_EDGE = 1600;
 

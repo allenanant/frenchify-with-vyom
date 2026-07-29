@@ -28,12 +28,12 @@ export default function PasswordForm() {
       </div>
       <div>
         <label className={label} htmlFor="next">New password</label>
-        <input id="next" name="next" type="password" required minLength={10} autoComplete="new-password" className={field} />
+        <input id="next" name="next" type="password" required minLength={10} maxLength={72} autoComplete="new-password" className={field} />
         <p className="mt-1.5 text-[13px] text-gray-500">At least 10 characters.</p>
       </div>
       <div>
         <label className={label} htmlFor="confirm">Repeat new password</label>
-        <input id="confirm" name="confirm" type="password" required minLength={10} autoComplete="new-password" className={field} />
+        <input id="confirm" name="confirm" type="password" required minLength={10} maxLength={72} autoComplete="new-password" className={field} />
       </div>
       <Submit />
     </form>

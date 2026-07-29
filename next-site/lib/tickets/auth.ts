@@ -46,6 +46,18 @@ export function suggestPassword() {
   return `${pick()}-${pick()}-${randomInt(1000, 9999)}`;
 }
 
+/**
+ * Mints a session only if the account still carries the password hash that was
+ * just verified. Closes the window where a sign-in checks an old password,
+ * pauses, and resumes after an admin has reset the account.
+ */
+export async function startSessionIfUnchanged(userId: number, expectedHash: string) {
+  const current = await db.getUserById(userId);
+  if (!current || !current.active || current.password_hash !== expectedHash) return false;
+  await startSession(userId);
+  return true;
+}
+
 export async function startSession(userId: number) {
   const token = randomBytes(32).toString('hex');
   await db.createSession(token, userId, SESSION_DAYS);

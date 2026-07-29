@@ -417,7 +417,7 @@ export async function reserveLoginAttempt(key: string, threshold = LOCK_AFTER): 
         WHEN support_login_attempts.locked_until > NOW() THEN support_login_attempts.locked_until
         WHEN support_login_attempts.locked_until IS NOT NULL
           OR support_login_attempts.updated_at < NOW() - INTERVAL '1 hour' THEN NULL
-        WHEN support_login_attempts.fails + 1 >= ${threshold}
+        WHEN support_login_attempts.fails + 1 > ${threshold}
           THEN NOW() + (${LOCK_MINUTES} * INTERVAL '1 minute')
         ELSE NULL
       END,
@@ -428,6 +428,40 @@ export async function reserveLoginAttempt(key: string, threshold = LOCK_AFTER): 
 
 export async function clearLoginFailures(key: string) {
   await sql`DELETE FROM support_login_attempts WHERE key = ${key}`;
+}
+
+/**
+ * Failure counter for a shared address, on a rolling window.
+ *
+ * Deliberately NOT reset by a successful sign-in. Clearing it on success let
+ * one valid account wipe the failures it had accumulated spraying every other
+ * account, then start again. Because only failures count, a roomful of people
+ * signing in normally never comes near it.
+ */
+export async function noteIpFailure(ipKey: string): Promise<number> {
+  await ensureSchema();
+  const rows = (await sql`
+    INSERT INTO support_login_attempts (key, fails, updated_at)
+    VALUES (${ipKey}, 1, NOW())
+    ON CONFLICT (key) DO UPDATE SET
+      fails = CASE
+        WHEN support_login_attempts.updated_at < NOW() - (${LOCK_MINUTES} * INTERVAL '1 minute')
+          THEN 1
+        ELSE support_login_attempts.fails + 1
+      END,
+      updated_at = NOW()
+    RETURNING fails`) as any[];
+  return Number(rows[0]?.fails ?? 0);
+}
+
+/** Read-only check of the shared-address budget, before any bcrypt work. */
+export async function ipFailuresRecently(ipKey: string): Promise<number> {
+  await ensureSchema();
+  const rows = (await sql`
+    SELECT fails FROM support_login_attempts
+     WHERE key = ${ipKey}
+       AND updated_at > NOW() - (${LOCK_MINUTES} * INTERVAL '1 minute')`) as any[];
+  return Number(rows[0]?.fails ?? 0);
 }
 
 /**
@@ -565,22 +599,23 @@ export async function updateTicket(
   const wantsUnassigned = !changes.assigned_to;
   const assigned = wantsUnassigned ? null : Number(changes.assigned_to);
   if (!wantsUnassigned && !Number.isInteger(assigned)) return { ok: false, reason: 'bad_assignee' };
-  if (assigned !== null) {
-    const rows = (await sql`SELECT 1 FROM support_users WHERE id = ${assigned} AND active`) as any[];
-    if (!rows.length) return { ok: false, reason: 'bad_assignee' };
-  }
   if (!Number.isFinite(version)) return { ok: false, reason: 'conflict' };
 
   const rows = (await sql`
     WITH before AS (
       SELECT id, status, priority, assigned_to, updated_at FROM support_tickets WHERE id = ${id}
     ), target AS (
-      SELECT u.id, u.name FROM support_users u WHERE u.id = ${assigned}
+      -- Valid if the account is active, OR if it is simply the owner this
+      -- ticket already had. Without that second arm, disabling an agent froze
+      -- every ticket they owned: staff could not add so much as a note without
+      -- reassigning it first.
+      SELECT u.id, u.name FROM support_users u, before b
+       WHERE u.id = ${assigned} AND (u.active OR u.id = b.assigned_to)
     ), upd AS (
       UPDATE support_tickets t SET
         status   = COALESCE(${status}, t.status),
         priority = ${priority},
-        assigned_to = ${assigned},
+        assigned_to = (SELECT id FROM target),
         resolution_note = CASE
           WHEN ${resolution}::text IS NULL THEN t.resolution_note
           ELSE NULLIF(${resolution}, '')
@@ -603,6 +638,9 @@ export async function updateTicket(
         -- re-reads t after waiting on a concurrent writer; b would still hold
         -- this request's original view and would wave the clash through.
         AND t.version = ${version}
+        -- A named assignee must have resolved, so validity and the write are
+        -- one statement rather than two that can disagree.
+        AND (${assigned}::int IS NULL OR EXISTS (SELECT 1 FROM target))
       RETURNING t.id, b.status AS old_status, b.priority AS old_priority, b.assigned_to AS old_assigned
     ), logged AS (
       INSERT INTO support_events (ticket_id, user_id, type, body)
@@ -610,14 +648,14 @@ export async function updateTicket(
         CASE WHEN COALESCE(${status}, u.old_status) <> u.old_status
              THEN 'Status ' || ${status ? STATUS_LABELS[status] : ''} END,
         CASE WHEN ${priority} <> u.old_priority THEN 'Priority set to ' || ${priority} END,
-        CASE WHEN ${assigned}::int IS DISTINCT FROM u.old_assigned
+        CASE WHEN (SELECT id FROM target) IS DISTINCT FROM u.old_assigned
              THEN CASE WHEN ${assigned}::int IS NULL THEN 'Unassigned'
                        ELSE 'Assigned to ' || COALESCE((SELECT name FROM target), 'someone') END END
       ))
       FROM upd u
       WHERE COALESCE(${status}, u.old_status) <> u.old_status
          OR ${priority} <> u.old_priority
-         OR ${assigned}::int IS DISTINCT FROM u.old_assigned
+         OR (SELECT id FROM target) IS DISTINCT FROM u.old_assigned
       RETURNING 1
     ), noted AS (
       INSERT INTO support_events (ticket_id, user_id, type, body)
@@ -628,12 +666,22 @@ export async function updateTicket(
   `) as any[];
 
   if (!rows.length) {
-    const still = (await sql`SELECT 1 FROM support_tickets WHERE id = ${id}`) as any[];
-    return { ok: false, reason: still.length ? 'conflict' : 'missing' };
+    // Work out which guard refused so the message is actually useful.
+    const still = (await sql`
+      SELECT t.id,
+             (SELECT COUNT(*) FROM support_users u
+               WHERE u.id = ${assigned} AND (u.active OR u.id = t.assigned_to))::int AS owner_ok
+        FROM support_tickets t WHERE t.id = ${id}`) as any[];
+    if (!still.length) return { ok: false, reason: 'missing' };
+    if (assigned !== null && Number(still[0].owner_ok) === 0) return { ok: false, reason: 'bad_assignee' };
+    return { ok: false, reason: 'conflict' };
   }
 
-  const ticket = await getTicket(id);
-  return ticket ? { ok: true, ticket } : { ok: false, reason: 'missing' };
+  // The write is already committed at this point. If reading it back fails,
+  // that is a display problem, not a failed save, and must not be reported to
+  // staff as "nothing was changed".
+  const ticket = await getTicket(id).catch(() => null);
+  return { ok: true, ticket: ticket as Ticket };
 }
 
 export async function counts() {
@@ -734,13 +782,29 @@ export async function setPasswordAndRevoke(
  */
 export async function setUserActive(id: number, active: boolean): Promise<boolean> {
   const rows = (await sql`
-    UPDATE support_users u SET active = ${active}
-     WHERE u.id = ${id}
-       AND (${active}
-            OR u.role <> 'admin'
-            OR EXISTS (SELECT 1 FROM support_users o
-                        WHERE o.id <> u.id AND o.active AND o.role = 'admin'))
-    RETURNING id`) as any[];
+    WITH admins AS (
+      -- FOR UPDATE serialises concurrent toggles. A plain EXISTS read shares
+      -- the statement snapshot, so two admins disabling each other would both
+      -- still see the other as active and both succeed.
+      SELECT id FROM support_users
+       WHERE role = 'admin' AND active
+       ORDER BY id
+       FOR UPDATE
+    ), toggled AS (
+      UPDATE support_users u SET active = ${active}
+       WHERE u.id = ${id}
+         AND (${active}
+              OR u.role <> 'admin'
+              OR EXISTS (SELECT 1 FROM admins a WHERE a.id <> u.id))
+      RETURNING id
+    ), revoked AS (
+      -- Same statement, so an account is never left disabled with a live
+      -- session waiting to become valid again the moment it is re-enabled.
+      DELETE FROM support_sessions
+       WHERE NOT ${active} AND user_id IN (SELECT id FROM toggled)
+      RETURNING 1
+    )
+    SELECT id FROM toggled`) as any[];
   return rows.length > 0;
 }
 
