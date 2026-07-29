@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollProgress from '@/components/motion/ScrollProgress';
 import FloatingLeadButton from '@/components/FloatingLeadButton';
+import ChromeGate from '@/components/ChromeGate';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -45,11 +46,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="antialiased">
-        <ScrollProgress />
-        <Header />
+        <ChromeGate>
+          <ScrollProgress />
+          <Header />
+        </ChromeGate>
         <main>{children}</main>
-        <Footer />
-        <FloatingLeadButton />
+        <ChromeGate>
+          <Footer />
+          <FloatingLeadButton />
+        </ChromeGate>
       </body>
     </html>
   );
