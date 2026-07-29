@@ -23,7 +23,7 @@ export default function UpdatePanel({
   priority: string;
   assignedTo: number | null;
   resolutionNote: string | null;
-  staff: { id: number; name: string }[];
+  staff: { id: number; name: string; active: boolean }[];
   /** The row's version counter when this form was rendered. Guards against
       one agent's save silently overwriting another's. A counter rather than a
       timestamp because the driver drops microseconds. */
@@ -68,7 +68,9 @@ export default function UpdatePanel({
           <select id="assigned_to" name="assigned_to" defaultValue={assignedTo ?? ''} className={field}>
             <option value="">Unassigned</option>
             {staff.map((s) => (
-              <option key={s.id} value={s.id}>{s.name}</option>
+              <option key={s.id} value={s.id}>
+                {s.name}{s.active ? '' : ' (disabled)'}
+              </option>
             ))}
           </select>
         </div>

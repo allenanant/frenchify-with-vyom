@@ -191,7 +191,8 @@ export async function signIn(_prev: FormState, fd: FormData): Promise<FormState>
   // per-IP one stops them dodging it by inventing a new email every request,
   // which would otherwise buy an unmetered bcrypt call and a fresh table row
   // on every try.
-  const ipLocked = await db.reserveLoginAttempt(`ip|${await auth.ipHash()}`);
+  const ipKey = `ip|${await auth.ipHash()}`;
+  const ipLocked = await db.reserveLoginAttempt(ipKey, db.IP_LOCK_AFTER);
   if (ipLocked > 0) {
     return { error: `Too many attempts from this connection. Try again in about ${Math.ceil(ipLocked / 60)} minutes.` };
   }
@@ -206,7 +207,10 @@ export async function signIn(_prev: FormState, fd: FormData): Promise<FormState>
 
   if (!ok) return { error: 'That email and password did not match.' };
 
+  // Clear both, otherwise the shared-address counter creeps up on ordinary
+  // successful sign-ins until it locks the whole office out.
   await db.clearLoginFailures(key);
+  await db.clearLoginFailures(ipKey);
   await auth.startSession(user.id);
   redirect(user.must_change ? '/student-support/staff/password/' : '/student-support/staff/');
 }
@@ -341,7 +345,10 @@ export async function resetTeamMember(_prev: FormState, fd: FormData): Promise<F
   if (!target) return { error: 'No such account.' };
 
   const password = auth.suggestPassword();
-  await db.setPasswordAndRevoke(target.id, auth.hash(password), true, target.password_hash);
+  const done = await db.setPasswordAndRevoke(target.id, auth.hash(password), true, target.password_hash);
+  if (!done) {
+    return { error: `${target.name}'s password changed a moment ago. Reload and try again.` };
+  }
   revalidatePath('/student-support/staff/team');
   return {
     ok: `Password reset. ${target.name} is signed out everywhere.`,
@@ -357,7 +364,10 @@ export async function toggleTeamMember(_prev: FormState, fd: FormData): Promise<
   if (!target) return { error: 'No such account.' };
   if (target.id === user.id) return { error: 'You cannot disable your own account.' };
 
-  await db.setUserActive(target.id, !target.active);
+  const done = await db.setUserActive(target.id, !target.active);
+  if (!done) {
+    return { error: `${target.name} is the only active admin. Promote someone else first.` };
+  }
   if (target.active) await db.deleteUserSessions(target.id);
   revalidatePath('/student-support/staff/team');
   return { ok: `${target.name} ${target.active ? 'disabled' : 'enabled'}.` };

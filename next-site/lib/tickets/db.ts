@@ -135,9 +135,13 @@ export function ensureSchema(): Promise<void> {
       // that can queue behind an upload and stall live reads.
       const hasVersion = (await sql`
         SELECT 1 FROM information_schema.columns
-         WHERE table_name = 'support_tickets' AND column_name = 'version'`) as any[];
+         WHERE table_schema = current_schema()
+           AND table_name = 'support_tickets'
+           AND column_name = 'version'`) as any[];
       if (!hasVersion.length) {
-        await sql`ALTER TABLE support_tickets ADD COLUMN version BIGINT NOT NULL DEFAULT 1`;
+        // IF NOT EXISTS stays on the mutation: two cold starts can both see
+        // the column missing, and only the DDL itself can settle that.
+        await sql`ALTER TABLE support_tickets ADD COLUMN IF NOT EXISTS version BIGINT NOT NULL DEFAULT 1`;
       }
 
       await sql`
@@ -379,6 +383,8 @@ export async function purgeOccasionally() {
 
 const LOCK_AFTER = 6;
 const LOCK_MINUTES = 15;
+/** A shared office NAT is one address for the whole team, so this is loose. */
+export const IP_LOCK_AFTER = 40;
 
 /**
  * Reserves one sign-in attempt.
@@ -391,7 +397,7 @@ const LOCK_MINUTES = 15;
  *
  * Returns 0 when the caller may proceed, otherwise seconds until it can.
  */
-export async function reserveLoginAttempt(key: string): Promise<number> {
+export async function reserveLoginAttempt(key: string, threshold = LOCK_AFTER): Promise<number> {
   await ensureSchema();
   const rows = (await sql`
     INSERT INTO support_login_attempts (key, fails, updated_at)
@@ -411,7 +417,7 @@ export async function reserveLoginAttempt(key: string): Promise<number> {
         WHEN support_login_attempts.locked_until > NOW() THEN support_login_attempts.locked_until
         WHEN support_login_attempts.locked_until IS NOT NULL
           OR support_login_attempts.updated_at < NOW() - INTERVAL '1 hour' THEN NULL
-        WHEN support_login_attempts.fails + 1 >= ${LOCK_AFTER}
+        WHEN support_login_attempts.fails + 1 >= ${threshold}
           THEN NOW() + (${LOCK_MINUTES} * INTERVAL '1 minute')
         ELSE NULL
       END,
@@ -653,10 +659,19 @@ export async function listUsers() {
       FROM support_users ORDER BY name`) as unknown as StaffUser[];
 }
 
-export async function listActiveUsers() {
+/**
+ * Active accounts, plus the ticket's current owner even if they have since
+ * been disabled. Without that row the select has no matching option, the
+ * browser shows "Unassigned", and saving an unrelated note quietly drops the
+ * assignment.
+ */
+export async function listAssignableUsers(currentOwner?: number | null) {
   await ensureSchema();
-  return (await sql`SELECT id, name FROM support_users WHERE active ORDER BY name`) as unknown as
-    { id: number; name: string }[];
+  return (await sql`
+    SELECT id, name, active FROM support_users
+     WHERE active OR id = ${currentOwner ?? null}
+     ORDER BY active DESC, name`) as unknown as
+    { id: number; name: string; active: boolean }[];
 }
 
 export async function getUserByEmail(email: string) {
@@ -694,19 +709,39 @@ export async function setPasswordAndRevoke(
   expectedHash?: string
 ): Promise<boolean> {
   const rows = (await sql`
-    WITH revoked AS (
-      DELETE FROM support_sessions WHERE user_id = ${id} RETURNING 1
+    WITH changed AS (
+      UPDATE support_users
+         SET password_hash = ${hash}, must_change = ${mustChange}
+       WHERE id = ${id}
+         AND (${expectedHash ?? null}::text IS NULL OR password_hash = ${expectedHash ?? null})
+      RETURNING id
+    ), revoked AS (
+      -- Driven by the update above, so a losing write leaves sessions alone
+      -- rather than signing someone out while their password stayed the same.
+      DELETE FROM support_sessions
+       WHERE user_id IN (SELECT id FROM changed)
+      RETURNING 1
     )
-    UPDATE support_users
-       SET password_hash = ${hash}, must_change = ${mustChange}
-     WHERE id = ${id}
-       AND (${expectedHash ?? null}::text IS NULL OR password_hash = ${expectedHash ?? null})
-    RETURNING id`) as any[];
+    SELECT id FROM changed`) as any[];
   return rows.length > 0;
 }
 
-export async function setUserActive(id: number, active: boolean) {
-  await sql`UPDATE support_users SET active = ${active} WHERE id = ${id}`;
+/**
+ * Returns false when the change would leave nobody able to administer the
+ * desk. Two admins disabling each other at the same moment would otherwise
+ * both pass an application-level check and lock everyone out, recoverable only
+ * with direct database access.
+ */
+export async function setUserActive(id: number, active: boolean): Promise<boolean> {
+  const rows = (await sql`
+    UPDATE support_users u SET active = ${active}
+     WHERE u.id = ${id}
+       AND (${active}
+            OR u.role <> 'admin'
+            OR EXISTS (SELECT 1 FROM support_users o
+                        WHERE o.id <> u.id AND o.active AND o.role = 'admin'))
+    RETURNING id`) as any[];
+  return rows.length > 0;
 }
 
 export async function touchLogin(id: number) {

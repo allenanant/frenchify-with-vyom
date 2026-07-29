@@ -33,7 +33,7 @@ export default async function QueuePage({
   const page = Number.isFinite(raw) ? Math.min(Math.max(Math.trunc(raw) || 1, 1), 1000) : 1;
   const PER = 50;
 
-  purgeOccasionally();
+  await purgeOccasionally();
   const [list, c] = await Promise.all([
     listTickets({ status, q, offset: (page - 1) * PER, limit: PER }),
     counts(),

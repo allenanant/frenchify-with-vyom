@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { currentUser } from '@/lib/tickets/auth';
 import {
-  getTicket, getAttachmentMeta, getEvents, listActiveUsers, STATUS_LABELS,
+  getTicket, getAttachmentMeta, getEvents, listAssignableUsers, STATUS_LABELS,
 } from '@/lib/tickets/db';
 import { card, pill, whenIst, ago } from '../../ui';
 import { STATUS_CLASSES } from '@/lib/tickets/constants';
@@ -25,7 +25,7 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
   const [shots, events, staff] = await Promise.all([
     getAttachmentMeta(id),
     getEvents(id),
-    listActiveUsers(),
+    listAssignableUsers(t.assigned_to),
   ]);
 
   const digits = (t.student_phone || '').replace(/\D/g, '');

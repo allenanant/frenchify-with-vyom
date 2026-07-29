@@ -34,7 +34,9 @@ export default async function ThanksPage({
     <main className="flex min-h-[70vh] items-center justify-center bg-white px-4 py-16">
       <div className="mx-auto max-w-lg text-center">
         <h1 className="font-display text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          {state === 'absent' ? 'We could not find that ticket' : 'Got it, thank you.'}
+          {state === 'found' ? 'Got it, thank you.'
+            : state === 'unverified' ? 'We cannot check that right now'
+            : 'We could not find that ticket'}
         </h1>
 
         {clean && (
@@ -55,8 +57,12 @@ export default async function ThanksPage({
           </>
         ) : state === 'unverified' ? (
           <p className="mt-5 text-base text-gray-600">
-            Your ticket was raised under the number above. We could not load its details just now, but nothing is
-            lost. Quote that number if you follow up, and there is no need to send it again.
+            Our system is not responding at the moment, so we cannot confirm this reference either way. If you
+            just submitted the form, your ticket is almost certainly saved. Hold on to the number above and email{' '}
+            <a className="font-medium text-brand-blue hover:underline" href="mailto:Admin@frenchifywithvyom.com">
+              Admin@frenchifywithvyom.com
+            </a>{' '}
+            if you do not hear back.
           </p>
         ) : (
           <p className="mt-5 text-base text-gray-600">
