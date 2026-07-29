@@ -26,6 +26,9 @@ export type SessionUser = {
   must_change: boolean;
 };
 
+/** What bcrypt will actually consume. Not the same as string length. */
+export const passwordBytes = (plain: string) => Buffer.byteLength(plain, 'utf8');
+
 export const hash = (plain: string) => bcrypt.hashSync(plain, ROUNDS);
 
 export function verify(plain: string, stored: string) {
@@ -51,13 +54,6 @@ export function suggestPassword() {
  * just verified. Closes the window where a sign-in checks an old password,
  * pauses, and resumes after an admin has reset the account.
  */
-export async function startSessionIfUnchanged(userId: number, expectedHash: string) {
-  const current = await db.getUserById(userId);
-  if (!current || !current.active || current.password_hash !== expectedHash) return false;
-  await startSession(userId);
-  return true;
-}
-
 export async function startSession(userId: number) {
   const token = randomBytes(32).toString('hex');
   await db.createSession(token, userId, SESSION_DAYS);

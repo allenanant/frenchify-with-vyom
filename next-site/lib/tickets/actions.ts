@@ -191,7 +191,12 @@ export async function signIn(_prev: FormState, fd: FormData): Promise<FormState>
   // Keyed on the account alone. Including the IP gave every source address a
   // fresh budget for the same email, which is exactly the shape a distributed
   // password grind takes. Hashed so one row cannot be grown by a long address.
-  const key = `acct|${createHash('sha256').update(email).digest('hex').slice(0, 32)}`;
+  const emailHash = createHash('sha256').update(email).digest('hex').slice(0, 32);
+  // Locking on the pair, not the account alone. A global account lock is a
+  // gift to anyone who wants Vyom unable to sign in: six bad guesses from
+  // anywhere and the real person is out. Pairing it with the address keeps a
+  // targeted grind throttled without handing over that lever.
+  const key = `pair|${await auth.ipHash()}|${emailHash}`;
 
   // Two budgets with different jobs.
   //
@@ -202,7 +207,12 @@ export async function signIn(_prev: FormState, fd: FormData): Promise<FormState>
   // success - otherwise one valid account could keep wiping the failures it
   // racked up spraying every other account.
   const ipKey = `ip|${await auth.ipHash()}`;
-  if ((await db.ipFailuresRecently(ipKey)) >= db.IP_LOCK_AFTER) {
+
+  // Reserved BEFORE any bcrypt work. Reading the count first and incrementing
+  // afterwards let a burst of concurrent requests all see the same number,
+  // all run a cost-12 comparison, and only then blow past the limit - which is
+  // the exact moment the limit was supposed to bite.
+  if (!(await db.reserveIpAttempt(ipKey, db.IP_LOCK_AFTER))) {
     return { error: 'Too many failed attempts from this connection. Try again shortly.' };
   }
 
@@ -211,22 +221,24 @@ export async function signIn(_prev: FormState, fd: FormData): Promise<FormState>
     return { error: `Too many attempts. Try again in about ${Math.ceil(locked / 60)} minutes.` };
   }
 
-  const user = await db.getUserByEmail(email);
-  const ok = auth.verify(password, user?.password_hash ?? DUMMY_HASH) && !!user && user.active;
-
-  if (!ok) {
-    await db.noteIpFailure(ipKey);
+  // Overlong input is rejected before hashing rather than silently truncated.
+  if (auth.passwordBytes(password) > MAX_PASSWORD) {
     return { error: 'That email and password did not match.' };
   }
 
+  const user = await db.getUserByEmail(email);
+  const ok = auth.verify(password, user?.password_hash ?? DUMMY_HASH) && !!user && user.active;
+
+  if (!ok) return { error: 'That email and password did not match.' };
+
+  // Honest sign-ins should not spend from the shared budget.
   await db.clearLoginFailures(key);
+  await db.releaseIpAttempt(ipKey);
 
-  // 2: bind the session to the hash that was just verified. Without this a
-  // request could check the old password, pause while an admin resets the
-  // account, then resume and mint a session the reset was meant to prevent.
-  const minted = await auth.startSessionIfUnchanged(user.id, user.password_hash);
-  if (!minted) return { error: 'Your password was just changed. Sign in again with the new one.' };
-
+  // A session issued before the credentials last changed is rejected at read
+  // time, so a paused sign-in cannot outlive the reset that was meant to stop
+  // it. No re-read here can achieve that; the check has to live at validation.
+  await auth.startSession(user.id);
   redirect(user.must_change ? '/student-support/staff/password/' : '/student-support/staff/');
 }
 
@@ -247,7 +259,9 @@ export async function changePassword(_prev: FormState, fd: FormData): Promise<Fo
   const row = await db.getUserById(me.id);
   if (!row || !auth.verify(current, row.password_hash)) return { error: 'Current password is wrong.' };
   if (next.length < 10) return { error: 'New password must be at least 10 characters.' };
-  if (next.length > MAX_PASSWORD) return { error: `New password must be under ${MAX_PASSWORD} characters.` };
+  if (auth.passwordBytes(next) > MAX_PASSWORD) {
+    return { error: `New password is too long. Keep it under ${MAX_PASSWORD} bytes (emoji count for several each).` };
+  }
   if (next !== confirm) return { error: 'The two new passwords do not match.' };
   if (next === current) return { error: 'Pick a password different from the current one.' };
 
@@ -328,7 +342,9 @@ export async function claimFirstAdmin(_prev: FormState, fd: FormData): Promise<F
   if (name.length < 2) return { error: 'Enter a name.' };
   if (!validEmail(email)) return { error: `Enter a valid email address, under ${MAX_EMAIL} characters.` };
   if (password.length < 10) return { error: 'Password must be at least 10 characters.' };
-  if (password.length > MAX_PASSWORD) return { error: `Password must be under ${MAX_PASSWORD} characters.` };
+  if (auth.passwordBytes(password) > MAX_PASSWORD) {
+    return { error: `Password is too long. Keep it under ${MAX_PASSWORD} bytes (emoji count for several each).` };
+  }
 
   const id = await db.claimFirstAdminAtomic({ email, name, password_hash: auth.hash(password) });
   if (id === null) return { error: 'Someone already set this up. Sign in instead.' };
@@ -385,7 +401,6 @@ export async function toggleTeamMember(_prev: FormState, fd: FormData): Promise<
   if (!done) {
     return { error: `${target.name} is the only active admin. Promote someone else first.` };
   }
-  if (target.active) await db.deleteUserSessions(target.id);
   revalidatePath('/student-support/staff/team');
   return { ok: `${target.name} ${target.active ? 'disabled' : 'enabled'}.` };
 }

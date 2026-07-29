@@ -93,8 +93,10 @@ export function ensureSchema(): Promise<void> {
           active        BOOLEAN NOT NULL DEFAULT TRUE,
           must_change   BOOLEAN NOT NULL DEFAULT TRUE,
           created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-          last_login_at TIMESTAMPTZ
+          last_login_at TIMESTAMPTZ,
+          creds_changed_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )`;
+      await sql`ALTER TABLE support_users ADD COLUMN IF NOT EXISTS creds_changed_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`;
 
       await sql`
         CREATE TABLE IF NOT EXISTS support_sessions (
@@ -194,8 +196,10 @@ export function ensureSchema(): Promise<void> {
           key         TEXT PRIMARY KEY,
           fails       INTEGER NOT NULL DEFAULT 0,
           locked_until TIMESTAMPTZ,
+          window_start TIMESTAMPTZ NOT NULL DEFAULT NOW(),
           updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )`;
+      await sql`ALTER TABLE support_login_attempts ADD COLUMN IF NOT EXISTS window_start TIMESTAMPTZ NOT NULL DEFAULT NOW()`;
 
       await sql`CREATE INDEX IF NOT EXISTS idx_support_tickets_status ON support_tickets(status)`;
       await sql`CREATE INDEX IF NOT EXISTS idx_support_tickets_created ON support_tickets(created_at DESC)`;
@@ -438,30 +442,35 @@ export async function clearLoginFailures(key: string) {
  * account, then start again. Because only failures count, a roomful of people
  * signing in normally never comes near it.
  */
-export async function noteIpFailure(ipKey: string): Promise<number> {
+export async function reserveIpAttempt(ipKey: string, threshold: number): Promise<boolean> {
   await ensureSchema();
   const rows = (await sql`
-    INSERT INTO support_login_attempts (key, fails, updated_at)
-    VALUES (${ipKey}, 1, NOW())
+    INSERT INTO support_login_attempts (key, fails, window_start, updated_at)
+    VALUES (${ipKey}, 1, NOW(), NOW())
     ON CONFLICT (key) DO UPDATE SET
+      -- window_start, not updated_at. Anchoring the reset on the last write
+      -- meant 40 failures spaced 14 minutes apart still accumulated to a lock
+      -- even though no single window held more than two.
       fails = CASE
-        WHEN support_login_attempts.updated_at < NOW() - (${LOCK_MINUTES} * INTERVAL '1 minute')
+        WHEN support_login_attempts.window_start < NOW() - (${LOCK_MINUTES} * INTERVAL '1 minute')
           THEN 1
         ELSE support_login_attempts.fails + 1
       END,
+      window_start = CASE
+        WHEN support_login_attempts.window_start < NOW() - (${LOCK_MINUTES} * INTERVAL '1 minute')
+          THEN NOW()
+        ELSE support_login_attempts.window_start
+      END,
       updated_at = NOW()
     RETURNING fails`) as any[];
-  return Number(rows[0]?.fails ?? 0);
+  return Number(rows[0]?.fails ?? 0) <= threshold;
 }
 
-/** Read-only check of the shared-address budget, before any bcrypt work. */
-export async function ipFailuresRecently(ipKey: string): Promise<number> {
-  await ensureSchema();
-  const rows = (await sql`
-    SELECT fails FROM support_login_attempts
-     WHERE key = ${ipKey}
-       AND updated_at > NOW() - (${LOCK_MINUTES} * INTERVAL '1 minute')`) as any[];
-  return Number(rows[0]?.fails ?? 0);
+/** Undo a reservation after a legitimate sign-in, so honest use costs nothing. */
+export async function releaseIpAttempt(ipKey: string) {
+  await sql`UPDATE support_login_attempts
+               SET fails = GREATEST(0, fails - 1)
+             WHERE key = ${ipKey}`;
 }
 
 /**
@@ -741,7 +750,9 @@ export async function createUser(u: { email: string; name: string; password_hash
 }
 
 export async function setPassword(id: number, hash: string, mustChange: boolean) {
-  await sql`UPDATE support_users SET password_hash = ${hash}, must_change = ${mustChange} WHERE id = ${id}`;
+  await sql`UPDATE support_users
+               SET password_hash = ${hash}, must_change = ${mustChange}, creds_changed_at = NOW()
+             WHERE id = ${id}`;
 }
 
 /**
@@ -759,7 +770,7 @@ export async function setPasswordAndRevoke(
   const rows = (await sql`
     WITH changed AS (
       UPDATE support_users
-         SET password_hash = ${hash}, must_change = ${mustChange}
+         SET password_hash = ${hash}, must_change = ${mustChange}, creds_changed_at = NOW()
        WHERE id = ${id}
          AND (${expectedHash ?? null}::text IS NULL OR password_hash = ${expectedHash ?? null})
       RETURNING id
@@ -791,7 +802,7 @@ export async function setUserActive(id: number, active: boolean): Promise<boolea
        ORDER BY id
        FOR UPDATE
     ), toggled AS (
-      UPDATE support_users u SET active = ${active}
+      UPDATE support_users u SET active = ${active}, creds_changed_at = NOW()
        WHERE u.id = ${id}
          AND (${active}
               OR u.role <> 'admin'
@@ -822,7 +833,12 @@ export async function getSession(token: string) {
   const rows = (await sql`
     SELECT s.token, u.id, u.email, u.name, u.role, u.active, u.must_change
       FROM support_sessions s JOIN support_users u ON u.id = s.user_id
-     WHERE s.token = ${token} AND s.expires_at > NOW()`) as any[];
+     WHERE s.token = ${token}
+       AND s.expires_at > NOW()
+       -- Any session minted before the credentials last changed is void, even
+       -- if it was inserted a moment after the revoking DELETE ran. Re-reading
+       -- the user before INSERT narrows that race; this ends it.
+       AND s.created_at >= u.creds_changed_at`) as any[];
   return rows[0] ?? null;
 }
 
