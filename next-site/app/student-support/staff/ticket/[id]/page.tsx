@@ -168,6 +168,7 @@ export default async function TicketPage({ params }: { params: Promise<{ id: str
           </section>
 
           <UpdatePanel
+            key={t.version}
             id={t.id}
             status={t.status}
             priority={t.priority}

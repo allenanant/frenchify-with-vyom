@@ -1,6 +1,7 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useFormStatus } from 'react-dom';
 import { saveTicket, type FormState } from '@/lib/tickets/actions';
 import { STATUSES, STATUS_LABELS } from '@/lib/tickets/constants';
@@ -30,6 +31,18 @@ export default function UpdatePanel({
   version: string;
 }) {
   const [state, action] = useActionState<FormState, FormData>(saveTicket, {});
+  const router = useRouter();
+
+  // Pull the server's new state down after a save.
+  //
+  // Without this the hidden version field keeps whatever it was rendered with,
+  // so the SECOND save on a page always fails its concurrency check and blames
+  // a colleague who never touched the ticket. The parent keys this component
+  // on version, so a refresh that changes it remounts the form with correct
+  // defaults rather than leaving the selects showing stale values.
+  useEffect(() => {
+    if (state.ok) router.refresh();
+  }, [state.ok, router]);
 
   return (
     <section className={card}>

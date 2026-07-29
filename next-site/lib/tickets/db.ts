@@ -655,7 +655,13 @@ export async function updateTicket(
       INSERT INTO support_events (ticket_id, user_id, type, body)
       SELECT u.id, ${userId}, 'status_change', trim(BOTH ' .' FROM concat_ws('. ',
         CASE WHEN COALESCE(${status}, u.old_status) <> u.old_status
-             THEN 'Status ' || ${status ? STATUS_LABELS[status] : ''} END,
+             THEN 'Status ' || CASE u.old_status
+                    WHEN 'new' THEN 'New'
+                    WHEN 'in_progress' THEN 'In progress'
+                    WHEN 'waiting_on_student' THEN 'Waiting on student'
+                    WHEN 'resolved' THEN 'Resolved'
+                    ELSE u.old_status END
+                  || ' to ' || ${status ? STATUS_LABELS[status] : ''} END,
         CASE WHEN ${priority} <> u.old_priority THEN 'Priority set to ' || ${priority} END,
         CASE WHEN (SELECT id FROM target) IS DISTINCT FROM u.old_assigned
              THEN CASE WHEN ${assigned}::int IS NULL THEN 'Unassigned'
