@@ -22,25 +22,21 @@ const ArrowIcon = () => (
 export default function ExamSplitSelector() {
   return (
     <div className="exam-split-root">
-      <div className="split-intro">
-        <span className="split-kicker">Frenchify Courses</span>
-        <h1 className="split-headline">
-          Which exam are you <span className="split-gradient">preparing for?</span>
-        </h1>
-        <p className="split-sub">
-          Both are accepted by IRCC for Canadian PR. Pick your exam to see the
-          courses built for it.
-        </p>
-      </div>
-
       <div className="split-wrap">
+        <div className="split-question" aria-hidden="true">
+          Which exam are you preparing for?
+        </div>
+
         <Link href="/course-test/tef" className="split-panel panel-tef">
+          <span className="panel-ghost panel-ghost-tef" aria-hidden="true">
+            TEF
+          </span>
           <div className="panel-inner">
             <span className="panel-pill panel-pill-tef">Most Popular</span>
-            <div className="panel-acronym">TEF</div>
+            <div className="panel-acronym panel-acronym-tef">TEF</div>
             <div className="panel-exam">TEF Canada</div>
             <p className="panel-body">
-              The exam most Frenchify students take for Canadian PR. Full journey
+              The exam most of our students take for Canadian PR — full journey
               from A1 to exam-ready B2.
             </p>
             <div className="panel-levels">
@@ -56,18 +52,17 @@ export default function ExamSplitSelector() {
           </div>
         </Link>
 
-        <div className="split-divider" aria-hidden="true">
-          <span>OR</span>
-        </div>
-
         <Link href="/course-test/tcf" className="split-panel panel-tcf">
+          <span className="panel-ghost panel-ghost-tcf" aria-hidden="true">
+            TCF
+          </span>
           <div className="panel-inner">
             <span className="panel-pill panel-pill-tcf">Also IRCC Accepted</span>
             <div className="panel-acronym panel-acronym-tcf">TCF</div>
             <div className="panel-exam panel-exam-tcf">TCF Canada</div>
             <p className="panel-body panel-body-tcf">
-              The same structured journey, with prep tuned to the TCF exam format,
-              question types, and timing.
+              The same structured journey, tuned to the TCF format, question
+              types, and timing.
             </p>
             <div className="panel-levels">
               {LEVELS.map((l) => (
@@ -93,41 +88,6 @@ export default function ExamSplitSelector() {
           padding-top: 68px;
         }
 
-        .split-intro {
-          text-align: center;
-          padding: clamp(2rem, 4.5vh, 3.5rem) 1.5rem clamp(1.5rem, 3vh, 2.5rem);
-        }
-        .split-kicker {
-          text-transform: uppercase;
-          letter-spacing: 0.28em;
-          font-size: 12px;
-          font-weight: 600;
-          color: #2563eb;
-        }
-        .split-headline {
-          font-family: var(--font-display), 'Sora', sans-serif;
-          font-weight: 700;
-          letter-spacing: -0.025em;
-          line-height: 1.05;
-          font-size: clamp(2rem, 4.2vw, 3.25rem);
-          color: #111827;
-          margin-top: 14px;
-        }
-        .split-gradient {
-          background-image: linear-gradient(90deg, #2563eb 0%, #f59e0b 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-          color: transparent;
-        }
-        .split-sub {
-          margin: 14px auto 0;
-          max-width: 560px;
-          color: #4b5563;
-          font-size: 16px;
-          line-height: 1.6;
-        }
-
         .split-wrap {
           flex: 1;
           display: flex;
@@ -135,84 +95,142 @@ export default function ExamSplitSelector() {
           min-height: 0;
         }
 
+        /* Floating question */
+        .split-question {
+          position: absolute;
+          top: clamp(18px, 3.5vh, 36px);
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 6;
+          background: #ffffff;
+          border: 1px solid #e5e7eb;
+          border-radius: 999px;
+          padding: 12px 26px;
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 600;
+          font-size: 15px;
+          letter-spacing: -0.01em;
+          color: #111827;
+          white-space: nowrap;
+          box-shadow: 0 14px 34px -14px rgba(17, 24, 39, 0.32);
+          pointer-events: none;
+        }
+
+        /* Panels */
         .split-panel {
-          flex: 1 1 0;
+          flex: 1 1 0%;
           display: flex;
           align-items: center;
           justify-content: center;
           position: relative;
           overflow: hidden;
-          padding: clamp(3rem, 6vh, 5rem) clamp(1.5rem, 4vw, 4rem);
-          transition: flex-grow 0.55s cubic-bezier(0.32, 0.72, 0.28, 1);
+          padding: clamp(2rem, 5vh, 4rem) clamp(1.5rem, 4vw, 4rem);
+          transition: flex-grow 0.6s cubic-bezier(0.32, 0.72, 0.28, 1);
           text-decoration: none;
         }
-        @media (min-width: 901px) {
-          .split-panel:hover {
-            flex-grow: 1.25;
-          }
+        .split-panel:focus-visible {
+          outline: 3px solid #2563eb;
+          outline-offset: -3px;
         }
 
         .panel-tef {
-          background: #f8faff;
+          background: linear-gradient(135deg, #f7faff 0%, #edf3ff 100%);
         }
         .panel-tef::before {
           content: '';
           position: absolute;
           inset: 0;
           background:
-            radial-gradient(700px 420px at 25% 20%, rgba(37, 99, 235, 0.14), transparent 60%),
-            radial-gradient(600px 400px at 80% 90%, rgba(37, 99, 235, 0.08), transparent 60%);
+            radial-gradient(720px 460px at 22% 18%, rgba(37, 99, 235, 0.16), transparent 62%),
+            radial-gradient(640px 420px at 82% 88%, rgba(37, 99, 235, 0.1), transparent 62%);
           transition: opacity 0.5s ease;
-          opacity: 0.75;
+          opacity: 0.7;
           pointer-events: none;
-        }
-        .panel-tef:hover::before {
-          opacity: 1;
         }
 
         .panel-tcf {
-          background: #0b1533;
+          background: linear-gradient(135deg, #0a1230 0%, #101c42 100%);
         }
         .panel-tcf::before {
           content: '';
           position: absolute;
           inset: 0;
           background:
-            radial-gradient(700px 420px at 75% 20%, rgba(245, 158, 11, 0.16), transparent 60%),
-            radial-gradient(600px 400px at 20% 90%, rgba(37, 99, 235, 0.22), transparent 60%);
+            radial-gradient(720px 460px at 78% 16%, rgba(245, 158, 11, 0.18), transparent 62%),
+            radial-gradient(640px 420px at 18% 88%, rgba(37, 99, 235, 0.26), transparent 62%);
           transition: opacity 0.5s ease;
-          opacity: 0.75;
+          opacity: 0.7;
           pointer-events: none;
         }
-        .panel-tcf:hover::before {
-          opacity: 1;
+
+        /* Giant ghost acronym behind the content */
+        .panel-ghost {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -54%);
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 800;
+          font-size: clamp(16rem, 30vw, 30rem);
+          line-height: 1;
+          letter-spacing: -0.05em;
+          pointer-events: none;
+          user-select: none;
+          transition: transform 0.7s cubic-bezier(0.32, 0.72, 0.28, 1);
+        }
+        .panel-ghost-tef {
+          color: transparent;
+          -webkit-text-stroke: 2px rgba(37, 99, 235, 0.07);
+        }
+        .panel-ghost-tcf {
+          color: transparent;
+          -webkit-text-stroke: 2px rgba(255, 255, 255, 0.06);
         }
 
         .panel-inner {
           position: relative;
           z-index: 1;
-          max-width: 460px;
+          max-width: 480px;
           width: 100%;
           text-align: center;
           display: flex;
           flex-direction: column;
           align-items: center;
+          transition: opacity 0.45s ease, transform 0.6s cubic-bezier(0.32, 0.72, 0.28, 1);
+        }
+
+        /* Hover choreography (desktop, real pointers only) */
+        @media (hover: hover) and (min-width: 901px) {
+          .split-panel:hover {
+            flex-grow: 1.35;
+          }
+          .split-panel:hover::before {
+            opacity: 1;
+          }
+          .split-panel:hover .panel-ghost {
+            transform: translate(-50%, -54%) scale(1.06);
+          }
+          .split-wrap:has(.split-panel:hover) .split-panel:not(:hover) .panel-inner {
+            opacity: 0.45;
+            transform: scale(0.95);
+          }
         }
 
         .panel-pill {
           display: inline-flex;
           align-items: center;
-          gap: 8px;
           border-radius: 999px;
-          padding: 6px 14px;
+          padding: 6px 15px;
           font-size: 12px;
-          letter-spacing: 0.04em;
-          font-weight: 600;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          font-weight: 700;
         }
         .panel-pill-tef {
-          background: #eff6ff;
+          background: #ffffff;
           color: #2563eb;
           border: 1px solid #dbeafe;
+          box-shadow: 0 6px 14px -8px rgba(37, 99, 235, 0.4);
         }
         .panel-pill-tcf {
           background: rgba(245, 158, 11, 0.12);
@@ -223,27 +241,33 @@ export default function ExamSplitSelector() {
         .panel-acronym {
           font-family: var(--font-display), 'Sora', sans-serif;
           font-weight: 800;
-          letter-spacing: -0.04em;
-          line-height: 0.95;
-          font-size: clamp(4.5rem, 10vw, 8.5rem);
-          color: #2563eb;
-          margin-top: clamp(1rem, 2.5vh, 1.75rem);
-          transition: transform 0.55s cubic-bezier(0.32, 0.72, 0.28, 1);
+          letter-spacing: -0.05em;
+          line-height: 0.92;
+          font-size: clamp(4.5rem, 11vw, 10rem);
+          margin-top: clamp(0.9rem, 2.2vh, 1.5rem);
+        }
+        .panel-acronym-tef {
+          background-image: linear-gradient(120deg, #1d4ed8 0%, #3b82f6 70%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
         }
         .panel-acronym-tcf {
-          color: #f59e0b;
-        }
-        .split-panel:hover .panel-acronym {
-          transform: scale(1.05);
+          background-image: linear-gradient(120deg, #f59e0b 0%, #fbbf24 70%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
         }
 
         .panel-exam {
           font-family: var(--font-display), 'Sora', sans-serif;
           font-weight: 700;
-          font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+          font-size: clamp(1.1rem, 1.7vw, 1.4rem);
           letter-spacing: -0.01em;
           color: #111827;
-          margin-top: 10px;
+          margin-top: 8px;
         }
         .panel-exam-tcf {
           color: #ffffff;
@@ -252,8 +276,8 @@ export default function ExamSplitSelector() {
         .panel-body {
           color: #4b5563;
           font-size: 15.5px;
-          line-height: 1.65;
-          margin-top: 12px;
+          line-height: 1.6;
+          margin-top: 10px;
           max-width: 400px;
         }
         .panel-body-tcf {
@@ -263,7 +287,7 @@ export default function ExamSplitSelector() {
         .panel-levels {
           display: flex;
           gap: 8px;
-          margin-top: 20px;
+          margin-top: clamp(0.9rem, 2.2vh, 1.4rem);
           flex-wrap: wrap;
           justify-content: center;
         }
@@ -290,7 +314,7 @@ export default function ExamSplitSelector() {
           display: inline-flex;
           align-items: center;
           gap: 10px;
-          margin-top: 28px;
+          margin-top: clamp(1.4rem, 3.2vh, 2rem);
           padding: 14px 30px;
           border-radius: 12px;
           font-weight: 600;
@@ -318,45 +342,36 @@ export default function ExamSplitSelector() {
           box-shadow: 0 14px 30px -8px rgba(245, 158, 11, 0.55);
         }
 
-        .split-divider {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          z-index: 2;
-          width: 58px;
-          height: 58px;
-          border-radius: 999px;
-          background: #ffffff;
-          border: 1px solid #e5e7eb;
-          box-shadow: 0 10px 30px -10px rgba(17, 24, 39, 0.25);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          pointer-events: none;
-        }
-        .split-divider span {
-          font-family: var(--font-display), 'Sora', sans-serif;
-          font-weight: 800;
-          font-size: 13px;
-          letter-spacing: 0.08em;
-          color: #6b7280;
-        }
-
+        /* Stacked layout on mobile / narrow screens */
         @media (max-width: 900px) {
           .split-wrap {
             flex-direction: column;
           }
           .split-panel {
-            min-height: 52svh;
-            padding: 3.5rem 1.5rem;
+            min-height: calc((100svh - 68px) / 2);
+            padding: 2rem 1.25rem;
           }
-          .split-divider {
-            width: 48px;
-            height: 48px;
+          .panel-tef {
+            padding-top: 74px;
           }
-          .split-divider span {
-            font-size: 11px;
+          .split-question {
+            top: 14px;
+            font-size: 13px;
+            padding: 10px 18px;
+          }
+          .panel-acronym {
+            font-size: clamp(3.5rem, 16vw, 4.5rem);
+          }
+          .panel-body {
+            font-size: 14px;
+            max-width: 340px;
+          }
+          .panel-ghost {
+            font-size: 15rem;
+          }
+          .panel-cta {
+            padding: 12px 24px;
+            font-size: 14.5px;
           }
         }
       `}</style>
