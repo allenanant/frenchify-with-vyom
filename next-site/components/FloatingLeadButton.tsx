@@ -1,29 +1,18 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { MessageCircle, X } from 'lucide-react';
 import Script from 'next/script';
 
+// The homepage has its own consultation CTAs — the floating form competes with
+// them there (Vyom's Aug 2026 feedback), so it renders on inner pages only.
 const HOME_PATHS = new Set(['/', '/home-v2', '/home-v2/']);
 const FORM_URL = 'https://api.leadconnectorhq.com/widget/form/hNHsUQGDYnwiWeSJKXSe';
 
 export default function FloatingLeadButton() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const autoOpenedRef = useRef(false);
-
-  // Home page only: auto-open once after a short delay on desktop.
-  useEffect(() => {
-    if (!HOME_PATHS.has(pathname)) return;
-    if (autoOpenedRef.current) return;
-    if (typeof window === 'undefined' || window.innerWidth < 768) return;
-    const t = setTimeout(() => {
-      autoOpenedRef.current = true;
-      setOpen(true);
-    }, 600);
-    return () => clearTimeout(t);
-  }, [pathname]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -32,6 +21,8 @@ export default function FloatingLeadButton() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
+
+  if (HOME_PATHS.has(pathname)) return null;
 
   return (
     <>

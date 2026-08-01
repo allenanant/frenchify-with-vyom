@@ -83,7 +83,7 @@ export default function HomeV2MegaCta() {
                       className="group inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-[15px] font-bold text-[#0A1426] shadow-[0_20px_40px_-15px_rgba(255,255,255,0.35)] hover:bg-[#f59e0b] hover:text-white transition-colors duration-300"
                     >
                       <Calendar className="h-4 w-4" />
-                      Book a Consultation
+                      Book consultation
                       <span className="grid h-7 w-7 place-items-center rounded-full bg-[#0A1426]/10 group-hover:bg-white/20 transition-colors">
                         <ArrowRight className="h-3.5 w-3.5" />
                       </span>

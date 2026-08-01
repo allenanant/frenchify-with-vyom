@@ -1,41 +1,32 @@
 'use client';
 
-import { Layers, Award, GraduationCap } from 'lucide-react';
+import { TrendingUp, Award, Clock3 } from 'lucide-react';
 import AnimatedNumber from '@/components/motion/AnimatedNumber';
 import Reveal from '@/components/motion/Reveal';
 
-type Stat = {
-  Icon: typeof Award;
-  // Either an animated number (value + suffix) or a static display string.
-  value?: number;
-  suffix?: string;
-  text?: string;
-  label: string;
-  sub: string;
-  accent: string;
-};
-
-const stats: Stat[] = [
+const stats = [
   {
-    Icon: GraduationCap,
-    text: 'Since 2020',
-    label: 'French Exam Training',
-    sub: 'Specialized preparation for TEF, TCF and TEFAQ Canada',
+    Icon: Clock3,
+    value: 4,
+    suffix: '+',
+    label: 'Years of TEF Canada training',
+    sub: 'Built and refined since 2020',
     accent: 'from-[#2563eb] to-[#3b82f6]',
   },
   {
     Icon: Award,
-    value: 100,
+    value: 75,
     suffix: '+',
-    label: 'Verified TEF/TCF Results',
-    sub: 'Including CLB 5, CLB 7 and CLB 9 scorecards',
+    label: 'Verified TEF/TCF results',
+    sub: 'CLB 5 + CLB 7+ scorecards on public page',
     accent: 'from-[#f59e0b] to-[#fbbf24]',
   },
   {
-    Icon: Layers,
-    text: '4 Levels',
-    label: 'Complete A1–B2 Roadmap',
-    sub: 'From complete beginner to exam preparation',
+    Icon: TrendingUp,
+    value: 10,
+    suffix: ' mo',
+    label: 'Average time to fluency',
+    sub: 'Beginner → exam-ready',
     accent: 'from-[#16a34a] to-[#22c55e]',
   },
 ];
@@ -50,7 +41,7 @@ export default function HomeV2Stats() {
               By the numbers
             </span>
             <h2 className="mt-3 font-display text-[36px] md:text-[48px] font-bold text-[#111827] tracking-[-0.03em] leading-[1.05]">
-              Real Results. Proven Experience.
+              Track record, not promises.
             </h2>
           </div>
         </Reveal>
@@ -72,12 +63,8 @@ export default function HomeV2Stats() {
                     0{i + 1}
                   </span>
                 </div>
-                <div className="mt-10 font-display font-bold text-[#111827] tracking-[-0.04em] leading-[0.95] text-[44px] md:text-[56px] lg:text-[64px]">
-                  {typeof s.value === 'number' ? (
-                    <AnimatedNumber value={s.value} suffix={s.suffix} duration={1.6} />
-                  ) : (
-                    s.text
-                  )}
+                <div className="mt-10 font-display font-bold text-[#111827] tracking-[-0.04em] leading-[0.95] text-[64px] md:text-[88px]">
+                  <AnimatedNumber value={s.value} suffix={s.suffix} duration={1.6} />
                 </div>
                 <div className="mt-3 text-[15px] font-semibold text-[#252525]">
                   {s.label}

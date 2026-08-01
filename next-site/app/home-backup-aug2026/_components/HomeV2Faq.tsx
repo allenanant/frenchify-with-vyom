@@ -40,13 +40,13 @@ export default function HomeV2Faq() {
             </h2>
             <p className="mt-5 text-[15.5px] leading-[1.6] text-[#4b5563]">
               Get answers to common questions about our French learning programs. Still
-              stuck? Book a consultation and we&apos;ll map your timeline together.
+              stuck? Book a 1:1 call and we&apos;ll map your timeline together.
             </p>
             <Link
               href="/contact"
               className="mt-7 inline-flex items-center gap-3 rounded-full bg-[#2563eb] px-6 py-3.5 text-[14px] font-semibold text-white shadow-[0_14px_30px_-12px_rgba(37,99,235,0.55)] hover:bg-[#1d4ed8] transition-colors"
             >
-              Book a Consultation
+              Book a 1:1 with Vyom
             </Link>
           </Reveal>
 

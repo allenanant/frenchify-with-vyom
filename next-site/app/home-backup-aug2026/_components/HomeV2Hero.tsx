@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { ArrowRight, ClipboardCheck, Sparkles, BadgeCheck, Globe2 } from 'lucide-react';
+import { ArrowRight, Play, Sparkles, BadgeCheck, Globe2 } from 'lucide-react';
 import Magnetic from '@/components/motion/Magnetic';
 import Reveal from '@/components/motion/Reveal';
 import TextReveal from '@/components/motion/TextReveal';
@@ -63,7 +63,7 @@ export default function HomeV2Hero() {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600" />
                 </span>
                 <span className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-blue-700">
-                  4+ Years of French Exam Training for Immigration &amp; PR
+                  4+ Years · TEF Canada Training
                 </span>
               </div>
             </Reveal>
@@ -71,13 +71,13 @@ export default function HomeV2Hero() {
             <h1 className="font-display font-bold text-[#111827] tracking-[-0.04em] leading-[0.96] text-[44px] sm:text-[58px] md:text-[48px] lg:text-[76px]">
               <TextReveal
                 as="span"
-                text="Clearing"
+                text="Becoming"
                 className="block"
                 stagger={0.06}
               />
               <TextReveal
                 as="span"
-                text="TEF & TCF"
+                text="Fluent with"
                 className="block"
                 delay={0.15}
                 stagger={0.06}
@@ -93,16 +93,16 @@ export default function HomeV2Hero() {
                   }}
                   className="inline-block shimmer-text"
                 >
-                  with Frenchify.
+                  Frenchify.
                 </motion.span>
               </span>
             </h1>
 
             <Reveal direction="up" delay={0.7}>
               <p className="mt-7 max-w-[560px] text-[16px] md:text-[18px] leading-[1.55] text-[#374151]">
-                Go from beginner to your{' '}
-                <span className="font-semibold text-[#111827]">CLB 5 or CLB 7</span> goal
-                with structured lessons, exam-focused practice and live expert support.
+                Learn French &amp; clear TEF/TCF Canada exam with a step-by-step real life
+                language learning methodology used by students to become fluent in under{' '}
+                <span className="font-semibold text-[#111827]">12 months</span>.
               </p>
             </Reveal>
 
@@ -110,10 +110,10 @@ export default function HomeV2Hero() {
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <Magnetic>
                   <Link
-                    href="/programs"
+                    href="/contact"
                     className="group inline-flex items-center gap-3 rounded-full bg-[#2563eb] px-7 py-4 text-[15px] font-semibold text-white shadow-[0_18px_40px_-12px_rgba(37,99,235,0.55)] hover:bg-[#1d4ed8] transition-all duration-300"
                   >
-                    Explore Courses
+                    Book My TEF Expert Call
                     <span className="grid h-7 w-7 place-items-center rounded-full bg-white/15 group-hover:bg-white/25 transition-colors">
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                     </span>
@@ -125,9 +125,9 @@ export default function HomeV2Hero() {
                     className="group inline-flex items-center gap-3 rounded-full border border-[#dbeafe] bg-white px-6 py-4 text-[15px] font-semibold text-[#252525] hover:border-[#2563eb] transition-colors duration-300"
                   >
                     <span className="grid h-7 w-7 place-items-center rounded-full bg-blue-50 text-[#2563eb]">
-                      <ClipboardCheck className="h-3.5 w-3.5" />
+                      <Play className="h-3 w-3 fill-current" />
                     </span>
-                    Take the Level Test
+                    Book My Analysis Test
                   </Link>
                 </Magnetic>
               </div>
@@ -137,15 +137,15 @@ export default function HomeV2Hero() {
               <div className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-3 text-[13px] text-[#4b5563]">
                 <span className="inline-flex items-center gap-1.5">
                   <BadgeCheck className="h-4 w-4 text-[#16a34a]" />
-                  <span className="font-medium">100+ Verified TEF/TCF Results</span>
+                  <span className="font-medium">100+ verified</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <Globe2 className="h-4 w-4 text-[#2563eb]" />
-                  <span className="font-medium">TEF • TCF • TEFAQ</span>
+                  <span className="font-medium">TEF · TCF · TEFAQ</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <Sparkles className="h-4 w-4 text-[#f59e0b]" />
-                  <span className="font-medium">Online Courses + Live Support</span>
+                  <span className="font-medium">Self-study + Live Mentorship</span>
                 </span>
               </div>
             </Reveal>
