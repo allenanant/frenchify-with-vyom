@@ -48,15 +48,15 @@ frenchify-with-vyom/
 └── src/, *.astro          # OLD ASTRO SITE — rollback only, NOT deployed
 ```
 
-## Branches
+## Branches (updated 2026-08-01)
 
 | Branch | What |
 |---|---|
-| `main` | Old Astro site. Legacy. Don't push here. |
-| `nextjs-homepage-redesign` | **Active dev branch.** All current Next.js work. PR/push target. |
-| `gh-pages` | Built static output. Auto-served by GitHub Pages. Don't hand-edit. |
+| `main` | **Active branch AND production.** Carries the Next.js site; push to `main` = Vercel auto-deploy. |
+| `nextjs-homepage-redesign` | Merged and deleted from the remote. Historical references only. |
+| `gh-pages` | Old GitHub Pages output. Legacy, no longer the production host. |
 
-When making changes: branch off `nextjs-homepage-redesign`, PR back to it, then deploy.
+Production hosting is **Vercel** (`frenchify-with-vyom.vercel.app`), not GitHub Pages. The old Astro files (`src/`, `*.astro`) still sit at the repo root as a rollback relic — ignore them.
 
 ## How To Deploy
 
@@ -120,6 +120,16 @@ Type is inferred from the folder. Frontmatter fields differ by type — see `doc
 After editing: run `node scripts/check-announcements.mjs` from `next-site/` to validate, then deploy via the one-liner above.
 
 The data loader is at `next-site/lib/announcements.ts` (server-only, reads at build time). Types are at `next-site/lib/announcements-types.ts` (client-safe).
+
+## Results Page System (added 2026-08-01)
+
+`/results-page` (Wall of Excellence) is CMS-driven the same way as announcements:
+
+```
+next-site/content/wall-results/   YYYY-MM-DD-slug.md
+```
+
+Each file = one upload batch: frontmatter `title`, `clbLevel` (`clb7` | `clb5`), `images` (list of URLs/paths), `createdAt`. Loader: `next-site/lib/wall-results.ts`. Newest batches render first; images inside a batch keep their list order. The Decap collection is "Results Page (CLB Wall)" (`wall_results` in `public/admin/config.yml`); its uploads land in `next-site/public/results/`. The two seed files carry the 75 images migrated from the old hardcoded page. Distinct from the "Student Results (Announcements page)" collection, which feeds `/announcements` cards.
 
 ## Decap CMS Status (TODO)
 

@@ -1,0 +1,53 @@
+---
+title: Original CLB 5 wall (migrated from the old page)
+clbLevel: clb5
+createdAt: 2026-08-01
+images:
+  - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de445244bd271f55917fce.jpg
+  - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452f3d637abac0f3dd8.jpg
+  - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452f3d637abac0f3dd7.jpg
+  - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452add632fcdc742315.jpg
+  - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de445280b446d0fb60a10a.jpg
+  - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452e7237c4dd3f9c616.jpg
+  - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452acf21ea88ace86f8.jpg
+  - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de44523d44725644782ff5.jpg
+  - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de44523d44725644782ff6.jpg
+  - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452acf21ea88ace86f7.jpg
+  - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452f3d637abac0f3dd9.jpg
+  - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de445244bd271f55917fcf.jpg
+  - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452e7237c4dd3f9c617.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b8849548d18ad.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba36a3929a03348d4e.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813c558f7d8aa9.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbac086650437d76763.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba36a3921eaa348d4d.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba36a392777d348d4f.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813c77b97d8aa7.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b88d8e88d18b7.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813c1c637d8aaa.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b88bc728d18b3.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b882ed38d18b2.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba36a3920d7b348d50.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813c24fb7d8ab0.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b8850408d18b6.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbac08665a909d76764.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b8866fc8d18b5.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813c346b7d8aac.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb36a392144b348d62.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb008498f787732b82.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb36a392db97348d63.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813c4f067d8aa8.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbbc0866553add76783.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb008498dc98732b83.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbbc086650f90d76780.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbbc086651a4fd76781.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb36a392cf05348d64.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba36a39254f3348d51.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813cf98e7d8aab.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb899b88789b8d18ca.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b8861df8d18b4.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba008498e0b6732b65.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbbc086659b52d7677f.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb24813c981c7d8ac4.jpg
+  - https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb008498cc7f732b81.jpg
+---

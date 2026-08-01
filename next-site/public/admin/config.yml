@@ -7,7 +7,7 @@
 backend:
   name: github
   repo: allenanant/frenchify-with-vyom
-  branch: nextjs-homepage-redesign
+  branch: main
   base_url: https://frenchify-with-vyom.vercel.app
   auth_endpoint: api/oauth/auth
 
@@ -67,7 +67,7 @@ collections:
       - { label: "Created Date (auto)", name: "createdAt", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
 
   - name: "results"
-    label: "Student Results"
+    label: "Student Results (Announcements page)"
     label_singular: "Result"
     folder: "next-site/content/announcements/results"
     create: true
@@ -85,6 +85,29 @@ collections:
       - { label: "Link URL (optional)", name: "link", widget: "string", required: false }
       - { label: "Button Text (default: Read Story)", name: "buttonText", widget: "string", required: false }
       - { label: "Created Date (auto)", name: "createdAt", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+
+  - name: "wall_results"
+    label: "Results Page (CLB Wall)"
+    label_singular: "Results Upload"
+    folder: "next-site/content/wall-results"
+    create: true
+    delete: true
+    media_folder: "/next-site/public/results"
+    public_folder: "/results"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} — {{clbLevel}}"
+    sortable_fields: ["createdAt", "title"]
+    fields:
+      - { label: "Title (for your reference, e.g. 'April TEF batch')", name: "title", widget: "string" }
+      - label: "Result Level"
+        name: "clbLevel"
+        widget: "select"
+        default: "clb7"
+        options:
+          - { label: "CLB 7+", value: "clb7" }
+          - { label: "CLB 5", value: "clb5" }
+      - { label: "Result Screenshots (add as many as you want)", name: "images", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Upload Date (auto)", name: "createdAt", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
 
   - name: "news"
     label: "News & Updates"

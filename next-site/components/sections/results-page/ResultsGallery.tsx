@@ -3,96 +3,20 @@
 import { useState, useCallback, useEffect, type CSSProperties } from 'react';
 import { CheckCircle2, ArrowUp, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const clb7Images = [
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4ccfe7237c4dd3fbcb8b.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4ccfe7237c4dd3fbcb8c.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4ccf190683601a10238d.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4cce80b446d0fb62a8f3.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4ccfb935a2d764b020ab.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4ccfb935a2d764b020b2.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4ccf1605aaccae17a99e.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4ccf190683601a10238c.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/698fda91899b8843c9757497.jpeg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/698f52a71afc8eebb797f377.jpeg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab22b4f0f19b4cd135e.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab215e9b5444d77392d.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab2cc792f2a3c1ec7dc.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab215e9b5efe277392e.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab2cc792f6bae1ec7dd.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab22b4f0f67eacd135d.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab2cef1010936ac866c.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab215e9b5fbf177392b.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab22dd5fdf1e8555c79.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab265a0d783877f83ca.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab2f8a93b452443d49b.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab2cef1013a1aac866d.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab265a0d700f97f83d0.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab2f13bc3ad1918d6eb.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab215e9b58d8c77392c.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab265a0d786007f83cb.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab265a0d738577f83cc.png',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/69613ab2f13bc3828f18d6ec.png',
-];
-
-const clb5Images = [
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de445244bd271f55917fce.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452f3d637abac0f3dd8.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452f3d637abac0f3dd7.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452add632fcdc742315.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de445280b446d0fb60a10a.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452e7237c4dd3f9c616.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452acf21ea88ace86f8.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de44523d44725644782ff5.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de44523d44725644782ff6.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452acf21ea88ace86f7.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452f3d637abac0f3dd9.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de445244bd271f55917fcf.jpg',
-  'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452e7237c4dd3f9c617.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b8849548d18ad.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba36a3929a03348d4e.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813c558f7d8aa9.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbac086650437d76763.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba36a3921eaa348d4d.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba36a392777d348d4f.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813c77b97d8aa7.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b88d8e88d18b7.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813c1c637d8aaa.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b88bc728d18b3.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b882ed38d18b2.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba36a3920d7b348d50.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813c24fb7d8ab0.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b8850408d18b6.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbac08665a909d76764.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b8866fc8d18b5.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813c346b7d8aac.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb36a392144b348d62.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb008498f787732b82.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb36a392db97348d63.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813c4f067d8aa8.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbbc0866553add76783.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb008498dc98732b83.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbbc086650f90d76780.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbbc086651a4fd76781.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb36a392cf05348d64.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba36a39254f3348d51.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba24813cf98e7d8aab.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb899b88789b8d18ca.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba899b8861df8d18b4.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acba008498e0b6732b65.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbbc086659b52d7677f.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb24813c981c7d8ac4.jpg',
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6990acbb008498cc7f732b81.jpg',
-];
+type ResultsGalleryProps = {
+  clb7Images: string[];
+  clb5Images: string[];
+};
 
 type Filter = 'all' | 'clb7' | 'clb5';
 
-export default function ResultsGallery() {
+export default function ResultsGallery({ clb7Images, clb5Images }: ResultsGalleryProps) {
   const [filter, setFilter] = useState<Filter>('all');
   const [lightbox, setLightbox] = useState<{ section: 'clb7' | 'clb5'; index: number } | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  const showClb7 = filter === 'all' || filter === 'clb7';
-  const showClb5 = filter === 'all' || filter === 'clb5';
+  const showClb7 = clb7Images.length > 0 && (filter === 'all' || filter === 'clb7');
+  const showClb5 = clb5Images.length > 0 && (filter === 'all' || filter === 'clb5');
 
   const openLightbox = useCallback((section: 'clb7' | 'clb5', index: number) => {
     setLightbox({ section, index });
@@ -109,7 +33,7 @@ export default function ResultsGallery() {
         return { ...prev, index: next };
       });
     },
-    []
+    [clb7Images, clb5Images]
   );
 
   useEffect(() => {
@@ -172,9 +96,9 @@ export default function ResultsGallery() {
             <span className="text-sm font-semibold text-slate-700">Filter by Level:</span>
           </div>
           <div className="flex flex-wrap gap-2 justify-center">
-            {filterBtn('all', 'All Results', '75')}
-            {filterBtn('clb7', 'CLB 7+', '28')}
-            {filterBtn('clb5', 'CLB 5', '47')}
+            {filterBtn('all', 'All Results', String(clb7Images.length + clb5Images.length))}
+            {filterBtn('clb7', 'CLB 7+', String(clb7Images.length))}
+            {filterBtn('clb5', 'CLB 5', String(clb5Images.length))}
           </div>
           <div className="flex items-center gap-2 text-sm text-slate-600">
             <CheckCircle2 className="text-emerald-500 w-4 h-4" />

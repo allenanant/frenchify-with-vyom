@@ -4,6 +4,9 @@ import Reveal from '@/components/motion/Reveal';
 import Magnetic from '@/components/motion/Magnetic';
 import FloatingOrbs from '@/components/motion/FloatingOrbs';
 import ResultsGallery from '@/components/sections/results-page/ResultsGallery';
+import { getWallResults } from '@/lib/wall-results';
+
+export const revalidate = 21600;
 
 export const metadata = {
   title: 'TEF Success Results | Frenchify with Vyom',
@@ -12,6 +15,7 @@ export const metadata = {
 };
 
 export default function ResultsPage() {
+  const { clb7, clb5 } = getWallResults();
   return (
     <>
       <main className="pt-32 pb-20 relative overflow-hidden aurora-bg">
@@ -37,7 +41,7 @@ export default function ResultsPage() {
           </Reveal>
         </div>
 
-        <ResultsGallery />
+        <ResultsGallery clb7Images={clb7} clb5Images={clb5} />
 
         {/* Enhanced CTA Section */}
         <div className="mt-24 text-center relative z-10 max-w-6xl mx-auto px-6">
