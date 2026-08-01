@@ -9,7 +9,7 @@ import Magnetic from '@/components/motion/Magnetic';
 import Reveal from '@/components/motion/Reveal';
 import TextReveal from '@/components/motion/TextReveal';
 
-const HERO_IMAGE_SRC = '/vyom-hero-bg.png';
+const HERO_IMAGE_SRC = '/vyom-hero-bg-pre-aug2026.png';
 
 export default function HomeV2Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -153,7 +153,7 @@ export default function HomeV2Hero() {
             {/* Mobile-only full-width hero image (below the content) */}
             <div className="md:hidden -mx-5 mt-8">
               <Image
-                src="/hero-bg-sm.jpg"
+                src="/hero-bg-sm-pre-aug2026.jpg"
                 alt="Vyom mentoring a live French class"
                 width={770}
                 height={726}

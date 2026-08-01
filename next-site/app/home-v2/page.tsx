@@ -5,6 +5,7 @@ import HomeV2Stats from './_components/HomeV2Stats';
 import HomeV2CurriculumJourney from './_components/HomeV2CurriculumJourney';
 import HomeV2BentoFeatures from './_components/HomeV2BentoFeatures';
 import HomeV2StudentShowcase from './_components/HomeV2StudentShowcase';
+import HomeV2TestimonialQuotes from './_components/HomeV2TestimonialQuotes';
 import HomeV2Faq from './_components/HomeV2Faq';
 import HomeV2MegaCta from './_components/HomeV2MegaCta';
 
@@ -24,6 +25,7 @@ export default function HomeV2Page() {
       <HomeV2CurriculumJourney />
       <HomeV2BentoFeatures />
       <HomeV2StudentShowcase />
+      <HomeV2TestimonialQuotes />
       <HomeV2Faq />
       <HomeV2MegaCta />
     </>

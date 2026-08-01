@@ -4,44 +4,43 @@ import { motion } from 'framer-motion';
 import { Quote, Star } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
 
-type Quote = {
+// Real reviews pulled verbatim (lightly trimmed) from the Frenchify review
+// widget (reputationhub / Google reviews). Swap freely — keep quotes real.
+type QuoteItem = {
   text: string;
   name: string;
   role: string;
-  avatar: string;
+  initials: string;
   badge: string;
   tone: 'dark' | 'light' | 'amber';
 };
 
-const quotes: Quote[] = [
+const quotes: QuoteItem[] = [
   {
     text:
-      'Walked into TEF Canada having never spoken French six months earlier. Walked out with CLB 8 across all four modules. Frenchify is built around the exam.',
-    name: 'Aanchal Mehta',
-    role: 'Software engineer · moving to Toronto',
-    avatar:
-      'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=400&auto=format&fit=crop',
-    badge: 'CLB 8',
+      'Frenchify with Vyom helped me clear the exam in first attempt. Weekly speaking sessions enabled me to speak fluently and get the required scores.',
+    name: 'Rajan Gurjar',
+    role: 'Verified student review · Jan 2026',
+    initials: 'RG',
+    badge: 'Cleared in first attempt',
     tone: 'dark',
   },
   {
     text:
-      'I work full time. There was no way I could attend a 6 PM batch every day. The self-paced lectures plus the weekly doubt calls were the only reason I cleared CLB 7.',
-    name: 'Harpreet Singh',
-    role: 'Product manager · Bengaluru',
-    avatar:
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop',
-    badge: 'CLB 7',
+      'Clear instructions, clear pathway and what not. The gameplan is structured in such a way that if someone who puts in the work, TEF Canada can be cracked in 10 months.',
+    name: 'Sarvesh Paarthasarathy',
+    role: 'Verified student review · Jan 2026',
+    initials: 'SP',
+    badge: 'TEF Canada in 10 months',
     tone: 'light',
   },
   {
     text:
-      'I scored CLB 9 in Speaking. That alone unlocked the maximum French bonus on Express Entry. Vyom drilled the pronunciation patterns until they became reflex.',
-    name: 'Simran Kaur',
-    role: 'Marketing lead · Express Entry',
-    avatar:
-      'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop',
-    badge: 'CLB 9',
+      'Vyom and his team are amazing, they have themselves cleared the TEF Canada exam and help students like me to clear the exam. The live speaking sessions are the most helpful, it made me very comfortable with the exam format.',
+    name: 'Appaar',
+    role: 'Verified student review · Feb 2026',
+    initials: 'A',
+    badge: 'Live speaking sessions',
     tone: 'amber',
   },
 ];
@@ -54,11 +53,10 @@ export default function HomeV2TestimonialQuotes() {
           <div className="max-w-3xl mb-14">
             <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#2667FF]">
               <Star className="h-3.5 w-3.5 fill-current text-[#f59e0b]" />
-              In their own words
+              Student reviews
             </span>
             <h2 className="mt-3 font-display text-[40px] md:text-[56px] lg:text-[64px] font-bold text-[#111827] tracking-[-0.04em] leading-[1.0]">
-              Three students. <br />
-              <span className="gradient-text">Three exam-winning stories.</span>
+              What our students say.
             </h2>
           </div>
         </Reveal>
@@ -134,13 +132,17 @@ export default function HomeV2TestimonialQuotes() {
                   {q.badge}
                 </span>
                 <div className="flex items-center gap-3">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={q.avatar}
-                    alt={q.name}
-                    loading="lazy"
-                    className="h-11 w-11 shrink-0 rounded-full object-cover border-2 border-white shadow-sm"
-                  />
+                  <span
+                    className={`grid h-11 w-11 shrink-0 place-items-center rounded-full font-display text-[14px] font-extrabold border-2 border-white shadow-sm ${
+                      q.tone === 'dark'
+                        ? 'bg-gradient-to-br from-[#2563eb] to-[#3b82f6] text-white'
+                        : q.tone === 'amber'
+                        ? 'bg-gradient-to-br from-[#f59e0b] to-[#fbbf24] text-white'
+                        : 'bg-gradient-to-br from-[#0A1426] to-[#0b1d3a] text-white'
+                    }`}
+                  >
+                    {q.initials}
+                  </span>
                   <div className="min-w-0">
                     <div
                       className={`font-display text-[14px] font-extrabold tracking-tight truncate ${
