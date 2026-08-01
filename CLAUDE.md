@@ -131,15 +131,26 @@ next-site/content/wall-results/   YYYY-MM-DD-slug.md
 
 Each file = one upload batch: frontmatter `title`, `clbLevel` (`clb7` | `clb5`), `images` (list of URLs/paths), `createdAt`. Loader: `next-site/lib/wall-results.ts`. Newest batches render first; images inside a batch keep their list order. The Decap collection is "Results Page (CLB Wall)" (`wall_results` in `public/admin/config.yml`); its uploads land in `next-site/public/results/`. The two seed files carry the 75 images migrated from the old hardcoded page. Distinct from the "Student Results (Announcements page)" collection, which feeds `/announcements` cards.
 
-## Decap CMS Status (TODO)
+## Content Admin at /admin (REBUILT 2026-08-01)
 
-The `/admin/` page renders correctly but **Login with GitHub fails** because `next-site/public/admin/config.yml` has placeholder `base_url: https://REPLACE_WITH_OAUTH_PROXY_DOMAIN`.
+`/admin` is a custom two-tab panel (Announcements / Results) built for Vyom's
+non-technical team — Decap CMS was too confusing for them and now lives at
+`/admin-advanced/` as a developer backdoor only.
 
-To fix, set up an OAuth proxy. Two paths in `HANDOFF.md`:
-1. Cloudflare Workers (~30-line script, free, no migration)
-2. Vercel API route + migrate hosting (cleaner long-term)
-
-After deploying the proxy, update `config.yml`'s `base_url` and `repo:` fields, rebuild, redeploy. Decap login will work and the editorial workflow (drafts → PRs → merge → live) takes effect.
+- **Auth:** the same staff accounts as the student support dashboard
+  (`support_users` in Neon, sessions via `lib/tickets/auth.ts`). Vyom manages
+  accounts from the support dashboard's Team page. No GitHub accounts needed.
+- **Code:** `app/admin/` (UI) + `lib/content-admin/` (GitHub API + serializers).
+- **How publishing works:** every action becomes ONE commit to `main` via the
+  GitHub Data API (blobs → tree → commit → ref). Vercel auto-deploys it, so a
+  publish is live in ~2 minutes. Images are compressed in the browser to WebP
+  (max 1600px) and land in `next-site/public/results/` or `public/announcements/`.
+- **Env:** needs `GITHUB_CONTENT_TOKEN` (a token with contents:write on this
+  repo) on Vercel and in `.env.local` for local dev. Optional `CONTENT_BRANCH`
+  redirects reads+writes to a test branch — used by the E2E test.
+- **Serializer contract:** `lib/content-admin/content.ts` must write frontmatter
+  the site loaders (`lib/announcements.ts`, `lib/wall-results.ts`) can read.
+  Change them in lockstep.
 
 ## Specs and Plans
 

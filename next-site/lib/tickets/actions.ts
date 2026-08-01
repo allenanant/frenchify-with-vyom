@@ -239,7 +239,10 @@ export async function signIn(_prev: FormState, fd: FormData): Promise<FormState>
   // time, so a paused sign-in cannot outlive the reset that was meant to stop
   // it. No re-read here can achieve that; the check has to live at validation.
   await auth.startSession(user.id);
-  redirect(user.must_change ? '/student-support/staff/password/' : '/student-support/staff/');
+  // The content admin reuses this sign-in with a hidden `next` field. Only
+  // whitelisted same-site destinations are honored — never a raw redirect.
+  const next = str(fd, 'next') === '/admin/' ? '/admin/' : '/student-support/staff/';
+  redirect(user.must_change ? '/student-support/staff/password/' : next);
 }
 
 export async function signOut() {
