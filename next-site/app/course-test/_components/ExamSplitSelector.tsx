@@ -79,13 +79,14 @@ export default function ExamSplitSelector() {
       </div>
 
       <style jsx global>{`
+        /* body already carries padding-top: 72px for the fixed header —
+           no extra offset here, just fill the space below it */
         .exam-split-root {
           font-family: var(--font-inter), 'Inter', sans-serif;
-          min-height: 100svh;
+          min-height: calc(100svh - 72px);
           display: flex;
           flex-direction: column;
           background: #ffffff;
-          padding-top: 68px;
         }
 
         .split-wrap {
@@ -348,7 +349,7 @@ export default function ExamSplitSelector() {
             flex-direction: column;
           }
           .split-panel {
-            min-height: calc((100svh - 68px) / 2);
+            min-height: calc((100svh - 72px) / 2);
             padding: 2rem 1.25rem;
           }
           .panel-tef {
