@@ -110,7 +110,7 @@ export default function HomeV2Hero() {
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <Magnetic>
                   <Link
-                    href="/programs"
+                    href="/courses"
                     className="group inline-flex items-center gap-3 rounded-full bg-[#2563eb] px-7 py-4 text-[15px] font-semibold text-white shadow-[0_18px_40px_-12px_rgba(37,99,235,0.55)] hover:bg-[#1d4ed8] transition-all duration-300"
                   >
                     Explore Courses

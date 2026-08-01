@@ -228,7 +228,7 @@ export default function AboutUsPage() {
             </p>
             <Magnetic>
               <Link
-                href="/programs"
+                href="/courses"
                 className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 inline-block"
               >
                 Explore Courses

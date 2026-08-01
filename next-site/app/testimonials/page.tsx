@@ -152,7 +152,7 @@ export default function TestimonialsPage() {
           </Reveal>
           <Reveal delay={0.2}>
             <Magnetic>
-              <Link href="/programs" className="btn-primary">
+              <Link href="/courses" className="btn-primary">
                 Explore Our Courses
               </Link>
             </Magnetic>

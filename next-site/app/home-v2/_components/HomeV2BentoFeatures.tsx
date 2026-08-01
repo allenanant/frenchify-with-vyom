@@ -261,7 +261,7 @@ export default function HomeV2BentoFeatures() {
               </div>
 
               <a
-                href="/programs"
+                href="/courses"
                 className="group/cta relative mt-8 inline-flex items-center gap-2 text-[13px] font-bold text-[#2667FF]"
               >
                 See full programs

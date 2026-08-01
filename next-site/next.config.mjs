@@ -14,6 +14,15 @@ if (isPages) {
 
 const nextConfig = {
   reactStrictMode: true,
+  async redirects() {
+    return [
+      // The courses funnel moved to the selection flow at /courses
+      { source: '/programs', destination: '/courses', permanent: true },
+      { source: '/course-test', destination: '/courses', permanent: true },
+      { source: '/course-test/tef', destination: '/courses/tef', permanent: true },
+      { source: '/course-test/tcf', destination: '/courses/tcf', permanent: true },
+    ];
+  },
   experimental: {
     // Three 400 KB screenshots plus the form text exceed the 1 MB default.
     serverActions: { bodySizeLimit: '3mb' },

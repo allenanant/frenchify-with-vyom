@@ -363,7 +363,7 @@ export default function AnalysisPage() {
               </Magnetic>
               <Magnetic>
                 <Link
-                  href="/programs"
+                  href="/courses"
                   className="inline-flex items-center justify-center gap-2 bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 transition-all"
                 >
                   <span>View All Courses</span>

@@ -27,7 +27,7 @@ export default function ExamSplitSelector() {
           Which exam are you preparing for?
         </div>
 
-        <Link href="/course-test/tef" className="split-panel panel-tef">
+        <Link href="/courses/tef" className="split-panel panel-tef">
           <div className="panel-inner">
             <span className="panel-pill panel-pill-tef">Most Popular</span>
             <div className="panel-acronym panel-acronym-tef">TEF</div>
@@ -49,7 +49,7 @@ export default function ExamSplitSelector() {
           </div>
         </Link>
 
-        <Link href="/course-test/tcf" className="split-panel panel-tcf">
+        <Link href="/courses/tcf" className="split-panel panel-tcf">
           <div className="panel-inner">
             <span className="panel-pill panel-pill-tcf">Also IRCC Accepted</span>
             <div className="panel-acronym panel-acronym-tcf">TCF</div>

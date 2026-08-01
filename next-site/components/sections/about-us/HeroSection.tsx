@@ -28,7 +28,7 @@ export default function HeroSection() {
               <div className="mt-6">
                 <Magnetic>
                   <Link
-                    href="/programs"
+                    href="/courses"
                     className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                   >
                     <span>Start Your Journey</span>

@@ -72,7 +72,7 @@ export default function ResultsPage() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Magnetic>
                     <Link
-                      href="/programs"
+                      href="/courses"
                       className="group bg-white text-blue-700 px-10 py-4 rounded-full font-bold shadow-2xl hover:shadow-white/50 transition-all hover:-translate-y-1 flex items-center justify-center gap-2 text-lg"
                     >
                       Explore Programs

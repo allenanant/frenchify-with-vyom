@@ -91,7 +91,7 @@ export default function HomeV2MegaCta() {
                   </Magnetic>
                   <Magnetic>
                     <Link
-                      href="/programs"
+                      href="/courses"
                       className="inline-flex items-center gap-3 rounded-full border border-white/20 px-6 py-4 text-[15px] font-semibold text-white hover:bg-white/5 transition-colors duration-300"
                     >
                       See all programs
