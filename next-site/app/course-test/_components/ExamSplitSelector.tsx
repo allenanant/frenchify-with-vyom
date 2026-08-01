@@ -28,9 +28,6 @@ export default function ExamSplitSelector() {
         </div>
 
         <Link href="/course-test/tef" className="split-panel panel-tef">
-          <span className="panel-ghost panel-ghost-tef" aria-hidden="true">
-            TEF
-          </span>
           <div className="panel-inner">
             <span className="panel-pill panel-pill-tef">Most Popular</span>
             <div className="panel-acronym panel-acronym-tef">TEF</div>
@@ -53,9 +50,6 @@ export default function ExamSplitSelector() {
         </Link>
 
         <Link href="/course-test/tcf" className="split-panel panel-tcf">
-          <span className="panel-ghost panel-ghost-tcf" aria-hidden="true">
-            TCF
-          </span>
           <div className="panel-inner">
             <span className="panel-pill panel-pill-tcf">Also IRCC Accepted</span>
             <div className="panel-acronym panel-acronym-tcf">TCF</div>
@@ -135,57 +129,11 @@ export default function ExamSplitSelector() {
         }
 
         .panel-tef {
-          background: linear-gradient(135deg, #f7faff 0%, #edf3ff 100%);
-        }
-        .panel-tef::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background:
-            radial-gradient(720px 460px at 22% 18%, rgba(37, 99, 235, 0.16), transparent 62%),
-            radial-gradient(640px 420px at 82% 88%, rgba(37, 99, 235, 0.1), transparent 62%);
-          transition: opacity 0.5s ease;
-          opacity: 0.7;
-          pointer-events: none;
+          background: #f7faff;
         }
 
         .panel-tcf {
-          background: linear-gradient(135deg, #0a1230 0%, #101c42 100%);
-        }
-        .panel-tcf::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background:
-            radial-gradient(720px 460px at 78% 16%, rgba(245, 158, 11, 0.18), transparent 62%),
-            radial-gradient(640px 420px at 18% 88%, rgba(37, 99, 235, 0.26), transparent 62%);
-          transition: opacity 0.5s ease;
-          opacity: 0.7;
-          pointer-events: none;
-        }
-
-        /* Giant ghost acronym behind the content */
-        .panel-ghost {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -54%);
-          font-family: var(--font-display), 'Sora', sans-serif;
-          font-weight: 800;
-          font-size: clamp(16rem, 30vw, 30rem);
-          line-height: 1;
-          letter-spacing: -0.05em;
-          pointer-events: none;
-          user-select: none;
-          transition: transform 0.7s cubic-bezier(0.32, 0.72, 0.28, 1);
-        }
-        .panel-ghost-tef {
-          color: transparent;
-          -webkit-text-stroke: 2px rgba(37, 99, 235, 0.07);
-        }
-        .panel-ghost-tcf {
-          color: transparent;
-          -webkit-text-stroke: 2px rgba(255, 255, 255, 0.06);
+          background: #0c1636;
         }
 
         .panel-inner {
@@ -204,12 +152,6 @@ export default function ExamSplitSelector() {
         @media (hover: hover) and (min-width: 901px) {
           .split-panel:hover {
             flex-grow: 1.35;
-          }
-          .split-panel:hover::before {
-            opacity: 1;
-          }
-          .split-panel:hover .panel-ghost {
-            transform: translate(-50%, -54%) scale(1.06);
           }
           .split-wrap:has(.split-panel:hover) .split-panel:not(:hover) .panel-inner {
             opacity: 0.45;
@@ -366,9 +308,6 @@ export default function ExamSplitSelector() {
           .panel-body {
             font-size: 14px;
             max-width: 340px;
-          }
-          .panel-ghost {
-            font-size: 15rem;
           }
           .panel-cta {
             padding: 12px 24px;
