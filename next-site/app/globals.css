@@ -42,6 +42,11 @@
     }
   }
 
+  /* Fragment jumps must clear the fixed 72px header */
+  [id] {
+    scroll-margin-top: 88px;
+  }
+
   ::selection {
     background-color: #2563eb;
     color: #fff;

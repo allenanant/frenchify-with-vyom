@@ -24,7 +24,15 @@ const TAILWIND_CONFIG = `
 
 const HIDE_FOOTER_CSS = `
   body > footer { display: none !important; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; }
+  }
 `;
+
+// If the IntersectionObserver misses elements (fragment deep-links scroll
+// past sections before observers register), reveal whatever is still hidden.
+const REVEAL_FAILSAFE =
+  ";setTimeout(function(){document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in')})},1500);";
 
 export default async function B1NewCourseV2Page() {
   const sourcePath = path.join(process.cwd(), 'app', 'b1-course', '_source.html');
@@ -53,7 +61,7 @@ export default async function B1NewCourseV2Page() {
       <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
       <style dangerouslySetInnerHTML={{ __html: HIDE_FOOTER_CSS + styleContent }} />
       <div dangerouslySetInnerHTML={{ __html: bodyHtml }} />
-      <Script id="b1-page-js" strategy="afterInteractive">{scriptContent}</Script>
+      <Script id="b1-page-js" strategy="afterInteractive">{scriptContent + REVEAL_FAILSAFE}</Script>
     </>
   );
 }
