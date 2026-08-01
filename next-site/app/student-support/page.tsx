@@ -1,5 +1,6 @@
 import Reveal from '@/components/motion/Reveal';
 import { CATEGORIES } from '@/lib/tickets/db';
+import PortalHandoff from './_components/PortalHandoff';
 import TicketForm from './_components/TicketForm';
 
 export const metadata = {
@@ -19,6 +20,7 @@ const STEPS = [
 export default function StudentSupportPage() {
   return (
     <main>
+      <PortalHandoff />
       <section className="bg-white px-4 pb-10 pt-12 sm:px-6 md:pt-20 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <Reveal>

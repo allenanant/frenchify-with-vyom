@@ -46,12 +46,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="antialiased">
-        <ChromeGate>
+        <ChromeGate zone="header">
           <ScrollProgress />
           <Header />
         </ChromeGate>
         <main>{children}</main>
-        <ChromeGate>
+        <ChromeGate zone="footer">
           <Footer />
           <FloatingLeadButton />
         </ChromeGate>
