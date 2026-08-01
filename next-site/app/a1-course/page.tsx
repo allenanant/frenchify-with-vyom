@@ -32,7 +32,12 @@ export default async function A1NewCourseV2Page() {
 
   const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/);
   const styleMatch = html.match(/<style>([\s\S]*?)<\/style>/);
-  const scriptMatch = html.match(/<script>([\s\S]*?)<\/script>\s*<\/body>/);
+  // Last <script> block = the page JS (reveal observers, magnetic hover).
+  // A single lazy match from the FIRST <script> swallows the whole document
+  // and the injected blob dies on a syntax error, leaving every .reveal
+  // element invisible — the blank-page bug.
+  const scriptBlocks = Array.from(html.matchAll(/<script>([\s\S]*?)<\/script>/g));
+  const scriptMatch = scriptBlocks[scriptBlocks.length - 1];
 
   const bodyHtml = bodyMatch ? bodyMatch[1] : '';
   const styleContent = styleMatch ? styleMatch[1] : '';
