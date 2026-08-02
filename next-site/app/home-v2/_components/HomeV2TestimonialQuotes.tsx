@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Quote, Star } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
+import { useRevealFailsafe } from '@/components/motion/useRevealFailsafe';
 
 // Real reviews pulled verbatim (lightly trimmed) from the Frenchify review
 // widget (reputationhub / Google reviews). Swap freely — keep quotes real.
@@ -46,6 +47,7 @@ const quotes: QuoteItem[] = [
 ];
 
 export default function HomeV2TestimonialQuotes() {
+  const forced = useRevealFailsafe();
   return (
     <section className="relative bg-[#F9FAFB] py-24 md:py-32 overflow-hidden">
       <div className="mx-auto max-w-[1280px] px-5 md:px-10">
@@ -67,6 +69,7 @@ export default function HomeV2TestimonialQuotes() {
               key={q.name}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
+              animate={forced ? { opacity: 1, y: 0 } : undefined}
               viewport={{ once: true, margin: '-60px' }}
               transition={{
                 duration: 0.6,

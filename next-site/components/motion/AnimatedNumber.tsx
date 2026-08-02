@@ -26,8 +26,16 @@ export default function AnimatedNumber({
   const motionValue = useMotionValue(0);
   const [display, setDisplay] = useState(prefersReducedMotion ? value : 0);
 
+  // Failsafe: if the in-view observer never fires (deep links, scroll
+  // restoration, odd viewports), show the final value rather than a stuck 0.
+  const [forced, setForced] = useState(false);
   useEffect(() => {
-    if (!isInView) return;
+    const t = window.setTimeout(() => setForced(true), 2000);
+    return () => window.clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    if (!isInView && !forced) return;
     if (prefersReducedMotion) {
       setDisplay(value);
       return;
@@ -38,7 +46,7 @@ export default function AnimatedNumber({
       onUpdate: (v) => setDisplay(v),
     });
     return () => controls.stop();
-  }, [isInView, value, duration, motionValue, prefersReducedMotion]);
+  }, [isInView, forced, value, duration, motionValue, prefersReducedMotion]);
 
   const shown = formatter ? formatter(display) : Math.round(display).toLocaleString();
 

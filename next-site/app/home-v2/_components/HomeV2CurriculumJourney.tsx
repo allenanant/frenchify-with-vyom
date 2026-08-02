@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
+import { useRevealFailsafe } from '@/components/motion/useRevealFailsafe';
 
 type Milestone = {
   num: string;
@@ -123,10 +124,12 @@ export default function HomeV2CurriculumJourney() {
 }
 
 function MilestoneRow({ m, index }: { m: Milestone; index: number }) {
+  const forced = useRevealFailsafe();
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
+      animate={forced ? { opacity: 1, y: 0 } : undefined}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
       className="relative"

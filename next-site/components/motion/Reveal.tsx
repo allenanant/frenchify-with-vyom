@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import type { ReactNode, ElementType } from 'react';
+import { useRevealFailsafe } from './useRevealFailsafe';
 
 type Direction = 'up' | 'down' | 'left' | 'right' | 'none';
 
@@ -35,6 +36,7 @@ export default function Reveal({
   amount = 0.2,
 }: RevealProps) {
   const prefersReducedMotion = useReducedMotion();
+  const forced = useRevealFailsafe();
   const offset = directions[direction] ?? directions.up;
 
   const initial = prefersReducedMotion
@@ -51,6 +53,7 @@ export default function Reveal({
       className={className}
       initial={initial}
       whileInView={whileInView}
+      animate={forced ? whileInView : undefined}
       viewport={{ once, amount }}
       transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
     >
