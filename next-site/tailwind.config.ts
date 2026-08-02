@@ -4,6 +4,11 @@ const config: Config = {
   content: [
     './app/**/*.{ts,tsx,js,jsx,mdx}',
     './components/**/*.{ts,tsx,js,jsx,mdx}',
+    // The level pages (a1/a2/b1/b2-course) are authored as standalone HTML and
+    // inlined at request time. Scanning them here is what lets those pages drop
+    // cdn.tailwindcss.com, which Tailwind itself says is not for production and
+    // which raced its own config script on every load.
+    './app/**/_source.html',
   ],
   theme: {
     extend: {
