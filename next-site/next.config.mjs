@@ -21,6 +21,18 @@ const nextConfig = {
       { source: '/course-test', destination: '/courses', permanent: true },
       { source: '/course-test/tef', destination: '/courses/tef', permanent: true },
       { source: '/course-test/tcf', destination: '/courses/tcf', permanent: true },
+
+      // Live URLs on the GoHighLevel site that this app renames. They are
+      // indexed and linked from the old nav, so they have to survive the
+      // domain cutover rather than 404.
+      { source: '/home', destination: '/', permanent: true },
+      { source: '/book-online', destination: '/book-a-meet', permanent: true },
+      { source: '/faqs-8903', destination: '/faq', permanent: true },
+      { source: '/privacypolicy', destination: '/privacy-policy', permanent: true },
+      // /immigration has no equivalent here yet — the French-category PR
+      // content was never ported. Parked on /courses so the URL still lands
+      // somewhere relevant; rebuild the page and drop this line.
+      { source: '/immigration', destination: '/courses', permanent: false },
     ];
   },
   experimental: {
