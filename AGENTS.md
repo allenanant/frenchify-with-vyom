@@ -28,27 +28,32 @@ npm run dev        # http://localhost:3000
 
 Node 20 or newer. Production runs Node 24.
 
-## Never push to main
+## Push straight to main
 
-`main` is protected. Direct pushes are rejected — that is deliberate, not a broken setup.
+Commit to `main` and push. There is no review step and no pull request — a push publishes to the live site in about two minutes.
 
 ```bash
 git checkout main && git pull
-git checkout -b <short-branch-name>
 # ...make changes...
 git add -A && git commit -m "what changed and why"
-git push -u origin <short-branch-name>
+git push
 ```
 
-Then open a pull request on GitHub. Vercel posts a preview URL on the PR automatically, so the change can be seen on a real link before anyone merges it. The repo owner reviews and merges.
+Do not open pull requests for ordinary work. Nobody is waiting to merge them, so they just sit there.
 
-## Before you open a PR
+Force pushes and branch deletion are blocked. Normal pushes are not.
 
-Always run this. A build failure merged to `main` takes the live site down.
+Because there is no reviewer, the build check below is the only thing standing between a mistake and the live site. Run it every time.
+
+## Before every push
+
+Always run this, and only push if it passes.
 
 ```bash
 cd next-site && npm run build
 ```
+
+A failing build will not take the site down — Vercel refuses to swap in a broken deploy and keeps serving the previous one. What it does mean is that your change silently never appears, which is worse to debug later than catching it here.
 
 ## Secrets
 
