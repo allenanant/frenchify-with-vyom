@@ -56,7 +56,7 @@ const examReadiness: FaqItem[] = [
     a: 'If your target is CLB 5, you’ll need B1-level skills, plus 1–2 months of B2-style practice to strengthen your exam performance and maximize your score.',
   },
   {
-    q: 'What if I can’t commit 4 months to B1?',
+    q: 'What if I can’t commit 3 months to B1?',
     a: 'No problem at all — connect with Vyom by email at frenchifyfee@gmail.com, and we’ll create a customized, fast-track plan to fit your timeline without compromising your results.',
   },
 ];

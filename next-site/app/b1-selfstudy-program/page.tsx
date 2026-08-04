@@ -9,7 +9,7 @@ import ReviewsEmbed from '@/components/sections/b1-selfstudy-program/ReviewsEmbe
 export const metadata: Metadata = {
   title: 'Frenchify B1 Self-Study (TEF) Program',
   description:
-    'Self-paced B1 preparation for TEF Canada with a full B1/B2 online curriculum, 3 one-on-one speaking sessions, 5 personalized writing feedbacks, and 4 months of access for $599 CAD.',
+    'Self-paced B1 preparation for TEF Canada with a full B1/B2 online curriculum, 3 one-on-one speaking sessions, 5 personalized writing feedbacks, and 3 months of access for $599 CAD.',
 };
 
 export default function B1SelfStudyPage() {

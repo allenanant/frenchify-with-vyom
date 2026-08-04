@@ -222,10 +222,10 @@ export default function A1SelfstudyProgramPage() {
             <div className="bg-gray-900/50 p-8 rounded-2xl mb-12 border border-gray-700">
               <div className="flex justify-center items-center gap-4 mb-4">
                 <Calendar className="w-8 h-8 text-brand-amber" />
-                <h3 className="font-display text-2xl font-bold tracking-tight">Instant Access for 4 Months</h3>
+                <h3 className="font-display text-2xl font-bold tracking-tight">Instant Access for 3 Months</h3>
               </div>
               <p className="text-gray-300">
-                You get 6 full months of access to complete the course at your own pace — whether that&rsquo;s daily, on weekends, or during spare moments. No short deadlines. No pressure. Just structured, beginner-friendly progress.
+                You get 3 full months of access to complete the course at your own pace — whether that&rsquo;s daily, on weekends, or during spare moments. No short deadlines. No pressure. Just structured, beginner-friendly progress.
               </p>
             </div>
           </Reveal>

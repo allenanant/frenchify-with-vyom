@@ -18,10 +18,10 @@ export default function AccessCtaSection() {
           <div className="bg-gray-800/60 backdrop-blur p-8 rounded-2xl mb-12 border border-gray-700 ring-1 ring-brand-blue/10">
             <div className="flex justify-center items-center gap-4 mb-4">
               <Calendar className="text-brand-amber w-8 h-8" strokeWidth={2.25} />
-              <h3 className="font-display text-2xl font-bold tracking-tight">4-Month Full Access</h3>
+              <h3 className="font-display text-2xl font-bold tracking-tight">3-Month Full Access</h3>
             </div>
             <p className="text-gray-300 leading-relaxed">
-              You get 4 months of full access to the online course and all live sessions. This includes up to 10 personalized writing checks to track your improvements over time, with an option to renew.
+              You get 3 months of full access to the online course and all live sessions. This includes up to 10 personalized writing checks to track your improvements over time, with an option to renew.
             </p>
           </div>
         </Reveal>

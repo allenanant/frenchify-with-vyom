@@ -20,10 +20,10 @@ export default function AccessCtaSection() {
             <div className="bg-gray-800/60 backdrop-blur p-8 rounded-2xl border border-gray-700 ring-1 ring-brand-blue/10 h-full">
               <div className="flex justify-center items-center gap-4 mb-4">
                 <Calendar className="text-brand-amber w-8 h-8" strokeWidth={2.25} />
-                <h3 className="font-display text-2xl font-bold tracking-tight">4-Month Full Access</h3>
+                <h3 className="font-display text-2xl font-bold tracking-tight">3-Month Full Access</h3>
               </div>
               <p className="text-gray-300 leading-relaxed">
-                Enjoy 4 months of full access to the online course and your 3 complimentary speaking sessions, plus 5 writing feedbacks (worth $120). Renew anytime if you need extra time or additional practice.
+                Enjoy 3 months of full access to the online course and your 3 complimentary speaking sessions, plus 5 writing feedbacks (worth $120). Renew anytime if you need extra time or additional practice.
               </p>
             </div>
           </Reveal>
@@ -35,7 +35,7 @@ export default function AccessCtaSection() {
               </div>
               <p className="font-display text-3xl font-bold text-white mb-2">$599 CAD</p>
               <p className="text-gray-300 leading-relaxed">
-                Includes 4 months of full access, 3 one-on-one speaking sessions, and 5 detailed writing feedbacks — all worth $120 in added value.
+                Includes 3 months of full access, 3 one-on-one speaking sessions, and 5 detailed writing feedbacks — all worth $120 in added value.
               </p>
             </div>
           </Reveal>

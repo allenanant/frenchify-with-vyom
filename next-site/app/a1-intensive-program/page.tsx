@@ -185,10 +185,10 @@ export default function A1IntensiveProgramPage() {
             <div className="bg-gray-900/50 p-6 rounded-2xl mb-6 border border-gray-700">
               <div className="flex justify-center items-center gap-4 mb-3">
                 <Calendar className="w-8 h-8 text-brand-amber" />
-                <h3 className="font-display text-2xl font-bold tracking-tight">4-Month Full Access</h3>
+                <h3 className="font-display text-2xl font-bold tracking-tight">3-Month Full Access</h3>
               </div>
               <p className="text-gray-300">
-                You get 4 full months of access to the online course and all live sessions. While the average student completes the A1 program in about 5 weeks, the extended access gives you total flexibility to learn at your own pace without pressure.
+                You get 3 full months of access to the online course and all live sessions. While the average student completes the A1 program in about 5 weeks, the extended access gives you total flexibility to learn at your own pace without pressure.
               </p>
             </div>
           </Reveal>

@@ -15,11 +15,11 @@ const programDetails: FaqItem[] = [
   },
   {
     q: 'How long do I get access to the course?',
-    a: 'You get 4 months of access, so you can learn at your own pace — daily, on weekends, or whenever your schedule allows.',
+    a: 'You get 3 months of access, so you can learn at your own pace — daily, on weekends, or whenever your schedule allows.',
   },
   {
-    q: 'Does it really take 4 months to finish?',
-    a: 'No — most students finish in about 5 weeks with 2–3 hours of study per day. The 6-month access simply gives you flexibility and no pressure.',
+    q: 'Does it really take 3 months to finish?',
+    a: 'No — most students finish in about 5 weeks with 2–3 hours of study per day. The 3-month access simply gives you flexibility and no pressure.',
   },
   {
     q: 'Can I access the course on multiple devices?',

@@ -215,10 +215,10 @@ export default function A2SelfstudyProgramPage() {
             <div className="bg-gray-900/60 p-8 rounded-2xl mb-12 border border-gray-700 backdrop-blur-sm">
               <div className="flex justify-center items-center gap-4 mb-4">
                 <Calendar className="w-8 h-8 text-brand-amber" />
-                <h3 className="font-display text-2xl font-bold tracking-tight">Instant Access for 4 Months</h3>
+                <h3 className="font-display text-2xl font-bold tracking-tight">Instant Access for 3 Months</h3>
               </div>
               <p className="text-gray-300 leading-relaxed">
-                You get 4 months of full course access. Learn when it works best for you, repeat lessons as needed, and track your progress without pressure.
+                You get 3 months of full course access. Learn when it works best for you, repeat lessons as needed, and track your progress without pressure.
               </p>
             </div>
           </Reveal>

@@ -26,10 +26,10 @@ const programDetails: FaqItem[] = [
 const learningProcess: FaqItem[] = [
   {
     q: 'How long will it take to complete A1 Intensive?',
-    a: 'It takes about 5 weeks for a beginner to complete A1 with 2–3 hours of daily study. You’ll still have 4 months of total course access for flexibility.',
+    a: 'It takes about 5 weeks for a beginner to complete A1 with 2–3 hours of daily study. You’ll still have 3 months of total course access for flexibility.',
   },
   {
-    q: 'Does it take 4 months for A1?',
+    q: 'Does it take 3 months for A1?',
     a: 'No — that’s the course access timeline. The actual study time is about 5 weeks on average for most beginners.',
   },
   {

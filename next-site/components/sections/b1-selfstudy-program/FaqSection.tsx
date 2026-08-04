@@ -23,7 +23,7 @@ const beforeJoining: FaqItem[] = [
 const programDetails: FaqItem[] = [
   {
     q: 'What exactly is included in the B1 Self-Study Program?',
-    a: 'You’ll get 4 months of access to our online platform, which includes:\n\nFull B1 and B2 advanced grammar lectures\nRSWL training for reading, speaking, writing, and listening\n5 personalized writing feedbacks\n3 one-on-one speaking sessions (25 minutes each)\nAccess to authentic TEF practice resources and brochures',
+    a: 'You’ll get 3 months of access to our online platform, which includes:\n\nFull B1 and B2 advanced grammar lectures\nRSWL training for reading, speaking, writing, and listening\n5 personalized writing feedbacks\n3 one-on-one speaking sessions (25 minutes each)\nAccess to authentic TEF practice resources and brochures',
   },
   {
     q: 'Are the speaking sessions included in the course fee?',
@@ -68,7 +68,7 @@ const examReadiness: FaqItem[] = [
     a: 'This program still works for you. You’ll build the skills for CLB 5 and beyond, ensuring you’re well-prepared if your goals change.',
   },
   {
-    q: 'Can I continue after 4 months if I need more time?',
+    q: 'Can I continue after 3 months if I need more time?',
     a: 'Yes, you can renew your access at a discounted rate if you need more time to complete your preparation.',
   },
 ];
