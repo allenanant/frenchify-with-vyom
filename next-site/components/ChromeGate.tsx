@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
  * Hides the marketing header, footer and floating CTA on internal tools.
  * The support desk is a working dashboard, not a page we are selling from.
  */
-const BARE_PREFIXES = ['/student-support/staff'];
+const BARE_PREFIXES = ['/student-support/staff', '/writingsubmissions'];
 
 /**
  * Pages that lose the navigation bar but keep the footer. Students land on
