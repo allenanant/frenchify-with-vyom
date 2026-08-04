@@ -1,9 +1,14 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Quote, Star } from 'lucide-react';
+import { ArrowUpRight, Quote, Star } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
 import { useRevealFailsafe } from '@/components/motion/useRevealFailsafe';
+
+// TODO(Vyom): swap in the public Trustpilot profile URL once it's confirmed.
+// Until then this points at the on-site reviews page, which embeds the same feed.
+const TRUSTPILOT_URL = '/testimonials';
 
 // Real reviews pulled verbatim (lightly trimmed) from the Frenchify review
 // widget (reputationhub / Google reviews). Swap freely — keep quotes real.
@@ -167,6 +172,19 @@ export default function HomeV2TestimonialQuotes() {
             </motion.figure>
           ))}
         </div>
+
+        <Reveal delay={0.15}>
+          <p className="mt-10 text-[15px] md:text-[16px] text-[#4b5563]">
+            Find more reviews and testimonies on our{' '}
+            <Link
+              href={TRUSTPILOT_URL}
+              className="inline-flex items-center gap-1 font-semibold text-[#2563eb] underline-offset-4 hover:underline"
+            >
+              Trustpilot
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
+          </p>
+        </Reveal>
       </div>
     </section>
   );

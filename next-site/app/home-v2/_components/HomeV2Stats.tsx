@@ -19,23 +19,23 @@ const stats: Stat[] = [
   {
     Icon: GraduationCap,
     text: 'Since 2020',
-    label: 'French Exam Training',
+    label: 'Canada PR Specialized Training Only',
     sub: 'Specialized preparation for TEF, TCF and TEFAQ Canada',
     accent: 'from-[#2563eb] to-[#3b82f6]',
   },
   {
     Icon: Award,
-    value: 100,
+    value: 150,
     suffix: '+',
-    label: 'Verified TEF/TCF Results',
-    sub: 'Including CLB 5, CLB 7 and CLB 9 scorecards',
+    label: 'Real TEF/TCF Results',
+    sub: 'For CLB 5, CLB 7, work permit extensions, PNP programs and more…',
     accent: 'from-[#f59e0b] to-[#fbbf24]',
   },
   {
     Icon: Layers,
-    text: '4 Levels',
-    label: 'Complete A1–B2 Roadmap',
-    sub: 'From complete beginner to exam preparation',
+    text: 'CLB 7+',
+    label: 'Highest & Most Truthful results in the French Coaching Industry',
+    sub: 'Most students clear their target score within 5 to 11 months, real roadmap, real expectations, no false promises',
     accent: 'from-[#16a34a] to-[#22c55e]',
   },
 ];
@@ -79,10 +79,10 @@ export default function HomeV2Stats() {
                     s.text
                   )}
                 </div>
-                <div className="mt-3 text-[15px] font-semibold text-[#252525]">
+                <div className="mt-3 text-[15px] font-semibold leading-snug text-[#252525]">
                   {s.label}
                 </div>
-                <div className="mt-1 text-[13px] text-[#6B7280]">{s.sub}</div>
+                <div className="mt-2 text-[13px] leading-relaxed text-[#6B7280]">{s.sub}</div>
               </div>
             </Reveal>
           ))}

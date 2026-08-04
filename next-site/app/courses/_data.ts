@@ -2,6 +2,8 @@ export type TrackId = 'tef' | 'tcf';
 
 export type Level = {
   code: string;
+  /** Big display label on the level card. Falls back to `code` when absent. */
+  display?: string;
   name: string;
   blurb: string;
   formats: string[];
@@ -30,14 +32,20 @@ const LEVELS: Omit<Level, 'blurb'>[] = [
   },
   {
     code: 'B1',
-    name: 'Intermediate',
-    formats: ['Intensive + Live'],
+    display: 'Exam Prep 1',
+    name: '(Intermediate)',
+    formats: [
+      'Intensive (Live Speaking Sessions)',
+      'Flex (Live 1-1 sessions)',
+      'CLB 5 for Work Permit',
+    ],
     href: '/b1-course',
   },
   {
     code: 'B2',
-    name: 'Upper Intermediate',
-    formats: ['Intensive + Live'],
+    display: 'Final Exam Prep',
+    name: '(TEF/TCF Ready)',
+    formats: ['Intensive (Live Speaking Sessions)', 'Flex (Live 1-1 sessions)'],
     href: '/b2-course',
   },
 ];

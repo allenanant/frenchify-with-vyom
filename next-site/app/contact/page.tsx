@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import Script from 'next/script';
-import { Calendar, MessageCircle, Mail } from 'lucide-react';
+import { Calendar, MessageCircle, Mail, ArrowRight } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
 import Magnetic from '@/components/motion/Magnetic';
+import IsThisYou from '@/components/IsThisYou';
 
 export const metadata = {
   title: 'Contact Us - Frenchify',
@@ -181,6 +182,38 @@ export default function ContactPage() {
               </div>
             </Reveal>
           </div>
+        </div>
+      </section>
+
+      {/* Is this you? */}
+      <IsThisYou className="bg-[#F9FAFB] border-t border-gray-100" />
+
+      {/* Closing CTA */}
+      <section className="bg-[#F9FAFB] pb-20 md:pb-28">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Reveal>
+            <h2 className="font-display text-3xl md:text-[40px] font-bold text-gray-900 tracking-tight leading-tight">
+              Don&apos;t figure this out alone.
+            </h2>
+            <p className="mt-5 text-base md:text-lg leading-relaxed text-gray-600">
+              We&apos;ve helped 150+ students in the exact same spot go from stuck to CLB 5
+              or CLB 7.
+            </p>
+            <p className="mt-3 text-base md:text-lg leading-relaxed text-gray-600">
+              Book a free call and we&apos;ll map out your timeline, your starting level,
+              and the fastest path to your target score, with a personalized French
+              learning plan.
+            </p>
+            <Magnetic>
+              <Link
+                href="/book-a-meet"
+                className="mt-8 inline-flex items-center gap-2.5 bg-brand-blue hover:bg-brand-blue-deep text-white font-semibold px-7 py-3.5 rounded-full shadow-[0_12px_28px_-8px_rgba(37,99,235,0.55)] hover:shadow-[0_18px_36px_-10px_rgba(37,99,235,0.65)] transform hover:-translate-y-0.5 transition-all duration-300"
+              >
+                Book Your Free Call
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Magnetic>
+          </Reveal>
         </div>
       </section>
 

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-const LEVELS = ['A1', 'A2', 'B1', 'B2'];
+const LEVELS = ['A1', 'A2', 'Exam Prep 1', 'Final Exam Prep'];
 
 const ArrowIcon = () => (
   <svg
@@ -29,13 +29,8 @@ export default function ExamSplitSelector() {
 
         <Link href="/courses/tef" className="split-panel panel-tef">
           <div className="panel-inner">
-            <span className="panel-pill panel-pill-tef">Most Popular</span>
             <div className="panel-acronym panel-acronym-tef">TEF</div>
             <div className="panel-exam">TEF Canada</div>
-            <p className="panel-body">
-              The exam most of our students take for Canadian PR — full journey
-              from A1 to exam-ready B2.
-            </p>
             <div className="panel-levels">
               {LEVELS.map((l) => (
                 <span key={l} className="panel-level panel-level-tef">
@@ -51,13 +46,8 @@ export default function ExamSplitSelector() {
 
         <Link href="/courses/tcf" className="split-panel panel-tcf">
           <div className="panel-inner">
-            <span className="panel-pill panel-pill-tcf">Also IRCC Accepted</span>
             <div className="panel-acronym panel-acronym-tcf">TCF</div>
             <div className="panel-exam panel-exam-tcf">TCF Canada</div>
-            <p className="panel-body panel-body-tcf">
-              The same structured journey, tuned to the TCF format, question
-              types, and timing.
-            </p>
             <div className="panel-levels">
               {LEVELS.map((l) => (
                 <span key={l} className="panel-level panel-level-tcf">
@@ -159,35 +149,12 @@ export default function ExamSplitSelector() {
           }
         }
 
-        .panel-pill {
-          display: inline-flex;
-          align-items: center;
-          border-radius: 999px;
-          padding: 6px 15px;
-          font-size: 12px;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          font-weight: 700;
-        }
-        .panel-pill-tef {
-          background: #ffffff;
-          color: #2563eb;
-          border: 1px solid #dbeafe;
-          box-shadow: 0 6px 14px -8px rgba(37, 99, 235, 0.4);
-        }
-        .panel-pill-tcf {
-          background: rgba(245, 158, 11, 0.12);
-          color: #fbbf24;
-          border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-
         .panel-acronym {
           font-family: var(--font-display), 'Sora', sans-serif;
           font-weight: 800;
           letter-spacing: -0.05em;
           line-height: 0.92;
           font-size: clamp(4.5rem, 11vw, 10rem);
-          margin-top: clamp(0.9rem, 2.2vh, 1.5rem);
         }
         .panel-acronym-tef {
           background-image: linear-gradient(120deg, #1d4ed8 0%, #3b82f6 70%);
@@ -214,17 +181,6 @@ export default function ExamSplitSelector() {
         }
         .panel-exam-tcf {
           color: #ffffff;
-        }
-
-        .panel-body {
-          color: #4b5563;
-          font-size: 15.5px;
-          line-height: 1.6;
-          margin-top: 10px;
-          max-width: 400px;
-        }
-        .panel-body-tcf {
-          color: rgba(255, 255, 255, 0.72);
         }
 
         .panel-levels {
@@ -304,10 +260,6 @@ export default function ExamSplitSelector() {
           }
           .panel-acronym {
             font-size: clamp(3.5rem, 16vw, 4.5rem);
-          }
-          .panel-body {
-            font-size: 14px;
-            max-width: 340px;
           }
           .panel-cta {
             padding: 12px 24px;

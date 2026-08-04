@@ -1,5 +1,6 @@
 import BodyClass from '@/components/BodyClass';
 import NoticeBars from '@/components/NoticeBars';
+import IsThisYou from '@/components/IsThisYou';
 import HomeV2Hero from './_components/HomeV2Hero';
 import HomeV2Stats from './_components/HomeV2Stats';
 import HomeV2CurriculumJourney from './_components/HomeV2CurriculumJourney';
@@ -21,6 +22,7 @@ export default function HomeV2Page() {
       <NoticeBars />
       <HomeV2Hero />
       <HomeV2Stats />
+      <IsThisYou />
       <HomeV2CurriculumJourney />
       <HomeV2StudentShowcase />
       <HomeV2TestimonialQuotes />

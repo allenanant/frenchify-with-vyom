@@ -49,29 +49,51 @@ export default function LevelSelect({ track }: { track: Track }) {
       </div>
 
       <div className="level-cols">
-        {track.levels.map((lv, i) => (
-          <Link
-            key={lv.code}
-            href={lv.href}
-            className={`level-col ${i % 2 === 1 ? 'level-col-alt' : ''}`}
-          >
-            <div className="level-col-inner">
-              <div className="level-acronym">{lv.code}</div>
-              <div className="level-name">{lv.name}</div>
-              <p className="level-blurb">{lv.blurb}</p>
-              <div className="level-formats">
-                {lv.formats.map((f) => (
-                  <span key={f} className="level-format">
-                    {f}
-                  </span>
-                ))}
+        {track.levels.map((lv, i) => {
+          const label = lv.display ?? lv.code;
+          return (
+            <Link
+              key={lv.code}
+              href={lv.href}
+              className={`level-col ${i % 2 === 1 ? 'level-col-alt' : ''}`}
+            >
+              <div className="level-col-inner">
+                <div
+                  className={`level-acronym ${lv.display ? 'level-acronym-word' : ''}`}
+                >
+                  {label}
+                </div>
+                <div className="level-name">{lv.name}</div>
+                <p className="level-blurb">{lv.blurb}</p>
+                <div className="level-formats">
+                  {lv.formats.map((f) => (
+                    <span key={f} className="level-format">
+                      {f}
+                    </span>
+                  ))}
+                </div>
+                <span className="level-cta">
+                  View {label} Course <ArrowIcon size={14} />
+                </span>
               </div>
-              <span className="level-cta">
-                View {lv.code} Course <ArrowIcon size={14} />
-              </span>
-            </div>
+            </Link>
+          );
+        })}
+      </div>
+
+      {/* Not sure where to start? — book a call with the team */}
+      <div className="level-help">
+        <div className="level-help-inner">
+          <h2 className="level-help-title">Confused where to start?</h2>
+          <p className="level-help-copy">
+            Don&apos;t worry, book a meeting with our team to understand every program in
+            detail and see where you stand to get started.
+            <span className="level-help-note">Analysis Test included for free</span>
+          </p>
+          <Link href="/book-a-meet" className="level-help-cta">
+            Book a call with our team <ArrowIcon size={15} />
           </Link>
-        ))}
+        </div>
       </div>
 
       <style jsx global>{`
@@ -203,7 +225,7 @@ export default function LevelSelect({ track }: { track: Track }) {
           flex-direction: column;
           align-items: center;
           text-align: center;
-          max-width: 270px;
+          max-width: 300px;
           width: 100%;
           transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.32, 0.72, 0.28, 1);
         }
@@ -225,6 +247,17 @@ export default function LevelSelect({ track }: { track: Track }) {
           letter-spacing: -0.045em;
           line-height: 1;
           color: #2563eb;
+          /* keeps all four columns aligned even when a label is a word, not a code */
+          min-height: clamp(3.4rem, 5.5vw, 4.5rem);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        /* Word labels (Exam Prep 1 / Final Exam Prep) can't run at acronym size */
+        .level-acronym-word {
+          font-size: clamp(1.65rem, 2.5vw, 2.1rem);
+          letter-spacing: -0.03em;
+          line-height: 1.12;
         }
         .level-root-dark .level-acronym {
           color: #f59e0b;
@@ -298,6 +331,92 @@ export default function LevelSelect({ track }: { track: Track }) {
           box-shadow: 0 12px 26px -8px rgba(245, 158, 11, 0.55);
         }
 
+        /* "Confused where to start?" band under the level columns */
+        .level-help {
+          border-top: 1px solid #f3f4f6;
+          background: #f9fafb;
+          padding: clamp(2.25rem, 5vh, 3.25rem) 1.5rem;
+        }
+        .level-root-dark .level-help {
+          border-top-color: rgba(255, 255, 255, 0.08);
+          background: #08102a;
+        }
+        .level-help-inner {
+          max-width: 720px;
+          margin: 0 auto;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .level-help-title {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 700;
+          font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+          letter-spacing: -0.025em;
+          color: #111827;
+        }
+        .level-root-dark .level-help-title {
+          color: #ffffff;
+        }
+        .level-help-copy {
+          margin-top: 10px;
+          font-size: 15.5px;
+          line-height: 1.6;
+          color: #4b5563;
+          max-width: 560px;
+        }
+        .level-root-dark .level-help-copy {
+          color: rgba(255, 255, 255, 0.72);
+        }
+        .level-help-note {
+          display: inline-flex;
+          align-items: center;
+          margin-left: 8px;
+          padding: 4px 12px;
+          border-radius: 999px;
+          font-size: 12px;
+          font-weight: 700;
+          background: #ecfdf5;
+          color: #047857;
+          border: 1px solid #a7f3d0;
+          white-space: nowrap;
+        }
+        .level-root-dark .level-help-note {
+          background: rgba(16, 185, 129, 0.12);
+          color: #6ee7b7;
+          border-color: rgba(16, 185, 129, 0.3);
+        }
+        .level-help-cta {
+          display: inline-flex;
+          align-items: center;
+          gap: 9px;
+          margin-top: 20px;
+          padding: 13px 26px;
+          border-radius: 999px;
+          font-size: 15px;
+          font-weight: 600;
+          background: #2563eb;
+          color: #ffffff;
+          text-decoration: none;
+          box-shadow: 0 12px 26px -10px rgba(37, 99, 235, 0.55);
+          transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+        .level-help-cta:hover {
+          background: #1d4ed8;
+          transform: translateY(-2px);
+          box-shadow: 0 16px 32px -10px rgba(37, 99, 235, 0.65);
+        }
+        .level-root-dark .level-help-cta {
+          background: #f59e0b;
+          color: #111827;
+          box-shadow: 0 12px 26px -10px rgba(245, 158, 11, 0.5);
+        }
+        .level-root-dark .level-help-cta:hover {
+          background: #fbbf24;
+          box-shadow: 0 16px 32px -10px rgba(245, 158, 11, 0.6);
+        }
+
         /* Mobile: stacked level cards */
         @media (max-width: 900px) {
           .level-intro {
@@ -320,6 +439,13 @@ export default function LevelSelect({ track }: { track: Track }) {
           }
           .level-col:first-child {
             border-top: 0;
+          }
+          .level-help-copy {
+            font-size: 14.5px;
+          }
+          .level-help-note {
+            margin-left: 0;
+            margin-top: 10px;
           }
         }
       `}</style>

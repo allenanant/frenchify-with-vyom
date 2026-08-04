@@ -41,7 +41,7 @@ const milestones: Milestone[] = [
   {
     num: '03',
     level: 'B1',
-    title: 'Frenchify B1 TEF/TCF',
+    title: 'Frenchify Exam Prep 1 (TEF/TCF)',
     copy: 'Exam-focused fluency. Mock tests begin. All four modules — Reading, Writing, Speaking, Listening — drilled to CLB 7 standard.',
     href: '/b1-course',
     cta: 'Explore Course',
@@ -51,7 +51,7 @@ const milestones: Milestone[] = [
   {
     num: '04',
     level: 'B2',
-    title: 'Frenchify B2 TEF/TCF',
+    title: 'Frenchify Final Exam Prep (TEF/TCF)',
     copy: 'Exam-ready level. Targeted module coaching, weekly speaking labs, and full TEF Canada simulation under timed conditions.',
     href: '/b2-course',
     cta: 'Explore Course',
