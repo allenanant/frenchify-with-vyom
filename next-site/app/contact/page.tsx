@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Script from 'next/script';
 import { Calendar, MessageCircle, Mail, ArrowRight } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
 import Magnetic from '@/components/motion/Magnetic';
@@ -41,8 +40,8 @@ export default function ContactPage() {
       {/* Two-column: Help info + form */}
       <section className="pb-12 md:pb-20 lg:pb-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-            {/* LEFT: helper text + meet CTA + phone */}
+          <div className="max-w-2xl mx-auto">
+            {/* helper text + meet CTA + phone */}
             <Reveal>
               <div>
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-5 tracking-tight">
@@ -151,36 +150,6 @@ export default function ContactPage() {
               </div>
             </Reveal>
 
-            {/* RIGHT: contact form */}
-            <Reveal delay={0.1}>
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-[0_25px_60px_-25px_rgba(30,58,138,0.18)] p-5 md:p-7">
-                <div className="text-center mb-4 lg:mb-6">
-                  <h2 className="font-display text-2xl md:text-3xl font-semibold text-gray-900 mb-2 tracking-tight">
-                    Send us a message
-                  </h2>
-                  <p className="text-gray-600 text-sm md:text-base">
-                    Drop your details and we&apos;ll get back to you shortly.
-                  </p>
-                </div>
-                <iframe
-                  src="https://api.leadconnectorhq.com/widget/form/hNHsUQGDYnwiWeSJKXSe"
-                  style={{ width: '100%', height: '440px', border: 'none', borderRadius: '3px' }}
-                  id="inline-hNHsUQGDYnwiWeSJKXSe"
-                  data-layout="{'id':'INLINE'}"
-                  data-trigger-type="alwaysShow"
-                  data-trigger-value=""
-                  data-activation-type="alwaysActivated"
-                  data-activation-value=""
-                  data-deactivation-type="neverDeactivate"
-                  data-deactivation-value=""
-                  data-form-name="Contact us form"
-                  data-height="440"
-                  data-layout-iframe-id="inline-hNHsUQGDYnwiWeSJKXSe"
-                  data-form-id="hNHsUQGDYnwiWeSJKXSe"
-                  title="Contact us form"
-                />
-              </div>
-            </Reveal>
           </div>
         </div>
       </section>
@@ -217,7 +186,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <Script src="https://link.msgsndr.com/js/form_embed.js" strategy="lazyOnload" />
     </main>
   );
 }
