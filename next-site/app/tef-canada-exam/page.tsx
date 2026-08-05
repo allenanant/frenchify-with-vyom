@@ -93,6 +93,16 @@ const mentors: Mentor[] = [
     clb: ['CLB 12', 'CLB 11', 'CLB 7', 'CLB 8'],
     link: 'https://api.leadconnectorhq.com/widget/bookings/wafaa-mansuri-30-mins-one-on-onf25esfyjd43id7imab6s2fmxr52418',
   },
+  {
+    name: 'Shilpa Rathore',
+    // Headshot supplied by Vyom, Aug 2026 - not on the GHL CDN like the others.
+    img: '/images/mentors/shilpa-rathore.png',
+    badge: { Icon: CheckCircle2, text: 'Cleared in 1st Attempt', color: 'text-green-600' },
+    certifiedLabel: 'TEF Certified',
+    clb: ['CLB 8', 'CLB 9', 'CLB 8', 'CLB 8'],
+    // B1 Flex calendar - the Flex-program version of her 30 min session.
+    link: 'https://api.leadconnectorhq.com/widget/bookings/shilpa-rathore-30-mins-one-on-onf25esfyjd43imvyjvf',
+  },
 ];
 
 const faqs: FaqItem[] = [

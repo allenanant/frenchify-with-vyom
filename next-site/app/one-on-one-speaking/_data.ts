@@ -244,6 +244,32 @@ export const mentors: Mentor[] = [
       },
     ],
   },
+  {
+    slug: "shilpa-rathore",
+    name: "Shilpa Rathore",
+    // Headshot supplied by Vyom, Aug 2026 - not on the GHL CDN like the others.
+    photo: "/images/mentors/shilpa-rathore.png",
+    specialty: "Cleared in 1st Attempt",
+    clb: "CLB 8 · 9 · 8 · 8",
+    blurb:
+      "Prepare a topic that suits your level before the session so Shilpa can give you proper feedback on structure and pronunciation, or practise one on the spot.",
+    sessions: [
+      {
+        bookingUrl:
+          "https://api.leadconnectorhq.com/widget/bookings/shilpa-rathore-30-mins-one-on-onf25esfyjd43imvyjvfd23pi9",
+        price: "CA$12.99",
+        duration: 30,
+        label: "30 Mins One-on-One Speaking",
+      },
+      {
+        bookingUrl:
+          "https://api.leadconnectorhq.com/widget/bookings/shilpa-rathore-50-mins-one-on-onf25esfyjd43imvyjvfd23pi9zwz2v3",
+        price: "CA$17.99",
+        duration: 50,
+        label: "50 Mins One-on-One Speaking",
+      },
+    ],
+  },
 ];
 
 export const bookingSteps = [
