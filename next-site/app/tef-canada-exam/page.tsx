@@ -36,6 +36,14 @@ type Mentor = {
 
 const mentors: Mentor[] = [
   {
+    name: 'Ashish Kohli',
+    img: 'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/6a32671a5408771d1634c5df.png',
+    badge: { Icon: Award, text: 'TEF Canada Exam', color: 'text-blue-600' },
+    certifiedLabel: 'TEF Certified',
+    clb: ['CLB 10', 'CLB 8', 'CLB 7', 'CLB 7'],
+    link: 'https://api.leadconnectorhq.com/widget/bookings/ashish-kohli-30-mins-one-on-onf25esfyjd43id7imab2rcn57',
+  },
+  {
     name: 'Rajan Gurjar',
     img: 'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/698cc13f5cec6ca7d09cb2b2.png',
     badge: { Icon: CheckCircle2, text: 'Cleared in 1st Attempt', color: 'text-green-600' },
