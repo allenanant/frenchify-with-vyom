@@ -38,7 +38,7 @@ const programDetails: FaqItem[] = [
 const learningProcess: FaqItem[] = [
   {
     q: 'How long does it take to complete B1 Intensive?',
-    a: 'Most students complete it in 3–4 months with consistent participation in live sessions and independent practice.',
+    a: 'Most students complete it in 2.5 to 3 months with consistent participation in live sessions and independent practice.',
   },
   {
     q: 'What makes this program different from learning on my own?',

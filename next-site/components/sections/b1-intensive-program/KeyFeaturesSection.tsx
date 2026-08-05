@@ -16,7 +16,7 @@ const features = [
   {
     Icon: Pen,
     title: 'Personalized Feedback',
-    desc: 'Receive personalized, exam-specific feedback on your writing (up to 10 submissions) to ensure clarity and confidence.',
+    desc: 'Receive personalized, exam-specific feedback on your writing (10 submissions over your 3-month access) to ensure clarity and confidence.',
   },
 ];
 

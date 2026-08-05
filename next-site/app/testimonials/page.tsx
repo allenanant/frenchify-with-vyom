@@ -53,6 +53,20 @@ export default function TestimonialsPage() {
               <ReviewsEmbed />
             </div>
           </Reveal>
+          <Reveal delay={0.15}>
+            <p className="text-center text-[15px] md:text-base text-gray-600 mt-8">
+              Find more reviews and testimonies on our{' '}
+              <a
+                href="https://ca.trustpilot.com/review/frenchifywithvyom.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-brand-blue underline-offset-4 hover:underline"
+              >
+                Trustpilot profile
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
+            </p>
+          </Reveal>
         </div>
       </section>
 

@@ -59,7 +59,7 @@ try {
   await page.fill('#student_name', 'Ananya Sharma');
   await page.fill('#student_email', 'ananya.sharma@example.com');
   await page.fill('#student_phone', '+91 98765 43210');
-  await page.fill('#course', 'TEF Canada batch 4');
+  await page.selectOption('#course', 'B1 - Exam Prep 1: Flex - TEF (3 Months)');
   await page.selectOption('#category', 'Course access or login');
   await page.fill('#subject', 'Cannot open week 3 videos on the portal');
   await page.fill('#description',

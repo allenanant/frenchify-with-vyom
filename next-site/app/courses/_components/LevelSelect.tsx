@@ -81,6 +81,21 @@ export default function LevelSelect({ track }: { track: Track }) {
         })}
       </div>
 
+      {/* Track-specific destination. TEF carries the Exam Prep 1 programs page;
+          TCF has no equivalent, so the strip simply does not render there. */}
+      {track.spotlight && (
+        <div className="level-spotlight">
+          <div className="level-spotlight-inner">
+            <span className="level-spotlight-eyebrow">{track.spotlight.eyebrow}</span>
+            <h2 className="level-spotlight-title">{track.spotlight.title}</h2>
+            <p className="level-spotlight-copy">{track.spotlight.copy}</p>
+            <Link href={track.spotlight.href} className="level-spotlight-cta">
+              {track.spotlight.cta} <ArrowIcon size={15} />
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* Not sure where to start? — book a call with the team */}
       <div className="level-help">
         <div className="level-help-inner">
@@ -329,6 +344,78 @@ export default function LevelSelect({ track }: { track: Track }) {
         .level-root-dark .level-col:hover .level-cta {
           background: #fbbf24;
           box-shadow: 0 12px 26px -8px rgba(245, 158, 11, 0.55);
+        }
+
+        /* Track-specific promoted destination, sits above the help band */
+        .level-spotlight {
+          border-top: 1px solid #f3f4f6;
+          background: #ffffff;
+          padding: clamp(2rem, 4.5vh, 2.75rem) 1.5rem;
+        }
+        .level-root-dark .level-spotlight {
+          border-top-color: rgba(255, 255, 255, 0.08);
+          background: #0c1636;
+        }
+        .level-spotlight-inner {
+          max-width: 720px;
+          margin: 0 auto;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .level-spotlight-eyebrow {
+          display: inline-flex;
+          border-radius: 999px;
+          padding: 5px 13px;
+          font-size: 11.5px;
+          font-weight: 700;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          background: #fffbeb;
+          color: #b45309;
+          border: 1px solid #fde68a;
+        }
+        .level-spotlight-title {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 700;
+          font-size: clamp(1.3rem, 2.3vw, 1.65rem);
+          letter-spacing: -0.025em;
+          color: #111827;
+          margin-top: 12px;
+        }
+        .level-root-dark .level-spotlight-title {
+          color: #ffffff;
+        }
+        .level-spotlight-copy {
+          margin-top: 10px;
+          font-size: 15px;
+          line-height: 1.6;
+          color: #4b5563;
+          max-width: 560px;
+        }
+        .level-root-dark .level-spotlight-copy {
+          color: rgba(255, 255, 255, 0.72);
+        }
+        .level-spotlight-cta {
+          display: inline-flex;
+          align-items: center;
+          gap: 9px;
+          margin-top: 18px;
+          padding: 12px 24px;
+          border-radius: 999px;
+          font-size: 14.5px;
+          font-weight: 600;
+          background: #f59e0b;
+          color: #111827;
+          text-decoration: none;
+          box-shadow: 0 12px 26px -10px rgba(245, 158, 11, 0.5);
+          transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+        .level-spotlight-cta:hover {
+          background: #fbbf24;
+          transform: translateY(-2px);
+          box-shadow: 0 16px 32px -10px rgba(245, 158, 11, 0.6);
         }
 
         /* "Confused where to start?" band under the level columns */

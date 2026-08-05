@@ -71,15 +71,8 @@ export default function HomeV2Hero() {
             <h1 className="font-display font-bold text-[#111827] tracking-[-0.04em] leading-[0.96] text-[40px] sm:text-[54px] md:text-[46px] lg:text-[72px]">
               <TextReveal
                 as="span"
-                text="Your CRS Score"
+                text="Clearing TEF & TCF"
                 className="block"
-                stagger={0.06}
-              />
-              <TextReveal
-                as="span"
-                text="Needs French."
-                className="block"
-                delay={0.15}
                 stagger={0.06}
               />
               <span className="block overflow-hidden">
@@ -88,12 +81,12 @@ export default function HomeV2Hero() {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{
                     duration: 0.9,
-                    delay: 0.55,
+                    delay: 0.4,
                     ease: [0.22, 1, 0.36, 1],
                   }}
                   className="inline-block shimmer-text"
                 >
-                  We Get You There.
+                  with Frenchify.
                 </motion.span>
               </span>
             </h1>

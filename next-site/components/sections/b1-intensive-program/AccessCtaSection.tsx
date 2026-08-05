@@ -21,7 +21,7 @@ export default function AccessCtaSection() {
               <h3 className="font-display text-2xl font-bold tracking-tight">3-Month Full Access</h3>
             </div>
             <p className="text-gray-300 leading-relaxed">
-              You get 3 months of full access to the online course and all live sessions. This includes up to 10 personalized writing checks to track your improvements over time, with an option to renew.
+              You get 3 months of full access to the online course and all live sessions. This includes 10 personalized writing checks to track your improvements over time, with an option to renew.
             </p>
           </div>
         </Reveal>

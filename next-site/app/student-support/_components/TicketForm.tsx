@@ -9,6 +9,43 @@ import {
 
 type Shot = { file: File; url: string; label: string };
 
+/**
+ * The course list Frenchify sells, grouped by level and kept in the order they
+ * gave us. Rendered as optgroups, so the option text stays short while the
+ * submitted value carries the level too. Without that a ticket saying
+ * "Self Paced (3 Months)" could be A1 or A2 and the team has to go and ask.
+ */
+const COURSES: { level: string; options: string[] }[] = [
+  {
+    level: 'A1',
+    options: ['Self Paced (3 Months)', 'Intensive (3 Months)'],
+  },
+  {
+    level: 'A2',
+    options: ['Self Paced (3 Months)', 'Intensive (3 Months)'],
+  },
+  {
+    level: 'B1 - Exam Prep 1',
+    options: [
+      'Flex - TCF (3 Months)',
+      'Flex - TEF (3 Months)',
+      'Intensive - TCF (3 Months)',
+      'Intensive - TEF (3 Months)',
+      'CLB 5 - TCF (3 Months)',
+      'CLB 5 - TEF (3 Months)',
+    ],
+  },
+  {
+    level: 'B2 - Final Exam Prep',
+    options: [
+      'Flex - TCF (3 Months)',
+      'Flex - TEF (3 Months)',
+      'Intensive - TCF (3 Months)',
+      'Intensive - TEF (3 Months)',
+    ],
+  },
+];
+
 /** Decode a picked file, preferring createImageBitmap, falling back to <img>. */
 async function decode(file: File): Promise<{ src: CanvasImageSource; w: number; h: number } | null> {
   if (typeof createImageBitmap === 'function') {
@@ -199,7 +236,17 @@ export default function TicketForm({ categories }: { categories: readonly string
         </div>
         <div>
           <label className={label} htmlFor="course">Which course are you on?</label>
-          <input id="course" name="course" maxLength={120} className={field} placeholder="TEF, A1 batch, TCF prep…" />
+          <select id="course" name="course" defaultValue="" className={field}>
+            {/* Not required, so the blank stays selectable rather than disabled. */}
+            <option value="">Choose your course</option>
+            {COURSES.map((group) => (
+              <optgroup key={group.level} label={group.level}>
+                {group.options.map((o) => (
+                  <option key={o} value={`${group.level}: ${o}`}>{o}</option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
         </div>
       </div>
 

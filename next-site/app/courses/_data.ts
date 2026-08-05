@@ -10,11 +10,25 @@ export type Level = {
   href: string;
 };
 
+/**
+ * A promoted destination shown under the level columns. Lives on the track, not
+ * on a level, because it exists for one exam only — /exam-prep-1-tef is TEF
+ * Canada content and must never surface on the TCF side.
+ */
+export type Spotlight = {
+  eyebrow: string;
+  title: string;
+  copy: string;
+  cta: string;
+  href: string;
+};
+
 export type Track = {
   id: TrackId;
   exam: string;
   sub: string;
   levels: Level[];
+  spotlight?: Spotlight;
 };
 
 const LEVELS: Omit<Level, 'blurb'>[] = [
@@ -57,12 +71,21 @@ const BLURBS: Record<string, string> = {
   B2: 'The All-In — exam-specific mastery.',
 };
 
+const TEF_SPOTLIGHT: Spotlight = {
+  eyebrow: 'TEF Canada',
+  title: 'Exam Prep 1 runs as three programs',
+  copy: 'EP1 Intensive, EP1 Flex and CLB 5 Speaking and Listening. Compare what is inside each one, see the fees, and book the Analysis Test.',
+  cta: 'See Exam Prep 1 programs',
+  href: '/exam-prep-1-tef',
+};
+
 export const TRACKS: Record<TrackId, Track> = {
   tef: {
     id: 'tef',
     exam: 'TEF Canada',
     sub: 'Every level of the TEF journey — pick where you are.',
     levels: LEVELS.map((l) => ({ ...l, blurb: BLURBS[l.code] })),
+    spotlight: TEF_SPOTLIGHT,
   },
   tcf: {
     id: 'tcf',

@@ -42,7 +42,7 @@ const programDetails: FaqItem[] = [
 const learningProcess: FaqItem[] = [
   {
     q: 'How long does it take to finish the Self-Study Program?',
-    a: 'On average, students complete the program in 3–4 months, depending on their pace and weekly commitment.',
+    a: 'On average, students complete the program in 2.5 to 3 months, depending on their pace and weekly commitment.',
   },
   {
     q: 'How much time should I dedicate each week to see results?',
