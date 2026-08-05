@@ -321,7 +321,7 @@ export default function A1RenewalPage() {
       <section className="bg-gray-50 py-14 md:py-20 full-bleed-section-ghl">
         <div className="ghl-row-faq mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
-            <div className="premium-card bg-white rounded-2xl border-2 border-brand-amber p-6 md:p-10 relative overflow-hidden">
+            <div className="premium-card bg-white rounded-2xl border-2 border-brand-amber p-6 md:p-10 relative">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <span className="bg-brand-amber text-gray-900 px-4 py-1 rounded-full text-sm font-bold shadow-lg">
                   LIMITED OFFER
