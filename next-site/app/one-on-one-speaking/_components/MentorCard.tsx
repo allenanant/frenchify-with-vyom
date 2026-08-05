@@ -44,8 +44,8 @@ export default function MentorCard({ mentor }: { mentor: Mentor }) {
       <div className="grid sm:grid-cols-2 gap-3 mt-6">
         {mentor.sessions.map((s) => (
           <a
-            key={s.calendarId}
-            href={`${GHL_ORIGIN}/widget/booking/${s.calendarId}`}
+            key={s.bookingUrl ?? s.calendarId}
+            href={s.bookingUrl ?? `${GHL_ORIGIN}/widget/booking/${s.calendarId}`}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 transition-all duration-300 hover:border-brand-blue hover:bg-brand-blue hover:shadow-glow-blue"
@@ -81,7 +81,7 @@ export default function MentorCard({ mentor }: { mentor: Mentor }) {
           {mentor.sessions
             .filter((s) => s.note)
             .map((s) => (
-              <li key={s.calendarId} className="text-xs text-gray-500">
+              <li key={s.bookingUrl ?? s.calendarId} className="text-xs text-gray-500">
                 {s.label}: {s.note}
               </li>
             ))}

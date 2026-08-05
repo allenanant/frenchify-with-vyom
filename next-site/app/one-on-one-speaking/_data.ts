@@ -5,7 +5,10 @@
 
 export type Session = {
   /** GHL calendar id - embeds as api.leadconnectorhq.com/widget/booking/<id> */
-  calendarId: string;
+  calendarId?: string;
+  /** Full booking URL, for newer calendars GHL only exposes by slug
+   * (/widget/bookings/<slug>). Wins over calendarId when both are set. */
+  bookingUrl?: string;
   /** Minutes, as configured on the calendar itself */
   duration: number;
   label: string;
@@ -49,10 +52,11 @@ export const mentors: Mentor[] = [
         label: "30 Mins One-on-One Speaking",
       },
       {
-        calendarId: "0NmC0qgyFhQvVvSv7dJd",
-        price: "CA$10",
-        duration: 30,
-        label: "TEF Success & Clarity Call",
+        bookingUrl:
+          "https://api.leadconnectorhq.com/widget/bookings/ashish-kohli-30-mins-one-on-ontauq45",
+        price: "CA$16.99",
+        duration: 45,
+        label: "45 Mins One-on-One Speaking",
       },
     ],
   },
