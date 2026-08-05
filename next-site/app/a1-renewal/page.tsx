@@ -232,12 +232,12 @@ export default function A1RenewalPage() {
           <Reveal>
             <div className="flex flex-col items-center gap-3 mb-6">
               <Image
-                src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png"
-                alt="Vyom, Founder of Frenchify with Vyom"
+                src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6808d65bdf54eff4377e2466.png"
+                alt="Vyom Sharma, Founder of Frenchify with Vyom"
                 width={88}
                 height={88}
                 unoptimized
-                className="w-20 h-20 md:w-22 md:h-22 rounded-full object-cover border-4 border-blue-100 bg-gray-50"
+                className="w-20 h-20 md:w-22 md:h-22 rounded-full object-cover object-top border-4 border-blue-100 bg-gray-50"
               />
               <p className="text-sm text-gray-600">
                 <span className="font-semibold text-gray-900">Founder of Frenchify with Vyom</span>
