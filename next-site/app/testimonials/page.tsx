@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Reveal from '@/components/motion/Reveal';
-import Stagger from '@/components/motion/Stagger';
-import Tilt from '@/components/motion/Tilt';
+import { Youtube } from 'lucide-react';
 import Magnetic from '@/components/motion/Magnetic';
 import FloatingOrbs from '@/components/motion/FloatingOrbs';
 import ReviewsEmbed from '@/components/sections/testimonials/ReviewsEmbed';
@@ -12,64 +11,11 @@ export const metadata = {
     'Real stories and results from learners who transformed their French skills with Frenchify.',
 };
 
-type VideoTestimonial = {
-  name: string;
-  location: string;
-  src: string;
-  quote: string;
-};
-
-const videoTestimonials: VideoTestimonial[] = [
-  {
-    name: 'Harleen Kaur',
-    location: 'Toronto, ON',
-    src: 'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688519f4b8876823a8e18d3c.mp4',
-    quote:
-      '"With all his guidance and remarks, I scored 7 in speaking, 8 in listening, 9 in reading and 10 in writing in TEF Canada exam and this helped me to increase my CRS score for Canadian PR."',
-  },
-  {
-    name: 'Parmeet Singh',
-    location: 'Toronto, ON',
-    src: 'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688519f46d2fd3019fb8adc8.mp4',
-    quote:
-      '"I notice the difference that I have got, a lot of motivation and amazing community which always kept me going."',
-  },
-  {
-    name: 'Bismanjit Singh',
-    location: 'Vancouver, BC',
-    src: 'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688519f4a9387ed5495d6a25.mp4',
-    quote:
-      '"Vyom and Frenchify has been very helpful throughout and that has helped me a lot in staying consistent and accountable."',
-  },
-  {
-    name: 'Achintya Mishra',
-    location: 'Toronto, ON',
-    src: 'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688519f46d2fd3a629b8adc9.mp4',
-    quote:
-      '"My experience with Vyom has been a very wonderful journey, the best thing is the flexibility and the way of teaching. As an Indian student on work permit, he makes it achievable to get a PR."',
-  },
-  {
-    name: 'Shivya Kakkar',
-    location: 'Toronto, ON',
-    src: 'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688519f45468fc1cb4e9e695.mp4',
-    quote:
-      '"I found the Frenchify programs to be very learnable... Everything in the courses are put in with efforts so you can easily refer back to anything you get confused in. Thank you for providing such a great community."',
-  },
-  {
-    name: 'Selena Diaz',
-    location: 'Barrie, ON',
-    src: 'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688519f4a9387e32e05d6a23.mp4',
-    quote:
-      '"I wanted better job opportunities... what I like about this course is the flexibility of learning. Vyom also has Q&A sessions, tests and everything is done from basics."',
-  },
-  {
-    name: 'Jeni Francis',
-    location: ' ',
-    src: 'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/688519f493322425174513c0.mp4',
-    quote:
-      '"It\'s been very comfortable learning in weekly classes with Vyom. The ease of learning with the strategy that Vyom tells is crazy."',
-  },
-];
+// The student success stories now come from Vyom's YouTube playlist instead of
+// seven self-hosted clips (his call, Aug 2026). Playlist: 34 videos.
+const PLAYLIST_ID = 'PLIX434KgUuaHsNre2lGTCXOTsROKjy6Z3';
+const PLAYLIST_URL = `https://www.youtube.com/playlist?list=${PLAYLIST_ID}`;
+const PLAYLIST_COUNT = 34;
 
 export default function TestimonialsPage() {
   return (
@@ -114,26 +60,43 @@ export default function TestimonialsPage() {
       <section className="py-16 md:py-20 bg-white full-bleed-section-ghl">
         <div className="mx-auto w-full lg:max-w-[1280px] px-4 sm:px-6 lg:px-8">
           <Reveal>
-            <h2 className="font-display text-3xl font-bold text-gray-900 text-center mb-12 tracking-tight">
+            <h2 className="font-display text-3xl font-bold text-gray-900 text-center mb-4 tracking-tight">
               Hear Directly From Our Students
             </h2>
           </Reveal>
-          <Stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {videoTestimonials.map((t) => (
-              <Tilt key={t.name} max={5}>
-                <div className="premium-card bg-gray-50 rounded-2xl shadow-md overflow-hidden flex flex-col h-full">
-                  <video controls className="w-full">
-                    <source src={t.src} type="video/mp4" />
-                  </video>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="font-display font-bold text-lg text-gray-800 tracking-tight">{t.name}</h3>
-                    <p className="text-sm text-gray-500 mb-3">{t.location}</p>
-                    <blockquote className="italic text-gray-600 flex-grow">{t.quote}</blockquote>
-                  </div>
-                </div>
-              </Tilt>
-            ))}
-          </Stagger>
+          <Reveal delay={0.1}>
+            <p className="text-lg text-gray-600 text-center max-w-2xl mx-auto mb-10">
+              {PLAYLIST_COUNT} success stories from students who cleared CLB 5 and CLB 7. Play them
+              straight through, right here.
+            </p>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <div className="premium-card max-w-4xl mx-auto aspect-video overflow-hidden rounded-2xl bg-black shadow-lg">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/videoseries?list=${PLAYLIST_ID}`}
+                title="CLB 5 and CLB 7 Student Success Stories"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+                className="w-full h-full border-0"
+              />
+            </div>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <div className="text-center mt-8">
+              <Magnetic>
+                <a
+                  href={PLAYLIST_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+                >
+                  <Youtube className="w-5 h-5" />
+                  Watch all {PLAYLIST_COUNT} on YouTube
+                </a>
+              </Magnetic>
+            </div>
+          </Reveal>
         </div>
       </section>
 
