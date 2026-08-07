@@ -103,7 +103,9 @@ export default function CourseInteractions({
         const id = el.dataset.ytFacade;
         if (!id) return;
         const frame = document.createElement('iframe');
-        frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+        frame.src =
+          `https://www.youtube-nocookie.com/embed/${id}` +
+          '?autoplay=1&rel=0&modestbranding=1&playsinline=1&color=white';
         frame.title = el.dataset.ytTitle || 'Video';
         frame.allow =
           'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
