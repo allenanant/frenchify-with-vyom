@@ -472,7 +472,16 @@
     text-align: center; position: relative; overflow: hidden;
   }
   .ed-day:hover { transform: translateY(-4px); box-shadow: 0 22px 36px -18px rgba(37, 99, 235, 0.22); }
-</style>
+
+    .yt-facade{position:relative;display:block;width:100%;padding:0;border:0;cursor:pointer;background:#0a1426;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(30,58,138,.45);line-height:0;}
+    .yt-facade__img{display:block;width:100%;height:auto;transition:transform .5s ease,filter .5s ease;}
+    .yt-facade:hover .yt-facade__img{transform:scale(1.02);filter:brightness(1.06);}
+    .yt-facade__play{position:absolute;right:28px;bottom:28px;display:flex;align-items:center;justify-content:center;width:86px;height:86px;border-radius:999px;background:rgba(245,158,11,.95);color:#0a1426;box-shadow:0 12px 34px -8px rgba(0,0,0,.55);transition:transform .35s ease,background .35s ease;padding-left:5px;}
+    .yt-facade:hover .yt-facade__play{transform:scale(1.09);background:#f59e0b;}
+    .yt-facade:focus-visible{outline:3px solid #f59e0b;outline-offset:3px;}
+    .yt-facade iframe{display:block;width:100%;aspect-ratio:16/9;border:0;}
+    @media (max-width:640px){.yt-facade__play{width:58px;height:58px;right:16px;bottom:16px;}}
+  </style>
 </head>
 <body class="bg-white">
 
@@ -516,6 +525,28 @@
             <span class="stat-pill__rest">from Beginner to CLB 7+</span>
           </span>
         </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAM VIDEO -->
+  <section class="pb-[10px] md:pb-4 -mt-2 md:-mt-6">
+    <div class="ghl-row mx-auto px-6">
+      <div class="reveal mx-auto max-w-3xl">
+        <button type="button"
+                class="yt-facade group"
+                data-yt-facade="PCXt_XCyV1U"
+                data-yt-title="Every Student Who Cleared TEF Started Exactly Here (Frenchify A1 Program)"
+                aria-label="Play the A1 program overview video">
+          <img src="/images/a1-course/a1-video-thumb.webp" width="1280" height="720" loading="lazy"
+               alt="A1 program overview with Vyom" class="yt-facade__img" />
+          <span class="yt-facade__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="30" height="30"><path d="M8 5.14v13.72L19 12 8 5.14Z"/></svg>
+          </span>
+        </button>
+        <p class="text-center text-sm text-gray-500 mt-3">
+          Watch the full walk-through, then pick the format that fits you.
+        </p>
       </div>
     </div>
   </section>
@@ -861,7 +892,8 @@
     <div class="relative max-w-[1170px] mx-auto">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mb-10">
         <div class="col-span-2 md:col-span-2">
-          <img src="/footer-logo.png" alt="Frenchify Logo" width="200" height="50" class="h-10 w-auto mb-5" />
+          <!-- Reversed mark: the primary logo is navy on navy down here. -->
+          <img src="/footer-logo-light.png" alt="Frenchify with Vyom Inc." width="225" height="63" class="h-11 w-auto mb-5" />
           <p class="text-sm leading-relaxed max-w-md">
             Helping students master French for Canadian immigration success. Specialized training for TEF Canada exam preparation.
           </p>
@@ -870,7 +902,7 @@
         <div>
           <h4 class="text-white font-semibold mb-4 tracking-wide">Quick Links</h4>
           <ul class="space-y-2.5 text-sm">
-            <li><a href="/programs" class="hover:text-white transition-colors">All Courses</a></li>
+            <li><a href="/courses" class="hover:text-white transition-colors">All Courses</a></li>
             <li><a href="/about-us" class="hover:text-white transition-colors">About Us</a></li>
             <li><a href="/testimonials" class="hover:text-white transition-colors">Testimonials</a></li>
             <li><a href="/faq" class="hover:text-white transition-colors">FAQs</a></li>
@@ -882,12 +914,28 @@
 
         <div>
           <h4 class="text-white font-semibold mb-4 tracking-wide">Contact</h4>
-          <ul class="space-y-2.5 text-sm">
-            <li class="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-brand-amber" style="flex-shrink:0;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              <a href="mailto:frenchifyfee@gmail.com" class="hover:text-white transition-colors break-all">frenchifyfee@gmail.com</a>
+          <ul class="space-y-3.5 text-sm">
+            <li class="flex items-start gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-brand-amber" style="flex-shrink:0;margin-top:2px;"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+              <span>
+                <a href="https://wa.me/14388131377" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">+1 438-813-1377</a>
+                <span class="block text-xs text-gray-400">WhatsApp, text only</span>
+              </span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-brand-amber" style="flex-shrink:0;margin-top:2px;"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <a href="mailto:admin@frenchifywithvyom.com" class="hover:text-white transition-colors break-all">admin@frenchifywithvyom.com</a>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-brand-amber" style="flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Monday to Friday, 9am&ndash;5pm IST</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-brand-amber" style="flex-shrink:0;margin-top:2px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Montr&eacute;al, Qu&eacute;bec, Canada</span>
             </li>
           </ul>
+          <a href="/contact" class="inline-block mt-4 text-sm font-medium text-brand-amber hover:text-white transition-colors">Contact us &rarr;</a>
         </div>
       </div>
 

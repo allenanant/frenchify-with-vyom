@@ -103,7 +103,6 @@ export default function LevelSelect({ track }: { track: Track }) {
           <p className="level-help-copy">
             Don&apos;t worry, book a meeting with our team to understand every program in
             detail and see where you stand to get started.
-            <span className="level-help-note">Analysis Test included for free</span>
           </p>
           <Link href="/book-a-meet" className="level-help-cta">
             Book a call with our team <ArrowIcon size={15} />
@@ -456,24 +455,6 @@ export default function LevelSelect({ track }: { track: Track }) {
         .level-root-dark .level-help-copy {
           color: rgba(255, 255, 255, 0.72);
         }
-        .level-help-note {
-          display: inline-flex;
-          align-items: center;
-          margin-left: 8px;
-          padding: 4px 12px;
-          border-radius: 999px;
-          font-size: 12px;
-          font-weight: 700;
-          background: #ecfdf5;
-          color: #047857;
-          border: 1px solid #a7f3d0;
-          white-space: nowrap;
-        }
-        .level-root-dark .level-help-note {
-          background: rgba(16, 185, 129, 0.12);
-          color: #6ee7b7;
-          border-color: rgba(16, 185, 129, 0.3);
-        }
         .level-help-cta {
           display: inline-flex;
           align-items: center;
@@ -529,10 +510,6 @@ export default function LevelSelect({ track }: { track: Track }) {
           }
           .level-help-copy {
             font-size: 14.5px;
-          }
-          .level-help-note {
-            margin-left: 0;
-            margin-top: 10px;
           }
         }
       `}</style>

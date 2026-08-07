@@ -5,6 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
+import { newestFirst } from './content-date';
 
 export type WallResults = {
   clb7: string[];
@@ -27,10 +28,13 @@ export function getWallResults(): WallResults {
       return {
         level,
         images: Array.isArray(data.images) ? (data.images as unknown[]).map(String) : [],
-        createdAt: String(data.createdAt ?? ''),
+        createdAt: data.createdAt,
+        id: file,
       };
     })
-    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+    // Newest batch first, on both walls. See lib/content-date.ts for why this
+    // cannot be a string comparison.
+    .sort(newestFirst);
 
   for (const entry of entries) {
     results[entry.level].push(...entry.images);

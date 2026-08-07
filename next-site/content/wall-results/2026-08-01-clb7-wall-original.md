@@ -1,7 +1,7 @@
 ---
 title: Original CLB 7+ wall (migrated from the old page)
 clbLevel: clb7
-createdAt: 2026-08-01
+createdAt: "2026-08-01T00:00:00.000Z"
 images:
   - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4ccfe7237c4dd3fbcb8b.jpg
   - https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4ccfe7237c4dd3fbcb8c.jpg

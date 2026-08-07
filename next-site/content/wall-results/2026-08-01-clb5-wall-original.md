@@ -1,7 +1,7 @@
 ---
 title: "Original CLB 5 wall (migrated from the old page)"
 clbLevel: "clb5"
-createdAt: "Sat Aug 01 2026 00:00:00 GMT+0000 (Coordinated Universal Time)"
+createdAt: "2026-08-01T00:00:00.000Z"
 images:
   - "https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de445244bd271f55917fce.jpg"
   - "https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/69de4452f3d637abac0f3dd8.jpg"

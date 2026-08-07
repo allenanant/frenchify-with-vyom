@@ -12,6 +12,7 @@
 import { redirect } from 'next/navigation';
 import matter from 'gray-matter';
 import * as auth from '@/lib/tickets/auth';
+import { stampNow, toIsoStamp } from '@/lib/content-date';
 import { commitFiles, createBlob, listTree, readBlob } from './github';
 import {
   ANNOUNCEMENTS_DIR,
@@ -44,6 +45,7 @@ async function gate(): Promise<string | null> {
   return null;
 }
 
+/** Date only. Used for slugs and default titles, never for ordering. */
 function today(): string {
   return new Date().toISOString().slice(0, 10);
 }
@@ -100,7 +102,9 @@ export async function publishResults(input: {
   const urls = files.map((f) => f.path.replace('next-site/public', ''));
   files.push({
     path: `${WALL_DIR}/${slug}.md`,
-    content: serializeWallEntry({ title, level: input.level, createdAt: today(), images: urls }),
+    // Full timestamp, not just the date: the wall sorts newest first, and two
+    // batches published on the same day have to be separable.
+    content: serializeWallEntry({ title, level: input.level, createdAt: stampNow(), images: urls }),
   });
 
   try {
@@ -143,7 +147,7 @@ export async function deleteResultImage(input: { entryPath: string; imageUrl: st
             content: serializeWallEntry({
               title: String(data.title ?? ''),
               level: data.clbLevel === 'clb5' ? 'clb5' : 'clb7',
-              createdAt: String(data.createdAt ?? today()),
+              createdAt: toIsoStamp(data.createdAt),
               images,
             }),
           },
@@ -189,7 +193,7 @@ export async function createAnnouncement(input: {
   const urls = files.map((f) => f.path.replace('next-site/public', ''));
   files.push({
     path: `${ANNOUNCEMENTS_DIR}/${d.folder}/${slug}.md`,
-    content: serializeAnnouncement({ ...d, title, images: urls, createdAt: today() }),
+    content: serializeAnnouncement({ ...d, title, images: urls, createdAt: stampNow() }),
   });
 
   try {

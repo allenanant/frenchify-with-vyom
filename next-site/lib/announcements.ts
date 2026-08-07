@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
+import { newestFirst } from './content-date';
 import type {
   Announcement,
   AnnouncementType,
@@ -87,7 +88,7 @@ export function getAllAnnouncements(): Announcement[] {
     }
   }
 
-  items.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  items.sort((a, b) => newestFirst({ ...a, id: a.slug }, { ...b, id: b.slug }));
   return items;
 }
 

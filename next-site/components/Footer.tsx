@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mail } from 'lucide-react';
+import { Mail, MessageCircle, MapPin, Clock } from 'lucide-react';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -17,12 +17,14 @@ export default function Footer() {
       <div className="relative max-w-[1170px] mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-10">
           <div className="col-span-2 md:col-span-2">
+            {/* Reversed mark. The primary logo is navy on navy down here and
+                all but disappears — see public/footer-logo-light.png. */}
             <Image
-              src="/footer-logo.png"
-              alt="Frenchify Logo"
-              width={200}
-              height={50}
-              className="h-10 w-auto mb-5"
+              src="/footer-logo-light.png"
+              alt="Frenchify with Vyom Inc."
+              width={225}
+              height={63}
+              className="h-11 w-auto mb-5"
             />
             <p className="text-sm leading-relaxed max-w-md">
               Helping students master French for Canadian immigration success. Specialized training for TEF Canada exam preparation.
@@ -44,12 +46,42 @@ export default function Footer() {
 
           <div>
             <h4 className="text-white font-semibold mb-4 tracking-wide">Contact</h4>
-            <ul className="space-y-2.5 text-sm">
-              <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-brand-amber" />
-                <a href="mailto:frenchifyfee@gmail.com" className="hover:text-white transition-colors break-all">frenchifyfee@gmail.com</a>
+            <ul className="space-y-3.5 text-sm">
+              <li className="flex items-start gap-2.5">
+                <MessageCircle className="w-4 h-4 text-brand-amber shrink-0 mt-0.5" />
+                <span>
+                  <a
+                    href="https://wa.me/14388131377"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    +1 438-813-1377
+                  </a>
+                  <span className="block text-xs text-gray-400">WhatsApp, text only</span>
+                </span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Mail className="w-4 h-4 text-brand-amber shrink-0 mt-0.5" />
+                <a href="mailto:admin@frenchifywithvyom.com" className="hover:text-white transition-colors break-all">
+                  admin@frenchifywithvyom.com
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Clock className="w-4 h-4 text-brand-amber shrink-0 mt-0.5" />
+                <span>Monday to Friday, 9am&ndash;5pm IST</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <MapPin className="w-4 h-4 text-brand-amber shrink-0 mt-0.5" />
+                <span>Montr&eacute;al, Qu&eacute;bec, Canada</span>
               </li>
             </ul>
+            <Link
+              href="/contact"
+              className="inline-block mt-4 text-sm font-medium text-brand-amber hover:text-white transition-colors"
+            >
+              Contact us &rarr;
+            </Link>
           </div>
         </div>
 

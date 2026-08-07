@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
           </Reveal>
           <Reveal direction="up" delay={0.1} duration={0.6}>
             <span className="inline-block px-4 py-1.5 rounded-full bg-white/70 backdrop-blur-sm border border-gray-200 text-sm text-gray-600 shadow-sm">
-              Last Updated: November 5, 2025
+              Last Updated: August 7, 2026
             </span>
           </Reveal>
         </div>
@@ -96,8 +96,8 @@ export default function PrivacyPolicyPage() {
               <h2 className="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">10. Student Rights</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
                 Students may request access to their data, corrections, or withdraw consent (which may limit services) by emailing{' '}
-                <Link href="mailto:frenchifywithvyom@gmail.com" className="text-brand-blue hover:text-brand-blue-deep hover:underline font-medium">
-                  frenchifywithvyom@gmail.com
+                <Link href="mailto:admin@frenchifywithvyom.com" className="text-brand-blue hover:text-brand-blue-deep hover:underline font-medium">
+                  admin@frenchifywithvyom.com
                 </Link>
                 .
               </p>
@@ -109,13 +109,13 @@ export default function PrivacyPolicyPage() {
               <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-4">
                 <li>
                   Email:{' '}
-                  <Link href="mailto:frenchifywithvyom@gmail.com" className="text-brand-blue hover:text-brand-blue-deep hover:underline font-medium">
-                    frenchifywithvyom@gmail.com
+                  <Link href="mailto:admin@frenchifywithvyom.com" className="text-brand-blue hover:text-brand-blue-deep hover:underline font-medium">
+                    admin@frenchifywithvyom.com
                   </Link>
                 </li>
                 <li>Location: Montr&eacute;al, Qu&eacute;bec, Canada</li>
               </ul>
-              <p className="text-gray-500 text-sm mt-8 text-center">&copy; 2025 Frenchify with Vyom Inc. &mdash; All Rights Reserved.</p>
+              <p className="text-gray-500 text-sm mt-8 text-center">&copy; 2026 Frenchify with Vyom Inc. &mdash; All Rights Reserved.</p>
             </article>
           </Reveal>
         </div>

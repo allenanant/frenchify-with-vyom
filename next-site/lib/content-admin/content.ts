@@ -9,6 +9,7 @@
 
 import 'server-only';
 import matter from 'gray-matter';
+import { newestFirst, toDateOnly } from '../content-date';
 import { listTree, readBlob } from './github';
 
 export const ANNOUNCEMENTS_DIR = 'next-site/content/announcements';
@@ -29,7 +30,10 @@ export type AdminAnnouncement = {
   folder: AnnouncementFolder;
   title: string;
   featured: boolean;
+  /** YYYY-MM-DD, for display. */
   createdAt: string;
+  /** The raw stamp, kept at full precision so same-day entries still order. */
+  stamp: unknown;
   summary: string;
   images: string[];
 };
@@ -38,15 +42,15 @@ export type AdminWallEntry = {
   path: string;
   title: string;
   level: 'clb7' | 'clb5';
+  /** YYYY-MM-DD, for display. */
   createdAt: string;
+  /** The raw stamp, kept at full precision so same-day batches still order. */
+  stamp: unknown;
   images: string[];
 };
 
-/** Unquoted YAML dates parse as Date objects — show them as YYYY-MM-DD. */
-function dstr(v: unknown): string {
-  if (v instanceof Date) return v.toISOString().slice(0, 10);
-  return v == null ? '' : String(v);
-}
+/** Stamps come in three shapes across the repo — always show the short date. */
+const dstr = toDateOnly;
 
 export async function fetchAnnouncements(): Promise<AdminAnnouncement[]> {
   const nodes = (await listTree(ANNOUNCEMENTS_DIR + '/')).filter((n) => n.path.endsWith('.md'));
@@ -69,13 +73,14 @@ export async function fetchAnnouncements(): Promise<AdminAnnouncement[]> {
         title: String(data.title ?? '(untitled)'),
         featured: Boolean(data.featured),
         createdAt: dstr(data.createdAt),
+        stamp: data.createdAt,
         summary,
         images: Array.isArray(data.images) ? (data.images as unknown[]).map(String) : [],
       };
     })
   );
   return (items.filter(Boolean) as AdminAnnouncement[]).sort((a, b) =>
-    a.createdAt < b.createdAt ? 1 : -1
+    newestFirst({ createdAt: a.stamp, id: a.path }, { createdAt: b.stamp, id: b.path })
   );
 }
 
@@ -89,11 +94,16 @@ export async function fetchWallEntries(): Promise<AdminWallEntry[]> {
         title: String(data.title ?? '(untitled)'),
         level: data.clbLevel === 'clb5' ? ('clb5' as const) : ('clb7' as const),
         createdAt: dstr(data.createdAt),
+        stamp: data.createdAt,
         images: Array.isArray(data.images) ? (data.images as unknown[]).map(String) : [],
       };
     })
   );
-  return items.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  // Same order the wall itself renders in, so what staff see in the admin is
+  // what students see on /results-page.
+  return items.sort((a, b) =>
+    newestFirst({ createdAt: a.stamp, id: a.path }, { createdAt: b.stamp, id: b.path })
+  );
 }
 
 // --- serializers -------------------------------------------------------------

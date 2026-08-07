@@ -94,6 +94,27 @@ export default function CourseInteractions({
     }, FAILSAFE_MS);
     cleanups.push(() => window.clearTimeout(failsafe));
 
+    // --- YouTube click-to-play ----------------------------------------------
+    // The page ships a custom thumbnail, not YouTube's. Loading the real embed
+    // only on click keeps YouTube's ~1MB of player script off a page that most
+    // visitors scroll straight past, and it is what lets the thumbnail be ours.
+    document.querySelectorAll<HTMLElement>('[data-yt-facade]').forEach((el) => {
+      const play = () => {
+        const id = el.dataset.ytFacade;
+        if (!id) return;
+        const frame = document.createElement('iframe');
+        frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+        frame.title = el.dataset.ytTitle || 'Video';
+        frame.allow =
+          'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        frame.allowFullscreen = true;
+        el.replaceChildren(frame);
+        el.removeAttribute('data-yt-facade');
+      };
+      el.addEventListener('click', play);
+      cleanups.push(() => el.removeEventListener('click', play));
+    });
+
     // --- Magnetic buttons ---------------------------------------------------
     // Buttons and button-like CTAs only. Explicitly not cards (.ed-card,
     // .tl__card), badges (.stat-pill) or layout columns.
