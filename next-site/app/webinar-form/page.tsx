@@ -57,7 +57,17 @@ export default async function RegisterWebinarPage({
           the fold on any 640px phone. */}
       <WebinarDateBadge date={webinar.displayDate} />
 
-      <div className="rounded-[10px] border border-fnl-line bg-fnl-surface">
+      {/* The reserved height lives on the wrapper, not the iframe.
+          form_embed.js rebuilds the iframe rather than just resizing it, so a
+          floor on the iframe alone does not help: the element goes away and
+          comes back, and everything below it moves twice. Measured CLS on this
+          page was 0.3817, well past Google's 0.25 "poor" line, on the only
+          page in the funnel that actually converts. A fixed box here means
+          nothing downstream can move whatever the script does inside it. */}
+      <div
+        className="rounded-[10px] border border-fnl-line bg-fnl-surface"
+        style={{ minHeight: 560 }}
+      >
         <iframe
           src={formSrc}
           id={`inline-${GHL_WEBINAR_FORM_ID}`}

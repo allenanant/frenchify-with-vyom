@@ -44,8 +44,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${sora.variable}`}>
       <head>
-        <link rel="preconnect" href="https://api.leadconnectorhq.com" />
-        <link rel="preconnect" href="https://link.msgsndr.com" />
+        {/* The webinar landing page is the one taking paid traffic, and its LCP
+            is the VSL poster on embed-fastly.wistia.com, which had no
+            preconnect. The two GoHighLevel hosts did, and that page never
+            touches either of them — they are only used by the form embed on
+            /webinar-form. Preconnect the host on the critical path and leave
+            the other two as a cheap DNS hint. */}
+        <link rel="preconnect" href="https://embed-fastly.wistia.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://api.leadconnectorhq.com" />
         <link rel="dns-prefetch" href="https://link.msgsndr.com" />
       </head>

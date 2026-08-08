@@ -36,7 +36,9 @@ export default function HeroSection({ startsAt, displayDate }: Props) {
     <section className="w-full bg-fnl-surface">
       <div className="mx-auto flex w-full max-w-[1120px] flex-col items-center px-5 py-10 text-center md:px-8 md:py-20">
         <Image
-          src="/brand/frenchify-logo.png"
+          /* WebP: 6 KB against the PNG's 20 KB, and this one is eager on the
+             page's first paint. Same mark, same dimensions. */
+          src="/brand/frenchify-logo.webp"
           alt="Frenchify with Vyom"
           width={132}
           height={38}

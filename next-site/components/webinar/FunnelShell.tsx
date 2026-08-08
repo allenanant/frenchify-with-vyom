@@ -15,7 +15,8 @@ import { Label } from '@/components/webinar/ui';
  * company that made the promise and then get out of the way.
  */
 
-const LOGO = '/brand/frenchify-logo.png';
+/** WebP: 6 KB against the PNG's 20 KB, and it is eager on all three pages. */
+const LOGO = '/brand/frenchify-logo.webp';
 
 export function WebinarDateBadge({ date }: { date: string }) {
   return (

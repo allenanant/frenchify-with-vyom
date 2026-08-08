@@ -47,7 +47,11 @@ export default function VideoFacade({
     >
       {playing ? (
         <>
-          <Script src={`https://fast.wistia.com/embed/${MEDIA_ID}.js`} strategy="afterInteractive" />
+          {/* player.js alone drives <wistia-player media-id>. The per-media
+              embed/<id>.js that usually sits alongside it is an ES module, so
+              loading it as a classic script threw "Unexpected token 'export'"
+              on every play and its prefetched metadata was discarded anyway —
+              player.js just refetched the same thing as JSON. */}
           <Script src="https://fast.wistia.com/player.js" strategy="afterInteractive" />
           {/* The custom element goes in as markup because <wistia-player> has no
               JSX typing, matching how the old hero mounted it. `autoplay` is
