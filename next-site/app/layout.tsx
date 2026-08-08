@@ -53,6 +53,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <ChromeGate zone="footer">
           <Footer />
+        </ChromeGate>
+        <ChromeGate zone="cta">
           <FloatingLeadButton />
         </ChromeGate>
       </body>

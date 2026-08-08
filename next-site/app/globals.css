@@ -30,6 +30,13 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* The 72px above is space reserved for the fixed header. Pages that hide the
+     header (ChromeGate) must reclaim it, or they open with a blank band where
+     the nav would have been. */
+  body.no-site-header {
+    padding-top: 0;
+  }
+
   body.has-notice-bars {
     /* Mobile: clarity-call bar (36px) + amber bar wraps to 2 lines (~52px) + header (69px) */
     padding-top: 157px;

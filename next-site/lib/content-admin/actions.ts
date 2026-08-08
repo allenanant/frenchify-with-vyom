@@ -13,6 +13,14 @@ import { redirect } from 'next/navigation';
 import matter from 'gray-matter';
 import * as auth from '@/lib/tickets/auth';
 import { stampNow, toIsoStamp } from '@/lib/content-date';
+import {
+  SCHEDULE_REPO_PATH,
+  formatWebinarDate,
+  readSchedule,
+  serializeSchedule,
+  webinarInstantFor,
+  webinarWeekday,
+} from '@/lib/webinar';
 import { commitFiles, createBlob, listTree, readBlob } from './github';
 import {
   ANNOUNCEMENTS_DIR,
@@ -231,4 +239,73 @@ function publicError(e: unknown): string {
   const msg = e instanceof Error ? e.message : '';
   if (msg.includes('GITHUB_CONTENT_TOKEN')) return 'Publishing key missing on the server — tell Allen.';
   return 'Publishing failed. Try again, and tell Allen if it keeps happening.';
+}
+
+/* ------------------------------------------------------------------ */
+/* Webinar schedule                                                    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * The Sunday webinar's date and this week's WebinarJam link.
+ *
+ * This is the replacement for editing a GoHighLevel custom value, a workflow's
+ * "Set Event Start Time" action and a countdown timer separately — the four
+ * funnel pages and the countdown all read this one file.
+ */
+export async function publishWebinarSchedule(input: {
+  /** Local date in the webinar's timezone, "YYYY-MM-DD". */
+  date: string;
+  /** 24h local time in the webinar's timezone, "HH:MM". */
+  time: string;
+  joinUrl: string;
+  autoRoll: boolean;
+}): Promise<Result> {
+  const denied = await gate();
+  if (denied) return { ok: false, error: denied };
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(input.date)) return { ok: false, error: 'Pick a webinar date.' };
+  if (!/^\d{2}:\d{2}$/.test(input.time)) return { ok: false, error: 'Pick a start time.' };
+
+  const joinUrl = input.joinUrl.trim();
+  if (joinUrl && !/^https:\/\/\S+$/i.test(joinUrl)) {
+    return { ok: false, error: 'The webinar link must be a full https:// address.' };
+  }
+
+  const [y, m, d] = input.date.split('-').map(Number);
+  const [hh, mm] = input.time.split(':').map(Number);
+  const startsAt = webinarInstantFor(y, m, d, hh, mm);
+  if (Number.isNaN(startsAt.getTime())) return { ok: false, error: 'That date and time did not make sense.' };
+
+  const current = readSchedule();
+  const iso = startsAt.toISOString();
+  const updated = {
+    ...current,
+    startsAt: iso,
+    joinUrl,
+    // Tie the link to this exact webinar so a later date change cannot leave
+    // last week's dead room being served from the waiting page.
+    joinUrlFor: joinUrl ? iso : '',
+    autoRoll: input.autoRoll,
+    // The chosen day and time become the pattern the weekly roll repeats, so
+    // moving a webinar to Saturday 6 PM moves every future one with it.
+    weekday: webinarWeekday(startsAt),
+    hour: hh,
+    minute: mm,
+    updatedAt: new Date().toISOString(),
+  };
+
+  try {
+    await commitFiles({
+      message: `Admin: webinar ${formatWebinarDate(startsAt)}`,
+      files: [{ path: SCHEDULE_REPO_PATH, content: serializeSchedule(updated) }],
+    });
+  } catch (e) {
+    return { ok: false, error: publicError(e) };
+  }
+  return {
+    ok: true,
+    detail: joinUrl
+      ? 'Webinar updated. Live in about 2 minutes.'
+      : 'Webinar date updated. Add the WebinarJam link before Sunday so the waiting room can let people in.',
+  };
 }

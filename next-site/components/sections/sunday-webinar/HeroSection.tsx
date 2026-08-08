@@ -5,15 +5,25 @@ import { ArrowRight } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
 import Magnetic from '@/components/motion/Magnetic';
 import FloatingOrbs from '@/components/motion/FloatingOrbs';
+import Countdown from '@/components/webinar/Countdown';
 
-export default function HeroSection() {
+type Props = {
+  /** ISO start instant — drives the countdown. */
+  startsAt: string;
+  /** The long, human date printed under the clock. */
+  displayDate: string;
+};
+
+export default function HeroSection({ startsAt, displayDate }: Props) {
   return (
     <section className="relative min-h-screen flex items-center py-16 lg:py-20 overflow-hidden full-bleed-section-ghl aurora-bg hero-pattern-animated">
       <FloatingOrbs variant="soft" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          {/* Left: Content */}
+          {/* Left on desktop: content. The order classes have to sit on the grid
+              children themselves — on the video they were a level too deep, so
+              the video won the first slot at every width. */}
           <div className="text-center lg:text-left order-2 lg:order-1">
             <Reveal direction="left">
               <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-50 to-blue-100 text-blue-900 px-5 py-2.5 rounded-full text-sm font-bold mb-6 border-2 border-blue-200 shadow-lg">
@@ -39,11 +49,23 @@ export default function HeroSection() {
               </p>
             </Reveal>
 
+            <Reveal direction="up" delay={0.22}>
+              <div className="mt-8 rounded-2xl border-2 border-blue-100 bg-white/70 p-4 shadow-soft backdrop-blur-sm sm:p-5">
+                <p className="mb-3 text-center text-[11px] font-bold uppercase tracking-widest text-slate-500 lg:text-left">
+                  Next live session starts in
+                </p>
+                <Countdown targetIso={startsAt} expiredLabel="We're live right now" />
+                <p className="mt-3 text-center text-xs font-semibold leading-snug text-slate-600 lg:text-left">
+                  {displayDate}
+                </p>
+              </div>
+            </Reveal>
+
             <Reveal direction="up" delay={0.3}>
-              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Magnetic>
                   <a
-                    href="/webinar-form-page"
+                    href="/register-webinar/"
                     className="btn-primary text-lg group"
                   >
                     <span className="relative z-10 flex items-center gap-3">
@@ -65,9 +87,9 @@ export default function HeroSection() {
             </Reveal>
           </div>
 
-          {/* Right: Video */}
-          <Reveal direction="right" delay={0.2} duration={0.8}>
-            <div className="w-full max-w-2xl mx-auto order-1 lg:order-2">
+          {/* Right on desktop: video */}
+          <Reveal direction="right" delay={0.2} duration={0.8} className="order-1 lg:order-2">
+            <div className="w-full max-w-2xl mx-auto">
               <div className="relative group">
                 <div className="absolute -inset-1 bg-gradient-to-r from-brand-blue to-brand-amber rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-500" />
                 <div

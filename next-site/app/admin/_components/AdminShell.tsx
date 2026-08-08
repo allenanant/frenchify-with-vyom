@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Megaphone, Trophy, LogOut, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Megaphone, Trophy, CalendarClock, LogOut, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { adminSignOut } from '@/lib/content-admin/actions';
 import type { AdminAnnouncement, AdminWallEntry } from '@/lib/content-admin/content';
 import ResultsTab from './ResultsTab';
 import AnnouncementsTab from './AnnouncementsTab';
+import WebinarTab, { type WebinarAdminState } from './WebinarTab';
 
 export type Banner = { kind: 'ok' | 'error'; text: string } | null;
 
@@ -14,11 +15,12 @@ type Props = {
   userName: string;
   announcements: AdminAnnouncement[];
   wall: AdminWallEntry[];
+  webinar: WebinarAdminState;
   loadError: string | null;
 };
 
-export default function AdminShell({ userName, announcements, wall, loadError }: Props) {
-  const [tab, setTab] = useState<'announcements' | 'results'>('announcements');
+export default function AdminShell({ userName, announcements, wall, webinar, loadError }: Props) {
+  const [tab, setTab] = useState<'announcements' | 'results' | 'webinar'>('announcements');
   const [banner, setBanner] = useState<Banner>(null);
   const router = useRouter();
 
@@ -78,20 +80,23 @@ export default function AdminShell({ userName, announcements, wall, loadError }:
           </div>
         )}
 
-        <div className="mb-8 flex gap-2 rounded-2xl border border-gray-200 bg-gray-100 p-1.5">
+        <div className="mb-8 flex flex-wrap gap-2 rounded-2xl border border-gray-200 bg-gray-100 p-1.5">
           <button className={tabBtn(tab === 'announcements')} onClick={() => setTab('announcements')}>
             <Megaphone className="h-5 w-5" /> Announcements
           </button>
           <button className={tabBtn(tab === 'results')} onClick={() => setTab('results')}>
             <Trophy className="h-5 w-5" /> Results
           </button>
+          <button className={tabBtn(tab === 'webinar')} onClick={() => setTab('webinar')}>
+            <CalendarClock className="h-5 w-5" /> Webinar
+          </button>
         </div>
 
-        {tab === 'announcements' ? (
+        {tab === 'announcements' && (
           <AnnouncementsTab announcements={announcements} onDone={done} onError={fail} />
-        ) : (
-          <ResultsTab wall={wall} onDone={done} onError={fail} />
         )}
+        {tab === 'results' && <ResultsTab wall={wall} onDone={done} onError={fail} />}
+        {tab === 'webinar' && <WebinarTab initial={webinar} onDone={done} onError={fail} />}
       </div>
     </main>
   );

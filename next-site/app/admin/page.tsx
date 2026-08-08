@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import { currentUser } from '@/lib/tickets/auth';
 import { fetchAnnouncements, fetchWallEntries } from '@/lib/content-admin/content';
+import { readSchedule, resolveWebinar, webinarFormFields } from '@/lib/webinar';
 import AdminLogin from './_components/AdminLogin';
 import AdminShell from './_components/AdminShell';
+import type { WebinarAdminState } from './_components/WebinarTab';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,7 +38,28 @@ export default async function AdminPage() {
       userName={user.name}
       announcements={announcements}
       wall={wall}
+      webinar={webinarAdminState()}
       loadError={loadError}
     />
   );
+}
+
+/**
+ * The form is prefilled with what the site is actually showing, not with the
+ * raw file. Those differ the week after a webinar has passed and the date has
+ * rolled forward on its own, and the version visitors see is the true one.
+ */
+function webinarAdminState(): WebinarAdminState {
+  const schedule = readSchedule();
+  const shown = resolveWebinar(schedule);
+  const fields = webinarFormFields(new Date(shown.startsAt));
+  return {
+    date: fields.date,
+    time: fields.time,
+    joinUrl: shown.joinUrl,
+    autoRoll: schedule.autoRoll,
+    displayDate: shown.displayDate,
+    slug: shown.slug,
+    linkIsCurrent: Boolean(shown.joinUrl),
+  };
 }

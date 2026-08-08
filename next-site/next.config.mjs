@@ -33,6 +33,23 @@ const nextConfig = {
       // content was never ported. Parked on /courses so the URL still lands
       // somewhere relevant; rebuild the page and drop this line.
       { source: '/immigration', destination: '/courses', permanent: false },
+
+      // ---- Webinar funnel, ported off GoHighLevel ----
+      // The GHL funnel's own page names. They are in live Meta ads, WhatsApp
+      // sends and confirmation emails already delivered, so they have to land.
+      { source: '/webinar-form-page', destination: '/register-webinar', permanent: true },
+      { source: '/register-webinar-2', destination: '/register-webinar', permanent: true },
+      { source: '/webinar-thankyou', destination: '/webinar-thank-you', permanent: true },
+      { source: '/thank-you-webinar', destination: '/webinar-thank-you', permanent: true },
+      // Every cloned week lived at its own root URL (/webinar-2aug2026,
+      // /webinar-12-july-132678-651265-447271). They now all resolve to the
+      // one landing page under its dated alias.
+      //
+      // The slug must start with a digit. redirects() is evaluated before
+      // filesystem routes, so an unanchored /webinar-:slug would capture the
+      // real /webinar-thank-you and /webinar-form-page pages instead of
+      // letting them render.
+      { source: '/webinar-:slug(\\d[\\w-]*)', destination: '/webinar/:slug', permanent: false },
     ];
   },
   experimental: {
