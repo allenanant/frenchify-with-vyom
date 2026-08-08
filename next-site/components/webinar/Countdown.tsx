@@ -75,32 +75,43 @@ export default function Countdown({
   }, [expired, redirectOnExpiry, joinUrl, redirectDelaySeconds]);
 
   const dark = tone === 'dark';
+  // The last day is the only time this thing is allowed to change colour, and
+  // `accent` is the only token licensed for it. It fails contrast on the navy
+  // band, so there the digits stay white and the urgency is carried by the copy
+  // next to the clock.
+  const urgent = remaining !== null && remaining > 0 && remaining < 86_400_000;
   const cell = dark
-    ? 'bg-white/10 border-white/20 text-white'
-    : 'bg-white border-blue-100 text-slate-900';
-  const label = dark ? 'text-white/70' : 'text-slate-500';
+    ? 'bg-white/5 border-white/20 text-white'
+    : urgent
+      ? 'bg-fnl-surface-alt border-fnl-accent/40 text-fnl-accent'
+      : 'bg-fnl-surface-alt border-fnl-line text-fnl-ink';
+  const label = dark ? 'text-white/60' : 'text-fnl-mute';
 
   if (expired) {
     return (
       <div className={className}>
         <div
-          className={`rounded-2xl border-2 px-6 py-5 text-center ${
-            dark ? 'border-green-400/40 bg-green-500/15' : 'border-green-200 bg-green-50'
+          className={`rounded-[10px] border px-6 py-5 text-center ${
+            dark ? 'border-white/20 bg-white/5' : 'border-fnl-line bg-fnl-surface-alt'
           }`}
         >
-          <p className={`font-display text-xl font-black ${dark ? 'text-white' : 'text-green-800'}`}>
+          <p
+            className={`font-display text-xl font-extrabold tracking-[-0.015em] ${
+              dark ? 'text-white' : 'text-fnl-success'
+            }`}
+          >
             {expiredLabel}
           </p>
           {joinUrl ? (
             <a
               href={joinUrl}
-              className="mt-3 inline-block rounded-xl bg-green-600 px-6 py-3 text-base font-black text-white shadow-lg transition hover:bg-green-700"
+              className="mt-3 inline-block rounded-[10px] bg-fnl-success px-7 py-4 text-[16px] font-semibold leading-none text-white transition-colors duration-[120ms] hover:brightness-110"
             >
               Join the workshop now
             </a>
           ) : (
-            <p className={`mt-1 text-sm font-semibold ${dark ? 'text-white/80' : 'text-green-700'}`}>
-              Keep this page open — you&apos;ll be connected as soon as the host opens the room.
+            <p className={`mt-1 text-[15px] leading-[1.5] ${dark ? 'text-white/70' : 'text-fnl-body'}`}>
+              Keep this page open, you&apos;ll be connected as soon as the host opens the room.
             </p>
           )}
         </div>
@@ -120,14 +131,13 @@ export default function Countdown({
     <div className={className}>
       <div className="grid grid-cols-4 gap-2 sm:gap-3" role="timer" aria-live="off">
         {cells.map(([value, name]) => (
-          <div
-            key={name}
-            className={`rounded-xl border-2 px-1 py-3 text-center shadow-sm sm:rounded-2xl sm:py-4 ${cell}`}
-          >
-            <span className="font-display block text-2xl font-black tabular-nums sm:text-4xl">
+          <div key={name} className={`rounded-[10px] border px-1 py-3 text-center ${cell}`}>
+            <span className="font-display block text-[26px] font-extrabold leading-[1.1] tabular-nums tracking-[-0.015em] sm:text-[32px]">
               {remaining === null ? '--' : String(value).padStart(2, '0')}
             </span>
-            <span className={`mt-0.5 block text-[10px] font-bold uppercase tracking-wider sm:text-xs ${label}`}>
+            <span
+              className={`mt-1 block text-[11px] font-semibold uppercase leading-[1.2] tracking-[0.08em] ${label}`}
+            >
               {name}
             </span>
           </div>

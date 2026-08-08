@@ -1,30 +1,21 @@
 import {
-  UserCheck,
-  Calendar,
-  Tag,
-  LineChart,
-  Clock,
-  Target,
-  MapPin,
-  CheckCircle2,
   Award,
-  MessagesSquare,
-  Quote,
-  Languages,
-  Rocket,
-  GraduationCap,
+  Check,
+  Clock,
   Flag,
+  LineChart,
+  MapPin,
+  MessagesSquare,
+  Target,
   Users,
 } from 'lucide-react';
-import Reveal from '@/components/motion/Reveal';
-import Stagger from '@/components/motion/Stagger';
-import Tilt from '@/components/motion/Tilt';
-import Magnetic from '@/components/motion/Magnetic';
-import AnimatedNumber from '@/components/motion/AnimatedNumber';
-import FloatingOrbs from '@/components/motion/FloatingOrbs';
 import HeroSection from '@/components/sections/sunday-webinar/HeroSection';
 import Countdown from '@/components/webinar/Countdown';
 import ForwardTracking from '@/components/webinar/ForwardTracking';
+import FunnelFooter from '@/components/webinar/FunnelFooter';
+import YouTubeFacade from '@/components/webinar/YouTubeFacade';
+import { Card, Cta, Divider, H2, Label, Lead, Section } from '@/components/webinar/ui';
+import { getWallResults } from '@/lib/wall-results';
 import type { Webinar } from '@/lib/webinar';
 
 /**
@@ -32,27 +23,26 @@ import type { Webinar } from '@/lib/webinar';
  * /sunday-webinar, and the dated /webinar/<slug> that each week's Meta ads
  * point at. Everything date-shaped arrives as the `webinar` prop, which is
  * resolved once from content/webinar/schedule.json.
+ *
+ * Built to the locked funnel system: white page, two navy bands and nothing
+ * else dark, four CTAs at fixed positions, hairlines instead of shadows, and
+ * no entrance animation anywhere. The copy is the copy that converted — the
+ * only edit is naming the exam TEF/TCF.
  */
 
 const painPoints = [
   {
     Icon: LineChart,
-    bg: 'from-red-100 to-red-200',
-    color: 'text-red-600',
     title: "CRS Score Isn't Competitive",
     copy: "Draws keep hitting 480+ and your score isn't close. You're watching months go by with no guarantee.",
   },
   {
     Icon: Clock,
-    bg: 'from-orange-100 to-orange-200',
-    color: 'text-orange-600',
     title: 'Time is Running Out',
     copy: "Your age points are decreasing, permits need renewal, and other options take years you don't have.",
   },
   {
     Icon: Target,
-    bg: 'from-blue-100 to-blue-200',
-    color: 'text-brand-blue',
     title: 'Opportunity Cost is Huge',
     copy: 'Every month you wait is lost Canadian income, career growth, and life progress.',
   },
@@ -79,6 +69,13 @@ const benefits = [
     title: 'Skip the competition',
     copy: 'Only 5% of candidates speak French',
   },
+];
+
+const stats = [
+  { value: '50+', label: 'CRS Points' },
+  { value: '8-12', label: 'Months to PR' },
+  { value: '95%', label: 'Less Competition' },
+  { value: 'Proven', label: 'Pathway' },
 ];
 
 const workshopSteps = [
@@ -115,463 +112,416 @@ const includes = [
 
 const faqs = [
   {
-    Icon: Clock,
     q: "I don't have time to learn a new language",
     a: 'The assessment reveals if you have enough time based on your specific timeline. Many students reach CLB 7 in 8-12 months with just 2-3 hours daily.',
   },
   {
-    Icon: Languages,
     q: 'French seems too difficult',
     a: 'French shares 60% vocabulary with English. The assessment measures your language learning aptitude - you might be surprised by your natural ability.',
   },
   {
-    Icon: LineChart,
     q: "I'm not sure if it's worth the investment",
-    a: 'The workshop includes a complete ROI analysis. You\'ll see the exact financial comparison between investing in French and the cost of waiting.',
+    a: "The workshop includes a complete ROI analysis. You'll see the exact financial comparison between investing in French and the cost of waiting.",
   },
   {
-    Icon: GraduationCap,
     q: 'What if I fail the TEF/TCF exam?',
     a: 'The assessment predicts your success probability. Plus, our students have an 80% first-attempt pass rate, and exams can be retaken.',
   },
 ];
 
+/** Student success stories, same playlist the /testimonials page plays. */
+const PLAYLIST_ID = 'PLIX434KgUuaHsNre2lGTCXOTsROKjy6Z3';
+/** First video in that playlist — the still is all it is used for. */
+const PLAYLIST_POSTER_VIDEO = '5PnAcrE9V9Y';
+const PLAYLIST_COUNT = 34;
+
+/**
+ * Proof unseen is proof wasted, but 100+ remote screenshots on first paint is
+ * the bigger tax on ad traffic. Four load with the page; the rest arrive as the
+ * rail is swiped.
+ */
+const EAGER_RESULTS = 4;
+
+/** A small square mark. No gradient fill, no coloured tile per item. */
+function IconTile({ Icon }: { Icon: typeof LineChart }) {
+  return (
+    <span className="inline-flex h-11 w-11 items-center justify-center rounded-[10px] border border-fnl-line bg-fnl-surface-alt text-fnl-ink">
+      <Icon className="h-5 w-5" strokeWidth={1.75} />
+    </span>
+  );
+}
+
 export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
+  const { clb7, clb5 } = getWallResults();
+  // CLB 7 first: it is the score that unlocks the francophone draws, so the
+  // four that load eagerly are the four that answer the page's promise.
+  const resultImages = [...clb7, ...clb5];
+
   return (
     <>
       <ForwardTracking />
+
+      {/* 1 — HERO */}
       <HeroSection startsAt={webinar.startsAt} displayDate={webinar.displayDate} />
 
-      {/* Info Cards under hero */}
-      <section className="-mt-16 pb-16 sm:pb-24 full-bleed-section-ghl relative z-10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <Stagger className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            <Tilt max={5}>
-              <div className="premium-card bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-center h-full group">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-brand-blue to-brand-blue-deep text-white rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg shadow-brand-blue/30 group-hover:scale-110 transition-transform duration-300">
-                  <UserCheck className="w-6 h-6" />
-                </div>
-                <p className="text-[10px] sm:text-xs text-slate-500 font-bold uppercase tracking-wider sm:tracking-widest mb-1">
-                  Host
-                </p>
-                <p className="font-display font-black text-slate-900 text-base sm:text-lg tracking-tight">Vyom Sharma</p>
-              </div>
-            </Tilt>
-            <Tilt max={5}>
-              <div className="premium-card bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-center h-full group">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-brand-blue to-brand-blue-deep text-white rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg shadow-brand-blue/30 group-hover:scale-110 transition-transform duration-300">
-                  <Calendar className="w-6 h-6" />
-                </div>
-                <p className="text-[10px] sm:text-xs text-slate-500 font-bold uppercase tracking-wider sm:tracking-widest mb-1">
-                  When
-                </p>
-                <p className="font-display font-black text-slate-900 text-sm sm:text-base leading-tight tracking-tight">
-                  {webinar.displayDate}
-                </p>
-              </div>
-            </Tilt>
-            <Tilt max={5}>
-              <div className="premium-card bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-center h-full group">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-green-500 to-green-600 text-white rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg shadow-green-500/30 group-hover:scale-110 transition-transform duration-300">
-                  <Tag className="w-6 h-6" />
-                </div>
-                <p className="text-[10px] sm:text-xs text-slate-500 font-bold uppercase tracking-wider sm:tracking-widest mb-1">
-                  Investment
-                </p>
-                <p className="font-display font-black text-slate-900 text-lg sm:text-xl tracking-tight">
-                  <span className="text-red-500 line-through text-sm sm:text-base mr-1 sm:mr-2">$19 CAD</span>
-                  <span className="text-green-600">FREE!</span>
-                </p>
-              </div>
-            </Tilt>
-          </Stagger>
-        </div>
-      </section>
-
-      {/* PAIN POINTS SECTION */}
-      <section id="details" className="py-20 sm:py-28 bg-gradient-to-b from-blue-50 to-white full-bleed-section-ghl relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-          <Reveal>
-            <div className="text-center max-w-4xl mx-auto mb-14 sm:mb-16">
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-tight tracking-tight">
-                Tired of Waiting in the Express Entry Pool?
-              </h2>
-              <p className="mt-5 text-lg sm:text-xl text-slate-600 font-medium">
-                If you&apos;re stuck with any of these problems, this workshop will show you a proven alternative.
-              </p>
-            </div>
-          </Reveal>
-
-          <Stagger className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-            {painPoints.map(({ Icon, bg, color, title, copy }) => (
-              <Tilt key={title} max={5}>
-                <div className="premium-card bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 group h-full">
-                  <div className={`w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br ${bg} ${color} rounded-2xl sm:rounded-3xl flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                    <Icon className="w-7 h-7" />
-                  </div>
-                  <h3 className="font-display text-lg sm:text-xl font-black text-slate-900 mb-2 sm:mb-3 tracking-tight">
-                    {title}
-                  </h3>
-                  <p className="text-slate-600 text-sm sm:text-base leading-relaxed">{copy}</p>
-                </div>
-              </Tilt>
-            ))}
-          </Stagger>
-        </div>
-      </section>
-
-      {/* SOLUTION SECTION */}
-      <section className="py-20 sm:py-28 relative overflow-hidden full-bleed-section-ghl aurora-bg">
-        <FloatingOrbs variant="soft" />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-          <Reveal>
-            <div className="text-center max-w-4xl mx-auto mb-14 sm:mb-16">
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-tight tracking-tight">
-                What if French Could <span className="gradient-text">Change Everything?</span>
-              </h2>
-              <p className="mt-5 text-lg sm:text-xl text-slate-600 font-medium">
-                While thousands wait, smart candidates are using French to guarantee their PR invitation.
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <Reveal direction="right">
-              <div>
-                <h3 className="font-display text-2xl font-black text-slate-900 mb-8 tracking-tight">
-                  Here&apos;s what French can do for your application:
-                </h3>
-                <Stagger className="space-y-6">
-                  {benefits.map(({ Icon, title, copy }) => (
-                    <div key={title} className="flex items-start gap-4 group">
-                      <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-brand-blue to-brand-blue-deep text-white rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg shadow-brand-blue/30">
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <p className="font-black text-lg text-slate-900 mb-1">{title}</p>
-                        <p className="text-slate-600 text-base">{copy}</p>
-                      </div>
-                    </div>
-                  ))}
-                </Stagger>
-              </div>
-            </Reveal>
-
-            <Reveal direction="left">
-              <div className="premium-card bg-white rounded-3xl p-6 sm:p-8 border-2 border-blue-100 shadow-2xl">
-                <h3 className="font-display text-xl sm:text-2xl font-black text-slate-900 text-center mb-6 sm:mb-8 tracking-tight">
-                  The Numbers Don&apos;t Lie:
-                </h3>
-                <Stagger className="grid grid-cols-2 gap-3 sm:gap-5">
-                  <div className="text-center bg-gradient-to-br from-white to-blue-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border-2 border-blue-100 premium-card">
-                    <AnimatedNumber
-                      value={50}
-                      suffix="+"
-                      className="font-display text-3xl sm:text-4xl lg:text-5xl font-black gradient-text block mb-1 sm:mb-2"
-                    />
-                    <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wide sm:tracking-wider text-slate-600 leading-tight">
-                      CRS Points
-                    </span>
-                  </div>
-                  <div className="text-center bg-gradient-to-br from-white to-blue-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border-2 border-blue-100 premium-card">
-                    <span className="font-display text-3xl sm:text-4xl lg:text-5xl font-black gradient-text block mb-1 sm:mb-2">
-                      8-12
-                    </span>
-                    <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wide sm:tracking-wider text-slate-600 leading-tight">
-                      Months to PR
-                    </span>
-                  </div>
-                  <div className="text-center bg-gradient-to-br from-white to-blue-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border-2 border-blue-100 premium-card">
-                    <AnimatedNumber
-                      value={95}
-                      suffix="%"
-                      className="font-display text-3xl sm:text-4xl lg:text-5xl font-black gradient-text block mb-1 sm:mb-2"
-                    />
-                    <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wide sm:tracking-wider text-slate-600 leading-tight">
-                      Less Competition
-                    </span>
-                  </div>
-                  <div className="text-center bg-gradient-to-br from-white to-blue-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border-2 border-blue-100 premium-card">
-                    <span className="font-display text-3xl sm:text-4xl font-black gradient-text block mb-1 sm:mb-2">
-                      Proven
-                    </span>
-                    <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wide sm:tracking-wider text-slate-600 leading-tight">
-                      Pathway
-                    </span>
-                  </div>
-                </Stagger>
-              </div>
-            </Reveal>
+      {/* 2 — FACT STRIP. Three facts, hairline separated. Not three cards. */}
+      <section className="w-full border-y border-fnl-line bg-fnl-surface">
+        <div className="mx-auto grid w-full max-w-[1120px] grid-cols-1 divide-y divide-fnl-line px-5 md:grid-cols-3 md:divide-x md:divide-y-0 md:px-8">
+          <div className="py-5 md:pr-8">
+            <Label>Host</Label>
+            <p className="mt-1 text-[17px] font-bold leading-[1.3] text-fnl-ink">Vyom Sharma</p>
+          </div>
+          <div className="py-5 md:px-8">
+            <Label>When</Label>
+            <p className="mt-1 text-[17px] font-bold leading-[1.3] text-fnl-ink">
+              {webinar.displayDate}
+            </p>
+          </div>
+          <div className="py-5 md:pl-8">
+            <Label>Investment</Label>
+            <p className="mt-1 text-[17px] font-bold leading-[1.3] text-fnl-ink">
+              <span className="text-fnl-danger line-through">$19 CAD</span>
+              <span className="ml-2 text-fnl-success">FREE!</span>
+            </p>
           </div>
         </div>
       </section>
 
-      {/* WORKSHOP DETAILS */}
-      <section className="py-20 sm:py-28 bg-gradient-to-b from-white to-blue-50 full-bleed-section-ghl relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-          <Reveal>
-            <div className="text-center max-w-4xl mx-auto mb-14 sm:mb-16">
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-tight tracking-tight">
-                What Happens in This Live Assessment Workshop
-              </h2>
-              <p className="mt-5 text-lg sm:text-xl text-slate-600 font-medium">
-                This isn&apos;t a typical webinar. You&apos;ll actively participate in a live assessment that determines your French PR potential.
-              </p>
-            </div>
-          </Reveal>
-
-          <Stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-            {workshopSteps.map(({ Icon, title, copy }, i) => (
-              <Tilt key={title} max={5}>
-                <div className="premium-card bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-7 h-full group">
-                  <div
-                    className={`w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br ${
-                      i === 2 ? 'from-green-500 to-green-600 shadow-green-500/30' : 'from-brand-blue to-brand-blue-deep shadow-brand-blue/30'
-                    } text-white rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
-                  >
-                    <Icon className="w-7 h-7" />
-                  </div>
-                  <h3 className="font-display text-base sm:text-lg font-black text-slate-900 mb-2 tracking-tight">
-                    {title}
-                  </h3>
-                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{copy}</p>
-                </div>
-              </Tilt>
-            ))}
-          </Stagger>
+      {/* 3 — PAIN */}
+      <Section id="details">
+        <div className="max-w-[640px]">
+          <H2>Tired of Waiting in the Express Entry Pool?</H2>
+          <Lead className="mt-4">
+            If you&apos;re stuck with any of these problems, this workshop will show you a proven
+            alternative.
+          </Lead>
         </div>
-      </section>
 
-      {/* ABOUT VYOM */}
-      <section className="py-20 sm:py-28 relative overflow-hidden full-bleed-section-ghl aurora-bg">
-        <FloatingOrbs variant="soft" />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <Reveal direction="right">
-              <div className="relative order-last lg:order-first">
-                <div className="absolute -inset-6 bg-gradient-to-r from-brand-blue to-brand-amber rounded-3xl blur-3xl opacity-20" />
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6808d65bdf54eff4377e2466.png"
-                    alt="Vyom Sharma"
-                    className="relative w-full h-auto"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal direction="left">
-              <div>
-                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 mb-6 leading-tight tracking-tight">
-                  Meet Vyom: He Actually <span className="gradient-text">Walked This Path</span>
-                </h2>
-
-                <div className="space-y-6 text-slate-600">
-                  <p className="text-lg font-semibold text-slate-700">
-                    This isn&apos;t theory from someone who&apos;s never done it. Vyom used this exact French strategy to get his own Canadian PR.
-                  </p>
-
-                  <div className="premium-card bg-white rounded-3xl p-7 border-2 border-blue-100 shadow-lg relative pl-10">
-                    <div
-                      className="absolute left-4 top-6 bottom-6 w-1 rounded-full"
-                      style={{ background: 'linear-gradient(180deg, #2563eb, #f59e0b)' }}
-                    />
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 bg-gradient-to-br from-brand-blue to-brand-blue-deep rounded-xl flex items-center justify-center">
-                        <Quote className="w-5 h-5 text-white" />
-                      </div>
-                      <h3 className="font-display font-black text-xl text-slate-900 tracking-tight">My Story</h3>
-                    </div>
-                    <p className="text-base leading-relaxed text-slate-700">
-                      I arrived in Canada in December 2018. After my studies, I was stuck in the Express Entry pool with a CRS score that wasn&apos;t competitive enough. In April 2021, I started learning French. In just 8 months, I went from zero to CLB 7 and added 62 points to my CRS score. I received my PR invitation in November 2022.
-                    </p>
-                  </div>
-
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-5 rounded-2xl border-2 border-blue-200 shadow-md">
-                    <p className="text-base font-bold text-slate-900 flex items-start gap-3">
-                      <span className="text-2xl">💡</span>
-                      <span>The assessment in this workshop is what I wish I had when I started. Instead of guessing if French is right for you, you&apos;ll know for certain.</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          </div>
+        <div className="mt-10 grid grid-cols-1 gap-5 md:mt-12 md:grid-cols-3">
+          {painPoints.map(({ Icon, title, copy }) => (
+            <Card key={title}>
+              <IconTile Icon={Icon} />
+              <h3 className="mt-4 text-[19px] font-bold leading-[1.3] tracking-[-0.01em] text-fnl-ink md:text-[22px]">
+                {title}
+              </h3>
+              <p className="mt-2 text-[16px] leading-[1.6] text-fnl-body md:text-[17px]">{copy}</p>
+            </Card>
+          ))}
         </div>
-      </section>
+      </Section>
 
-      {/* WHAT ATTENDEES GET */}
-      <section
-        className="py-20 sm:py-28 relative overflow-hidden full-bleed-section-ghl"
-        style={{
-          background: 'linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 25%, #2563eb 50%, #3b82f6 75%, #60a5fa 100%)',
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/20" />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
-          <Reveal>
-            <div className="text-center mb-14 sm:mb-16">
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight">
-                Your Free Workshop Includes:
-              </h2>
-            </div>
-          </Reveal>
+      {/* 4 — SOLUTION */}
+      <Section tone="alt">
+        <div className="max-w-[640px]">
+          <H2>What if French Could Change Everything?</H2>
+          <Lead className="mt-4">
+            While thousands wait, smart candidates are using French to guarantee their PR
+            invitation.
+          </Lead>
+        </div>
 
-          <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-            {includes.map((it) => (
-              <div
-                key={it.title}
-                className="rounded-xl sm:rounded-2xl p-5 sm:p-6 text-white hover:scale-105 transition-all duration-300"
-                style={{
-                  background: 'rgba(30, 58, 138, 0.6)',
-                  backdropFilter: 'blur(20px) saturate(180%)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-                }}
-              >
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 sm:w-11 sm:h-11 bg-white text-brand-blue rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
-                    <CheckCircle2 className="w-5 h-5" />
-                  </div>
+        <div className="mt-10 grid grid-cols-1 items-start gap-8 md:mt-12 lg:grid-cols-2 lg:gap-12">
+          <div>
+            <h3 className="text-[19px] font-bold leading-[1.3] tracking-[-0.01em] text-fnl-ink md:text-[22px]">
+              Here&apos;s what French can do for your application:
+            </h3>
+            <ul className="mt-6 space-y-5">
+              {benefits.map(({ Icon, title, copy }) => (
+                <li key={title} className="flex items-start gap-4">
+                  <IconTile Icon={Icon} />
                   <div>
-                    <p className="font-display font-black text-base sm:text-lg mb-1 tracking-tight">{it.title}</p>
-                    <p className="text-white/90 text-xs sm:text-sm">{it.copy}</p>
+                    <p className="text-[17px] font-bold leading-[1.4] text-fnl-ink">{title}</p>
+                    <p className="mt-0.5 text-[16px] leading-[1.6] text-fnl-body md:text-[17px]">
+                      {copy}
+                    </p>
                   </div>
-                </div>
-              </div>
-            ))}
-          </Stagger>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          <Reveal>
-            <div className="text-center mt-12">
-              <p className="text-white font-bold text-xl mb-3">
-                Regular Workshop Price: <span className="line-through opacity-75">$19 CAD</span>
+          <Card className="p-6 md:p-8">
+            <h3 className="text-[19px] font-bold leading-[1.3] tracking-[-0.01em] text-fnl-ink md:text-[22px]">
+              The Numbers Don&apos;t Lie:
+            </h3>
+            <div className="mt-6 grid grid-cols-2 gap-4">
+              {stats.map(({ value, label }) => (
+                <div
+                  key={label}
+                  className="rounded-[10px] border border-fnl-line bg-fnl-surface-alt px-4 py-5 text-center"
+                >
+                  <span className="block font-display text-[28px] font-extrabold leading-[1.1] tracking-[-0.015em] text-fnl-ink md:text-[36px]">
+                    {value}
+                  </span>
+                  <span className="mt-2 block text-[12px] font-semibold uppercase leading-[1.2] tracking-[0.08em] text-fnl-mute">
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+      </Section>
+
+      {/* 5 — RESULTS RAIL, then CTA 2. Native scroll-snap, no carousel script. */}
+      <Section className="border-t border-fnl-line">
+        <div className="max-w-[640px]">
+          <H2>Wall of Excellence</H2>
+          <Lead className="mt-4">
+            Every screenshot below is a real TEF/TCF attestation from a Frenchify student.
+          </Lead>
+          <p className="mt-3 text-[16px] leading-[1.6] text-fnl-body md:text-[17px]">
+            <span className="font-bold text-fnl-ink">{resultImages.length} verified results</span> so
+            far: {clb7.length} at CLB 7 or higher, {clb5.length} at CLB 5.
+          </p>
+        </div>
+
+        {/* The rail bleeds back out to the container padding so a half-cut card
+            sits at the right edge, which is the only affordance a scroll rail
+            needs. Momentum and snapping are the browser's — no carousel script,
+            no hydration cost, and it keeps working with JS off. */}
+        {/* scroll-pl matters: snap alignment is measured from the scrollport
+            edge, not the padding box, so without it the browser parks the first
+            card 20px left of the heading it is supposed to line up with. */}
+        <div className="-mx-5 mt-8 flex snap-x snap-mandatory gap-4 scroll-pl-5 overflow-x-auto px-5 pb-4 [-webkit-overflow-scrolling:touch] [scrollbar-width:thin] md:-mx-8 md:mt-10 md:scroll-pl-8 md:px-8">
+          {resultImages.map((src, i) => (
+            <figure
+              key={src}
+              className="w-[250px] shrink-0 snap-start overflow-hidden rounded-[14px] border border-fnl-line bg-fnl-surface-alt md:w-[300px]"
+            >
+              <div className="aspect-[940/788] w-full">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={src}
+                  alt="Student TEF/TCF result attestation"
+                  width={940}
+                  height={788}
+                  loading={i < EAGER_RESULTS ? 'eager' : 'lazy'}
+                  decoding="async"
+                  className="h-full w-full object-contain"
+                />
+              </div>
+            </figure>
+          ))}
+        </div>
+
+        <p className="mt-3 text-[14px] leading-[1.5] text-fnl-mute md:text-[15px]">
+          Swipe or scroll sideways to see the rest.
+        </p>
+
+        <div className="mt-10 flex justify-center">
+          <Cta href="/webinar-form/" className="max-w-[420px]">
+            Reserve My Free Spot
+          </Cta>
+        </div>
+      </Section>
+
+      {/* 6 — WHAT HAPPENS IN THE WORKSHOP */}
+      <Section className="border-t border-fnl-line">
+        <div className="max-w-[640px]">
+          <H2>What Happens in This Live Assessment Workshop</H2>
+          <Lead className="mt-4">
+            This isn&apos;t a typical webinar. You&apos;ll actively participate in a live assessment
+            that determines your French PR potential.
+          </Lead>
+        </div>
+
+        <div className="mt-10 grid grid-cols-1 gap-5 md:mt-12 md:grid-cols-2 lg:grid-cols-4">
+          {workshopSteps.map(({ Icon, title, copy }, i) => (
+            <Card key={title}>
+              <div className="flex items-center justify-between">
+                <IconTile Icon={Icon} />
+                <Label>Step {String(i + 1).padStart(2, '0')}</Label>
+              </div>
+              <h3 className="mt-4 text-[19px] font-bold leading-[1.3] tracking-[-0.01em] text-fnl-ink md:text-[22px]">
+                {title}
+              </h3>
+              <p className="mt-2 text-[16px] leading-[1.6] text-fnl-body md:text-[17px]">{copy}</p>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
+      {/* 7 — MEET VYOM */}
+      <Section tone="alt">
+        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,380px)_1fr] lg:gap-14">
+          <div className="overflow-hidden rounded-[14px] border border-fnl-line bg-fnl-surface">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6808d65bdf54eff4377e2466.png"
+              alt="Vyom Sharma"
+              width={794}
+              height={908}
+              sizes="(min-width: 1024px) 380px, 100vw"
+              loading="lazy"
+              decoding="async"
+              className="block h-auto w-full"
+            />
+          </div>
+
+          <div>
+            <H2>Meet Vyom: He Actually Walked This Path</H2>
+            <Lead className="mt-4 max-w-[640px]">
+              This isn&apos;t theory from someone who&apos;s never done it. Vyom used this exact
+              French strategy to get his own Canadian PR.
+            </Lead>
+
+            <Card className="mt-8 p-6 md:p-8">
+              <Label>My Story</Label>
+              <p className="mt-3 text-[16px] leading-[1.6] text-fnl-body md:text-[17px]">
+                I arrived in Canada in December 2018. After my studies, I was stuck in the Express
+                Entry pool with a CRS score that wasn&apos;t competitive enough. In April 2021, I
+                started learning French. In just 8 months, I went from zero to CLB 7 and added 62
+                points to my CRS score. I received my PR invitation in November 2022.
               </p>
-              <div className="inline-block bg-white text-brand-blue-deep px-8 py-4 rounded-2xl font-black text-xl shadow-2xl">
-                Today&apos;s Price: FREE! (Plus $497 in Bonuses)
+              <Divider className="my-6" />
+              <p className="text-[16px] leading-[1.6] text-fnl-body md:text-[17px]">
+                The assessment in this workshop is what I wish I had when I started. Instead of
+                guessing if French is right for you, you&apos;ll know for certain.
+              </p>
+            </Card>
+          </div>
+        </div>
+      </Section>
+
+      {/* 8 — INCLUDES + PRICE, then CTA 3. Navy band 1 of 2. */}
+      <Section tone="ink">
+        <div className="max-w-[640px]">
+          <H2 className="text-white">Your Free Workshop Includes:</H2>
+        </div>
+
+        <div className="mt-10 grid grid-cols-1 gap-4 md:mt-12 md:grid-cols-2">
+          {includes.map((it) => (
+            <div
+              key={it.title}
+              className="flex items-start gap-4 rounded-[14px] border border-white/15 p-5"
+            >
+              <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/25 text-white">
+                <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
+              </span>
+              <div>
+                <p className="text-[17px] font-bold leading-[1.4] text-white">{it.title}</p>
+                <p className="mt-1 text-[16px] leading-[1.6] text-white/70">{it.copy}</p>
               </div>
             </div>
-          </Reveal>
+          ))}
         </div>
-      </section>
 
-      {/* FAQ SECTION */}
-      <section className="py-20 sm:py-28 bg-white full-bleed-section-ghl">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-          <Reveal>
-            <div className="text-center mb-14 sm:mb-16">
-              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-tight tracking-tight">
-                Still Have <span className="gradient-text">Doubts?</span>
-              </h2>
+        <div className="mt-12 border-t border-white/15 pt-8 text-center">
+          <p className="text-[17px] leading-[1.6] text-white/70">
+            Regular Workshop Price: <span className="line-through">$19 CAD</span>
+          </p>
+          <p className="mt-2 font-display text-[22px] font-extrabold leading-[1.2] tracking-[-0.015em] text-white md:text-[28px]">
+            Today&apos;s Price: FREE! (Plus $497 in Bonuses)
+          </p>
+          <div className="mt-8 flex justify-center">
+            <Cta href="/webinar-form/" variant="onInk" className="max-w-[420px]">
+              Reserve My Free Spot
+            </Cta>
+          </div>
+        </div>
+      </Section>
+
+      {/* 9 — VIDEO TESTIMONIALS. Facade: a bare playlist iframe is ~900 KB. */}
+      <Section>
+        <div className="mx-auto max-w-[640px] text-center">
+          <H2>Hear Directly From Our Students</H2>
+          <Lead className="mt-4">
+            {PLAYLIST_COUNT} success stories from students who cleared CLB 5 and CLB 7. Play them
+            straight through, right here.
+          </Lead>
+        </div>
+
+        <div className="mx-auto mt-8 max-w-[800px] md:mt-10">
+          <YouTubeFacade
+            playlistId={PLAYLIST_ID}
+            posterVideoId={PLAYLIST_POSTER_VIDEO}
+            title="CLB 5 and CLB 7 Student Success Stories"
+          />
+        </div>
+      </Section>
+
+      {/* 10 — FAQ */}
+      <Section className="border-t border-fnl-line">
+        <div className="mx-auto max-w-[640px] text-center">
+          <H2>Still Have Doubts?</H2>
+        </div>
+
+        <div className="mx-auto mt-8 max-w-[800px] md:mt-10">
+          {faqs.map(({ q, a }) => (
+            <details key={q} className="group border-b border-fnl-line">
+              <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-[19px] font-bold leading-[1.3] tracking-[-0.01em] text-fnl-ink [&::-webkit-details-marker]:hidden md:text-[22px]">
+                <span>&ldquo;{q}&rdquo;</span>
+                <span
+                  aria-hidden
+                  className="mt-1 shrink-0 text-fnl-mute transition-transform duration-[180ms] group-open:rotate-180 motion-reduce:transition-none"
+                >
+                  <svg viewBox="0 0 20 20" className="h-4 w-4 fill-current">
+                    <path d="M10 13.2 3.6 6.8l1.4-1.4L10 10.4l5-5 1.4 1.4z" />
+                  </svg>
+                </span>
+              </summary>
+              <p className="pb-5 pr-10 text-[16px] leading-[1.6] text-fnl-body md:text-[17px]">
+                {a}
+              </p>
+            </details>
+          ))}
+        </div>
+      </Section>
+
+      {/* 11 — FINAL DECISION, then CTA 4. Navy band 2 of 2. */}
+      <Section tone="ink" id="register">
+        <div className="mx-auto max-w-[720px] text-center">
+          <H2 className="text-white">Your Canadian PR Journey Starts with One Decision</H2>
+
+          <div className="mt-10 space-y-4 text-left">
+            <div className="rounded-[14px] border border-white/15 p-5">
+              <Label className="text-white/60">Option 1</Label>
+              <p className="mt-2 text-[16px] leading-[1.6] text-white/80 md:text-[17px]">
+                Keep waiting in Express Entry, hoping draws get easier (they won&apos;t), watching
+                opportunities pass by.
+              </p>
             </div>
-          </Reveal>
-
-          <Stagger className="space-y-5">
-            {faqs.map(({ Icon, q, a }, i) => (
-              <Tilt key={q} max={3}>
-                <div className="premium-card bg-white rounded-3xl p-7 border-2 border-blue-50">
-                  <h4 className="font-display text-lg font-black text-slate-900 flex items-center gap-4 mb-3 tracking-tight">
-                    <div
-                      className={`w-11 h-11 ${
-                        i === 2 ? 'bg-gradient-to-br from-green-500 to-green-600' : 'bg-gradient-to-br from-brand-blue to-brand-blue-deep'
-                      } text-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg`}
-                    >
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <span>&ldquo;{q}&rdquo;</span>
-                  </h4>
-                  <p className="text-slate-600 text-base pl-[60px] leading-relaxed">{a}</p>
-                </div>
-              </Tilt>
-            ))}
-          </Stagger>
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section id="register" className="py-20 sm:py-28 aurora-bg full-bleed-section-ghl relative overflow-hidden">
-        <FloatingOrbs variant="soft" />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
-          <Reveal>
-            <div className="relative">
-              <div className="absolute -inset-6 bg-gradient-to-r from-brand-blue via-brand-blue-deep to-brand-amber rounded-[2.5rem] blur-3xl opacity-30" />
-
-              <div
-                className="relative rounded-3xl sm:rounded-[2.5rem] p-10 sm:p-12 lg:p-16 text-center shadow-2xl border-4 border-white/20"
-                style={{
-                  background:
-                    'linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 25%, #2563eb 50%, #3b82f6 75%, #60a5fa 100%)',
-                }}
-              >
-                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-6 leading-tight tracking-tight">
-                  Your Canadian PR Journey Starts with One Decision 🍁
-                </h2>
-
-                <div className="max-w-3xl mx-auto space-y-4 mb-8">
-                  <div
-                    className="rounded-2xl p-5 text-left border-2 border-red-400/30"
-                    style={{
-                      background: 'rgba(30, 58, 138, 0.6)',
-                      backdropFilter: 'blur(20px) saturate(180%)',
-                      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-                    }}
-                  >
-                    <p className="text-white text-base">
-                      <span className="font-black text-red-300 text-lg">Option 1:</span>
-                      <span className="ml-2">Keep waiting in Express Entry, hoping draws get easier (they won&apos;t), watching opportunities pass by.</span>
-                    </p>
-                  </div>
-
-                  <div
-                    className="rounded-2xl p-5 text-left border-2 border-green-400/30"
-                    style={{
-                      background: 'rgba(30, 58, 138, 0.6)',
-                      backdropFilter: 'blur(20px) saturate(180%)',
-                      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-                    }}
-                  >
-                    <p className="text-white text-base">
-                      <span className="font-black text-green-300 text-lg">Option 2:</span>
-                      <span className="ml-2">Take 90 minutes to discover if French could be your PR game-changer and get a personalized roadmap.</span>
-                    </p>
-                  </div>
-                </div>
-
-                <p className="text-white/95 font-semibold mb-6 text-lg">
-                  This workshop, normally <span className="font-black text-blue-100 text-xl">$19 CAD</span>, is completely free today. The assessment alone is worth hundreds in consultation fees.
-                </p>
-
-                <div className="max-w-md mx-auto mb-8">
-                  <p className="mb-3 text-[11px] font-bold uppercase tracking-widest text-blue-100">
-                    Registration closes in
-                  </p>
-                  <Countdown targetIso={webinar.startsAt} tone="dark" expiredLabel="We're live right now" />
-                  <p className="mt-3 text-xs font-semibold text-blue-100">{webinar.displayDate}</p>
-                </div>
-
-                <div className="space-y-4">
-                  <Magnetic>
-                    <a
-                      href="/webinar-form/"
-                      className="inline-block w-full sm:w-auto bg-white hover:bg-gray-50 text-brand-blue-deep font-black py-5 px-10 rounded-2xl text-xl transition-all duration-300 transform hover:scale-105 shadow-2xl border-4 border-white/30"
-                    >
-                      <Rocket className="inline w-5 h-5 mr-2" />
-                      Claim My Spot Before It&apos;s Full
-                    </a>
-                  </Magnetic>
-
-                  <p className="text-sm font-black text-blue-100 flex items-center justify-center gap-2">
-                    <span className="text-xl">🚨</span>
-                    <span>Registration closes when we hit capacity or 24 hours before the workshop!</span>
-                  </p>
-                </div>
-              </div>
+            <div className="rounded-[14px] border border-white/30 bg-white/5 p-5">
+              <Label className="text-white/60">Option 2</Label>
+              <p className="mt-2 text-[16px] leading-[1.6] text-white md:text-[17px]">
+                Take 90 minutes to discover if French could be your PR game-changer and get a
+                personalized roadmap.
+              </p>
             </div>
-          </Reveal>
+          </div>
+
+          <p className="mt-8 text-[17px] leading-[1.6] text-white/80 md:text-[19px]">
+            This workshop, normally <span className="font-semibold text-white">$19 CAD</span>, is
+            completely free today. The assessment alone is worth hundreds in consultation fees.
+          </p>
+
+          <div className="mx-auto mt-10 max-w-[420px]">
+            <Label className="text-white/60">Registration closes in</Label>
+            <Countdown
+              targetIso={webinar.startsAt}
+              tone="dark"
+              expiredLabel="We're live right now"
+              className="mt-3"
+            />
+            <p className="mt-3 text-[15px] leading-[1.5] text-white/60">{webinar.displayDate}</p>
+          </div>
+
+          <div className="mt-8 flex justify-center">
+            <Cta href="/webinar-form/" variant="onInk" className="max-w-[420px]">
+              Claim My Spot Before It&apos;s Full
+            </Cta>
+          </div>
+
+          <p className="mx-auto mt-5 max-w-[520px] text-[15px] leading-[1.5] text-white/60">
+            Registration closes when we hit capacity or 24 hours before the workshop!
+          </p>
         </div>
-      </section>
+      </Section>
+
+      {/* 12 — ChromeGate bares this route, so the legal links have to come from
+          somewhere. This is that somewhere, and it adds no exits. */}
+      <FunnelFooter />
     </>
   );
 }

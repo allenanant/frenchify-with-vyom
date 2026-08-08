@@ -15,6 +15,12 @@ const BARE_PREFIXES = [
   '/webinar-form',
   '/thank-you-for-registeration',
   '/waiting-room',
+  // The landing page joins them. It kept the marketing footer until now, which
+  // put seven exits at the bottom of a page paid clicks land on; it carries its
+  // own legal-only FunnelFooter instead. '/webinar' also covers /webinar/<slug>,
+  // the dated alias each week's ads point at.
+  '/sunday-webinar',
+  '/webinar',
 ];
 
 /**

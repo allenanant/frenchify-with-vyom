@@ -19,6 +19,26 @@ const config: Config = {
           amber: '#f59e0b',
           ink: '#252525',
         },
+        // The paid webinar funnel runs on its own closed palette. It is
+        // deliberately separate from `brand`, which the rest of the marketing
+        // site depends on: the funnel needs every contrast ratio to hold on a
+        // near-white page, and it needs a hard rule that nothing outside these
+        // twelve values gets used. Ratios are against white unless noted.
+        fnl: {
+          surface: '#FFFFFF',
+          'surface-alt': '#F5F7FA',
+          // Dark punctuation band. Two uses on the landing page, no more.
+          'ink-bg': '#0B1B33',
+          ink: '#0F172A', // headings, 17.9:1
+          body: '#44506A', // body copy, 8.1:1
+          mute: '#64748B', // captions and labels, 4.8:1
+          primary: '#1D4ED8', // 6.7:1 as fill and as text
+          'primary-press': '#1E40AF',
+          line: '#E3E8EF', // every border and divider
+          success: '#047857', // "FREE" and verified marks, 5.5:1
+          danger: '#B91C1C', // the struck $19 CAD only, 6.5:1
+          accent: '#B45309', // countdown under 24h only, 5.0:1
+        },
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
