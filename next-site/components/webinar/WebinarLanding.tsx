@@ -355,9 +355,15 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
       <Section tone="alt">
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,380px)_1fr] lg:gap-14">
           <div className="overflow-hidden rounded-[14px] border border-fnl-line bg-fnl-surface">
+            {/* Was the GoHighLevel-hosted original: an 831 KB PNG of a
+                photograph, by a distance the heaviest thing on the page. Same
+                frame as WebP is 54 KB. It is lazy and below the fold so it never
+                counted against the first-load gate, but it is most of what a
+                visitor pays for scrolling to Vyom's story on a budget phone. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6808d65bdf54eff4377e2466.png"
+              src="/brand/vyom-portrait-760.webp"
+              srcSet="/brand/vyom-portrait-380.webp 380w, /brand/vyom-portrait-760.webp 760w"
               alt="Vyom Sharma"
               width={794}
               height={908}
