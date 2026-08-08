@@ -24,6 +24,7 @@ import AnimatedNumber from '@/components/motion/AnimatedNumber';
 import FloatingOrbs from '@/components/motion/FloatingOrbs';
 import HeroSection from '@/components/sections/sunday-webinar/HeroSection';
 import Countdown from '@/components/webinar/Countdown';
+import ForwardTracking from '@/components/webinar/ForwardTracking';
 import type { Webinar } from '@/lib/webinar';
 
 /**
@@ -138,6 +139,7 @@ const faqs = [
 export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
   return (
     <>
+      <ForwardTracking />
       <HeroSection startsAt={webinar.startsAt} displayDate={webinar.displayDate} />
 
       {/* Info Cards under hero */}

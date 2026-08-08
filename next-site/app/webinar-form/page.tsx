@@ -14,6 +14,7 @@ import Script from 'next/script';
 import FunnelShell, { WebinarDateBadge } from '@/components/webinar/FunnelShell';
 import Countdown from '@/components/webinar/Countdown';
 import { GHL_WEBINAR_FORM_ID, getWebinar } from '@/lib/webinar';
+import { trackingQuery } from '@/lib/webinar-tracking';
 
 export const metadata: Metadata = {
   title: 'Register for the Workshop',
@@ -22,12 +23,22 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// Ten minutes: fresh enough that the date is never visibly stale, cached
-// enough that an ad spike does not render this per request.
-export const revalidate = 600;
+// Reading searchParams makes this render per request, which is the price of
+// passing the ad's tracking tags into the form. The landing page, which takes
+// the actual traffic spike, stays cached and forwards them on the client.
+export const dynamic = 'force-dynamic';
 
-export default function RegisterWebinarPage() {
+export default async function RegisterWebinarPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const webinar = getWebinar();
+  // GHL's form_embed.js does not copy the parent page's query string into the
+  // iframe, so the form only sees the campaign if we put it on the src.
+  const formSrc =
+    `https://api.leadconnectorhq.com/widget/form/${GHL_WEBINAR_FORM_ID}` +
+    trackingQuery(await searchParams);
 
   return (
     <FunnelShell>
@@ -44,7 +55,7 @@ export default function RegisterWebinarPage() {
 
       <div className="rounded-2xl border border-blue-50 bg-white">
         <iframe
-          src={`https://api.leadconnectorhq.com/widget/form/${GHL_WEBINAR_FORM_ID}`}
+          src={formSrc}
           id={`inline-${GHL_WEBINAR_FORM_ID}`}
           title="Webinar Registration form"
           data-layout="{'id':'INLINE'}"
