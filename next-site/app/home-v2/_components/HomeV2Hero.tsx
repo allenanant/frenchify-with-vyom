@@ -28,13 +28,7 @@ export default function HomeV2Hero() {
       id="home-v2-hero"
       className="relative overflow-hidden bg-white md:min-h-[88vh] lg:min-h-[92vh]"
     >
-      {/* Background photo — desktop & tablet only; mobile uses a plain white bg.
-          The nav is bg-white/70 over a backdrop blur, so whatever sits behind it
-          shows through, and the source frame had Vyom's hair starting 48px from
-          the top — his forehead read straight through the nav. The photo now
-          carries 160px of wall above his head (see public/vyom-hero-bg.png), and
-          anchoring to `top` spends that headroom on clearing the nav instead of
-          cropping it away. */}
+      {/* Background photo — desktop & tablet only; mobile uses a plain white bg */}
       <motion.div
         aria-hidden
         style={{ y: bgY, scale: bgScale }}
@@ -46,7 +40,7 @@ export default function HomeV2Hero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[78%_top] md:object-[75%_top] lg:object-[center_top]"
+          className="object-cover object-[78%_center] md:object-[75%_center] lg:object-[center_center]"
         />
         {/* White wash only on the LEFT, fully transparent on the right so Vyom stays crisp */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.98)_0%,rgba(255,255,255,0.9)_38%,rgba(255,255,255,0.35)_55%,rgba(255,255,255,0)_72%)] md:bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,0.95)_32%,rgba(255,255,255,0.55)_50%,rgba(255,255,255,0)_65%)]" />
