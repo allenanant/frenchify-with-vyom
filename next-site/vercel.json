@@ -2,7 +2,6 @@
   "framework": "nextjs",
   "crons": [
     {
-      "_comment": "Trailing slash is required: next.config sets trailingSlash true, so the bare path 308s and the cron would never reach the handler.",
       "path": "/api/webinar/roll/",
       "schedule": "30 4 * * 1"
     }

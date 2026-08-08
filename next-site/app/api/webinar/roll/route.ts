@@ -6,7 +6,10 @@
  * countdown timer and change its end date. This moves the date on once, in the
  * one file all four of those now read from.
  *
- * Vercel Cron calls it Mondays at 04:30 UTC (10:00 IST) — see vercel.json.
+ * Vercel Cron calls it Mondays at 04:30 UTC (10:00 IST) — see vercel.json, where
+ * the path is written WITH a trailing slash. next.config sets trailingSlash, so
+ * the bare /api/webinar/roll answers 308 and the cron would never reach this
+ * handler. (vercel.json rejects unknown keys, so that note cannot live there.)
  * Nothing depends on it running: lib/webinar rolls the displayed date forward
  * on its own if this never fires. The commit only makes the file agree with
  * what visitors are already being shown.
