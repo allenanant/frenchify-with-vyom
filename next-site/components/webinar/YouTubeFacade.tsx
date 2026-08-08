@@ -7,7 +7,7 @@ import { cn } from '@/lib/cn';
  * Click-to-play shell for the student-testimonial playlist, built the same way
  * as VideoFacade so the funnel has one pattern for embedded video rather than
  * two. A bare YouTube iframe costs about 900 KB before anyone has decided to
- * watch; the poster below is a 23 KB still from the playlist's first video.
+ * watch. This costs one lazy still.
  *
  * Same playlist and same player as /testimonials — youtube-nocookie, videoseries
  * — so the visitor still gets all 34 stories back to back.
@@ -51,21 +51,30 @@ export default function YouTubeFacade({
         >
           {/* maxresdefault is the true 16:9 frame at 1280x720. hqdefault is
               cheaper but it is a 480x360 letterbox, so filling this frame means
-              upscaling 480x270 to 800 and it visibly softens. This one is lazy
-              and sits nine sections down, so it costs nothing on first load.
+              upscaling 480x270 to 800 and it visibly softens.
+              YouTube serves the same frame as WebP under /vi_webp/ — 66 KB
+              against 169 KB for the JPEG — with the JPEG left as the fallback
+              for anything that cannot decode it. Lazy either way, nine sections
+              down, so none of it lands on first load.
               next/image is `unoptimized` here, so it would wrap the tag and
               compress nothing. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={`https://i.ytimg.com/vi/${posterVideoId}/maxresdefault.jpg`}
-            width={1280}
-            height={720}
-            sizes="(min-width: 1024px) 800px, 100vw"
-            alt=""
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover"
-          />
+          <picture>
+            <source
+              srcSet={`https://i.ytimg.com/vi_webp/${posterVideoId}/maxresdefault.webp`}
+              type="image/webp"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`https://i.ytimg.com/vi/${posterVideoId}/maxresdefault.jpg`}
+              width={1280}
+              height={720}
+              sizes="(min-width: 1024px) 800px, 100vw"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+          </picture>
           <span
             aria-hidden
             className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-fnl-surface transition-colors duration-[120ms] group-hover:bg-fnl-surface-alt md:h-20 md:w-20"
