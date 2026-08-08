@@ -27,8 +27,12 @@ export const metadata: Metadata = {
   },
   description:
     'Learn French & clear TEF/TCF Canada exam with step-by-step methodologies. Become fluent in under 12 months with Frenchify with Vyom.',
+  // The GoHighLevel-hosted wordmark is a 2580x702 PNG weighing 2.1 MB, and it
+  // was being served as the favicon on every page of the site. These are the
+  // same mark, cropped and palette-compressed: 4.7 KB and 18 KB.
   icons: {
-    icon: 'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png',
+    icon: '/brand/icon-32.png',
+    apple: '/brand/apple-touch-icon.png',
   },
 };
 

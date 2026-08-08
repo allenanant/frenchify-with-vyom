@@ -8,7 +8,7 @@ import Image from 'next/image';
  */
 
 const LOGO =
-  'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png';
+  '/brand/frenchify-logo.png';
 
 export function WebinarDateBadge({ date }: { date: string }) {
   return (

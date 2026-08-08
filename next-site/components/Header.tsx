@@ -49,7 +49,7 @@ export default function Header() {
       <nav className="flex justify-between items-center px-6 py-4 max-w-[1170px] mx-auto">
         <Link href="/" className="flex items-center">
           <Image
-            src="https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/681356df3176b96f4b69c47b.png"
+            src="/brand/frenchify-logo.png"
             alt="Frenchify Logo"
             width={160}
             height={36}
