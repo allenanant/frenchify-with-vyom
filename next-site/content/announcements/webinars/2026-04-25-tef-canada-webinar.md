@@ -1,11 +1,11 @@
 ---
-title: "Free TEF Canada Webinar with Vyom"
+title: "French for Canadian PR: Live Assessment Workshop"
 featured: true
 images: []
 link: "https://frenchifywithvyom.com/sunday-webinar"
 buttonText: "Register Now"
-webinarDate: "2026-05-10"
-webinarTime: "7:00 PM IST"
-description: "Learn how to crack TEF Canada B2 in 90 days. Live Q&A at the end."
+webinarDate: "2026-08-09"
+webinarTime: "2:00 PM (Montreal Time)"
+description: "Discover in 90 minutes if French is your fastest path to Canadian PR. Take a live assessment and get your personalized French learning strategy - completely free. Live every Sunday."
 createdAt: "2026-04-25"
 ---
