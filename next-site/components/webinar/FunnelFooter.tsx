@@ -30,7 +30,10 @@ export default function FunnelFooter({ className }: { className?: string }) {
             <a
               key={item.href}
               href={item.href}
-              className="text-[15px] leading-[1.5] text-fnl-mute transition-colors duration-[120ms] hover:text-fnl-ink"
+              /* py-2.5 gets these to a 44px tap target. They were 23px, which
+                 is a miss on the one set of links that has to stay reachable
+                 for legal reasons. */
+              className="inline-flex items-center py-2.5 text-[15px] leading-[1.5] text-fnl-mute transition-colors duration-[120ms] hover:text-fnl-ink"
             >
               {item.label}
             </a>

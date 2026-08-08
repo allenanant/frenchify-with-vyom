@@ -109,9 +109,20 @@ export default function Countdown({
             >
               Join the workshop now
             </a>
-          ) : (
+          ) : redirectOnExpiry ? (
+            // Waiting room only. Everyone here registered and is waiting to be
+            // let in, so "keep this page open" is a true statement.
             <p className={`mt-1 text-[15px] leading-[1.5] ${dark ? 'text-white/70' : 'text-fnl-body'}`}>
               Keep this page open, you&apos;ll be connected as soon as the host opens the room.
+            </p>
+          ) : (
+            // Landing and registration pages. For the 90 minutes the workshop
+            // is live this used to tell people who had never registered that
+            // they would be connected shortly, which was never going to happen,
+            // directly above buttons still offering them a seat. Send them to
+            // the thing that can actually help instead.
+            <p className={`mt-1 text-[15px] leading-[1.5] ${dark ? 'text-white/70' : 'text-fnl-body'}`}>
+              Register now and we&apos;ll email you the link for the next session.
             </p>
           )}
         </div>

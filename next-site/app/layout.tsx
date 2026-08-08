@@ -21,6 +21,10 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
+  // Without this, every relative canonical and og:url in the app resolves
+  // against localhost in dev and is emitted relative in production, which
+  // social scrapers do not follow.
+  metadataBase: new URL('https://frenchifywithvyom.com'),
   title: {
     default: 'Frenchify - Master French Fluency',
     template: '%s | Frenchify',

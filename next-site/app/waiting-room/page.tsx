@@ -15,6 +15,7 @@
 import type { Metadata } from 'next';
 import FunnelShell, { WebinarDateBadge } from '@/components/webinar/FunnelShell';
 import Countdown from '@/components/webinar/Countdown';
+import LocalTime from '@/components/webinar/LocalTime';
 import { getWebinar } from '@/lib/webinar';
 
 export const metadata: Metadata = {
@@ -41,6 +42,8 @@ export default function WaitingRoomPage() {
       </p>
 
       <WebinarDateBadge date={webinar.displayDate} />
+
+      <LocalTime iso={webinar.startsAt} className="-mt-3 mb-5 text-fnl-mute" />
 
       <Countdown
         targetIso={webinar.startsAt}

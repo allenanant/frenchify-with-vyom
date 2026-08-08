@@ -13,6 +13,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import FunnelShell, { WebinarDateBadge } from '@/components/webinar/FunnelShell';
 import Countdown from '@/components/webinar/Countdown';
+import LocalTime from '@/components/webinar/LocalTime';
 import { GHL_WEBINAR_FORM_ID, getWebinar } from '@/lib/webinar';
 import { trackingQuery } from '@/lib/webinar-tracking';
 
@@ -49,9 +50,12 @@ export default async function RegisterWebinarPage({
         Confirm your details below to secure your spot for this exclusive Canadian PR workshop.
       </p>
 
+      {/* The badge stays above the form because it confirms what was promised.
+          The countdown moved below it: this visitor has already clicked, so
+          they need input fields, not another 72px of re-selling between the
+          headline and the first one. That put the first field at ~610px, below
+          the fold on any 640px phone. */}
       <WebinarDateBadge date={webinar.displayDate} />
-
-      <Countdown targetIso={webinar.startsAt} expiredLabel="The workshop is starting" className="mb-7" />
 
       <div className="rounded-[10px] border border-fnl-line bg-fnl-surface">
         <iframe
@@ -70,7 +74,11 @@ export default async function RegisterWebinarPage({
           data-layout-iframe-id={`inline-${GHL_WEBINAR_FORM_ID}`}
           data-form-id={GHL_WEBINAR_FORM_ID}
           className="w-full rounded-[10px] border-0"
-          style={{ minHeight: 411 }}
+          /* GHL's own data-height. The form actually measures about 500, and
+             form_embed.js resizes it correctly, but if link.msgsndr.com is
+             ever blocked the only conversion form on the site would get a
+             nested scrollbar. The floor is the rendered height instead. */
+          style={{ minHeight: 560 }}
         />
         {/* GHL's embed script resizes the iframe to the form's real height. */}
         <Script src="https://link.msgsndr.com/js/form_embed.js" strategy="afterInteractive" />
@@ -79,6 +87,13 @@ export default async function RegisterWebinarPage({
       <p className="mt-5 text-[14px] leading-[1.5] text-fnl-mute">
         Your details go straight to Frenchify with Vyom. No spam, and you can leave the WhatsApp group any time.
       </p>
+
+      <Countdown
+        targetIso={webinar.startsAt}
+        expiredLabel="The workshop is starting"
+        className="mt-7"
+      />
+      <LocalTime iso={webinar.startsAt} className="mt-3 text-fnl-mute" />
     </FunnelShell>
   );
 }

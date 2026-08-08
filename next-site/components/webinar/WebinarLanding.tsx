@@ -13,6 +13,7 @@ import HeroSection from '@/components/sections/sunday-webinar/HeroSection';
 import Countdown from '@/components/webinar/Countdown';
 import ForwardTracking from '@/components/webinar/ForwardTracking';
 import FunnelFooter from '@/components/webinar/FunnelFooter';
+import LocalTime from '@/components/webinar/LocalTime';
 import YouTubeFacade from '@/components/webinar/YouTubeFacade';
 import { Card, Cta, Divider, H2, Label, Lead, Section } from '@/components/webinar/ui';
 import { getWallResults } from '@/lib/wall-results';
@@ -166,8 +167,6 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
 
   return (
     <>
-      <ForwardTracking />
-
       {/* 1 — HERO */}
       <HeroSection startsAt={webinar.startsAt} displayDate={webinar.displayDate} />
 
@@ -177,12 +176,14 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
           <div className="py-5 md:pr-8">
             <Label>Host</Label>
             <p className="mt-1 text-[17px] font-bold leading-[1.3] text-fnl-ink">Vyom Sharma</p>
+            <p className="mt-1 text-[15px] leading-[1.5] text-fnl-mute">Online, join from anywhere</p>
           </div>
           <div className="py-5 md:px-8">
             <Label>When</Label>
             <p className="mt-1 text-[17px] font-bold leading-[1.3] text-fnl-ink">
               {webinar.displayDate}
             </p>
+            <LocalTime iso={webinar.startsAt} className="mt-1 text-fnl-mute" />
           </div>
           <div className="py-5 md:pl-8">
             <Label>Investment</Label>
@@ -300,7 +301,11 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={src}
-                  alt="Student TEF/TCF result attestation"
+                  /* Empty on purpose. 109 identical alt strings is 109
+                     repetitions of the same sentence for a screen reader; the
+                     heading and the count line above already describe the
+                     group, and no single card carries meaning on its own. */
+                  alt=""
                   width={940}
                   height={788}
                   loading={i < EAGER_RESULTS ? 'eager' : 'lazy'}
@@ -512,7 +517,12 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
           </p>
 
           <div className="mx-auto mt-10 max-w-[420px]">
-            <Label className="text-white/60">Registration closes in</Label>
+            {/* Was "Registration closes in", counting down to the start time,
+                directly above a line saying registration closes 24 hours
+                before the workshop. The two disagreed by a day, and a page
+                selling to skeptics cannot afford a timer that reads as fake.
+                The clock is honest about what it actually measures. */}
+            <Label className="text-white/60">Workshop starts in</Label>
             <Countdown
               targetIso={webinar.startsAt}
               tone="dark"
@@ -520,6 +530,7 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
               className="mt-3"
             />
             <p className="mt-3 text-[15px] leading-[1.5] text-white/60">{webinar.displayDate}</p>
+            <LocalTime iso={webinar.startsAt} className="mt-1 text-white/60" />
           </div>
 
           <div className="mt-8 flex justify-center">
@@ -537,6 +548,10 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
       {/* 12 — ChromeGate bares this route, so the legal links have to come from
           somewhere. This is that somewhere, and it adds no exits. */}
       <FunnelFooter />
+
+      {/* Last on purpose: it patches the CTA hrefs, so every anchor it looks
+          for has to be parsed before it runs. */}
+      <ForwardTracking />
     </>
   );
 }

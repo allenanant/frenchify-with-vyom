@@ -12,6 +12,7 @@ import type { Metadata } from 'next';
 import { CalendarDays, CheckCircle2, Mail } from 'lucide-react';
 import FunnelShell, { WebinarDateBadge } from '@/components/webinar/FunnelShell';
 import Countdown from '@/components/webinar/Countdown';
+import LocalTime from '@/components/webinar/LocalTime';
 import { Divider } from '@/components/webinar/ui';
 import { getWebinar } from '@/lib/webinar';
 
@@ -57,6 +58,8 @@ export default function WebinarThankYouPage() {
       </p>
 
       <WebinarDateBadge date={webinar.displayDate} />
+
+      <LocalTime iso={webinar.startsAt} className="-mt-3 mb-5 text-fnl-mute" />
 
       <Countdown targetIso={webinar.startsAt} expiredLabel="The workshop is starting" className="mb-7" />
 
