@@ -42,10 +42,10 @@ export default async function RegisterWebinarPage({
 
   return (
     <FunnelShell>
-      <h1 className="font-display text-3xl font-black leading-tight tracking-tight text-slate-900 sm:text-4xl">
-        You&apos;re Almost In! 🍁
+      <h1 className="font-display text-[26px] font-extrabold leading-[1.1] tracking-[-0.015em] text-fnl-ink sm:text-[34px]">
+        You&apos;re Almost In!
       </h1>
-      <p className="mt-3 text-base font-medium text-slate-600">
+      <p className="mt-3 text-[17px] leading-[1.55] text-fnl-body">
         Confirm your details below to secure your spot for this exclusive Canadian PR workshop.
       </p>
 
@@ -53,7 +53,7 @@ export default async function RegisterWebinarPage({
 
       <Countdown targetIso={webinar.startsAt} expiredLabel="The workshop is starting" className="mb-7" />
 
-      <div className="rounded-2xl border border-blue-50 bg-white">
+      <div className="rounded-[10px] border border-fnl-line bg-fnl-surface">
         <iframe
           src={formSrc}
           id={`inline-${GHL_WEBINAR_FORM_ID}`}
@@ -69,14 +69,14 @@ export default async function RegisterWebinarPage({
           data-height="411"
           data-layout-iframe-id={`inline-${GHL_WEBINAR_FORM_ID}`}
           data-form-id={GHL_WEBINAR_FORM_ID}
-          className="w-full rounded-xl border-0"
+          className="w-full rounded-[10px] border-0"
           style={{ minHeight: 411 }}
         />
         {/* GHL's embed script resizes the iframe to the form's real height. */}
         <Script src="https://link.msgsndr.com/js/form_embed.js" strategy="afterInteractive" />
       </div>
 
-      <p className="mt-5 text-xs text-slate-500">
+      <p className="mt-5 text-[14px] leading-[1.5] text-fnl-mute">
         Your details go straight to Frenchify with Vyom. No spam, and you can leave the WhatsApp group any time.
       </p>
     </FunnelShell>

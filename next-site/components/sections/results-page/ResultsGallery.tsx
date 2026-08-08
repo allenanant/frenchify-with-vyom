@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect, type CSSProperties } from 'react';
-import { CheckCircle2, ArrowUp, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { CheckCircle2, ArrowUp, X, ChevronLeft, ChevronRight, ListFilter } from 'lucide-react';
 
 type ResultsGalleryProps = {
   clb7Images: string[];
@@ -92,7 +92,7 @@ export default function ResultsGallery({ clb7Images, clb5Images }: ResultsGaller
       <div className="max-w-7xl mx-auto px-6 mb-12">
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-white/60 shadow-sm">
           <div className="flex items-center gap-2">
-            <i className="fas fa-filter text-slate-500" />
+            <ListFilter className="h-4 w-4 text-slate-500" aria-hidden />
             <span className="text-sm font-semibold text-slate-700">Filter by Level:</span>
           </div>
           <div className="flex flex-wrap gap-2 justify-center">

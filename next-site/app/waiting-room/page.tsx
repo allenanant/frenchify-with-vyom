@@ -33,10 +33,10 @@ export default function WaitingRoomPage() {
 
   return (
     <FunnelShell>
-      <h1 className="font-display text-2xl font-black leading-tight tracking-tight text-slate-900 sm:text-3xl">
-        <span className="gradient-text">You&apos;ll be redirected to the webinar automatically</span> 🍁
+      <h1 className="font-display text-[26px] font-extrabold leading-[1.1] tracking-[-0.015em] text-fnl-ink sm:text-[34px]">
+        You&apos;ll be redirected to the webinar automatically
       </h1>
-      <p className="mt-3 text-base font-medium text-slate-600">
+      <p className="mt-3 text-[17px] leading-[1.55] text-fnl-body">
         Thank you for joining us! We&apos;re just getting things ready and will begin at the scheduled time.
       </p>
 
@@ -50,17 +50,22 @@ export default function WaitingRoomPage() {
         className="mb-6"
       />
 
-      <div className="flex items-center justify-center gap-3 rounded-xl border-2 border-dashed border-brand-blue/40 bg-blue-50/60 p-4">
-        <span className="relative flex h-3 w-3 shrink-0">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-blue opacity-75" />
-          <span className="relative inline-flex h-3 w-3 rounded-full bg-brand-blue" />
+      {/* The one animation the funnel keeps. On a page whose entire content is
+          "nothing is happening yet", a live pulse is the only thing telling a
+          nervous registrant the tab has not frozen, so it earns its keep. */}
+      <div className="flex items-center justify-center gap-3 rounded-[10px] border border-fnl-line bg-fnl-surface-alt p-4">
+        <span className="relative flex h-2.5 w-2.5 shrink-0">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-fnl-primary opacity-75 motion-reduce:hidden" />
+          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-fnl-primary" />
         </span>
-        <p className="text-base font-bold text-brand-blue-deep">Waiting for the host to start the session...</p>
+        <p className="text-[16px] font-semibold leading-[1.4] text-fnl-ink">
+          Waiting for the host to start the session...
+        </p>
       </div>
 
-      <p className="mt-7 text-base text-slate-600">
-        <strong className="text-slate-900">Please keep this page open.</strong> You will be automatically connected
-        to the webinar room as soon as it begins.
+      <p className="mt-7 text-[16px] leading-[1.6] text-fnl-body">
+        <strong className="font-semibold text-fnl-ink">Please keep this page open.</strong> You will be
+        automatically connected to the webinar room as soon as it begins.
       </p>
     </FunnelShell>
   );

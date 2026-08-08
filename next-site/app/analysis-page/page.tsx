@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import {
   ArrowRight,
+  ClipboardCheck,
   Layers,
   BarChart3,
   Compass,
@@ -38,7 +39,7 @@ export default function AnalysisPage() {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <Reveal>
             <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <i className="fas fa-clipboard-check" />
+              <ClipboardCheck className="h-4 w-4" aria-hidden />
               <span>Professional French Assessment</span>
             </div>
           </Reveal>

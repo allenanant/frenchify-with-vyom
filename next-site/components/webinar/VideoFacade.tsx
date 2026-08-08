@@ -19,9 +19,14 @@ const MEDIA_ID = 'giyksplji4';
  * fast.wistia.com/embed/medias/giyksplji4.json. `image_crop_resized` is their
  * resizer: the untouched still is 1752x976 and weighs 198 KB, which would undo
  * most of what deferring the player buys back.
+ *
+ * `image_quality` matters as much as the resize. Wistia defaults to a quality
+ * that costs 126 KB at 960x540; the same frame at 80 is 60 KB and the
+ * difference is invisible behind a play button. This still is the page's LCP
+ * on mobile, so it is the one request worth tuning by hand.
  */
 const POSTER = 'https://embed-fastly.wistia.com/deliveries/2a75fd811a1058c4aaca949de855a774.jpg';
-const poster = (size: string) => `${POSTER}?image_crop_resized=${size}`;
+const poster = (size: string) => `${POSTER}?image_crop_resized=${size}&image_quality=80`;
 
 export default function VideoFacade({
   className,
@@ -66,11 +71,15 @@ export default function VideoFacade({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={poster('960x540')}
-            srcSet={`${poster('640x360')} 640w, ${poster('960x540')} 960w`}
-            sizes="(min-width: 1024px) 560px, 100vw"
+            srcSet={`${poster('640x360')} 640w, ${poster('800x450')} 800w, ${poster('960x540')} 960w`}
+            /* The hero column is 680px at its widest and the full viewport
+               minus 40px of padding below that, so a 390px phone at DPR 2 asks
+               for ~700px and lands on the 800w candidate rather than the 960. */
+            sizes="(min-width: 768px) 680px, calc(100vw - 40px)"
             width={960}
             height={540}
             alt=""
+            fetchPriority="high"
             decoding="async"
             className="h-full w-full object-cover"
           />

@@ -1,20 +1,27 @@
 import Image from 'next/image';
+import FunnelFooter from '@/components/webinar/FunnelFooter';
+import { Label } from '@/components/webinar/ui';
 
 /**
  * The card layout the three small funnel pages share — registration, thank you
  * and the waiting room. On GoHighLevel these were three standalone HTML pages
  * that each carried their own copy of the background, the logo and the date
  * box; keeping that shell in one place is what stops them drifting apart.
+ *
+ * Rebuilt on the funnel system so the four pages read as one product. What went:
+ * two layers of radial-gradient wash, a dot grid, a three-stop gradient rule
+ * across the card top, and a heavy drop shadow. A visitor arriving here has
+ * already clicked a CTA, so the page's whole job is to look like the same
+ * company that made the promise and then get out of the way.
  */
 
-const LOGO =
-  '/brand/frenchify-logo.png';
+const LOGO = '/brand/frenchify-logo.png';
 
 export function WebinarDateBadge({ date }: { date: string }) {
   return (
-    <div className="my-6 rounded-xl border-l-[5px] border-brand-blue bg-gradient-to-br from-blue-50 to-sky-50 p-5 text-left shadow-soft">
-      <p className="text-[11px] font-bold uppercase tracking-widest text-brand-blue">Workshop date</p>
-      <p className="mt-1 text-base font-bold leading-snug text-blue-900 sm:text-lg">{date}</p>
+    <div className="my-6 rounded-[10px] border border-fnl-line bg-fnl-surface-alt p-5 text-left">
+      <Label>Workshop date</Label>
+      <p className="mt-1 text-[17px] font-bold leading-[1.3] text-fnl-ink">{date}</p>
     </div>
   );
 }
@@ -27,36 +34,11 @@ export default function FunnelShell({
   maxWidth?: string;
 }) {
   return (
-    <div className="relative flex min-h-screen flex-col overflow-x-hidden bg-white">
-      {/* Brand wash + dot grid, carried over from the GHL pages */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 z-0"
-        style={{
-          backgroundImage:
-            'radial-gradient(at 18% 12%, rgba(37,99,235,0.10) 0, transparent 45%),' +
-            'radial-gradient(at 85% 18%, rgba(245,158,11,0.07) 0, transparent 45%),' +
-            'radial-gradient(at 50% 92%, rgba(37,99,235,0.08) 0, transparent 50%)',
-        }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 z-0 opacity-50"
-        style={{
-          backgroundImage: 'radial-gradient(rgba(37,99,235,0.10) 1px, transparent 1px)',
-          backgroundSize: '22px 22px',
-        }}
-      />
-
-      <main className="relative z-10 flex flex-grow items-center justify-center px-5 py-10 sm:py-14">
+    <div className="flex min-h-screen flex-col bg-fnl-surface-alt">
+      <main className="flex flex-grow items-center justify-center px-5 py-10 sm:py-14">
         <div
-          className={`w-full ${maxWidth} relative overflow-hidden rounded-3xl border border-blue-100 bg-white p-7 text-center shadow-premium sm:p-11`}
+          className={`w-full ${maxWidth} rounded-[14px] border border-fnl-line bg-fnl-surface p-7 text-center sm:p-11`}
         >
-          <div
-            aria-hidden
-            className="absolute inset-x-0 top-0 h-1.5"
-            style={{ background: 'linear-gradient(90deg,#2563EB 0%,#60A5FA 50%,#F59E0B 100%)' }}
-          />
           <Image
             src={LOGO}
             alt="Frenchify with Vyom"
@@ -70,9 +52,7 @@ export default function FunnelShell({
         </div>
       </main>
 
-      <footer className="relative z-10 px-5 pb-8 text-center text-sm text-slate-500">
-        <p>© {new Date().getFullYear()} Frenchify with Vyom Inc. All Rights Reserved.</p>
-      </footer>
+      <FunnelFooter className="border-t-0 bg-transparent" />
     </div>
   );
 }

@@ -6,8 +6,18 @@ import Stagger from '@/components/motion/Stagger';
 import Magnetic from '@/components/motion/Magnetic';
 import HeroSection from '@/components/sections/about-us/HeroSection';
 
+/**
+ * Inline rather than Font Awesome's `fa-canadian-maple-leaf`. This was the last
+ * icon on the site pulling a 100 KB render-blocking stylesheet off a CDN for a
+ * single glyph, so it carries its own path now. Same call signature as the
+ * lucide icons it sits beside, so nothing downstream changes.
+ */
 function MapleLeaf({ className = '' }: { className?: string }) {
-  return <i aria-hidden="true" className={`fab fa-canadian-maple-leaf ${className}`} />;
+  return (
+    <svg viewBox="0 0 512 512" className={className} fill="currentColor" aria-hidden="true">
+      <path d="M256 32l-30 56c-3.4 6.3-9.6 5.7-15.8 2.2l-21.7-11.2 16.2 86c3.4 15.7-7.6 15.7-13 8.9l-37.9-42.4-6.2 21.5c-.7 2.9-3.9 5.9-8.7 5.2l-47.9-10.1 12.6 45.8c2.7 10.2 4.8 14.4-2.8 17.1l-17.2 8.1 83 67.4c3.3 2.5 5 7.1 3.8 11.3l-7.3 23.8 80.6-9.5c2.5 0 4.1 1.4 4.1 4.3l-3.7 87.3h30.3l-2.1-87.1c0-2.9 1.5-4.4 4-4.4l80.6 9.5-7.3-23.8c-1.2-4.2.5-8.8 3.8-11.3l83-67.4-17.2-8.1c-7.6-2.7-5.5-6.9-2.8-17.1l12.6-45.8-47.9 10.1c-4.8.7-8-2.3-8.7-5.2l-6.2-21.5-37.9 42.4c-5.4 6.8-16.4 6.8-13-8.9l16.2-86-21.7 11.2c-6.2 3.5-12.4 4.1-15.8-2.2z" />
+    </svg>
+  );
 }
 
 export const metadata = {

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Calendar, Shield } from 'lucide-react';
+import { ArrowRight, Calendar, Flame, Shield } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
 import Magnetic from '@/components/motion/Magnetic';
 import FloatingOrbs from '@/components/motion/FloatingOrbs';
@@ -62,7 +62,7 @@ export default function ResultsPage() {
 
               <div className="relative z-10">
                 <div className="inline-block mb-4 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white text-sm font-bold">
-                  <i className="fas fa-fire text-orange-300 mr-2" />
+                  <Flame className="mr-2 inline-block h-4 w-4 align-[-2px] text-orange-300" aria-hidden />
                   Limited Spots Available
                 </div>
                 <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 text-white leading-tight tracking-tight">

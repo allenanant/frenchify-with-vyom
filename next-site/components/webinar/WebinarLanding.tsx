@@ -139,6 +139,13 @@ const PLAYLIST_COUNT = 34;
  * Proof unseen is proof wasted, but 100+ remote screenshots on first paint is
  * the bigger tax on ad traffic. Four load with the page; the rest arrive as the
  * rail is swiped.
+ *
+ * Those four are still fetched at low priority. React hoists any img that is
+ * not `loading="lazy"` into a <link rel="preload"> in the head, which put 149 KB
+ * of section-five screenshots in front of the hero poster in the queue — the
+ * page's LCP. `fetchPriority="low"` keeps the request and drops the queue
+ * position, so the rail is never blank on the first swipe and the hero still
+ * paints first.
  */
 const EAGER_RESULTS = 4;
 
@@ -297,6 +304,8 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
                   width={940}
                   height={788}
                   loading={i < EAGER_RESULTS ? 'eager' : 'lazy'}
+                  fetchPriority="low"
+                  sizes="(min-width: 768px) 300px, 250px"
                   decoding="async"
                   className="h-full w-full object-contain"
                 />

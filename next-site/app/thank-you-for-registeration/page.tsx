@@ -12,6 +12,7 @@ import type { Metadata } from 'next';
 import { CalendarDays, CheckCircle2, Mail } from 'lucide-react';
 import FunnelShell, { WebinarDateBadge } from '@/components/webinar/FunnelShell';
 import Countdown from '@/components/webinar/Countdown';
+import { Divider } from '@/components/webinar/ui';
 import { getWebinar } from '@/lib/webinar';
 
 /** Vyom's community group — same link the GHL page used. */
@@ -44,14 +45,14 @@ export default function WebinarThankYouPage() {
 
   return (
     <FunnelShell maxWidth="max-w-[720px]">
-      <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-green-600 text-white shadow-lg shadow-green-600/30">
-        <CheckCircle2 className="h-8 w-8" />
+      <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-fnl-success text-white">
+        <CheckCircle2 className="h-8 w-8" strokeWidth={1.75} />
       </div>
 
-      <h1 className="font-display text-2xl font-black leading-tight tracking-tight text-slate-900 sm:text-3xl">
-        Congratulations! Your spot is confirmed.&nbsp;🍁
+      <h1 className="font-display text-[26px] font-extrabold leading-[1.1] tracking-[-0.015em] text-fnl-ink sm:text-[34px]">
+        Congratulations! Your spot is confirmed.
       </h1>
-      <p className="mt-3 text-base font-medium text-slate-600">
+      <p className="mt-3 text-[17px] leading-[1.55] text-fnl-body">
         Your spot for the exclusive French for Canada PR workshop is reserved. We&apos;re excited to see you there!
       </p>
 
@@ -63,7 +64,7 @@ export default function WebinarThankYouPage() {
         href={WHATSAPP_GROUP}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-[#25D366] px-7 py-4 text-base font-black text-white shadow-lg transition hover:brightness-95 sm:w-auto"
+        className="inline-flex w-full items-center justify-center gap-3 rounded-[10px] bg-[#25D366] px-7 py-4 text-[16px] font-semibold leading-none text-white transition-colors duration-[120ms] hover:brightness-95 sm:w-auto"
       >
         <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24" aria-hidden>
           <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.505 1.786 6.456l-1.017 3.717 3.718-1.018z" />
@@ -71,24 +72,26 @@ export default function WebinarThankYouPage() {
         Join our WhatsApp Community
       </a>
 
-      <hr className="my-8 border-blue-50" />
+      <Divider className="my-8" />
 
-      <h2 className="font-display text-xl font-black tracking-tight text-slate-900">Your Final Steps:</h2>
+      <h2 className="font-display text-[22px] font-extrabold leading-[1.2] tracking-[-0.015em] text-fnl-ink">
+        Your Final Steps:
+      </h2>
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         {steps.map(({ Icon, title, copy }) => (
-          <div key={title} className="rounded-2xl border border-blue-50 bg-blue-50/40 p-5 text-left">
-            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-blue to-brand-blue-deep text-white shadow-md">
-              <Icon className="h-5 w-5" />
-            </div>
-            <h3 className="font-display text-base font-black tracking-tight text-slate-900">{title}</h3>
-            <p className="mt-1 text-sm leading-relaxed text-slate-600">{copy}</p>
+          <div key={title} className="rounded-[10px] border border-fnl-line bg-fnl-surface-alt p-5 text-left">
+            <span className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-[10px] border border-fnl-line bg-fnl-surface text-fnl-ink">
+              <Icon className="h-5 w-5" strokeWidth={1.75} />
+            </span>
+            <h3 className="text-[17px] font-bold leading-[1.4] text-fnl-ink">{title}</h3>
+            <p className="mt-1 text-[16px] leading-[1.6] text-fnl-body">{copy}</p>
           </div>
         ))}
       </div>
 
-      <p className="mt-7 text-sm text-slate-500">
+      <p className="mt-7 text-[15px] leading-[1.5] text-fnl-body">
         On the day, head to{' '}
-        <a href="/waiting-room/" className="font-bold text-brand-blue underline">
+        <a href="/waiting-room/" className="font-semibold text-fnl-primary underline">
           the waiting room
         </a>{' '}
         a few minutes early and you&apos;ll be let in automatically.
