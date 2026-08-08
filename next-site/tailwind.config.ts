@@ -31,7 +31,11 @@ const config: Config = {
           'ink-bg': '#0B1B33',
           ink: '#0F172A', // headings, 17.9:1
           body: '#44506A', // body copy, 8.1:1
-          mute: '#64748B', // captions and labels, 4.8:1
+          // Captions and labels. 5.2:1 on white, and 4.8:1 on surface-alt —
+          // which is the ratio that actually set it. The obvious #64748B clears
+          // AA against white but lands at 4.43:1 on the alt surface, and the
+          // stat tiles put 12px uppercase labels on exactly that background.
+          mute: '#5F6E85',
           primary: '#1D4ED8', // 6.7:1 as fill and as text
           'primary-press': '#1E40AF',
           line: '#E3E8EF', // every border and divider
