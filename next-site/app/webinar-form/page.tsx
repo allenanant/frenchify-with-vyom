@@ -13,7 +13,6 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import FunnelShell, { WebinarDateBadge } from '@/components/webinar/FunnelShell';
 import Countdown from '@/components/webinar/Countdown';
-import LocalTime from '@/components/webinar/LocalTime';
 import { GHL_WEBINAR_FORM_ID, getWebinar } from '@/lib/webinar';
 import { trackingQuery } from '@/lib/webinar-tracking';
 
@@ -103,7 +102,6 @@ export default async function RegisterWebinarPage({
         expiredLabel="The workshop is starting"
         className="mt-7"
       />
-      <LocalTime iso={webinar.startsAt} className="mt-3 text-fnl-mute" />
     </FunnelShell>
   );
 }

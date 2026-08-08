@@ -42,6 +42,9 @@ const nextConfig = {
       // form's post-submit redirect and every email already sent still land.
       // These are the other names the funnel has answered to over time.
       { source: '/webinar-form-page', destination: '/webinar-form', permanent: true },
+      // The GHL registration form's post-submit redirect points here — with
+      // GHL's "-page" suffix. Without this line every registrant lands on a 404.
+      { source: '/thank-you-for-registeration-page', destination: '/thank-you-for-registeration', permanent: true },
       { source: '/register-webinar', destination: '/webinar-form', permanent: true },
       { source: '/register-webinar-2', destination: '/webinar-form', permanent: true },
       { source: '/webinar-thank-you', destination: '/thank-you-for-registeration', permanent: true },

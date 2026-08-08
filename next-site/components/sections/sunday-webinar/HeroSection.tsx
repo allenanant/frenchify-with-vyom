@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Countdown from '@/components/webinar/Countdown';
-import LocalTime from '@/components/webinar/LocalTime';
 import VideoFacade from '@/components/webinar/VideoFacade';
 import { Chip, Cta, Label } from '@/components/webinar/ui';
 
@@ -78,7 +77,6 @@ export default function HeroSection({ startsAt, displayDate }: Props) {
           <Label className="text-center">Next live session starts in</Label>
           <Countdown targetIso={startsAt} expiredLabel="We're live right now" className="mt-3" />
           <p className="mt-3 text-[15px] leading-[1.5] text-fnl-mute">{displayDate}</p>
-          <LocalTime iso={startsAt} className="mt-1 text-fnl-mute" />
         </div>
       </div>
     </section>

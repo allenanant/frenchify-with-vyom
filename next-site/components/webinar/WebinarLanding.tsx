@@ -13,7 +13,6 @@ import HeroSection from '@/components/sections/sunday-webinar/HeroSection';
 import Countdown from '@/components/webinar/Countdown';
 import ForwardTracking from '@/components/webinar/ForwardTracking';
 import FunnelFooter from '@/components/webinar/FunnelFooter';
-import LocalTime from '@/components/webinar/LocalTime';
 import YouTubeFacade from '@/components/webinar/YouTubeFacade';
 import { Card, Cta, Divider, H2, Label, Lead, Section } from '@/components/webinar/ui';
 import { getWallResults } from '@/lib/wall-results';
@@ -183,7 +182,6 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
             <p className="mt-1 text-[17px] font-bold leading-[1.3] text-fnl-ink">
               {webinar.displayDate}
             </p>
-            <LocalTime iso={webinar.startsAt} className="mt-1 text-fnl-mute" />
           </div>
           <div className="py-5 md:pl-8">
             <Label>Investment</Label>
@@ -530,7 +528,6 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
               className="mt-3"
             />
             <p className="mt-3 text-[15px] leading-[1.5] text-white/60">{webinar.displayDate}</p>
-            <LocalTime iso={webinar.startsAt} className="mt-1 text-white/60" />
           </div>
 
           <div className="mt-8 flex justify-center">
