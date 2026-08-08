@@ -4,8 +4,9 @@
  * triggered by a submission of GHL form 3APCQqdqGuJSH8iTWgS1, so embedding the
  * real form rather than rebuilding it means none of that had to be touched.
  *
- * The one setting that lives on the GHL side is where the form redirects after
- * submit — it has to point at /webinar-thank-you/ on this domain.
+ * The URL is the GHL funnel's own, letter for letter, so the form's existing
+ * post-submit redirect and every registration email already sent still land in
+ * the right place. Nothing on the GHL side had to be re-pointed.
  */
 
 import type { Metadata } from 'next';

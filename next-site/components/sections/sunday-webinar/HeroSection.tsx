@@ -65,7 +65,7 @@ export default function HeroSection({ startsAt, displayDate }: Props) {
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Magnetic>
                   <a
-                    href="/register-webinar/"
+                    href="/webinar-form/"
                     className="btn-primary text-lg group"
                   >
                     <span className="relative z-10 flex items-center gap-3">

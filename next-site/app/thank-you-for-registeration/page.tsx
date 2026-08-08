@@ -2,6 +2,10 @@
  * Where the GoHighLevel registration form lands after a submit. Copy is the
  * GHL thank-you page verbatim; the date now comes from the shared schedule
  * instead of a merge tag.
+ *
+ * The path keeps the funnel's original spelling — "registeration" — on purpose.
+ * It is what the form's redirect and every confirmation email already point at,
+ * and correcting it here would break both.
  */
 
 import type { Metadata } from 'next';

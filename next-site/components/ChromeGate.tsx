@@ -12,8 +12,8 @@ const BARE_PREFIXES = [
   '/writingsubmissions',
   // The webinar funnel's inner pages carry their own shell and footer. They
   // are paid-traffic steps, so the site nav would only offer a way out.
-  '/register-webinar',
-  '/webinar-thank-you',
+  '/webinar-form',
+  '/thank-you-for-registeration',
   '/waiting-room',
 ];
 

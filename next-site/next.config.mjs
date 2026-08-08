@@ -37,10 +37,17 @@ const nextConfig = {
       // ---- Webinar funnel, ported off GoHighLevel ----
       // The GHL funnel's own page names. They are in live Meta ads, WhatsApp
       // sends and confirmation emails already delivered, so they have to land.
-      { source: '/webinar-form-page', destination: '/register-webinar', permanent: true },
-      { source: '/register-webinar-2', destination: '/register-webinar', permanent: true },
-      { source: '/webinar-thankyou', destination: '/webinar-thank-you', permanent: true },
-      { source: '/thank-you-webinar', destination: '/webinar-thank-you', permanent: true },
+      // The live pages are /webinar-form, /thank-you-for-registeration and
+      // /waiting-room — the GHL funnel's own paths, spelling and all, so the
+      // form's post-submit redirect and every email already sent still land.
+      // These are the other names the funnel has answered to over time.
+      { source: '/webinar-form-page', destination: '/webinar-form', permanent: true },
+      { source: '/register-webinar', destination: '/webinar-form', permanent: true },
+      { source: '/register-webinar-2', destination: '/webinar-form', permanent: true },
+      { source: '/webinar-thank-you', destination: '/thank-you-for-registeration', permanent: true },
+      { source: '/webinar-thankyou', destination: '/thank-you-for-registeration', permanent: true },
+      { source: '/thank-you-webinar', destination: '/thank-you-for-registeration', permanent: true },
+      { source: '/thank-you-for-registration', destination: '/thank-you-for-registeration', permanent: true },
       // Every cloned week lived at its own root URL (/webinar-2aug2026,
       // /webinar-12-july-132678-651265-447271). They now all resolve to the
       // one landing page under its dated alias.

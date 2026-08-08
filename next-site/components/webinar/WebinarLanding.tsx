@@ -552,7 +552,7 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
                 <div className="space-y-4">
                   <Magnetic>
                     <a
-                      href="/register-webinar/"
+                      href="/webinar-form/"
                       className="inline-block w-full sm:w-auto bg-white hover:bg-gray-50 text-brand-blue-deep font-black py-5 px-10 rounded-2xl text-xl transition-all duration-300 transform hover:scale-105 shadow-2xl border-4 border-white/30"
                     >
                       <Rocket className="inline w-5 h-5 mr-2" />
