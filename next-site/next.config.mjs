@@ -22,14 +22,6 @@ const nextConfig = {
       { source: '/course-test/tef', destination: '/courses/tef', permanent: true },
       { source: '/course-test/tcf', destination: '/courses/tcf', permanent: true },
 
-      // ClassMarker sends A1 assessment takers here after submission. Keep the
-      // branded URL stable while HighLevel owns the result and registration page.
-      {
-        source: '/a1-analysis-test',
-        destination: 'https://sites.leadconnectorhq.com/preview/MbosOoc4XVCclQt2tiGh?notrack=true',
-        permanent: false,
-      },
-
       // Live URLs on the GoHighLevel site that this app renames. They are
       // indexed and linked from the old nav, so they have to survive the
       // domain cutover rather than 404.
@@ -68,6 +60,16 @@ const nextConfig = {
       // real /webinar-thank-you and /webinar-form-page pages instead of
       // letting them render.
       { source: '/webinar-:slug(\\d[\\w-]*)', destination: '/webinar/:slug', permanent: false },
+    ];
+  },
+  async rewrites() {
+    return [
+      // Keep the Frenchify URL in the browser while HighLevel serves the A1
+      // result and registration experience behind it.
+      {
+        source: '/a1-analysis-test',
+        destination: 'https://sites.leadconnectorhq.com/preview/MbosOoc4XVCclQt2tiGh?notrack=true',
+      },
     ];
   },
   experimental: {
