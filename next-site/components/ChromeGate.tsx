@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation';
 const BARE_PREFIXES = [
   '/student-support/staff',
   '/writingsubmissions',
+  '/examprep1writingsubmissions',
   // The webinar funnel's inner pages carry their own shell and footer. They
   // are paid-traffic steps, so the site nav would only offer a way out.
   '/webinar-form',
