@@ -42,7 +42,6 @@ export default function HeroSection({ startsAt, displayDate }: Props) {
           width={132}
           height={38}
           className="mb-6 h-[34px] w-auto"
-          unoptimized
           priority
         />
 

@@ -80,7 +80,6 @@ export default function HeroSection() {
               width={700}
               height={500}
               priority
-              unoptimized
               className="relative w-full h-auto rounded-2xl shadow-2xl transform group-hover:scale-[1.02] transition duration-500"
             />
           </motion.div>

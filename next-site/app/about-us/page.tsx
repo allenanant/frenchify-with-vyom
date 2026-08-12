@@ -218,7 +218,6 @@ export default function AboutUsPage() {
                 alt={g.alt}
                 width={400}
                 height={400}
-                unoptimized
                 className="rounded-xl shadow-lg w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
               />
             ))}

@@ -12,7 +12,7 @@ type Course = {
 const courses: Course[] = [
   {
     href: 'https://frenchifywithvyom.com/a1_intensive_program',
-    img: '/images/programs-v2/a1-intensive.png',
+    img: '/images/programs-v2/a1-intensive.webp',
     alt: 'A1 Intensive Program',
     level: 'A1 · Beginner',
     title: 'Frenchify A1 Intensive Program',
@@ -22,7 +22,7 @@ const courses: Course[] = [
   },
   {
     href: 'https://frenchifywithvyom.com/a2_intensive_program',
-    img: '/images/programs-v2/a2-intensive.png',
+    img: '/images/programs-v2/a2-intensive.webp',
     alt: 'A2 Intensive Program',
     level: 'A2 · Elementary',
     title: 'Frenchify A2 Intensive Program',
@@ -32,7 +32,7 @@ const courses: Course[] = [
   },
   {
     href: 'https://frenchifywithvyom.com/b1_intensive_program',
-    img: '/images/programs-v2/b1-tef-tcf.png',
+    img: '/images/programs-v2/b1-tef-tcf.webp',
     alt: 'B1 TEF/TCF Program',
     level: 'B1 · Intermediate',
     title: 'Frenchify B1 TEF/TCF Program',
@@ -42,7 +42,7 @@ const courses: Course[] = [
   },
   {
     href: 'https://frenchifywithvyom.com/b2_intensive_program',
-    img: '/images/programs-v2/b2-tef-tcf.png',
+    img: '/images/programs-v2/b2-tef-tcf.webp',
     alt: 'B2 TEF/TCF Program',
     level: 'B2 · Advanced',
     title: 'Frenchify B2 TEF/TCF Program',

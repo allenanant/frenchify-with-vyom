@@ -46,7 +46,6 @@ export default function FunnelShell({
             width={132}
             height={38}
             className="mx-auto mb-6 h-[38px] w-auto"
-            unoptimized
             priority
           />
           {children}

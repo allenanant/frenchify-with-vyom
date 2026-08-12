@@ -12,7 +12,7 @@ type Course = {
 const courses: Course[] = [
   {
     href: 'https://frenchifywithvyom.com/a1-selfstudy-program',
-    img: '/images/programs-v2/a1-selfstudy.png',
+    img: '/images/programs-v2/a1-selfstudy.webp',
     alt: 'A1 Self-Study Program',
     level: 'A1 · Self-Paced',
     title: 'Frenchify A1 Self-Study Program',
@@ -22,7 +22,7 @@ const courses: Course[] = [
   },
   {
     href: 'https://frenchifywithvyom.com/a2-selfstudy-program',
-    img: '/images/programs-v2/a2-selfstudy.png',
+    img: '/images/programs-v2/a2-selfstudy.webp',
     alt: 'A2 Self-Study Program',
     level: 'A2 · Self-Paced',
     title: 'Frenchify A2 Self-Study Program',

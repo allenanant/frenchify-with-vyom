@@ -47,7 +47,6 @@ export default function HeroSection() {
                   alt="Vyom Sharma - French Language Instructor"
                   width={288}
                   height={320}
-                  unoptimized
                   className="relative rounded-2xl shadow-2xl w-72 h-80 object-cover object-center border-4 border-white"
                 />
               </div>

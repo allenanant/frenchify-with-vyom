@@ -248,7 +248,7 @@ export const mentors: Mentor[] = [
     slug: "shilpa-rathore",
     name: "Shilpa Rathore",
     // Headshot supplied by Vyom, Aug 2026 - not on the GHL CDN like the others.
-    photo: "/images/mentors/shilpa-rathore.png",
+    photo: "/images/mentors/shilpa-rathore.webp",
     specialty: "Cleared in 1st Attempt",
     clb: "CLB 8 · 9 · 8 · 8",
     blurb:

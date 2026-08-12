@@ -236,7 +236,6 @@ export default function A1RenewalPage() {
                 alt="Vyom Sharma, Founder of Frenchify with Vyom"
                 width={88}
                 height={88}
-                unoptimized
                 className="w-20 h-20 md:w-22 md:h-22 rounded-full object-cover object-top border-4 border-blue-100 bg-gray-50"
               />
               <p className="text-sm text-gray-600">

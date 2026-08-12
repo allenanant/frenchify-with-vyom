@@ -50,7 +50,6 @@ export default function HeroSection() {
               alt="French Learning Session"
               width={700}
               height={500}
-              unoptimized
               className="relative w-full h-auto rounded-2xl shadow-2xl transform group-hover:scale-[1.02] transition duration-500"
             />
           </div>

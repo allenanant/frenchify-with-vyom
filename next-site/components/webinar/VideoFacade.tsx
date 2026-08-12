@@ -70,8 +70,10 @@ export default function VideoFacade({
           aria-label={label}
           className="group absolute inset-0 h-full w-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fnl-primary"
         >
-          {/* next/image is configured `unoptimized` in this app, so it would add
-              a wrapper and no compression. The srcset is doing the real work. */}
+          {/* Deliberately a raw tag even though the optimizer is on: Wistia
+              already serves this poster at whatever size we ask for, so the
+              srcset below is doing the real work and routing it through
+              /_next/image would only add a wrapper and a second hop. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={poster('960x540')}

@@ -9,7 +9,7 @@ import Magnetic from '@/components/motion/Magnetic';
 import Reveal from '@/components/motion/Reveal';
 import TextReveal from '@/components/motion/TextReveal';
 
-const HERO_IMAGE_SRC = '/vyom-hero-bg-pre-aug2026.png';
+const HERO_IMAGE_SRC = '/vyom-hero-bg-pre-aug2026.webp';
 
 export default function HomeV2Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -158,7 +158,6 @@ export default function HomeV2Hero() {
                 width={770}
                 height={726}
                 priority
-                unoptimized
                 className="block w-full h-auto"
               />
             </div>

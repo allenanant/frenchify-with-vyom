@@ -48,7 +48,6 @@ export default function BookAMeetPage() {
                     alt="Darshan Patel"
                     width={112}
                     height={112}
-                    unoptimized
                     className="w-28 h-28 rounded-full object-cover absolute -top-14 left-1/2 -translate-x-1/2 border-4 border-white shadow-lg"
                   />
                   <h2 className="font-display text-2xl font-bold text-gray-900 tracking-tight">Darshan Patel</h2>
@@ -123,7 +122,6 @@ export default function BookAMeetPage() {
                     alt="Khushi"
                     width={112}
                     height={112}
-                    unoptimized
                     className="w-28 h-28 rounded-full object-cover absolute -top-14 left-1/2 -translate-x-1/2 border-4 border-white shadow-lg"
                   />
                   <h2 className="font-display text-2xl font-bold text-gray-900 tracking-tight">Khushi</h2>

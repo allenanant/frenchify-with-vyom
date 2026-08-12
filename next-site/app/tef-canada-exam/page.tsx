@@ -129,7 +129,7 @@ const mentors: Mentor[] = [
     blurb:
       'Prepare a topic that suits your level before the session so Shilpa can give you proper feedback on structure and pronunciation.',
     // Headshot supplied by Vyom, Aug 2026 - not on the GHL CDN like the others.
-    img: '/images/mentors/shilpa-rathore.png',
+    img: '/images/mentors/shilpa-rathore.webp',
     badge: { Icon: CheckCircle2, text: 'Cleared in 1st Attempt', color: 'text-green-600' },
     certifiedLabel: 'TEF Certified',
     clb: ['CLB 8', 'CLB 9', 'CLB 8', 'CLB 8'],
@@ -301,7 +301,6 @@ export default function TefCanadaExamPage() {
                   alt={m.name}
                   width={160}
                   height={160}
-                  unoptimized
                   className="w-28 h-28 md:w-36 md:h-36 rounded-full object-cover border-4 border-blue-50 bg-gray-50 transition-colors duration-300 group-hover:border-blue-500/40"
                 />
                 <span className="font-display font-bold text-gray-900 text-sm mt-3 leading-tight">
@@ -325,7 +324,6 @@ export default function TefCanadaExamPage() {
                       alt={m.name}
                       width={160}
                       height={160}
-                      unoptimized
                       className="w-28 h-28 md:w-36 md:h-36 rounded-full object-cover border-4 border-blue-50 bg-gray-50 shrink-0"
                     />
                     <div className="min-w-0">

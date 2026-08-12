@@ -192,7 +192,6 @@ export default function HomeV2Hero() {
                   width={760}
                   height={920}
                   priority
-                  unoptimized
                   className="w-full h-[440px] md:h-[520px] lg:h-[600px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A1426]/55 via-transparent to-transparent" />

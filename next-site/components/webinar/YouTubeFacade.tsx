@@ -56,8 +56,9 @@ export default function YouTubeFacade({
               against 169 KB for the JPEG — with the JPEG left as the fallback
               for anything that cannot decode it. Lazy either way, nine sections
               down, so none of it lands on first load.
-              next/image is `unoptimized` here, so it would wrap the tag and
-              compress nothing. */}
+              Left as a raw tag even though the optimizer is on: YouTube is
+              already serving the WebP, so /_next/image would add a hop and
+              re-encode something that is optimal. */}
           <picture>
             <source
               srcSet={`https://i.ytimg.com/vi_webp/${posterVideoId}/maxresdefault.webp`}

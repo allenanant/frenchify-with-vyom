@@ -86,7 +86,6 @@ export default function IntensiveCoursesSection() {
                     src={c.img}
                     alt={c.alt}
                     fill
-                    unoptimized
                     sizes="(min-width: 768px) 50vw, 100vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />

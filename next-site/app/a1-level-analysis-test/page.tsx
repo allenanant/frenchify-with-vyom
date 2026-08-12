@@ -187,7 +187,6 @@ export default function A1LevelAnalysisTestPage() {
                     alt="Confused student"
                     width={1200}
                     height={800}
-                    unoptimized
                     className="relative rounded-2xl shadow-2xl w-full h-auto"
                   />
                 </div>

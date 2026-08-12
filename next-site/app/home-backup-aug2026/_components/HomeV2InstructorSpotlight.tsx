@@ -36,7 +36,6 @@ export default function HomeV2InstructorSpotlight() {
                   alt="Vyom — Frenchify instructor"
                   width={680}
                   height={780}
-                  unoptimized
                   className="w-full h-[440px] md:h-[560px] object-cover"
                 />
                 <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-[#0A1426] via-[#0A1426]/80 to-transparent">

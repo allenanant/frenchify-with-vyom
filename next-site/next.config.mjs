@@ -137,11 +137,30 @@ const nextConfig = {
   assetPrefix: isPages ? '/frenchify-with-vyom/' : undefined,
   trailingSlash: true,
   images: {
-    unoptimized: true,
+    // The optimizer used to be off because this app was built for GitHub
+    // Pages, and `output: 'export'` cannot run it. That export path now
+    // throws at the top of this file and the site is served by Vercel, so
+    // leaving it off only meant every image — including the ~90 full-size
+    // ones still hosted on the GoHighLevel CDN — was shipped at its original
+    // weight, in its original format, at every screen size.
+    formats: ['image/avif', 'image/webp'],
+    // Marketing images change when someone replaces the file, not on a
+    // timer. A 60-second cache (the default) re-runs the transform for
+    // almost every visitor.
+    minimumCacheTTL: 2678400, // 31 days
+    // With the optimizer off this list was inert, so hosts could be added to
+    // a page without ever being added here. Switching it on makes the list
+    // load-bearing: a next/image pointing at a host that is missing returns
+    // 400 and the image disappears. These are every host the pages actually
+    // pull an image from today.
     remotePatterns: [
       { protocol: 'https', hostname: 'storage.googleapis.com' },
       { protocol: 'https', hostname: 'reputationhub.site' },
       { protocol: 'https', hostname: 'assets.cdn.filesafe.space' },
+      { protocol: 'https', hostname: 'images.leadconnectorhq.com' },
+      { protocol: 'https', hostname: 'api.leadconnectorhq.com' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'i.ytimg.com' },
     ],
   },
 };

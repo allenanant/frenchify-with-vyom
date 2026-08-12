@@ -18,9 +18,9 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-10">
           <div className="col-span-2 md:col-span-2">
             {/* Reversed mark. The primary logo is navy on navy down here and
-                all but disappears — see public/footer-logo-light.png. */}
+                all but disappears — see public/footer-logo-light.webp. */}
             <Image
-              src="/footer-logo-light.png"
+              src="/footer-logo-light.webp"
               alt="Frenchify with Vyom Inc."
               width={225}
               height={63}
