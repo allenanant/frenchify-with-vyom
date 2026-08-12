@@ -277,8 +277,7 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
             Every screenshot below is a real TEF/TCF attestation from a Frenchify student.
           </Lead>
           <p className="mt-3 text-[16px] leading-[1.6] text-fnl-body md:text-[17px]">
-            <span className="font-bold text-fnl-ink">{resultImages.length} verified results</span> so
-            far: {clb7.length} at CLB 7 or higher, {clb5.length} at CLB 5.
+            <span className="font-bold text-fnl-ink">150+ Verified results</span>
           </p>
         </div>
 
@@ -315,6 +314,11 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
               </div>
             </figure>
           ))}
+          <div className="flex w-[250px] shrink-0 snap-start items-center justify-center rounded-[14px] border border-fnl-line bg-fnl-surface-alt px-6 text-center md:w-[300px]">
+            <p className="font-display text-[24px] font-extrabold leading-[1.2] tracking-[-0.015em] text-fnl-ink md:text-[28px]">
+              and more...
+            </p>
+          </div>
         </div>
 
         <p className="mt-3 text-[14px] leading-[1.5] text-fnl-mute md:text-[15px]">
