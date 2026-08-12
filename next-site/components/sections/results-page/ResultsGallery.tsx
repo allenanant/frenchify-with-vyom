@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect, type CSSProperties } from 'react';
-import { CheckCircle2, ArrowUp, X, ChevronLeft, ChevronRight, ListFilter } from 'lucide-react';
+import { ArrowUp, X, ChevronLeft, ChevronRight, ListFilter } from 'lucide-react';
 
 type ResultsGalleryProps = {
   clb7Images: string[];
@@ -57,7 +57,7 @@ export default function ResultsGallery({ clb7Images, clb5Images }: ResultsGaller
     };
   }, [lightbox, closeLightbox, navigate]);
 
-  const filterBtn = (key: Filter, label: string, count: string) => (
+  const filterBtn = (key: Filter, label: string) => (
     <button
       onClick={() => {
         setFilter(key);
@@ -72,7 +72,7 @@ export default function ResultsGallery({ clb7Images, clb5Images }: ResultsGaller
           : 'bg-slate-100 text-slate-700 hover:bg-blue-50'
       }`}
     >
-      {label} <span className="ml-1 text-xs opacity-70">({count})</span>
+      {label}
     </button>
   );
 
@@ -96,13 +96,9 @@ export default function ResultsGallery({ clb7Images, clb5Images }: ResultsGaller
             <span className="text-sm font-semibold text-slate-700">Filter by Level:</span>
           </div>
           <div className="flex flex-wrap gap-2 justify-center">
-            {filterBtn('all', 'All Results', String(clb7Images.length + clb5Images.length))}
-            {filterBtn('clb7', 'CLB 7+', String(clb7Images.length))}
-            {filterBtn('clb5', 'CLB 5', String(clb5Images.length))}
-          </div>
-          <div className="flex items-center gap-2 text-sm text-slate-600">
-            <CheckCircle2 className="text-emerald-500 w-4 h-4" />
-            <span className="font-medium">Updated Daily</span>
+            {filterBtn('all', 'All Results')}
+            {filterBtn('clb7', 'CLB 7+')}
+            {filterBtn('clb5', 'CLB 5')}
           </div>
         </div>
       </div>
@@ -144,6 +140,7 @@ export default function ResultsGallery({ clb7Images, clb5Images }: ResultsGaller
                 />
               </div>
             ))}
+            <PrivacyResultCard />
           </div>
         </div>
       )}
@@ -188,6 +185,7 @@ export default function ResultsGallery({ clb7Images, clb5Images }: ResultsGaller
                 />
               </div>
             ))}
+            <PrivacyResultCard />
           </div>
         </div>
       )}
@@ -253,6 +251,16 @@ export default function ResultsGallery({ clb7Images, clb5Images }: ResultsGaller
         </div>
       )}
     </>
+  );
+}
+
+function PrivacyResultCard() {
+  return (
+    <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-white/60 bg-white/80 p-8 text-center shadow-md backdrop-blur-md">
+      <p className="font-display text-2xl font-bold leading-relaxed text-slate-800">
+        and more... (kept private due to personal privacy)
+      </p>
+    </div>
   );
 }
 
