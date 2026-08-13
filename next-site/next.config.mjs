@@ -46,14 +46,70 @@ const nextConfig = {
       // GHL's "-page" suffix. Without this line every registrant lands on a 404.
       { source: '/thank-you-for-registeration-page', destination: '/thank-you-for-registeration', permanent: true },
       { source: '/register-webinar', destination: '/webinar-form', permanent: true },
-      { source: '/register-webinar-2', destination: '/webinar-form', permanent: true },
       { source: '/webinar-thank-you', destination: '/thank-you-for-registeration', permanent: true },
       { source: '/webinar-thankyou', destination: '/thank-you-for-registeration', permanent: true },
       { source: '/thank-you-webinar', destination: '/thank-you-for-registeration', permanent: true },
       { source: '/thank-you-for-registration', destination: '/thank-you-for-registeration', permanent: true },
-      // Every cloned week lived at its own root URL (/webinar-2aug2026,
-      // /webinar-12-july-132678-651265-447271). They now all resolve to the
-      // one landing page under its dated alias.
+      // ---- Every landing page the GHL funnel ever cloned ----
+      // "Frenchify Webinar (Sunday)" in GoHighLevel has 46 steps, 40 of them
+      // landing pages: one clone per week going back to 24 August 2025. Each
+      // kept its own root URL, and those URLs are still sitting in old Meta
+      // ads, WhatsApp sends and emails already delivered. Read out of the
+      // funnel on 2026-08-13; the six non-LP steps (lead capture, thank you,
+      // waiting room, the quiz, the reschedule page and the newer
+      // registration page) are deliberately not in this list — they have
+      // their own live pages above.
+      //
+      // All of them land on the evergreen page, not on a dated alias, so a
+      // visitor always sees this Sunday's date rather than a page named after
+      // a webinar that ran a year ago.
+      ...[
+        '/register-webinar-2', // "LP 2" in the funnel
+        '/webinar-24aug',
+        '/webinar-7sept',
+        '/webinar-21sept',
+        '/webinar-5oct',
+        '/webinar-12oct',
+        '/webinar-26oct',
+        '/webinar-2nov',
+        '/webinar-16nov',
+        '/webinar-30nov',
+        '/webinar-14dec',
+        '/webinar-21dec',
+        '/webinar-28dec',
+        '/webinar-4jan',
+        '/webinar-11jan',
+        '/webinar-18jan',
+        '/webinar-25jan',
+        '/webinar-1feb',
+        '/lp-7feb', // the one week that was not named /webinar-*
+        '/webinar-8feb',
+        '/webinar-15feb',
+        '/webinar-22feb',
+        '/webinar-1mar',
+        '/webinar-8mar',
+        '/webinar-12-april',
+        '/webinar-19-april',
+        '/webinar-26-april',
+        '/webinar-3-may',
+        '/webinar-10-may-251224',
+        '/webinar-17-may-567157',
+        '/webinar-24-may-683877',
+        '/webinar-31-may-692421',
+        '/webinar-7-june',
+        '/webinar-14-june-452322',
+        '/webinar-21-june',
+        '/webinar-28-june',
+        '/webinar-5-july',
+        '/webinar-12-july',
+        '/webinar-26-july-2026',
+        '/webinar-2aug2026',
+      ].map((source) => ({ source, destination: '/sunday-webinar', permanent: false })),
+
+      // Catch-all for any weekly clone URL not in the list above — old ad
+      // links carrying GHL's random numeric suffixes, for one
+      // (/webinar-12-july-132678-651265-447271). It resolves to the dated
+      // alias, which renders the same landing page.
       //
       // The slug must start with a digit. redirects() is evaluated before
       // filesystem routes, so an unanchored /webinar-:slug would capture the
