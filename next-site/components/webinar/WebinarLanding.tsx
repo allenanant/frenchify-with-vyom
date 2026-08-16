@@ -525,8 +525,13 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
                 selling to skeptics cannot afford a timer that reads as fake.
                 The clock is honest about what it actually measures. */}
             <Label className="text-white/60">Workshop starts in</Label>
+            {/* Deliberately not a force-redirect. Cold ad traffic lands here
+                all Sunday afternoon and must not be thrown into a live room it
+                never registered for. With the week's room link set, the expired
+                state offers a join button instead of a dead end. */}
             <Countdown
               targetIso={webinar.startsAt}
+              joinUrl={webinar.joinUrl}
               tone="dark"
               expiredLabel="We're live right now"
               className="mt-3"

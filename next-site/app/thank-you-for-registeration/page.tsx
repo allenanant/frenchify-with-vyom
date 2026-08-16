@@ -58,7 +58,14 @@ export default function WebinarThankYouPage() {
 
       <WebinarDateBadge date={webinar.displayDate} />
 
-      <Countdown targetIso={webinar.startsAt} expiredLabel="The workshop is starting" className="mb-7" />
+      {/* Everyone here just registered, so at zero they get a direct button
+          into the room rather than being told to go check their email again. */}
+      <Countdown
+        targetIso={webinar.startsAt}
+        joinUrl={webinar.joinUrl}
+        expiredLabel="The workshop is starting"
+        className="mb-7"
+      />
 
       <a
         href={WHATSAPP_GROUP}
