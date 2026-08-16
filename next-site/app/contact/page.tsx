@@ -10,14 +10,55 @@ export const metadata = {
     "Get in touch with Frenchify. Send us your details and we'll get back to you shortly.",
 };
 
-// Specific instructor meets shown on the contact page. Only meets with an
-// existing GHL booking link are clickable; others are placeholders until their
-// links are provided.
-const meets: { label: string; href: string | null }[] = [
-  { label: 'Clarity Calls', href: 'https://frenchifywithvyom.com/tef-success--clarity-call' },
-  { label: 'TEF Guidance', href: 'https://api.leadconnectorhq.com/widget/booking/WATTU6fLCIqmDmFUuB4k' },
-  { label: 'Analysis Test', href: 'https://frenchifywithvyom.com/analysis-page' },
-  { label: 'Meeting with Karan', href: null },
+/**
+ * One-to-one calls anyone can book from this page.
+ *
+ * Vyom's ask (11 Aug 2026) was to name each person and show what their call
+ * costs, because "Clarity Calls" as a single unlabelled pill told nobody who
+ * they were about to meet or what they were about to pay. That pill also
+ * pointed at https://frenchifywithvyom.com/tef-success--clarity-call, a
+ * GoHighLevel URL that stopped resolving once the domain started serving this
+ * app, so it was a dead link as well as a vague one.
+ *
+ * Every price below is the total the GHL calendar actually charges at
+ * checkout, read off the live widget in Aug 2026. GHL stays the source of
+ * truth - if a calendar's price changes there, change it here too.
+ */
+const calls: {
+  name: string;
+  title: string;
+  duration: string;
+  price: string;
+  href: string;
+}[] = [
+  {
+    name: 'Jay Patel',
+    title: 'TEF/TCF Success & Clarity Call',
+    duration: '30 min',
+    price: 'CA$10',
+    href: 'https://api.leadconnectorhq.com/widget/bookings/jay-patel-30-mins-one-on-onf25esfyjd43idglfps8uq446ywu7fu',
+  },
+  {
+    name: 'Harleen Kaur',
+    title: 'TEF/TCF Success & Clarity Call',
+    duration: '30 min',
+    price: 'CA$10',
+    href: 'https://api.leadconnectorhq.com/widget/bookings/harleen',
+  },
+  {
+    name: 'Khushi Patel',
+    title: 'Program Consultation',
+    duration: '20 min',
+    price: 'CA$1.99',
+    href: 'https://api.leadconnectorhq.com/widget/booking/vuQtLZKhcVRsWI09FG6j',
+  },
+  {
+    name: 'Darshan Patel',
+    title: 'TEF Guidance Consultation',
+    duration: '30 min',
+    price: 'CA$25',
+    href: 'https://api.leadconnectorhq.com/widget/booking/WATTU6fLCIqmDmFUuB4k',
+  },
 ];
 
 export default function ContactPage() {
@@ -82,34 +123,51 @@ export default function ContactPage() {
                     </Link>
                   </Magnetic>
 
-                  {/* Specific instructor meets */}
-                  <div className="mt-6">
+                  {/* Named calls with the real price, so nobody has to open a
+                      booking widget just to find out who and how much. */}
+                  <div className="mt-8">
                     <p className="text-gray-700 text-sm md:text-base mb-3 font-medium">
-                      Or book a specific session:
+                      Or book a specific call:
                     </p>
-                    <div className="flex flex-wrap gap-2.5">
-                      {meets.map((meet) =>
-                        meet.href ? (
-                          <a
-                            key={meet.label}
-                            href={meet.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center text-sm font-medium text-brand-blue bg-blue-50 hover:bg-blue-100 border border-blue-100 px-4 py-2 rounded-full transition-colors"
-                          >
-                            {meet.label}
-                          </a>
-                        ) : (
-                          <span
-                            key={meet.label}
-                            className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 bg-gray-50 border border-gray-100 px-4 py-2 rounded-full cursor-not-allowed"
-                          >
-                            {meet.label}
-                            <span className="text-[10px] font-semibold uppercase tracking-wide">soon</span>
+                    <div className="space-y-2.5">
+                      {calls.map((call) => (
+                        <a
+                          key={call.href}
+                          href={call.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group flex items-center justify-between gap-4 rounded-xl border border-gray-200 bg-white px-4 py-3.5 transition-all duration-300 hover:border-brand-blue hover:bg-brand-blue hover:shadow-[0_12px_28px_-10px_rgba(37,99,235,0.5)]"
+                        >
+                          <span className="min-w-0">
+                            <span className="block font-semibold text-sm text-gray-900 transition-colors group-hover:text-white">
+                              {call.name}
+                            </span>
+                            <span className="block text-xs text-gray-500 mt-0.5 transition-colors group-hover:text-blue-100">
+                              {call.title} &middot; {call.duration}
+                            </span>
                           </span>
-                        )
-                      )}
+                          <span className="flex items-center gap-2 shrink-0">
+                            <span className="text-sm font-bold text-gray-900 transition-colors group-hover:text-white">
+                              {call.price}
+                            </span>
+                            <ArrowRight className="w-4 h-4 text-brand-blue transition-all duration-300 group-hover:text-white group-hover:translate-x-0.5" />
+                            <span className="sr-only">
+                              Book {call.name} &ndash; {call.title} (opens in a new tab)
+                            </span>
+                          </span>
+                        </a>
+                      ))}
                     </div>
+                    <p className="text-gray-600 text-sm mt-4">
+                      Not sure of your level yet? Book an{' '}
+                      <Link
+                        href="/analysis-page"
+                        className="text-brand-blue hover:underline font-medium"
+                      >
+                        Analysis Test
+                      </Link>{' '}
+                      first and we&apos;ll tell you where to start.
+                    </p>
                   </div>
                 </div>
 

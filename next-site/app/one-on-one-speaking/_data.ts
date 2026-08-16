@@ -84,30 +84,6 @@ export const mentors: Mentor[] = [
     ],
   },
   {
-    slug: "darshil-ashawa",
-    name: "Darshil Ashawa",
-    photo: `${MEDIA}/698a37fda41b87d3021df22a.png`,
-    specialty: "Cleared in 1st Attempt",
-    clb: "CLB 9 · 9 · 7 · 8",
-    clearedNote: "Cleared December 2025",
-    blurb:
-      "A focused session to sharpen your speaking for TEF / TCF Canada, with feedback you can act on straight away.",
-    sessions: [
-      {
-        calendarId: "RhdeR6e3xKhfGNJAWCXf",
-        price: "CA$10.99",
-        duration: 30,
-        label: "30 Mins Speaking Session",
-      },
-      {
-        calendarId: "nHYxc0uDePCShBPMbwYe",
-        price: "CA$17.99",
-        duration: 50,
-        label: "50 Mins Speaking Session",
-      },
-    ],
-  },
-  {
     slug: "rajan-gurjar",
     name: "Rajan Gurjar",
     photo: `${MEDIA}/698cc13f5cec6ca7d09cb2b2.png`,
@@ -267,6 +243,33 @@ export const mentors: Mentor[] = [
         price: "CA$17.99",
         duration: 50,
         label: "50 Mins One-on-One Speaking",
+      },
+    ],
+  },
+  {
+    slug: "bhavya-sood",
+    name: "Bhavya Sood",
+    // Headshot supplied by Vyom, Aug 2026 - not on the GHL CDN like the others.
+    photo: "/images/mentors/bhavya-sood.webp",
+    specialty: "Cleared TCF Canada",
+    // TCF is scored out of 20 per module with a CEFR band, not in CLB, so the
+    // scores stay in the blurb rather than being forced into the clb pill.
+    blurb:
+      "Cleared the TCF Canada exam with 16/20 in Speaking and 12/20 in Writing, plus C1 in Listening and B2 in Reading. Bring a prepared topic or practise one on the spot.",
+    sessions: [
+      {
+        bookingUrl:
+          "https://api.leadconnectorhq.com/widget/bookings/bhavya-sood-30-mins-one-on-onf25esfyjd43imvyjvfd23pi96j4qin",
+        price: "CA$14.99",
+        duration: 30,
+        label: "30 Mins One-on-One Speaking",
+      },
+      {
+        bookingUrl:
+          "https://api.leadconnectorhq.com/widget/bookings/bhavya-sood-30-mins-one-on-onf25esfyjd43imvyjvfd23pi96j4qinjzdzmf",
+        price: "CA$19.99",
+        duration: 45,
+        label: "45 Mins One-on-One Speaking",
       },
     ],
   },

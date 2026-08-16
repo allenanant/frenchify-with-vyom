@@ -63,7 +63,7 @@ export default function LevelSelect({ track }: { track: Track }) {
                 >
                   {label}
                 </div>
-                <div className="level-name">{lv.name}</div>
+                {lv.name && <div className="level-name">{lv.name}</div>}
                 <p className="level-blurb">{lv.blurb}</p>
                 <div className="level-formats">
                   {lv.formats.map((f) => (
@@ -96,17 +96,35 @@ export default function LevelSelect({ track }: { track: Track }) {
         </div>
       )}
 
-      {/* Not sure where to start? — book a call with the team */}
+      {/* Two ways out of "I don't know which one I am", side by side. Vyom asked
+          for both on 11 Aug 2026: talking to the team answers questions about the
+          programs, but someone who does not know their own level needs the
+          analysis test instead, and one CTA was sending both groups to a call. */}
       <div className="level-help">
         <div className="level-help-inner">
           <h2 className="level-help-title">Confused where to start?</h2>
-          <p className="level-help-copy">
-            Don&apos;t worry, book a meeting with our team to understand every program in
-            detail and see where you stand to get started.
-          </p>
-          <Link href="/book-a-meet" className="level-help-cta">
-            Book a call with our team <ArrowIcon size={15} />
-          </Link>
+          <div className="level-help-options">
+            <div className="level-help-option">
+              <h3 className="level-help-option-title">Not sure which program?</h3>
+              <p className="level-help-copy">
+                Book a meeting with our team to understand every program in detail and
+                see where you stand to get started.
+              </p>
+              <Link href="/book-a-meet" className="level-help-cta">
+                Book a call with our team <ArrowIcon size={15} />
+              </Link>
+            </div>
+            <div className="level-help-option">
+              <h3 className="level-help-option-title">Not sure of your level?</h3>
+              <p className="level-help-copy">
+                Book an Analysis Test with Frenchify. We check where your French
+                actually is and tell you which level to start at.
+              </p>
+              <Link href="/analysis-page" className="level-help-cta level-help-cta-alt">
+                Book an Analysis Test <ArrowIcon size={15} />
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -428,12 +446,51 @@ export default function LevelSelect({ track }: { track: Track }) {
           background: #08102a;
         }
         .level-help-inner {
-          max-width: 720px;
+          max-width: 940px;
           margin: 0 auto;
           text-align: center;
           display: flex;
           flex-direction: column;
           align-items: center;
+        }
+        /* Two options, equal width, equal height. Grid rather than flex so the
+           two cards match height however long the copy runs. */
+        .level-help-options {
+          margin-top: 26px;
+          width: 100%;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 18px;
+        }
+        .level-help-option {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 26px 22px 24px;
+          border: 1px solid #e5e7eb;
+          border-radius: 18px;
+          background: #ffffff;
+        }
+        .level-root-dark .level-help-option {
+          border-color: rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.04);
+        }
+        .level-help-option-title {
+          font-family: var(--font-display), 'Sora', sans-serif;
+          font-weight: 700;
+          font-size: 17px;
+          letter-spacing: -0.015em;
+          color: #111827;
+        }
+        .level-root-dark .level-help-option-title {
+          color: #ffffff;
+        }
+        /* Pushes both buttons to the bottom edge so they line up across cards */
+        .level-help-option .level-help-cta {
+          margin-top: auto;
+        }
+        .level-help-option .level-help-copy {
+          margin-bottom: 20px;
         }
         .level-help-title {
           font-family: var(--font-display), 'Sora', sans-serif;
@@ -484,6 +541,29 @@ export default function LevelSelect({ track }: { track: Track }) {
           background: #fbbf24;
           box-shadow: 0 16px 32px -10px rgba(245, 158, 11, 0.6);
         }
+        /* Second option is the same weight of ask but a quieter button, so the
+           pair does not read as two competing primary CTAs. */
+        .level-help-cta-alt,
+        .level-root-dark .level-help-cta-alt {
+          background: transparent;
+          color: #1d4ed8;
+          border: 1.5px solid #bfdbfe;
+          box-shadow: none;
+        }
+        .level-help-cta-alt:hover {
+          background: #eff6ff;
+          border-color: #2563eb;
+          box-shadow: none;
+        }
+        .level-root-dark .level-help-cta-alt {
+          color: #fbbf24;
+          border-color: rgba(245, 158, 11, 0.45);
+        }
+        .level-root-dark .level-help-cta-alt:hover {
+          background: rgba(245, 158, 11, 0.12);
+          border-color: #fbbf24;
+          box-shadow: none;
+        }
 
         /* Mobile: stacked level cards */
         @media (max-width: 900px) {
@@ -510,6 +590,9 @@ export default function LevelSelect({ track }: { track: Track }) {
           }
           .level-help-copy {
             font-size: 14.5px;
+          }
+          .level-help-options {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>

@@ -4,7 +4,13 @@ export type Level = {
   code: string;
   /** Big display label on the level card. Falls back to `code` when absent. */
   display?: string;
-  name: string;
+  /**
+   * CEFR nickname under the big label. Optional and currently unused: Vyom
+   * removed them on 11 Aug 2026 because students read "Beginner" / "(Intermediate)"
+   * as the product name and could not tell the four levels apart. The field
+   * stays so a label can be put back on one card without a schema change.
+   */
+  name?: string;
   blurb: string;
   formats: string[];
   href: string;
@@ -34,20 +40,17 @@ export type Track = {
 const LEVELS: Omit<Level, 'blurb'>[] = [
   {
     code: 'A1',
-    name: 'Beginner',
     formats: ['Intensive + Live', 'Self-Study'],
     href: '/a1-course',
   },
   {
     code: 'A2',
-    name: 'Elementary',
     formats: ['Intensive + Live', 'Self-Study'],
     href: '/a2-course',
   },
   {
     code: 'B1',
     display: 'Exam Prep 1',
-    name: '(Intermediate)',
     formats: [
       'Intensive (Live Speaking Sessions)',
       'Flex (Live 1-1 sessions)',
@@ -58,7 +61,6 @@ const LEVELS: Omit<Level, 'blurb'>[] = [
   {
     code: 'B2',
     display: 'Final Exam Prep',
-    name: '(TEF/TCF Ready)',
     formats: ['Intensive (Live Speaking Sessions)', 'Flex (Live 1-1 sessions)'],
     href: '/b2-course',
   },
@@ -71,13 +73,15 @@ const BLURBS: Record<string, string> = {
   B2: 'The All-In — exam-specific mastery.',
 };
 
-const TEF_SPOTLIGHT: Spotlight = {
-  eyebrow: 'TEF Canada',
-  title: 'Exam Prep 1 runs as three programs',
-  copy: 'EP1 Intensive, EP1 Flex and CLB 5 Speaking and Listening. Compare what is inside each one, see the fees, and book the Analysis Test.',
-  cta: 'See Exam Prep 1 programs',
-  href: '/exam-prep-1-tef',
-};
+/*
+ * The "Exam Prep 1 runs as three programs" strip used to live here and render
+ * under the TEF level columns. Vyom pulled it on 11 Aug 2026: this page is the
+ * level chooser, and splitting Exam Prep 1 into three sub-programs at the same
+ * moment someone is picking a level made students hesitate rather than choose.
+ * /exam-prep-1-tef is still live and still linked from the B1 card's own page.
+ * The Spotlight type and the render block are intact, so setting `spotlight`
+ * on a track brings it straight back.
+ */
 
 export const TRACKS: Record<TrackId, Track> = {
   tef: {
@@ -85,7 +89,6 @@ export const TRACKS: Record<TrackId, Track> = {
     exam: 'TEF Canada',
     sub: 'Every level of the TEF journey — pick where you are.',
     levels: LEVELS.map((l) => ({ ...l, blurb: BLURBS[l.code] })),
-    spotlight: TEF_SPOTLIGHT,
   },
   tcf: {
     id: 'tcf',

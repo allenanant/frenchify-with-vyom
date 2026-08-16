@@ -27,7 +27,7 @@ export default function Footer() {
               className="h-11 w-auto mb-5"
             />
             <p className="text-sm leading-relaxed max-w-md">
-              Helping students master French for Canadian immigration success. Specialized training for TEF Canada exam preparation.
+              Helping students master French for Canadian immigration success. Specialized training for TEF and TCF Canada exam preparation.
             </p>
           </div>
 
