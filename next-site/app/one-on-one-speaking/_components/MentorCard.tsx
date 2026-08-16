@@ -48,7 +48,13 @@ export default function MentorCard({ mentor }: { mentor: Mentor }) {
             href={s.bookingUrl ?? `${GHL_ORIGIN}/widget/booking/${s.calendarId}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 transition-all duration-300 hover:border-brand-blue hover:bg-brand-blue hover:shadow-glow-blue"
+            // min-w-0 is load-bearing: a grid item defaults to min-width:auto,
+            // and the label inside is `truncate` (white-space: nowrap), so the
+            // item refused to shrink below the full untruncated label. Below
+            // about 340px that pushed the Book button off the right edge, where
+            // html/body overflow-x:clip silently cut it off instead of
+            // scrolling. With min-w-0 the label truncates as intended.
+            className="group flex min-w-0 items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 transition-all duration-300 hover:border-brand-blue hover:bg-brand-blue hover:shadow-glow-blue"
           >
             <span className="min-w-0">
               <span className="block font-semibold text-sm text-gray-900 truncate transition-colors group-hover:text-white">
