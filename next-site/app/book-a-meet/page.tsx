@@ -88,8 +88,11 @@ export default function BookAMeetPage() {
                     Click here to view Darshan&apos;s Result
                   </a>
                   <div className="text-center mt-auto">
+                    {/* Must match what the GHL calendar actually charges at
+                        checkout. This read 20 CAD while the calendar took 25,
+                        so people were quoted one price and billed another. */}
                     <p className="text-3xl font-bold text-gray-800 mb-2">
-                      20 CAD{' '}
+                      25 CAD{' '}
                       <span className="text-lg font-normal text-gray-500 line-through">60 CAD</span>
                     </p>
                     <Magnetic>

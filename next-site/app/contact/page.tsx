@@ -23,13 +23,17 @@ export const metadata = {
  * Every price below is the total the GHL calendar actually charges at
  * checkout, read off the live widget in Aug 2026. GHL stays the source of
  * truth - if a calendar's price changes there, change it here too.
+ *
+ * Entries with href: null keep their place in the list greyed out. They are
+ * waiting on a booking link, not retired - do not delete them to tidy up.
  */
 const calls: {
   name: string;
   title: string;
-  duration: string;
-  price: string;
-  href: string;
+  duration?: string;
+  price?: string;
+  /** null = no booking link yet, so the row renders greyed out and marked soon */
+  href: string | null;
 }[] = [
   {
     name: 'Jay Patel',
@@ -59,6 +63,8 @@ const calls: {
     price: 'CA$25',
     href: 'https://api.leadconnectorhq.com/widget/booking/WATTU6fLCIqmDmFUuB4k',
   },
+  // Placeholder that predates this list. Stays until Vyom sends the link.
+  { name: 'Meeting with Karan', title: 'Booking link coming soon', href: null },
 ];
 
 export default function ContactPage() {
@@ -130,33 +136,52 @@ export default function ContactPage() {
                       Or book a specific call:
                     </p>
                     <div className="space-y-2.5">
-                      {calls.map((call) => (
-                        <a
-                          key={call.href}
-                          href={call.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group flex items-center justify-between gap-4 rounded-xl border border-gray-200 bg-white px-4 py-3.5 transition-all duration-300 hover:border-brand-blue hover:bg-brand-blue hover:shadow-[0_12px_28px_-10px_rgba(37,99,235,0.5)]"
-                        >
-                          <span className="min-w-0">
-                            <span className="block font-semibold text-sm text-gray-900 transition-colors group-hover:text-white">
-                              {call.name}
+                      {calls.map((call) =>
+                        call.href ? (
+                          <a
+                            key={call.name}
+                            href={call.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center justify-between gap-4 rounded-xl border border-gray-200 bg-white px-4 py-3.5 transition-all duration-300 hover:border-brand-blue hover:bg-brand-blue hover:shadow-[0_12px_28px_-10px_rgba(37,99,235,0.5)]"
+                          >
+                            <span className="min-w-0">
+                              <span className="block font-semibold text-sm text-gray-900 transition-colors group-hover:text-white">
+                                {call.name}
+                              </span>
+                              <span className="block text-xs text-gray-500 mt-0.5 transition-colors group-hover:text-blue-100">
+                                {call.title} &middot; {call.duration}
+                              </span>
                             </span>
-                            <span className="block text-xs text-gray-500 mt-0.5 transition-colors group-hover:text-blue-100">
-                              {call.title} &middot; {call.duration}
+                            <span className="flex items-center gap-2 shrink-0">
+                              <span className="text-sm font-bold text-gray-900 transition-colors group-hover:text-white">
+                                {call.price}
+                              </span>
+                              <ArrowRight className="w-4 h-4 text-brand-blue transition-all duration-300 group-hover:text-white group-hover:translate-x-0.5" />
+                              <span className="sr-only">
+                                Book {call.name} &ndash; {call.title} (opens in a new tab)
+                              </span>
                             </span>
-                          </span>
-                          <span className="flex items-center gap-2 shrink-0">
-                            <span className="text-sm font-bold text-gray-900 transition-colors group-hover:text-white">
-                              {call.price}
+                          </a>
+                        ) : (
+                          <div
+                            key={call.name}
+                            className="flex items-center justify-between gap-4 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3.5 cursor-not-allowed"
+                          >
+                            <span className="min-w-0">
+                              <span className="block font-semibold text-sm text-gray-400">
+                                {call.name}
+                              </span>
+                              <span className="block text-xs text-gray-400 mt-0.5">
+                                {call.title}
+                              </span>
                             </span>
-                            <ArrowRight className="w-4 h-4 text-brand-blue transition-all duration-300 group-hover:text-white group-hover:translate-x-0.5" />
-                            <span className="sr-only">
-                              Book {call.name} &ndash; {call.title} (opens in a new tab)
+                            <span className="shrink-0 text-[10px] font-semibold uppercase tracking-wide text-gray-400">
+                              soon
                             </span>
-                          </span>
-                        </a>
-                      ))}
+                          </div>
+                        )
+                      )}
                     </div>
                     <p className="text-gray-600 text-sm mt-4">
                       Not sure of your level yet? Book an{' '}
