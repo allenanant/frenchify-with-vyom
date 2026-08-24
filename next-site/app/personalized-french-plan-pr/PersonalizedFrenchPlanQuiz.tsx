@@ -34,6 +34,7 @@ type Question = {
   key: AnswerKey;
   title: string;
   helper: string;
+  multiple?: boolean;
   options: { value: string; label: string }[];
 };
 
@@ -104,7 +105,8 @@ const QUESTIONS: Question[] = [
   {
     key: 'biggestStruggle',
     title: 'What do you struggle with the most?',
-    helper: 'We’ll use this to highlight the support your plan should prioritize.',
+    helper: 'Select all that apply. We’ll use your choices to highlight the support your plan should prioritize.',
+    multiple: true,
     options: [
       { value: 'speaking', label: 'Speaking' },
       { value: 'listening', label: 'Listening' },
@@ -112,7 +114,6 @@ const QUESTIONS: Question[] = [
       { value: 'reading', label: 'Reading' },
       { value: 'grammar', label: 'Grammar' },
       { value: 'pronunciation', label: 'Pronunciation' },
-      { value: 'full-guidance', label: 'I am just starting, so I need full guidance' },
     ],
   },
   {
@@ -146,7 +147,7 @@ const EMPTY_ANSWERS: FrenchPlanAnswers = {
   workPermitExpiry: '',
   dailyStudyTime: '',
   examTarget: '',
-  biggestStruggle: '',
+  biggestStruggle: [],
   learningPreference: '',
   previousExamAttempt: '',
   listeningScore: '',
@@ -182,6 +183,9 @@ export default function PersonalizedFrenchPlanQuiz() {
 
   const question = QUESTIONS[stepIndex];
   const selectedAnswer = answers[question.key];
+  const hasSelectedAnswer = Array.isArray(selectedAnswer)
+    ? selectedAnswer.length > 0
+    : Boolean(selectedAnswer);
   const showScores =
     question.key === 'previousExamAttempt' &&
     ['yes-tef', 'yes-tcf'].includes(answers.previousExamAttempt);
@@ -200,7 +204,7 @@ export default function PersonalizedFrenchPlanQuiz() {
   };
 
   const next = () => {
-    if (!selectedAnswer) return;
+    if (!hasSelectedAnswer) return;
     if (stepIndex === QUESTIONS.length - 1) {
       setView('contact');
     } else {
@@ -320,7 +324,9 @@ export default function PersonalizedFrenchPlanQuiz() {
 
                   <div className="mt-7 grid gap-3 sm:grid-cols-2">
                     {question.options.map((option) => {
-                      const selected = selectedAnswer === option.value;
+                      const selected = question.multiple
+                        ? Array.isArray(selectedAnswer) && selectedAnswer.includes(option.value)
+                        : selectedAnswer === option.value;
                       return (
                         <label
                           key={option.value}
@@ -331,17 +337,30 @@ export default function PersonalizedFrenchPlanQuiz() {
                           }`}
                         >
                           <input
-                            type="radio"
-                            name={question.key}
+                            type={question.multiple ? 'checkbox' : 'radio'}
+                            name={question.multiple ? `${question.key}[]` : question.key}
                             value={option.value}
                             checked={selected}
-                            onChange={() =>
-                              setAnswers((current) => ({ ...current, [question.key]: option.value }))
-                            }
+                            onChange={() => {
+                              if (question.key === 'biggestStruggle') {
+                                setAnswers((current) => ({
+                                  ...current,
+                                  biggestStruggle: current.biggestStruggle.includes(option.value)
+                                    ? current.biggestStruggle.filter((value) => value !== option.value)
+                                    : [...current.biggestStruggle, option.value],
+                                }));
+                                return;
+                              }
+
+                              setAnswers((current) => ({
+                                ...current,
+                                [question.key]: option.value,
+                              }));
+                            }}
                             className="sr-only"
                           />
                           <span
-                            className={`grid h-6 w-6 shrink-0 place-items-center rounded-full border transition-colors ${
+                            className={`grid h-6 w-6 shrink-0 place-items-center border transition-colors ${question.multiple ? 'rounded-lg' : 'rounded-full'} ${
                               selected
                                 ? 'border-[#2563eb] bg-[#2563eb] text-white'
                                 : 'border-[#cfd7e2] bg-white text-transparent'
@@ -410,7 +429,7 @@ export default function PersonalizedFrenchPlanQuiz() {
                   <button
                     type="button"
                     onClick={next}
-                    disabled={!selectedAnswer}
+                    disabled={!hasSelectedAnswer}
                     className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-[#0A1426] px-5 text-[14px] font-bold text-white shadow-[0_12px_28px_-14px_rgba(10,20,38,0.7)] transition-all hover:-translate-y-0.5 hover:bg-[#14294c] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 sm:px-6"
                   >
                     {stepIndex === QUESTIONS.length - 1 ? 'See My French Plan' : 'Next'}

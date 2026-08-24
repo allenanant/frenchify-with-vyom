@@ -7,7 +7,7 @@ export type FrenchPlanAnswers = {
   workPermitExpiry: string;
   dailyStudyTime: string;
   examTarget: string;
-  biggestStruggle: string;
+  biggestStruggle: string[];
   learningPreference: string;
   previousExamAttempt: string;
   listeningScore: string;
@@ -130,9 +130,6 @@ export function getRecommendedFrenchPlan(
     answers.currentLevel === 'attempted-exam';
   const isBeginner = answers.currentLevel === 'complete-beginner';
   const isUnsure = answers.currentLevel === 'unsure';
-  const beginnerConflict =
-    answers.biggestStruggle === 'full-guidance' &&
-    (answers.currentLevel === 'b1-b2' || answers.currentLevel === 'attempted-exam');
   const examHistoryConflict =
     answers.currentLevel === 'attempted-exam' && answers.previousExamAttempt === 'no';
 
@@ -141,7 +138,9 @@ export function getRecommendedFrenchPlan(
       !isBeginner &&
       !isUnsure &&
       answers.mainGoal === 'clb-5' &&
-      ['speaking', 'listening'].includes(answers.biggestStruggle) &&
+      answers.biggestStruggle.some((struggle) =>
+        ['speaking', 'listening'].includes(struggle),
+      ) &&
       ['one-to-one', 'mixed-live-one-to-one'].includes(answers.learningPreference);
 
     return copyPlan(readyForFocusedPrep ? 'clb-5' : 'analysis');
@@ -152,14 +151,13 @@ export function getRecommendedFrenchPlan(
 
     const readyForFinalPrep =
       ['b1-b2', 'attempted-exam'].includes(answers.currentLevel) &&
-      answers.mainGoal === 'clb-7-plus' &&
-      !beginnerConflict;
+      answers.mainGoal === 'clb-7-plus';
 
     return copyPlan(readyForFinalPrep ? 'final-exam-prep' : 'analysis');
   }
 
-  if (beginnerConflict || isUnsure) return copyPlan('analysis');
-  if (isBeginner || answers.biggestStruggle === 'full-guidance') return copyPlan('a1');
+  if (isUnsure) return copyPlan('analysis');
+  if (isBeginner) return copyPlan('a1');
 
   if (['some-basics', 'completed-a1'].includes(answers.currentLevel)) {
     return copyPlan('a2');
