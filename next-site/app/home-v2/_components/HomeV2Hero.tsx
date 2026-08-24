@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { ArrowRight, CalendarDays, Sparkles, BadgeCheck, Globe2 } from 'lucide-react';
+import { ArrowRight, Sparkles, BadgeCheck, Globe2 } from 'lucide-react';
 import Magnetic from '@/components/motion/Magnetic';
 import Reveal from '@/components/motion/Reveal';
 import TextReveal from '@/components/motion/TextReveal';
@@ -92,43 +92,43 @@ export default function HomeV2Hero() {
             </h1>
 
             <Reveal direction="up" delay={0.7}>
-              <p className="mt-7 max-w-[560px] text-[16px] md:text-[18px] leading-[1.55] text-[#374151]">
-                Go from zero French to your{' '}
-                <span className="font-semibold text-[#111827]">CLB 5 or CLB 7</span> target,
-                with a roadmap built and refined over 4 years, weekly live sessions, and
-                one-on-one support when you need it.
+              <p className="mt-7 max-w-[620px] text-[16px] md:text-[18px] leading-[1.55] text-[#374151]">
+                Not sure where to start? Get a personalized TEF/TCF Canada study plan based on your French level, daily study time, work permit timeline, and PR goal.
               </p>
             </Reveal>
 
             <Reveal direction="up" delay={0.85}>
               <div className="mt-9 flex flex-wrap items-center gap-4">
-                <Magnetic>
+                <Magnetic className="w-full sm:w-auto">
                   <Link
-                    href="/courses"
-                    className="group inline-flex items-center gap-3 rounded-full bg-[#2563eb] px-7 py-4 text-[15px] font-semibold text-white shadow-[0_18px_40px_-12px_rgba(37,99,235,0.55)] hover:bg-[#1d4ed8] transition-all duration-300"
+                    href="/personalized-french-plan-pr"
+                    className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#f59e0b] px-6 py-4 text-center text-[14px] font-bold leading-snug text-[#111827] shadow-[0_18px_40px_-12px_rgba(245,158,11,0.65)] hover:bg-[#fbbf24] transition-all duration-300 sm:w-auto sm:px-7 sm:text-[15px]"
                   >
-                    Explore Courses
-                    <span className="grid h-7 w-7 place-items-center rounded-full bg-white/15 group-hover:bg-white/25 transition-colors">
+                    Create my personalized French Plan for PR
+                    <span className="grid h-7 w-7 place-items-center rounded-full bg-white/30 group-hover:bg-white/45 transition-colors">
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                     </span>
                   </Link>
                 </Magnetic>
-                <Magnetic>
+                <Magnetic className="w-full sm:w-auto">
                   <Link
-                    href="/book-a-meet"
-                    className="group inline-flex items-center gap-3 rounded-full border border-[#dbeafe] bg-white px-6 py-4 text-[15px] font-semibold text-[#252525] hover:border-[#2563eb] transition-colors duration-300"
+                    href="/courses"
+                    className="group inline-flex w-full items-center justify-center gap-3 rounded-full border border-[#dbeafe] bg-white px-6 py-4 text-[15px] font-semibold text-[#252525] hover:border-[#2563eb] transition-colors duration-300 sm:w-auto"
                   >
                     <span className="grid h-7 w-7 place-items-center rounded-full bg-blue-50 text-[#2563eb]">
-                      <CalendarDays className="h-3.5 w-3.5" />
+                      <ArrowRight className="h-3.5 w-3.5" />
                     </span>
-                    Book a personalized meeting
+                    Explore Programs
                   </Link>
                 </Magnetic>
               </div>
             </Reveal>
 
             <Reveal direction="up" delay={1.0}>
-              <div className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-3 text-[13px] text-[#4b5563]">
+              <p className="mt-5 text-[12px] font-semibold text-[#4b5563] sm:text-[13px]">
+                Takes 2 minutes • TEF &amp; TCF focused • CLB 5 and CLB 7 roadmap
+              </p>
+              <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3 text-[13px] text-[#4b5563]">
                 <span className="inline-flex items-center gap-1.5">
                   <BadgeCheck className="h-4 w-4 text-[#16a34a]" />
                   <span className="font-medium">150+ Verified TEF/TCF Results</span>
