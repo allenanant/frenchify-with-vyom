@@ -45,7 +45,8 @@ const paths = [
       'Choose this if you have completed A2 and want an assessment with Harleen before beginning Exam Prep 1.',
     Icon: BookOpen,
     accent: 'violet',
-    action: 'Information & Booking Coming Soon',
+    href: '/a2-analysis-test/',
+    action: 'View A2 Test Details',
   },
   {
     eyebrow: 'Exam Prep Analysis Test',
@@ -76,7 +77,7 @@ const accentStyles = {
     border: 'border-violet-200',
     icon: 'bg-violet-50 text-violet-700',
     eyebrow: 'text-violet-700',
-    button: '',
+    button: 'bg-violet-700 hover:bg-violet-800 focus-visible:outline-violet-700',
   },
   amber: {
     border: 'border-amber-200',
