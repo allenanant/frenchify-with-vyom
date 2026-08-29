@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mail, MessageCircle, MapPin, Clock } from 'lucide-react';
+import { Mail, MessageCircle, MapPin } from 'lucide-react';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -66,10 +66,6 @@ export default function Footer() {
                 <a href="mailto:admin@frenchifywithvyom.com" className="hover:text-white transition-colors break-all">
                   admin@frenchifywithvyom.com
                 </a>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Clock className="w-4 h-4 text-brand-amber shrink-0 mt-0.5" />
-                <span>Monday to Friday, 9am&ndash;5pm IST</span>
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-brand-amber shrink-0 mt-0.5" />
