@@ -17,6 +17,8 @@ Useful entry points:
 - Home page: `app/page.tsx` renders `app/home-v2/page.tsx`, whose sections are in `app/home-v2/_components/`
 - Courses funnel: `app/courses/` (level names, formats and links are all in `_data.ts`)
 - Contact: `app/contact/page.tsx`
+- Website chat widget: `components/chat/ChatWidget.tsx`; same-origin proxy routes are under `app/api/chat/`
+- VPS Codex service: `chat-service/`; it is deployed separately from Vercel
 
 ## Setup
 
@@ -53,7 +55,32 @@ Always run this, and only push if it passes.
 cd next-site && npm run build
 ```
 
+If the chatbot service changed, also run:
+
+```bash
+cd chat-service && npm test
+```
+
+The chatbot uses Codex SDK with the VPS service user's ChatGPT login. It does not use `OPENAI_API_KEY`. Never move the SDK into a Vercel route. Keep the model at `gpt-5.6-luna` with low reasoning unless Allen explicitly changes the speed and usage requirement.
+
+`chat-service/knowledge/primary.md` is the bundled fallback. The linked Google document is authoritative and refreshes on the VPS. Website context is secondary. Approved visitor links live in `chat-service/src/links.mjs`; the model cannot return arbitrary URLs.
+
 A failing build will not take the site down — Vercel refuses to swap in a broken deploy and keeps serving the previous one. What it does mean is that your change silently never appears, which is worse to debug later than catching it here.
+
+## The chatbot
+
+Two halves, deployed two different ways.
+
+- `chat-service/` is the **backend**. It runs on Vyom's own VPS, not on Vercel. It listens on `127.0.0.1:4310` only, behind Caddy at `https://chat.frenchifywithvyom.com`. Port 4310 is never exposed to the internet.
+- Everything under `next-site/` is the **website half** and deploys through Vercel like any other page: `components/chat/ChatWidget.tsx`, the proxy routes in `app/api/chat/`, `app/api/support/chat-ticket/`, and `lib/chat-proxy.ts`.
+
+**Cost model, non-negotiable.** The backend runs through `@openai/codex-sdk` signed in with Vyom's paid ChatGPT account, as the locked `frenchify-chat` service user on the VPS. Never add `OPENAI_API_KEY`. Never create an OpenAI Platform project. Never switch to the Responses API. Never add an API fallback. If something cannot be done without an API key, stop and ask a human.
+
+**Mounting the widget: ADD, never replace.** `next-site/app/layout.tsx` already renders `FloatingLeadButton`. `ChatWidget` gets **added alongside it**. Do not remove, replace, or move `FloatingLeadButton` — it is live lead capture on a revenue site. Before pushing any change that mounts the widget, run `git diff --stat` and confirm it shows one file changed with **zero deleted lines**. Any deletion means something was removed from the live site.
+
+**To change what the chatbot says**, edit the Google knowledge document. Do not edit code and do not deploy. It refreshes on the VPS every 15 minutes. `chat-service/knowledge/primary.md` is only the bundled fallback for when that document cannot be fetched.
+
+**Never commit** `chat-service/.env`, `chat-service/data/` (real visitor conversations), `chat-service/knowledge/website-live.md` (the refreshed cache), or any log folder. `chat-service/.gitignore` already covers these — do not weaken it.
 
 ## Secrets
 

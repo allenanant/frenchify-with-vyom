@@ -1,0 +1,5 @@
+data/
+knowledge/website-live.md
+.env
+.env.*
+!.env.example

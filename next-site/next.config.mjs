@@ -34,6 +34,13 @@ const nextConfig = {
       // somewhere relevant; rebuild the page and drop this line.
       { source: '/immigration', destination: '/courses', permanent: false },
 
+      // Current destinations for paths still listed in the maintained chatbot
+      // knowledge bank. Keep them alive so a saved or copied answer never 404s.
+      { source: '/a1-new-course-page', destination: '/a1-course', permanent: true },
+      { source: '/a2-course-page-new', destination: '/a2-course', permanent: true },
+      { source: '/a1-free-renewal', destination: '/a1-renewal#free-renewal', permanent: true },
+      { source: '/a2-free-1-month-renewal', destination: '/a2-renewal#free-renewal', permanent: true },
+
       // ---- Webinar funnel, ported off GoHighLevel ----
       // The GHL funnel's own page names. They are in live Meta ads, WhatsApp
       // sends and confirmation emails already delivered, so they have to land.

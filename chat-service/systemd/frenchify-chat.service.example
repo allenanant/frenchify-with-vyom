@@ -1,0 +1,25 @@
+[Unit]
+Description=Frenchify Codex website chat
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=frenchify-chat
+Group=frenchify-chat
+WorkingDirectory=/opt/frenchify-chat
+Environment=HOME=/var/lib/frenchify-chat
+EnvironmentFile=/etc/frenchify-chat.env
+ExecStart=/usr/bin/node /opt/frenchify-chat/src/server.mjs
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/opt/frenchify-chat/data /opt/frenchify-chat/knowledge /var/lib/frenchify-chat
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
