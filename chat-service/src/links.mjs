@@ -28,10 +28,12 @@ export const LINKS = Object.freeze({
 
 export const LINK_KEYS = Object.freeze(Object.keys(LINKS));
 
-export function resolveLinks(keys) {
+export function resolveLinks(keys, { visitorMessage = '' } = {}) {
   const clean = [];
+  const isConsultationRequest = /\bconsultations?\b/i.test(String(visitorMessage));
   for (const key of Array.isArray(keys) ? keys : []) {
     if (!Object.hasOwn(LINKS, key)) continue;
+    if (isConsultationRequest && key === 'student_mentorship') continue;
     if (clean.some((item) => item.url === LINKS[key].url)) continue;
     clean.push(LINKS[key]);
     if (clean.length === 3) break;

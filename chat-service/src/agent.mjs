@@ -58,7 +58,7 @@ export class CodexChatAgent {
 
     return {
       ...answer,
-      links: resolveLinks(answer.linkKeys),
+      links: resolveLinks(answer.linkKeys, { visitorMessage: message }),
       threadId: thread.id,
       knowledgeHash: knowledge.hash,
       usage: turn.usage,
