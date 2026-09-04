@@ -58,6 +58,7 @@ export type Ticket = {
   created_at: string;
   updated_at: string;
   version: number;
+  source_key?: string | null;
   attachment_count?: number;
 };
 
@@ -146,6 +147,15 @@ export function ensureSchema(): Promise<void> {
         await sql`ALTER TABLE support_tickets ADD COLUMN IF NOT EXISTS version BIGINT NOT NULL DEFAULT 1`;
       }
 
+      const hasSourceKey = (await sql`
+        SELECT 1 FROM information_schema.columns
+         WHERE table_schema = current_schema()
+           AND table_name = 'support_tickets'
+           AND column_name = 'source_key'`) as any[];
+      if (!hasSourceKey.length) {
+        await sql`ALTER TABLE support_tickets ADD COLUMN IF NOT EXISTS source_key TEXT`;
+      }
+
       await sql`
         CREATE TABLE IF NOT EXISTS support_attachments (
           id            SERIAL PRIMARY KEY,
@@ -205,6 +215,8 @@ export function ensureSchema(): Promise<void> {
       await sql`CREATE INDEX IF NOT EXISTS idx_support_tickets_created ON support_tickets(created_at DESC)`;
       await sql`CREATE INDEX IF NOT EXISTS idx_support_attachments_ticket ON support_attachments(ticket_id)`;
       await sql`CREATE INDEX IF NOT EXISTS idx_support_events_ticket ON support_events(ticket_id, id)`;
+      await sql`CREATE UNIQUE INDEX IF NOT EXISTS idx_support_tickets_source_key
+        ON support_tickets(source_key) WHERE source_key IS NOT NULL`;
     })().catch((err) => {
       ready = null; // let the next request retry rather than caching a failure
       throw err;
@@ -232,6 +244,7 @@ export type NewTicket = {
   subject: string;
   description: string;
   ip_hash?: string | null;
+  source_key?: string | null;
 };
 
 export type NewAttachment = {
@@ -305,12 +318,12 @@ export async function createTicket(
     ), ins AS (
       INSERT INTO support_tickets
         (id, ref, student_name, student_email, student_phone, course, category,
-         subject, description, ip_hash)
+         subject, description, ip_hash, source_key)
       SELECT a.id,
              'FRN-' || LPAD(a.id::text, GREATEST(5, LENGTH(a.id::text)), '0'),
              ${input.student_name}, ${input.student_email}, ${input.student_phone ?? null},
              ${input.course ?? null}, ${input.category}, ${input.subject},
-             ${input.description}, ${input.ip_hash ?? null}
+             ${input.description}, ${input.ip_hash ?? null}, ${input.source_key ?? null}
         FROM allowed a
       RETURNING id, ref
     ), att AS (
@@ -322,14 +335,20 @@ export async function createTicket(
       RETURNING 1
     ), ev AS (
       INSERT INTO support_events (ticket_id, type, body)
-      SELECT id, 'created', 'Ticket raised by the student through the support form.' FROM ins
+      SELECT id, 'created',
+             CASE WHEN ${input.source_key ?? null}::text IS NULL
+               THEN 'Ticket raised by the student through the support form.'
+               ELSE 'Ticket raised by the visitor through the website chatbot.'
+             END
+        FROM ins
       RETURNING 1
     ), ob AS (
       INSERT INTO support_outbox (ticket_id, event, payload)
       SELECT i.id, 'ticket.created', jsonb_build_object(
         'ref', i.ref, 'name', ${input.student_name}::text, 'email', ${input.student_email}::text,
         'phone', ${input.student_phone ?? null}::text, 'category', ${input.category}::text,
-        'subject', ${input.subject}::text)
+        'subject', ${input.subject}::text, 'source',
+        CASE WHEN ${input.source_key ?? null}::text IS NULL THEN 'support_form' ELSE 'website_chat' END)
       FROM ins i
       RETURNING 1
     )
@@ -355,6 +374,13 @@ export async function refExists(ref: string) {
   await ensureSchema();
   const rows = (await sql`SELECT 1 FROM support_tickets WHERE ref = ${ref} LIMIT 1`) as any[];
   return rows.length > 0;
+}
+
+export async function getTicketBySourceKey(sourceKey: string) {
+  await ensureSchema();
+  const rows = (await sql`
+    SELECT id, ref FROM support_tickets WHERE source_key = ${sourceKey} LIMIT 1`) as any[];
+  return rows[0] ? { id: Number(rows[0].id), ref: String(rows[0].ref) } : null;
 }
 
 /** Housekeeping. Cheap, and keeps the free plan's storage honest. */
