@@ -12,6 +12,7 @@ import {
 import HeroSection from '@/components/sections/sunday-webinar/HeroSection';
 import Countdown from '@/components/webinar/Countdown';
 import ForwardTracking from '@/components/webinar/ForwardTracking';
+import WebinarPixel from '@/components/webinar/WebinarPixel';
 import FunnelFooter from '@/components/webinar/FunnelFooter';
 import YouTubeFacade from '@/components/webinar/YouTubeFacade';
 import { Card, Cta, Divider, H2, Label, Lead, Section } from '@/components/webinar/ui';
@@ -558,6 +559,7 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
       {/* Last on purpose: it patches the CTA hrefs, so every anchor it looks
           for has to be parsed before it runs. */}
       <ForwardTracking />
+      <WebinarPixel />
     </>
   );
 }

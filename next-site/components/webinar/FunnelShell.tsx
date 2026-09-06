@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import FunnelFooter from '@/components/webinar/FunnelFooter';
+import WebinarPixel from '@/components/webinar/WebinarPixel';
 import { Label } from '@/components/webinar/ui';
 
 /**
@@ -36,6 +37,7 @@ export default function FunnelShell({
 }) {
   return (
     <div className="flex min-h-screen flex-col bg-fnl-surface-alt">
+      <WebinarPixel />
       <main className="flex flex-grow items-center justify-center px-5 py-10 sm:py-14">
         <div
           className={`w-full ${maxWidth} rounded-[14px] border border-fnl-line bg-fnl-surface p-7 text-center sm:p-11`}
