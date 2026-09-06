@@ -4,7 +4,7 @@ import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollProgress from '@/components/motion/ScrollProgress';
-import FloatingLeadButton from '@/components/FloatingLeadButton';
+import ChatWidget from '@/components/chat/ChatWidget';
 import ChromeGate from '@/components/ChromeGate';
 
 const inter = Inter({
@@ -64,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </ChromeGate>
         <ChromeGate zone="cta">
-          <FloatingLeadButton />
+          <ChatWidget />
         </ChromeGate>
       </body>
     </html>
