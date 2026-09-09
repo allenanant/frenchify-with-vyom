@@ -7,6 +7,7 @@ import test from 'node:test';
 import { createApp } from '../src/app.mjs';
 import { loadConfig } from '../src/config.mjs';
 import { ChatStore } from '../src/store.mjs';
+import { prepareKnowledge } from '../src/knowledge.mjs';
 
 test('gates chat, answers, and creates one idempotent ticket', async (t) => {
   const dataDir = await mkdtemp(path.join(tmpdir(), 'frenchify-chat-'));
@@ -17,6 +18,7 @@ test('gates chat, answers, and creates one idempotent ticket', async (t) => {
     ticketSecret: 't'.repeat(40),
   });
   const store = new ChatStore(dataDir);
+  await prepareKnowledge(config);
   const agent = {
     async answer(_session, message, knowledge) {
       return {

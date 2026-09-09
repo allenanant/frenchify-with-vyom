@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
-import { mkdir, readFile, rename, stat, writeFile } from 'node:fs/promises';
+import { constants } from 'node:fs';
+import { copyFile, mkdir, readFile, rename, stat, utimes, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const PRIMARY_EXPORT =
@@ -56,6 +57,24 @@ async function atomicWrite(file, content) {
   await rename(temp, file);
 }
 
+// Releases may be read-only. Keep refreshed knowledge beside the writable database,
+// seeding it once from the existing knowledge bank without overwriting newer data.
+export async function prepareKnowledge(config) {
+  await mkdir(config.knowledgeDir, { recursive: true });
+  for (const name of ['primary.md', 'website.md', 'website-live.md']) {
+    try {
+      const source = path.join(config.knowledgeSeedDir, name);
+      const destination = path.join(config.knowledgeDir, name);
+      await copyFile(source, destination, constants.COPYFILE_EXCL);
+      const modified = await stat(source);
+      await utimes(destination, modified.atime, modified.mtime);
+    } catch (error) {
+      if (error.code === 'EEXIST' || (name === 'website-live.md' && error.code === 'ENOENT')) continue;
+      throw error;
+    }
+  }
+}
+
 async function fetchText(url, timeoutMs = 15_000) {
   const response = await fetch(url, { signal: AbortSignal.timeout(timeoutMs), redirect: 'follow' });
   if (!response.ok) throw new Error(`${url} returned ${response.status}`);
@@ -91,6 +110,7 @@ export async function syncKnowledge(config, { force = false } = {}) {
         '\n'
     );
   }
+  console.log(`[knowledge-sync] Refreshed primary=${Boolean(primary?.trim())}, website=${sections.length > 0}.`);
 }
 
 export async function loadKnowledge(config) {

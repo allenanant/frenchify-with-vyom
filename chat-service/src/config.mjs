@@ -10,14 +10,16 @@ function positiveInt(name, fallback) {
 }
 
 export function loadConfig(overrides = {}) {
+  const dataDir = overrides.dataDir || path.join(serviceRoot, 'data');
   return {
     serviceRoot,
     port: positiveInt('PORT', 4310),
     serviceToken: process.env.CHAT_SERVICE_TOKEN ?? '',
     model: process.env.CHAT_MODEL || 'gpt-5.6-luna',
     reasoningEffort: process.env.CHAT_REASONING_EFFORT || 'low',
-    knowledgeDir: path.join(serviceRoot, 'knowledge'),
-    dataDir: path.join(serviceRoot, 'data'),
+    knowledgeSeedDir: path.join(serviceRoot, 'knowledge'),
+    knowledgeDir: path.join(dataDir, 'knowledge'),
+    dataDir,
     refreshMinutes: positiveInt('KNOWLEDGE_REFRESH_MINUTES', 15),
     maxMessagesPerSession: positiveInt('CHAT_MAX_MESSAGES', 8),
     ticketIngestUrl:

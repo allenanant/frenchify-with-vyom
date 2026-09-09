@@ -2,13 +2,14 @@ import { createServer } from 'node:http';
 import { CodexChatAgent } from './agent.mjs';
 import { createApp } from './app.mjs';
 import { assertProductionConfig, loadConfig } from './config.mjs';
-import { syncKnowledge } from './knowledge.mjs';
+import { prepareKnowledge, syncKnowledge } from './knowledge.mjs';
 import { ChatStore } from './store.mjs';
 import { TicketPoster } from './tickets.mjs';
 import { LeadDelivery } from './leads.mjs';
 
 const config = loadConfig();
 assertProductionConfig(config);
+await prepareKnowledge(config);
 
 const store = new ChatStore(config.dataDir);
 const leads = new LeadDelivery(config, store);

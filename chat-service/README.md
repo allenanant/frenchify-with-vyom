@@ -65,7 +65,7 @@ Set `CHAT_SERVICE_URL=https://chat.your-domain.example` on Vercel after TLS is w
 
 ## Knowledge updates
 
-The bundled `knowledge/primary.md` is a safe fallback. The running service refreshes the same Google document and writes `knowledge/website-live.md` atomically. If a refresh fails, the last good copy stays active.
+The bundled `knowledge/primary.md` is a safe fallback. At startup, missing cache files are seeded from the existing knowledge bank into writable `data/knowledge/`. The running service refreshes the same Google document and writes `data/knowledge/website-live.md` atomically. If a refresh fails, the last good copy stays active. Existing cache files are never overwritten by startup seeding. This keeps refreshes working when deployment makes the release knowledge directory read-only.
 
 Edit the Google document first for policy, pricing, and course changes. Edit `src/links.mjs` when a page URL changes. The model never returns an arbitrary URL.
 

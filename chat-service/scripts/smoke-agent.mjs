@@ -1,8 +1,9 @@
 import { CodexChatAgent } from '../src/agent.mjs';
 import { loadConfig } from '../src/config.mjs';
-import { loadKnowledge } from '../src/knowledge.mjs';
+import { loadKnowledge, prepareKnowledge } from '../src/knowledge.mjs';
 
 const config = loadConfig();
+await prepareKnowledge(config);
 const knowledge = await loadKnowledge(config);
 const started = Date.now();
 const answer = await new CodexChatAgent(config).answer(
