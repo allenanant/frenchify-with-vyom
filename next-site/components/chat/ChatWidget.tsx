@@ -121,6 +121,7 @@ export default function ChatWidget() {
       const data = await postJson('/api/chat/session', {
         name: form.get('name'),
         email: form.get('email'),
+        phone: form.get('phone'),
       });
       setToken(data.sessionToken);
       setMessages([{ role: 'assistant', text: data.greeting }]);
@@ -289,8 +290,26 @@ export default function ChatWidget() {
                     className="w-full rounded-xl border border-gray-300 bg-white px-3.5 py-3 text-[16px] text-gray-950 outline-none transition focus:border-brand-blue focus:ring-2 focus:ring-blue-100"
                   />
                 </label>
+                <label className="block">
+                  <span className="mb-1.5 block text-sm font-semibold text-gray-700">Phone number</span>
+                  <input
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    required
+                    maxLength={40}
+                    placeholder="+1 514 555 0123"
+                    aria-describedby="chat-phone-help"
+                    className="w-full rounded-xl border border-gray-300 bg-white px-3.5 py-3 text-[16px] text-gray-950 outline-none transition focus:border-brand-blue focus:ring-2 focus:ring-blue-100"
+                  />
+                  <span id="chat-phone-help" className="mt-1 block text-xs text-gray-500">
+                    Include your country code, such as +1 for Canada or +91 for India.
+                  </span>
+                </label>
                 <p className="text-xs leading-5 text-gray-500">
-                  I use these details to continue the conversation and create a ticket only when you ask.
+                  Frenchify will save your contact details to help with your enquiry and follow up.
+                  A support ticket is created only when you ask.{' '}
+                  <a href="/privacy-policy" className="underline">Privacy policy</a>
                 </p>
                 <button
                   type="submit"

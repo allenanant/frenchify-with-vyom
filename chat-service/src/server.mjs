@@ -5,16 +5,19 @@ import { assertProductionConfig, loadConfig } from './config.mjs';
 import { syncKnowledge } from './knowledge.mjs';
 import { ChatStore } from './store.mjs';
 import { TicketPoster } from './tickets.mjs';
+import { LeadDelivery } from './leads.mjs';
 
 const config = loadConfig();
 assertProductionConfig(config);
 
 const store = new ChatStore(config.dataDir);
+const leads = new LeadDelivery(config, store);
 const app = createApp({
   config,
   store,
   agent: new CodexChatAgent(config),
   tickets: new TicketPoster(config),
+  leads,
 });
 
 const server = createServer(app);
@@ -30,10 +33,16 @@ const refresh = setInterval(
   config.refreshMinutes * 60_000
 );
 refresh.unref();
+const leadRefresh = setInterval(() => void leads.flush(), 30_000);
+leadRefresh.unref();
+void leads.flush();
 
 for (const signal of ['SIGINT', 'SIGTERM']) {
   process.on(signal, () => {
-    server.close(() => {
+    clearInterval(leadRefresh);
+    clearInterval(refresh);
+    server.close(async () => {
+      await leads.running;
       store.close();
       process.exit(0);
     });

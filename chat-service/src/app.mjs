@@ -1,5 +1,6 @@
 import { createHash, timingSafeEqual } from 'node:crypto';
 import { loadKnowledge } from './knowledge.mjs';
+import { normalizePhone } from './phone.mjs';
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const CATEGORY_FALLBACK = 'Something else';
@@ -46,7 +47,7 @@ function validSession(store, token) {
   return store.sessionByToken(String(token || ''));
 }
 
-export function createApp({ config, store, agent, tickets }) {
+export function createApp({ config, store, agent, tickets, leads }) {
   const active = new Set();
 
   return async function handler(req, res) {
@@ -61,13 +62,17 @@ export function createApp({ config, store, agent, tickets }) {
         const body = await readJson(req);
         const name = String(body.name || '').trim().slice(0, 80);
         const email = String(body.email || '').trim().toLowerCase().slice(0, 180);
+        const phone = normalizePhone(body.phone);
         const ip = ipHash(req, config.serviceToken);
         if (name.length < 2) return json(res, 400, { error: 'Enter your name.' });
         if (!EMAIL.test(email)) return json(res, 400, { error: 'Enter a valid email.' });
+        if (!phone) return json(res, 400, { error: 'Enter your phone number with its country code, such as +1 or +91.' });
         if (!store.consumeRate(`session:${ip}`, 8, 3_600)) {
           return json(res, 429, { error: 'Too many new chats. Try again later.' });
         }
-        const session = store.createSession({ name, email, ipHash: ip });
+        const session = store.createSession({ name, email, phone, ipHash: ip });
+        // The durable queue owns retries. CRM availability must not block a chat.
+        void leads?.flush();
         return json(res, 201, {
           sessionToken: session.token,
           greeting: `Hey ${name.split(/\s+/)[0]}! How are you? What can I help you with today?`,

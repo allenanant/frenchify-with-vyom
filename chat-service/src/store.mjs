@@ -47,19 +47,54 @@ export class ChatStore {
         count INTEGER NOT NULL,
         PRIMARY KEY (bucket, window_start)
       );
+      CREATE TABLE IF NOT EXISTS chat_lead_outbox (
+        session_id TEXT PRIMARY KEY REFERENCES chat_sessions(id) ON DELETE CASCADE,
+        attempts INTEGER NOT NULL DEFAULT 0,
+        next_attempt_at INTEGER NOT NULL DEFAULT 0,
+        delivered_at TEXT
+      );
     `);
+    // Additive migration preserves existing conversations and rollback compatibility.
+    if (!this.db.prepare('PRAGMA table_info(chat_sessions)').all().some((column) => column.name === 'phone')) {
+      this.db.exec('ALTER TABLE chat_sessions ADD COLUMN phone TEXT');
+    }
   }
 
-  createSession({ name, email, ipHash }) {
+  createSession({ name, email, phone, ipHash }) {
     const id = randomUUID();
     const token = randomBytes(32).toString('base64url');
     const now = new Date().toISOString();
-    this.db
-      .prepare(`INSERT INTO chat_sessions
-        (id, token_hash, name, email, ip_hash, created_at, updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?)`)
-      .run(id, hashToken(token), name, email, ipHash || null, now, now);
-    return { id, token, name, email };
+    this.db.exec('BEGIN IMMEDIATE');
+    try {
+      this.db.prepare(`INSERT INTO chat_sessions
+        (id, token_hash, name, email, phone, ip_hash, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`)
+        .run(id, hashToken(token), name, email, phone, ipHash || null, now, now);
+      this.db.prepare('INSERT INTO chat_lead_outbox (session_id) VALUES (?)').run(id);
+      this.db.exec('COMMIT');
+    } catch (error) {
+      this.db.exec('ROLLBACK');
+      throw error;
+    }
+    return { id, token, name, email, phone };
+  }
+
+  pendingLeads(now = Date.now(), limit = 20) {
+    return this.db.prepare(`SELECT s.id, s.name, s.email, s.phone, q.attempts
+      FROM chat_lead_outbox q JOIN chat_sessions s ON s.id = q.session_id
+      WHERE q.delivered_at IS NULL AND q.next_attempt_at <= ?
+      ORDER BY q.next_attempt_at, s.created_at LIMIT ?`).all(now, limit);
+  }
+
+  completeLead(sessionId) {
+    this.db.prepare('UPDATE chat_lead_outbox SET delivered_at = ? WHERE session_id = ?')
+      .run(new Date().toISOString(), sessionId);
+  }
+
+  retryLead(sessionId, attempts, now = Date.now()) {
+    const delay = Math.min(3_600_000, 30_000 * 2 ** Math.min(attempts, 7));
+    this.db.prepare(`UPDATE chat_lead_outbox SET attempts = attempts + 1, next_attempt_at = ?
+      WHERE session_id = ?`).run(now + delay, sessionId);
   }
 
   sessionByToken(token) {

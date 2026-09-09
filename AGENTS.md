@@ -82,6 +82,8 @@ Two halves, deployed two different ways.
 
 **Never commit** `chat-service/.env`, `chat-service/data/` (real visitor conversations), `chat-service/knowledge/website-live.md` (the refreshed cache), or any log folder. `chat-service/.gitignore` already covers these — do not weaken it.
 
+**Phone capture and GHL routing (2026-09-10).** New chats require name, email and an international phone number. The VPS saves a durable lead queue and posts to `/api/chat/lead`, authenticated with the existing ticket secret. Only the Vercel Production environment has `GHL_FRENCHIFY_API_KEY` and `CHAT_LEAD_WORKFLOW_ID`. The dedicated workflow is `Website Submission - Forms and Chatbot` (`ff3f4b75-fc18-443f-9426-f0802e056359`) in Frenchify location `cmjlzerv4DUDyZFj6PYO`. It routes all native form submissions and API-enrolled chatbot leads to the `Website Submission` pipeline. Preserve contact tags, owners and consent settings. Allen explicitly forbids changing any other automations as part of this work. See `chat-service/README.md` for queue and rollback details.
+
 ## Secrets
 
 `.env.local` is not in the repo and never should be. If a page needs an environment variable you do not have, **stop and ask a human** — do not invent values, do not commit a `.env` file, do not paste keys into source.

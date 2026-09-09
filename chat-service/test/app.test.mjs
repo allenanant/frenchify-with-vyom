@@ -63,9 +63,16 @@ test('gates chat, answers, and creates one idempotent ticket', async (t) => {
   };
 
   assert.equal((await call('/v1/sessions', {}, false)).status, 401);
-  const started = await call('/v1/sessions', { name: 'Asha Patel', email: 'asha@example.com' });
+  for (const phone of [undefined, '', '123', '5145550123', '+012345678', '+1 514 555 0123 ext 2']) {
+    const invalid = await call('/v1/sessions', { name: 'Asha Patel', email: 'asha@example.com', phone });
+    assert.equal(invalid.status, 400);
+  }
+  assert.equal(store.pendingLeads().length, 0);
+  const started = await call('/v1/sessions', { name: 'Asha Patel', email: 'asha@example.com', phone: '+1 (514) 555-0123' });
   assert.equal(started.status, 201);
   assert.ok(started.body.sessionToken);
+  assert.equal(store.sessionByToken(started.body.sessionToken).phone, '+15145550123');
+  assert.equal(store.pendingLeads().length, 1);
 
   const answered = await call('/v1/messages', {
     sessionToken: started.body.sessionToken,
