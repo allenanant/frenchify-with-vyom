@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation';
  * The support desk is a working dashboard, not a page we are selling from.
  */
 const BARE_PREFIXES = [
+  '/student-assistant',
   '/student-support/staff',
   '/writingsubmissions',
   '/final_prep_writing_submissions',
