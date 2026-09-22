@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import ExamSplitSelector from './_components/ExamSplitSelector';
+import CourseJourney from './_components/CourseJourney';
 
 export const metadata: Metadata = {
   title: 'Frenchify Courses - Master French Fluency',
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function CoursesPage() {
-  return <ExamSplitSelector />;
+  return <CourseJourney />;
 }
