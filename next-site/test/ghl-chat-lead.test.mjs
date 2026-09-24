@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { syncChatLead } from '../lib/ghl-chat-lead.mjs';
+import {
+  addFrenchifyContactTags,
+  enrollFrenchifyContact,
+  syncChatLead,
+  upsertFrenchifyContact,
+} from '../lib/ghl-chat-lead.mjs';
 
 const lead = { name: 'Test Lead', email: 'test@example.com', phone: '+15145550123' };
 const config = { token: 'test-token', workflowId: 'test-workflow' };
@@ -41,4 +46,25 @@ test('requires a positive acknowledgment and accepts the legacy GHL success spel
     if (acknowledgment.succeded === true) assert.deepEqual(await result, { ok: true });
     else await assert.rejects(result);
   }
+});
+
+test('roadmap sync primitives append tags and keep workflow enrollment separate', async () => {
+  const calls = [];
+  const mockFetch = async (url, options) => {
+    calls.push({ url, body: JSON.parse(options.body) });
+    if (url.endsWith('/contacts/upsert')) {
+      return new Response(JSON.stringify({ contact: { id: 'contact-2', locationId: 'cmjlzerv4DUDyZFj6PYO' } }));
+    }
+    if (url.endsWith('/tags')) return new Response(JSON.stringify({ tags: ['existing', 'free-roadmap-access'] }), { status: 201 });
+    return new Response('{"succeeded":true}');
+  };
+
+  const result = await upsertFrenchifyContact(lead, { token: config.token }, mockFetch);
+  await addFrenchifyContactTags(result.contactId, ['free-roadmap-access'], { token: config.token }, mockFetch);
+  assert.equal(calls.length, 2, 'upsert and tags must not enroll without an explicit call');
+  assert.deepEqual(calls[0].body, { locationId: 'cmjlzerv4DUDyZFj6PYO', ...lead });
+  assert.deepEqual(calls[1].body, { tags: ['free-roadmap-access'] });
+
+  await enrollFrenchifyContact(result.contactId, config, mockFetch);
+  assert.match(calls[2].url, /\/workflow\/test-workflow$/);
 });

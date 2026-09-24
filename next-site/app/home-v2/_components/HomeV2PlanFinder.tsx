@@ -29,7 +29,7 @@ export default function HomeV2PlanFinder() {
               Not sure where to start?
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-[16px] leading-[1.7] text-[#5f6b7a] md:text-[18px]">
-              Answer 8 quick questions and we&apos;ll recommend the Frenchify path that matches your level, timeline, and PR goal.
+              Answer 8 quick questions, get the Frenchify path that matches your level and PR goal, and unlock the full French roadmap completely free.
             </p>
           </div>
         </Reveal>
@@ -60,7 +60,7 @@ export default function HomeV2PlanFinder() {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </Link>
             <p className="mt-4 text-[12px] font-medium text-[#6b7280]">
-              Takes 2 minutes • TEF &amp; TCF focused • No commitment
+              Takes 2 minutes • Free roadmap included • No commitment
             </p>
           </div>
         </Reveal>

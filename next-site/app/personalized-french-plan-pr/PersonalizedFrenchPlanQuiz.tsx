@@ -5,12 +5,14 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
   ArrowLeft,
   ArrowRight,
+  BookOpenCheck,
   Check,
   CheckCircle2,
   ChevronRight,
   Clock3,
   Compass,
   GraduationCap,
+  LoaderCircle,
   LockKeyhole,
   RotateCcw,
   Sparkles,
@@ -24,6 +26,7 @@ import {
   FrenchPlanRecommendation,
   getRecommendedFrenchPlan,
 } from '@/lib/french-plan';
+import { MARKETING_CONSENT_COPY } from '@/lib/roadmap/constants';
 
 type AnswerKey = Exclude<
   keyof FrenchPlanAnswers,
@@ -161,6 +164,9 @@ type ContactDetails = {
   email: string;
   phone: string;
   countryTimezone: string;
+  password: string;
+  passwordConfirmation: string;
+  marketingConsent: boolean;
 };
 
 const EMPTY_CONTACT: ContactDetails = {
@@ -168,6 +174,9 @@ const EMPTY_CONTACT: ContactDetails = {
   email: '',
   phone: '',
   countryTimezone: '',
+  password: '',
+  passwordConfirmation: '',
+  marketingConsent: false,
 };
 
 type View = 'quiz' | 'contact' | 'result';
@@ -180,6 +189,8 @@ export default function PersonalizedFrenchPlanQuiz() {
   const [answers, setAnswers] = useState<FrenchPlanAnswers>(EMPTY_ANSWERS);
   const [contact, setContact] = useState<ContactDetails>(EMPTY_CONTACT);
   const [recommendation, setRecommendation] = useState<FrenchPlanRecommendation | null>(null);
+  const [submitError, setSubmitError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const question = QUESTIONS[stepIndex];
   const selectedAnswer = answers[question.key];
@@ -223,31 +234,38 @@ export default function PersonalizedFrenchPlanQuiz() {
     goToTop();
   };
 
-  const submitContact = (event: FormEvent<HTMLFormElement>) => {
+  const submitContact = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const plan = getRecommendedFrenchPlan(answers);
-    const lead = {
-      ...contact,
-      ...answers,
-      recommendedProgram: plan.recommendedProgram,
-      createdAt: new Date().toISOString(),
-    };
-
-    try {
-      window.sessionStorage.setItem('frenchifyPersonalizedPlanLead', JSON.stringify(lead));
-    } catch {
-      // The recommendation still works when storage is blocked or unavailable.
+    setSubmitError('');
+    if (contact.password !== contact.passwordConfirmation) {
+      setSubmitError('The two passwords do not match.');
+      return;
     }
+    setSubmitting(true);
+    try {
+      const response = await fetch('/api/personalized-plan/submit/', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ ...contact, answers, website: '' }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || 'Your plan could not be saved.');
 
-    setRecommendation(plan);
-    setView('result');
-    goToTop();
+      setRecommendation(result.recommendation || getRecommendedFrenchPlan(answers));
+      setView('result');
+      goToTop();
+    } catch (reason) {
+      setSubmitError(reason instanceof Error ? reason.message : 'Your plan could not be saved.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const restart = () => {
     setAnswers(EMPTY_ANSWERS);
     setContact(EMPTY_CONTACT);
     setRecommendation(null);
+    setSubmitError('');
     setStepIndex(0);
     setView('quiz');
     goToTop();
@@ -278,8 +296,18 @@ export default function PersonalizedFrenchPlanQuiz() {
               Create My Personalized French Plan for PR
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-[1.65] text-[#5f6b7a] md:text-[17px]">
-              Answer a few quick questions and we&apos;ll recommend the best Frenchify roadmap for your TEF/TCF Canada goal.
+              Answer a few quick questions, get your personalized recommendation, and unlock the full Frenchify roadmap completely free.
             </p>
+            <div className="mx-auto mt-5 flex max-w-xl flex-col items-center justify-center gap-2 rounded-2xl border border-amber-200 bg-amber-50/80 px-4 py-3 text-[12px] leading-relaxed text-[#6f5620] sm:flex-row sm:gap-3">
+              <span className="inline-flex items-center gap-2 font-bold">
+                <BookOpenCheck className="h-4 w-4 text-[#d97706]" aria-hidden="true" />
+                Free roadmap included
+              </span>
+              <span className="hidden h-4 w-px bg-amber-200 sm:block" aria-hidden="true" />
+              <Link href="/free-french-roadmap/login/" className="font-bold text-[#2563eb] hover:underline">
+                Already have access? Sign in
+              </Link>
+            </div>
           </header>
         )}
 
@@ -474,7 +502,7 @@ export default function PersonalizedFrenchPlanQuiz() {
                   Where should we attach your plan?
                 </h2>
                 <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-[#6b7280]">
-                  Add your details to unlock your recommended program, roadmap, and next step.
+                  Add your details and create a password to save your result. You can return anytime to view your free roadmap without retaking the quiz.
                 </p>
 
                 <div className="mt-7 grid gap-5 sm:grid-cols-2">
@@ -501,10 +529,55 @@ export default function PersonalizedFrenchPlanQuiz() {
                   ))}
                 </div>
 
+                <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                  {([
+                    ['password', 'Create a Roadmap Password', 'new-password'],
+                    ['passwordConfirmation', 'Confirm Password', 'new-password'],
+                  ] as const).map(([key, label, autoComplete]) => (
+                    <label key={key} className="text-[13px] font-bold text-[#374151]">
+                      {label}
+                      <input
+                        type="password"
+                        required
+                        minLength={10}
+                        maxLength={72}
+                        autoComplete={autoComplete}
+                        value={contact[key]}
+                        onChange={(event) =>
+                          setContact((current) => ({ ...current, [key]: event.target.value }))
+                        }
+                        placeholder="At least 10 characters"
+                        className="mt-2 min-h-12 w-full rounded-xl border border-[#d9e0e8] bg-white px-4 text-[14px] font-normal text-[#111827] outline-none transition placeholder:text-[#9aa4b2] focus:border-[#2563eb] focus:ring-4 focus:ring-blue-100"
+                      />
+                    </label>
+                  ))}
+                </div>
+
+                <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-2xl border border-[#dfe5ec] bg-white p-4 transition hover:border-blue-200">
+                  <input
+                    type="checkbox"
+                    checked={contact.marketingConsent}
+                    onChange={(event) =>
+                      setContact((current) => ({ ...current, marketingConsent: event.target.checked }))
+                    }
+                    className="mt-0.5 h-4 w-4 shrink-0 rounded border-[#cfd7e2] text-[#2563eb] focus:ring-[#2563eb]"
+                  />
+                  <span className="text-[12px] leading-relaxed text-[#4b5563]">
+                    {MARKETING_CONSENT_COPY} <span className="font-semibold text-[#7a8492]">Optional.</span>
+                  </span>
+                </label>
+
                 <div className="mt-7 flex items-start gap-2.5 rounded-2xl bg-[#f5f7fb] p-4 text-[12px] leading-relaxed text-[#667085]">
                   <LockKeyhole className="mt-0.5 h-4 w-4 shrink-0 text-[#2563eb]" aria-hidden="true" />
-                  Your answers are used to prepare this recommendation and are kept in this browser session for easy reference.
+                  Your details and answers are securely saved to create your roadmap account and Frenchify lead record. Marketing emails are only enabled when you tick the optional consent box. See our{' '}
+                  <Link href="/privacy-policy/" className="font-bold text-[#2563eb] hover:underline">Privacy Policy</Link>.
                 </div>
+
+                {submitError && (
+                  <p role="alert" className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-[13px] font-medium text-red-700">
+                    {submitError}
+                  </p>
+                )}
 
                 <div className="mt-8 flex flex-col-reverse gap-3 border-t border-[#edf0f4] pt-6 sm:flex-row sm:items-center sm:justify-between">
                   <button
@@ -517,10 +590,12 @@ export default function PersonalizedFrenchPlanQuiz() {
                   </button>
                   <button
                     type="submit"
-                    className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#f59e0b] px-6 text-[14px] font-bold text-[#111827] shadow-[0_16px_34px_-15px_rgba(245,158,11,0.75)] transition-all hover:-translate-y-0.5 hover:bg-[#fbbf24]"
+                    disabled={submitting}
+                    className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#f59e0b] px-6 text-[14px] font-bold text-[#111827] shadow-[0_16px_34px_-15px_rgba(245,158,11,0.75)] transition-all hover:-translate-y-0.5 hover:bg-[#fbbf24] disabled:cursor-wait disabled:opacity-60 disabled:hover:translate-y-0"
                   >
-                    Show My Recommended Plan
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                    {submitting ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
+                    {submitting ? 'Saving My Plan…' : 'Show My Plan + Unlock Free Roadmap'}
+                    {!submitting ? <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" /> : null}
                   </button>
                 </div>
               </form>
@@ -625,6 +700,31 @@ export default function PersonalizedFrenchPlanQuiz() {
                   ))}
                 </ol>
               </article>
+
+              <div className="relative mt-5 overflow-hidden rounded-[26px] border border-blue-200 bg-gradient-to-br from-blue-50 via-white to-amber-50 p-6 shadow-[0_20px_55px_-36px_rgba(37,99,235,0.45)] sm:p-8">
+                <div aria-hidden className="absolute -right-20 -top-20 h-52 w-52 rounded-full bg-[#f59e0b]/15 blur-[70px]" />
+                <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-start gap-4">
+                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#2563eb] text-white shadow-[0_12px_28px_-14px_rgba(37,99,235,0.8)]">
+                      <BookOpenCheck className="h-6 w-6" aria-hidden="true" />
+                    </span>
+                    <div>
+                      <span className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#2563eb]">Included completely free</span>
+                      <h2 className="mt-1 font-display text-[23px] font-bold tracking-[-0.02em] text-[#111827]">Your Full French Roadmap</h2>
+                      <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#5f6b7a]">
+                        Use the step-by-step roadmap online now. Your new account keeps it available when you return on any device.
+                      </p>
+                    </div>
+                  </div>
+                  <Link
+                    href="/free-french-roadmap/"
+                    className="group inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2 rounded-full bg-[#2563eb] px-6 py-3.5 text-[14px] font-bold text-white shadow-[0_16px_34px_-15px_rgba(37,99,235,0.75)] transition-all hover:-translate-y-0.5 hover:bg-[#1d4ed8]"
+                  >
+                    Open My Free Roadmap
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                  </Link>
+                </div>
+              </div>
 
               <div className="mt-5 rounded-[26px] bg-white p-6 text-center shadow-[0_20px_55px_-36px_rgba(15,23,42,0.4)] sm:p-8">
                 <GraduationCap className="mx-auto h-7 w-7 text-[#2563eb]" aria-hidden="true" />

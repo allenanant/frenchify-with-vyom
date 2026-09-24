@@ -69,7 +69,7 @@ export default function HomeV2MegaCta() {
 
               <Reveal direction="up" delay={0.2}>
                 <p className="mt-6 max-w-[520px] text-[16px] md:text-[18px] leading-[1.6] text-white/75">
-                  Answer 8 focused questions and get a personalized route from your current French level to your TEF or TCF Canada goal.
+                  Answer 8 focused questions, receive your personalized route, and unlock the complete French roadmap free.
                 </p>
               </Reveal>
 
@@ -129,7 +129,7 @@ export default function HomeV2MegaCta() {
                     In about 2 minutes
                   </div>
                   <div className="text-[13px] text-white/65">
-                    A clear program recommendation and roadmap
+                    A clear recommendation + your free full roadmap
                   </div>
                 </div>
               </div>

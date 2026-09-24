@@ -93,7 +93,7 @@ export default function HomeV2Hero() {
 
             <Reveal direction="up" delay={0.7}>
               <p className="mt-7 max-w-[620px] text-[16px] md:text-[18px] leading-[1.55] text-[#374151]">
-                Not sure where to start? Get a personalized TEF/TCF Canada study plan based on your French level, daily study time, work permit timeline, and PR goal.
+                Not sure where to start? Get a personalized TEF/TCF Canada study plan and unlock our full French roadmap completely free.
               </p>
             </Reveal>
 
@@ -126,7 +126,7 @@ export default function HomeV2Hero() {
 
             <Reveal direction="up" delay={1.0}>
               <p className="mt-5 text-[12px] font-semibold text-[#4b5563] sm:text-[13px]">
-                Takes 2 minutes • TEF &amp; TCF focused • CLB 5 and CLB 7 roadmap
+                Takes 2 minutes • Free full roadmap included • Save access with your email
               </p>
               <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3 text-[13px] text-[#4b5563]">
                 <span className="inline-flex items-center gap-1.5">

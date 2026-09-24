@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
           </Reveal>
           <Reveal direction="up" delay={0.1} duration={0.6}>
             <span className="inline-block px-4 py-1.5 rounded-full bg-white/70 backdrop-blur-sm border border-gray-200 text-sm text-gray-600 shadow-sm">
-              Last Updated: August 7, 2026
+              Last Updated: September 24, 2026
             </span>
           </Reveal>
         </div>
@@ -46,8 +46,14 @@ export default function PrivacyPolicyPage() {
                 <li>Course enrollment and progress information</li>
                 <li>IP addresses and device IDs (for security)</li>
                 <li>Class recordings, messages, and feedback</li>
+                <li>French plan questionnaire answers, program recommendations, and roadmap account details</li>
+                <li>Your marketing consent choice and the date and source of that choice</li>
               </ul>
-              <p className="text-gray-700 leading-relaxed mb-4">These details are used solely to provide and administer our educational services and maintain account security.</p>
+              <p className="text-gray-700 leading-relaxed mb-4">These details are used to provide and administer our educational services, personalize recommendations, grant access to saved resources, follow up on inquiries, and maintain account security.</p>
+
+              <h2 className="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">1.1 Roadmap Accounts &amp; Marketing Choice</h2>
+              <p className="text-gray-700 leading-relaxed mb-4">When you complete the personalized French plan questionnaire, we create a password-protected roadmap account and a lead record so that we can deliver your result and respond to your inquiry.</p>
+              <p className="text-gray-700 leading-relaxed mb-4">The optional marketing checkbox is separate from access to the free roadmap. We send newsletters, study tips, course updates, or promotional offers only when you provide consent or when another lawful basis applies. You may unsubscribe at any time.</p>
 
               <h2 className="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">2. Class Recordings &amp; Consent</h2>
               <p className="text-gray-700 leading-relaxed mb-4">All live sessions are recorded. Attendance constitutes consent to recording of your name, voice, and video.</p>
@@ -81,17 +87,18 @@ export default function PrivacyPolicyPage() {
                 <li>Needed to process payments or prevent fraud</li>
                 <li>Used by service providers bound by confidentiality</li>
               </ul>
+              <p className="text-gray-700 leading-relaxed mb-4">Questionnaire leads and consent records may be processed in our GoHighLevel customer relationship management system. Roadmap account and session data may be stored through our website hosting and database providers.</p>
 
               <h2 className="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">7. Data Retention</h2>
               <p className="text-gray-700 leading-relaxed mb-4">Personal data is retained only as long as necessary for course delivery and to meet legal obligations.</p>
               <p className="text-gray-700 leading-relaxed mb-4">After that period, it may be anonymized or securely deleted.</p>
 
               <h2 className="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">8. Cookies &amp; Analytics</h2>
-              <p className="text-gray-700 leading-relaxed mb-4">Our website uses cookies and analytics tools to improve functionality and performance.</p>
+              <p className="text-gray-700 leading-relaxed mb-4">Our website uses cookies and analytics tools to improve functionality and performance. A secure, essential session cookie keeps signed-in roadmap users authenticated.</p>
               <p className="text-gray-700 leading-relaxed mb-4">Users may disable cookies in their browser settings.</p>
 
               <h2 className="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">9. Third-Party Tools Notice</h2>
-              <p className="text-gray-700 leading-relaxed mb-4">Participation via Zoom, Google Meet, Stripe, Afterpay, or similar platforms is governed by each provider&rsquo;s independent terms and privacy policies.</p>
+              <p className="text-gray-700 leading-relaxed mb-4">Participation via Zoom, Google Meet, Google Docs, GoHighLevel, Vercel, Neon, Stripe, Afterpay, or similar platforms is governed by each provider&rsquo;s independent terms and privacy policies.</p>
 
               <h2 className="text-2xl font-semibold text-gray-900 mt-10 mb-4 pb-2 border-b border-gray-200">10. Student Rights</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
