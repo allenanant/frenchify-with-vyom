@@ -98,7 +98,41 @@ export default function HomeV2Hero() {
             </Reveal>
 
             <Reveal direction="up" delay={0.85}>
-              <div className="mt-9 flex flex-wrap items-center gap-4">
+              <section
+                aria-labelledby="plan-video-heading"
+                className="mt-7 max-w-[560px]"
+              >
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                  <h2
+                    id="plan-video-heading"
+                    className="text-[14px] font-extrabold text-[#111827] sm:text-[15px]"
+                  >
+                    Watch how your free personalized plan works
+                  </h2>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-bold text-[#4b5563] shadow-sm ring-1 ring-[#dbeafe]">
+                    <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#2563eb]" />
+                    Starts muted
+                  </span>
+                </div>
+
+                <div className="relative aspect-video overflow-hidden rounded-[22px] border border-white/80 bg-[#071936] shadow-[0_24px_60px_-20px_rgba(7,25,54,0.5)] ring-1 ring-[#dbeafe]">
+                  <iframe
+                    src="https://www.youtube-nocookie.com/embed/VchV9QvuKpI?autoplay=1&mute=1&playsinline=1&rel=0"
+                    title="Free Roadmap for PR in Canada — Frenchify"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                    className="absolute inset-0 h-full w-full border-0"
+                  />
+                </div>
+                <p className="mt-2 text-[11px] font-medium text-[#6b7280] sm:text-[12px]">
+                  Tap the speaker in the video to hear Vyom explain what you will receive.
+                </p>
+              </section>
+            </Reveal>
+
+            <Reveal direction="up" delay={0.95}>
+              <div className="mt-7 flex flex-wrap items-center gap-4">
                 <Magnetic className="w-full sm:w-auto">
                   <Link
                     href="/personalized-french-plan-pr"
@@ -124,7 +158,7 @@ export default function HomeV2Hero() {
               </div>
             </Reveal>
 
-            <Reveal direction="up" delay={1.0}>
+            <Reveal direction="up" delay={1.1}>
               <p className="mt-5 text-[12px] font-semibold text-[#4b5563] sm:text-[13px]">
                 Takes 2 minutes • Free full roadmap included • Save access with your email
               </p>
