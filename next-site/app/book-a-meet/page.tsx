@@ -138,7 +138,7 @@ export default function BookAMeetPage() {
                     Khushi is a Program Consultant at Frenchify who conducts 20-minute one-on-one consultations to help students understand program structure, fees, access, and timelines. She guides you in choosing the right starting level based on your goals and availability.
                   </p>
                   <div className="text-center mt-auto">
-                    <p className="text-3xl font-bold text-gray-800 mb-2">1.99 CAD</p>
+                    <p className="text-3xl font-bold text-gray-800 mb-2">4.99 CAD</p>
                     <Magnetic>
                       <a
                         href="https://api.leadconnectorhq.com/widget/booking/vuQtLZKhcVRsWI09FG6j"

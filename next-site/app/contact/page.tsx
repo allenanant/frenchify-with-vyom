@@ -53,7 +53,7 @@ const calls: {
     name: 'Khushi Patel',
     title: 'Program Consultation',
     duration: '20 min',
-    price: 'CA$1.99',
+    price: 'CA$4.99',
     href: 'https://api.leadconnectorhq.com/widget/booking/vuQtLZKhcVRsWI09FG6j',
   },
   {
@@ -63,8 +63,6 @@ const calls: {
     price: 'CA$25',
     href: 'https://api.leadconnectorhq.com/widget/booking/WATTU6fLCIqmDmFUuB4k',
   },
-  // Placeholder that predates this list. Stays until Vyom sends the link.
-  { name: 'Meeting with Karan', title: 'Booking link coming soon', href: null },
 ];
 
 export default function ContactPage() {
