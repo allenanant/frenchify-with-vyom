@@ -123,7 +123,7 @@ export default function A2AnalysisTestPage() {
               <BookingCta className="mt-8 w-full" />
               <p className="mt-4 flex items-center justify-center gap-2 text-center text-xs leading-5 text-slate-500">
                 <LockKeyhole className="h-3.5 w-3.5" aria-hidden />
-                Secure online payment
+                Secure payment. Instant access after you pay.
               </p>
             </aside>
           </div>
@@ -203,7 +203,7 @@ export default function A2AnalysisTestPage() {
             Ready to check your A2 level?
           </h2>
           <p className="mx-auto mt-4 max-w-xl leading-7 text-slate-300">
-            Pay online and the Frenchify team will help you schedule your session with Harleen.
+            Pay online and get instant access to your A2 Analysis Test.
           </p>
           <BookingCta className="mt-8" />
           <p className="mx-auto mt-8 max-w-2xl text-xs leading-5 text-slate-400">
