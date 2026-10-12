@@ -42,10 +42,9 @@ const links = {
 } as const;
 
 const approvedPortraits = {
-  darshan:
-    'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/68851d26b8876817d0e1903e.png',
-  khushi:
-    'https://storage.googleapis.com/msgsndr/cmjlzerv4DUDyZFj6PYO/media/6845e1c3e8861b03d63d455f.png',
+  punya: '/team/punya-sharma.jpg',
+  darshan: '/team/darshan-patel.jpg',
+  khushi: '/team/khushi-patel.jpg',
   harleen:
     'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/698a1fd867d749129b19c343.png',
 } as const;
@@ -79,6 +78,8 @@ const advisors: Advisor[] = [
     price: 'CAD $3.99',
     button: 'Book with Punya',
     href: links.punya,
+    imageSrc: approvedPortraits.punya,
+    imagePosition: 'object-[50%_38%]',
     recommended: true,
     showIntroSlot: true,
   },
@@ -94,7 +95,7 @@ const advisors: Advisor[] = [
     button: 'Book with Darshan',
     href: links.darshan,
     imageSrc: approvedPortraits.darshan,
-    imagePosition: 'object-[50%_30%]',
+    imagePosition: 'object-[50%_36%]',
   },
   {
     name: 'Khushi Patel',
@@ -108,7 +109,7 @@ const advisors: Advisor[] = [
     button: 'Book with Khushi',
     href: links.khushi,
     imageSrc: approvedPortraits.khushi,
-    imagePosition: 'object-[50%_28%]',
+    imagePosition: 'object-[50%_35%]',
   },
 ];
 
