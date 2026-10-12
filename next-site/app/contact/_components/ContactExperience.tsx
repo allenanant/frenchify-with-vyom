@@ -45,8 +45,7 @@ const approvedPortraits = {
   punya: '/team/punya-sharma.jpg',
   darshan: '/team/darshan-patel.jpg',
   khushi: '/team/khushi-patel.jpg',
-  harleen:
-    'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/698a1fd867d749129b19c343.png',
+  harleen: '/team/harleen-kaur.jpg',
 } as const;
 
 type Advisor = {
@@ -204,7 +203,7 @@ function ProfilePortrait({ advisor }: { advisor: Advisor }) {
   return (
     <div
       className={cn(
-        'relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl border-4 bg-white shadow-sm',
+        'relative h-32 w-32 shrink-0 overflow-hidden rounded-2xl border-4 bg-white shadow-sm',
         advisor.recommended ? 'border-amber-100' : 'border-blue-50'
       )}
     >
@@ -213,7 +212,7 @@ function ProfilePortrait({ advisor }: { advisor: Advisor }) {
           src={advisor.imageSrc}
           alt={`${advisor.name}, ${advisor.meta}`}
           fill
-          sizes="96px"
+          sizes="128px"
           className={cn('object-cover', advisor.imagePosition)}
         />
       ) : (
@@ -542,13 +541,13 @@ export default function ContactExperience() {
             <Reveal className="h-full">
               <article className="flex h-full flex-col rounded-3xl border border-[#e4e7f2] bg-white p-5 shadow-[0_18px_50px_-35px_rgba(22,35,95,0.45)] sm:p-7">
                 <div className="flex items-start gap-4">
-                  <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl border-4 border-blue-50 bg-white shadow-sm">
+                  <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-2xl border-4 border-blue-50 bg-white shadow-sm">
                     <Image
                       src={approvedPortraits.harleen}
                       alt="Harleen Kaur, Frenchify analysis advisor"
                       fill
-                      sizes="96px"
-                      className="object-cover"
+                      sizes="128px"
+                      className="object-cover object-center"
                     />
                   </div>
                   <div className="min-w-0 pt-1">
