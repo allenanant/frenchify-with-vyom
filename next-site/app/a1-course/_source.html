@@ -66,6 +66,9 @@
     text-decoration: none;
   }
   .btn-primary:hover { background: #1d4ed8; transform: translateY(-3px); box-shadow: 0 18px 35px -10px rgba(37, 99, 235, 0.6); }
+  /* Combo card: its column is only 240px on a 360px phone, so the two register
+     buttons trade side padding for a label that stays on one line. */
+  .btn-primary--tight { padding-left: 1rem; padding-right: 1rem; text-align: center; }
 
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.in { opacity: 1; transform: translateY(0); }
@@ -818,25 +821,34 @@
                   📌 A1 access is for 3 months. Your A2 3 months access begins right after you give your A1 Test, or when your A1 3 months access ends, whichever comes first.
                 </p>
               </div>
-              <div class="space-y-4">
-                <div class="ed-day" style="background:#f9fafb;text-align:left;">
-                  <div class="text-xs uppercase tracking-widest text-gray-500">Self-Paced Combo</div>
-                  <div class="mt-1 flex items-baseline gap-2">
-                    <span class="font-display text-3xl font-bold text-brand-ink">$878</span>
-                    <span class="text-sm text-gray-400 line-through">$948</span>
+              <!-- One button per price, each directly under the price it charges for. -->
+              <div class="space-y-6">
+                <div class="space-y-3">
+                  <div class="ed-day" style="background:#f9fafb;text-align:left;">
+                    <div class="text-xs uppercase tracking-widest text-gray-500">Self-Paced Combo</div>
+                    <div class="mt-1 flex items-baseline gap-2">
+                      <span class="font-display text-3xl font-bold text-brand-ink">$878</span>
+                      <span class="text-sm text-gray-400 line-through">$948</span>
+                    </div>
                   </div>
+                  <a href="https://link.fastpaydirect.com/payment-link/68ab529a67ee3b5faf687eb9" target="_blank" rel="noopener noreferrer" class="btn-primary btn-primary--tight w-full" aria-label="Register for Self-Paced Combo (A1 + A2)">
+                    Register for Self-Paced
+                    <span class="cta-link__arrow">→</span>
+                  </a>
                 </div>
-                <div class="ed-day" style="background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(245,158,11,0.06));border-color:rgba(37,99,235,0.2);text-align:left;">
-                  <div class="text-xs uppercase tracking-widest text-brand-blue">Intensive Combo</div>
-                  <div class="mt-1 flex items-baseline gap-2">
-                    <span class="font-display text-3xl font-bold text-brand-ink">$1,098</span>
-                    <span class="text-sm text-gray-400 line-through">$1,198</span>
+                <div class="space-y-3">
+                  <div class="ed-day" style="background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(245,158,11,0.06));border-color:rgba(37,99,235,0.2);text-align:left;">
+                    <div class="text-xs uppercase tracking-widest text-brand-blue">Intensive Combo</div>
+                    <div class="mt-1 flex items-baseline gap-2">
+                      <span class="font-display text-3xl font-bold text-brand-ink">$1,098</span>
+                      <span class="text-sm text-gray-400 line-through">$1,198</span>
+                    </div>
                   </div>
+                  <a href="https://link.fastpaydirect.com/payment-link/6852f4718e1542a54ebcc6e1" target="_blank" rel="noopener noreferrer" class="btn-primary btn-primary--tight w-full" aria-label="Register for Intensive Combo (A1 + A2)">
+                    Register for Intensive
+                    <span class="cta-link__arrow">→</span>
+                  </a>
                 </div>
-                <a href="https://link.fastpaydirect.com/payment-link/6852f4718e1542a54ebcc6e1" target="_blank" rel="noopener noreferrer" class="btn-primary w-full">
-                  Register for Combo
-                  <span class="cta-link__arrow">→</span>
-                </a>
               </div>
             </div>
           </div>
