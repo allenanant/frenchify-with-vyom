@@ -127,6 +127,14 @@ const nextConfig = {
   },
   async rewrites() {
     return [
+      // Keep the Diwali campaign on the Frenchify domain while GoHighLevel
+      // continues to own the funnel content, countdown and checkout controls.
+      // This also means edits made to the source funnel appear at the public
+      // Frenchify URL without maintaining a second, drifting copy.
+      {
+        source: '/diwali-offer',
+        destination: 'https://sites.leadconnectorhq.com/preview/R2WiSGskbUSHpkbDe5li?notrack=true',
+      },
       // Keep the Frenchify URL in the browser while HighLevel serves the A1
       // result and registration experience behind it.
       {
