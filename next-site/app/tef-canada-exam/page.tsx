@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import {
   Star,
   Users,
@@ -7,8 +6,6 @@ import {
   MessagesSquare,
   CheckCircle2,
   Award,
-  ArrowRight,
-  Clock,
   Youtube,
 } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
@@ -16,6 +13,8 @@ import Stagger from '@/components/motion/Stagger';
 import Magnetic from '@/components/motion/Magnetic';
 import FloatingOrbs from '@/components/motion/FloatingOrbs';
 import FaqAccordion, { type FaqItem } from '@/components/FaqAccordion';
+import MentorBookingCard from '@/components/booking/MentorBookingCard';
+import MentorRail from '@/components/booking/MentorRail';
 
 // Root layout adds "| Frenchify" via the title template, so no suffix here.
 export const metadata = {
@@ -41,6 +40,9 @@ type Mentor = {
 // price - read off the live GHL widgets, Aug 2026. GHL stays the source of
 // truth; the calendar shows the real total at checkout.
 const FLEX_SESSION = { duration: 30, price: 'CA$13.99' };
+
+// Anchor for each mentor's card, e.g. #ashish-kohli - the mentor list jumps here.
+const mentorSlug = (m: Mentor) => m.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
 const mentors: Mentor[] = [
   {
@@ -253,101 +255,86 @@ export default function TefCanadaExamPage() {
 
       {/* Mentors Section */}
       <section className="py-10 md:py-20 bg-white full-bleed-section-ghl" id="mentors">
-        <div className="ghl-row mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <div className="text-center mb-12">
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">
-                Our TEF &amp; TCF Canada Exam-Certified{' '}
-                <span className="text-blue-600">Mentors</span>
-              </h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Each mentor brings dual-exam experience and proven strategies for TEF and TCF Canada.
-              </p>
-            </div>
-          </Reveal>
-
-          {/* One compact card per mentor, three across on desktop. The old face
-              line-up + full-width card stack was the same information twice and
-              made the page several screens longer than it needed to be.
-              h-full + flex-col keeps every card in a row the same height, and
-              mt-auto pins the booking button to the bottom edge whatever the
-              blurb length. Booking still opens the GHL widget in a new tab. */}
-          <Stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mentors.map((m) => (
-              <div
-                key={m.name}
-                className="premium-card h-full flex flex-col bg-white rounded-2xl border border-gray-200 shadow-lg p-5 sm:p-6 transition-all duration-300 hover:shadow-2xl"
-              >
-                <div className="flex items-center gap-4">
-                  <Image
-                    src={m.img}
-                    alt={m.name}
-                    width={160}
-                    height={160}
-                    className="w-20 h-20 rounded-full object-cover border-4 border-blue-50 bg-gray-50 shrink-0"
-                  />
-                  <div className="min-w-0">
-                    <h3 className="font-display text-lg font-bold text-gray-900 tracking-tight">
-                      {m.name}
-                    </h3>
-                    <p className={`text-xs ${m.badge.color} font-medium mt-1 flex items-center`}>
-                      <m.badge.Icon className="w-3.5 h-3.5 mr-1 shrink-0" />
-                      <span className="min-w-0">{m.badge.text}</span>
-                    </p>
-                    <p className="text-xs font-medium text-gray-700 mt-1">{m.certifiedLabel}</p>
-                  </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Booking cards, with the mentor list pinned beside them on desktop. */}
+          <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_68px] lg:gap-6 xl:grid-cols-[minmax(0,1fr)_224px] xl:gap-8">
+            <div className="min-w-0">
+              <Reveal>
+                <div className="text-center mb-10 md:mb-12">
+                  <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">
+                    Our TEF &amp; TCF Canada Exam-Certified{' '}
+                    <span className="text-blue-600">Mentors</span>
+                  </h2>
+                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Each mentor brings dual-exam experience and proven strategies for TEF and TCF Canada.
+                  </p>
                 </div>
+              </Reveal>
 
-                <div className="flex flex-wrap gap-1.5 mt-4">
-                  {m.clb.map((c, i) => (
-                    <span
-                      key={i}
-                      className="inline-block px-2.5 py-1 rounded-full text-xs font-semibold text-gray-700 bg-gray-100"
+              {/* One card per mentor with their Flex calendar embedded in it,
+                  instead of a Book button that opened the GHL widget in a new
+                  tab. Under 1024px each card is a dropdown. Fade only: a
+                  slide-in would move each card after the mentor list has
+                  scrolled to it, so the jump lands short. */}
+              <div className="space-y-4 lg:space-y-6">
+                {mentors.map((m) => (
+                  <Reveal key={m.name} amount={0.05} direction="none">
+                    <MentorBookingCard
+                      id={mentorSlug(m)}
+                      name={m.name}
+                      photo={m.img}
+                      tagline={
+                        <>
+                          <p className={`text-xs ${m.badge.color} font-medium mt-1 flex items-center`}>
+                            <m.badge.Icon className="w-3.5 h-3.5 mr-1 shrink-0" />
+                            <span className="min-w-0">{m.badge.text}</span>
+                          </p>
+                          <p className="text-xs font-medium text-gray-700 mt-1">{m.certifiedLabel}</p>
+                        </>
+                      }
+                      sessions={[
+                        {
+                          src: m.link,
+                          label: 'Flex Speaking Session',
+                          duration: FLEX_SESSION.duration,
+                          price: FLEX_SESSION.price,
+                        },
+                      ]}
                     >
-                      {c}
-                    </span>
-                  ))}
-                </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {m.clb.map((c, i) => (
+                          <span
+                            key={i}
+                            className="inline-block px-2.5 py-1 rounded-full text-xs font-semibold text-gray-700 bg-gray-100"
+                          >
+                            {c}
+                          </span>
+                        ))}
+                      </div>
 
-                <p className="text-gray-600 text-sm leading-relaxed mt-3">{m.blurb}</p>
+                      <p className="text-gray-600 text-sm leading-relaxed mt-3">{m.blurb}</p>
 
-                {m.videoLink && (
-                  <a
-                    href={m.videoLink.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center self-start text-xs text-red-600 hover:text-red-800 font-medium underline mt-2"
-                  >
-                    <Youtube className="w-3.5 h-3.5 mr-1" />
-                    {m.videoLink.label}
-                  </a>
-                )}
-
-                <Magnetic className="mt-auto pt-5">
-                  <a
-                    href={m.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between gap-2 bg-blue-600 text-white font-medium px-4 py-3 rounded-xl transition-all duration-300 hover:bg-brand-blue-deep hover:-translate-y-0.5 shadow-[0_2px_8px_rgba(37,99,235,0.25)] hover:shadow-[0_6px_16px_rgba(37,99,235,0.35)]"
-                  >
-                    <span className="min-w-0">
-                      <span className="block font-semibold text-sm">Flex Speaking Session</span>
-                      <span className="flex items-center gap-1.5 text-xs text-blue-100 mt-0.5">
-                        <Clock className="w-3 h-3 shrink-0" />
-                        {FLEX_SESSION.duration} min
-                        <span aria-hidden>·</span>
-                        <span className="font-semibold">{FLEX_SESSION.price}</span>
-                      </span>
-                    </span>
-                    <span className="inline-flex items-center shrink-0 text-sm font-semibold">
-                      Book <ArrowRight className="ml-1.5 w-4 h-4" />
-                      <span className="sr-only">{m.name} (opens in a new tab)</span>
-                    </span>
-                  </a>
-                </Magnetic>
+                      {m.videoLink && (
+                        <a
+                          href={m.videoLink.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center self-start text-xs text-red-600 hover:text-red-800 font-medium underline mt-2"
+                        >
+                          <Youtube className="w-3.5 h-3.5 mr-1" />
+                          {m.videoLink.label}
+                        </a>
+                      )}
+                    </MentorBookingCard>
+                  </Reveal>
+                ))}
               </div>
-            ))}
-          </Stagger>
+            </div>
+
+            <MentorRail
+              mentors={mentors.map((m) => ({ id: mentorSlug(m), name: m.name, photo: m.img }))}
+            />
+          </div>
         </div>
       </section>
 

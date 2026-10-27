@@ -2,6 +2,7 @@ import { CalendarDays, Info, Lock, MessageSquare } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
 import Stagger from '@/components/motion/Stagger';
 import FaqAccordion from '@/components/FaqAccordion';
+import MentorRail from '@/components/booking/MentorRail';
 import MentorCard from './_components/MentorCard';
 import { bookingSteps, faqs, levels, mentors } from './_data';
 
@@ -72,25 +73,35 @@ export default function OneOnOneSpeakingPage() {
 
       {/* ── Booking ─────────────────────────────────────────── */}
       <section className="bg-white py-14 md:py-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <div className="text-center mb-10 md:mb-14">
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
-                Book Your <span className="gradient-text">Speaking Session</span>
-              </h2>
-              <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-                Pick a mentor and choose a duration. The booking calendar opens in a new tab, and
-                you will get an email with the meeting link once the booking is confirmed.
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="space-y-6">
-            {mentors.map((m) => (
-              <Reveal key={m.slug} amount={0.05}>
-                <MentorCard mentor={m} />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Booking cards, with the mentor list pinned beside them on desktop. */}
+          <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_68px] lg:gap-6 xl:grid-cols-[minmax(0,1fr)_224px] xl:gap-8">
+            <div className="min-w-0">
+              <Reveal>
+                <div className="text-center mb-10 md:mb-14">
+                  <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
+                    Book Your <span className="gradient-text">Speaking Session</span>
+                  </h2>
+                  <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
+                    Pick a mentor and choose a duration, then book straight from their calendar
+                    here. You will get an email with the meeting link once the booking is
+                    confirmed.
+                  </p>
+                </div>
               </Reveal>
-            ))}
+
+              {/* Fade only: a slide-in would move each card after the mentor
+                  list or a #link has scrolled to it, so the jump lands short. */}
+              <div className="space-y-4 lg:space-y-6">
+                {mentors.map((m) => (
+                  <Reveal key={m.slug} amount={0.05} direction="none">
+                    <MentorCard mentor={m} />
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+
+            <MentorRail mentors={mentors.map((m) => ({ id: m.slug, name: m.name, photo: m.photo }))} />
           </div>
         </div>
       </section>

@@ -54,6 +54,17 @@
     scroll-margin-top: 88px;
   }
 
+  /* Pages with an embedded GHL booking calendar (GhlBookingCalendar). The
+     widget scrolls the page to each new booking step, and scroll-padding on
+     the page is the only thing that keeps that step clear of the header, so
+     it takes over the header clearance here and the per-element margins go. */
+  html[data-embedded-booking] {
+    scroll-padding-top: 96px;
+  }
+  html[data-embedded-booking] [id] {
+    scroll-margin-top: 0;
+  }
+
   ::selection {
     background-color: #2563eb;
     color: #fff;
