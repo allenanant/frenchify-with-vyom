@@ -15,7 +15,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 
-const PAYMENT_LINK = 'https://link.fastpaydirect.com/payment-link/6a778ccec8cc9a2ce7266f61';
+const PAYMENT_LINK = 'https://learn.frenchifywithvyom.com/l/4ad717fb2a';
 
 export const metadata = {
   title: 'A1 Analysis Test – Start A2 | Frenchify with Vyom',

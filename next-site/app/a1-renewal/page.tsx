@@ -46,13 +46,13 @@ const situations = [
 ];
 
 const onlinePlans = [
-  { term: '1 Month', price: '$149 CAD', href: 'https://buy.stripe.com/4gM28rajBafI7QW3Mk5sA1E' },
-  { term: '2 Months', price: '$249 CAD', href: 'https://buy.stripe.com/5kQ5kD4Zh2Ng6MSfv25sA1y' },
+  { term: '1 Month', price: '$149 CAD', href: 'https://learn.frenchifywithvyom.com/l/4cfcf2594d' },
+  { term: '2 Months', price: '$249 CAD', href: 'https://learn.frenchifywithvyom.com/l/03b1f14dbb' },
 ];
 
 const livePlans = [
-  { term: '1 Month', price: '$199 CAD', href: 'https://buy.stripe.com/5kQdR9fDVbjM0ou82A5sA17' },
-  { term: '2 Months', price: '$299 CAD', href: 'https://buy.stripe.com/8x29ATbnF0F85IO0A85sA1w' },
+  { term: '1 Month', price: '$199 CAD', href: 'https://learn.frenchifywithvyom.com/l/e328bed27a' },
+  { term: '2 Months', price: '$299 CAD', href: 'https://learn.frenchifywithvyom.com/l/dcbcd7925c' },
 ];
 
 const pathSteps = [

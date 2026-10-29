@@ -34,8 +34,8 @@ const links = {
   khushi: 'https://api.leadconnectorhq.com/widget/bookings/khushi-patel',
   harleen:
     'https://api.leadconnectorhq.com/widget/bookings/harleen-kaur-30-mins-one-on-onf25esfyjd43id7imab6s2fmxiihif9',
-  a1Analysis: 'https://link.fastpaydirect.com/payment-link/6a778ccec8cc9a2ce7266f61',
-  a2Analysis: 'https://link.fastpaydirect.com/payment-link/6aabf0f2f426560dbc2f0c82',
+  a1Analysis: 'https://learn.frenchifywithvyom.com/l/4ad717fb2a',
+  a2Analysis: 'https://learn.frenchifywithvyom.com/l/0cbde9620f',
   masterclass: 'https://www.frenchifywithvyom.com/sunday-webinar/',
   beginner: 'https://frenchifywithvyom.com/frenchify-beginner-program/',
   portal: 'https://learn.frenchifywithvyom.com/',

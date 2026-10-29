@@ -1,7 +1,7 @@
 import { ArrowLeft, ArrowRight, Check, ClipboardCheck, LockKeyhole, Mic2 } from 'lucide-react';
 
 // The previous, longer version of this page is archived at /a2-analysis-test-previous/.
-const PAYMENT_LINK = 'https://link.fastpaydirect.com/payment-link/6aabf0f2f426560dbc2f0c82';
+const PAYMENT_LINK = 'https://learn.frenchifywithvyom.com/l/0cbde9620f';
 
 export const metadata = {
   title: 'A2 Analysis Test – Start Exam Prep 1 | Frenchify with Vyom',
