@@ -263,7 +263,7 @@ export default function A2RenewalPage() {
                 </h2>
                 <p className="text-gray-700 leading-relaxed max-w-2xl mx-auto">
                   Pre-register and pay the fee for B1, your next level, to get 1 month of A2 Online
-                  Course + Live Sessions renewal for free.
+                  Program renewal for free.
                 </p>
               </div>
             </div>
