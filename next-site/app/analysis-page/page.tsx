@@ -1,193 +1,180 @@
-import {
-  ArrowRight,
-  BookOpen,
-  CheckCircle2,
-  ClipboardCheck,
-  GraduationCap,
-  LockKeyhole,
-  Sparkles,
-} from 'lucide-react';
+import { ArrowRight, CheckCircle2, MessageCircle } from 'lucide-react';
 
 export const metadata = {
-  title: 'Choose Your French Starting Point | Frenchify with Vyom',
+  title: 'Frenchify Placement & Level Assessment',
   description:
-    'Choose the right Frenchify starting point: begin with A1, take the A1 analysis test, or explore advanced placement options.',
+    'Select the French level you want to start next: start A1 directly, book a Test to Start A2 or B1, or book a B2 guidance call with Punya Sharma.',
 };
 
 const paths = [
   {
-    eyebrow: 'Beginner pathway',
-    title: 'Start directly with A1',
-    destination: 'Build your French foundation',
+    level: 'A1',
+    heading: 'Start',
+    requirement: 'No Test Required',
+    foundation: null,
     description:
-      'Choose this if you are a complete beginner or have only studied a little French. You do not need an analysis test.',
-    Icon: Sparkles,
+      'New to French? You can start A1 directly without taking a placement assessment.',
     accent: 'blue',
     href: '/a1-course/',
     action: 'Explore A1 Programs',
   },
   {
-    eyebrow: 'A1 Analysis Test',
-    title: 'To start A2',
-    destination: 'Confirm your A1 foundation',
+    level: 'A2',
+    heading: 'Test to Start',
+    requirement: 'Test Required',
+    foundation: 'Check Your A1 Foundation',
     description:
-      'Choose this if you have completed A1 elsewhere or believe you already understand the A1 level.',
-    Icon: ClipboardCheck,
+      'Already studied A1? Complete this assessment so we can confirm whether you are ready to begin A2.',
     accent: 'emerald',
-    href: '/a1-level-analysis-test/',
-    action: 'View A1 Test Information',
+    href: 'https://learn.frenchifywithvyom.com/web/checkout/6925f1238d6535cff000f8d5',
+    action: 'Book Test to Start A2',
   },
   {
-    eyebrow: 'A2 Analysis Test',
-    title: 'To start Exam Prep 1',
-    destination: 'Confirm your readiness for exam preparation',
+    level: 'B1',
+    heading: 'Test to Start',
+    requirement: 'Test Required',
+    foundation: 'Check Your A2 Foundation',
     description:
-      'Choose this if you have completed A2 and want an assessment with Harleen before beginning Exam Prep 1.',
-    Icon: BookOpen,
+      'Completed A2 or studied equivalent French elsewhere? Complete this assessment before beginning B1 / Exam Prep 1.',
     accent: 'violet',
-    href: '/a2-analysis-test/',
-    action: 'View A2 Test Details',
+    href: 'https://learn.frenchifywithvyom.com/web/checkout/693645b55324d3f59baadd0b',
+    action: 'Book Test to Start B1',
   },
   {
-    eyebrow: 'Exam Prep Analysis Test',
-    title: 'To start Final Prep',
-    destination: 'Confirm your readiness for the final stage',
+    level: 'B2',
+    heading: 'Start',
+    requirement: 'Guidance Call Required',
+    foundation: null,
     description:
-      'Choose this if you have completed Exam Prep 1 or studied TEF material and want an assessment with Harleen.',
-    Icon: GraduationCap,
+      'Completed B1 or already preparing for TEF/TCF? Book a guidance call with Punya Sharma so we can review your current level and recommend the correct B2 / final-prep pathway.',
     accent: 'amber',
-    action: 'Information & Booking Coming Soon',
+    href: 'https://www.frenchifywithvyom.com/contact/',
+    action: 'Book B2 Guidance Call',
   },
 ] as const;
 
 const accentStyles = {
   blue: {
     border: 'border-blue-200',
-    icon: 'bg-blue-50 text-blue-700',
-    eyebrow: 'text-blue-700',
+    badge: 'bg-blue-50 text-blue-700',
+    level: 'text-blue-700',
     button: 'bg-blue-700 hover:bg-blue-800 focus-visible:outline-blue-700',
   },
   emerald: {
     border: 'border-emerald-200',
-    icon: 'bg-emerald-50 text-emerald-700',
-    eyebrow: 'text-emerald-700',
+    badge: 'bg-emerald-50 text-emerald-700',
+    level: 'text-emerald-700',
     button: 'bg-emerald-700 hover:bg-emerald-800 focus-visible:outline-emerald-700',
   },
   violet: {
     border: 'border-violet-200',
-    icon: 'bg-violet-50 text-violet-700',
-    eyebrow: 'text-violet-700',
+    badge: 'bg-violet-50 text-violet-700',
+    level: 'text-violet-700',
     button: 'bg-violet-700 hover:bg-violet-800 focus-visible:outline-violet-700',
   },
   amber: {
     border: 'border-amber-200',
-    icon: 'bg-amber-50 text-amber-700',
-    eyebrow: 'text-amber-700',
-    button: '',
+    badge: 'bg-amber-50 text-amber-800',
+    level: 'text-amber-800',
+    button: 'bg-amber-800 hover:bg-amber-900 focus-visible:outline-amber-800',
   },
 } as const;
 
 export default function AnalysisPage() {
   return (
     <div className="bg-white text-slate-900">
-      <section className="full-bleed-section-ghl border-b border-slate-200 bg-slate-50 px-6 pb-16 pt-[118px] md:pb-20 md:pt-[150px]">
+      <section className="full-bleed-section-ghl border-b border-slate-200 bg-slate-50 px-6 py-12 md:py-16">
         <div className="mx-auto max-w-4xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-4 py-2 text-sm font-semibold text-blue-700">
-            <CheckCircle2 className="h-4 w-4" aria-hidden />
-            Frenchify Placement &amp; Program Entry
+            <CheckCircle2 className="h-4 w-4 shrink-0" aria-hidden />
+            Frenchify Placement &amp; Level Assessment
           </div>
           <h1 className="font-display mt-6 text-4xl font-bold leading-tight tracking-tight text-slate-950 md:text-6xl">
-            Choose your correct French starting point.
+            Which French Level Do You Want to Start?
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-600 md:text-xl">
-            Select the option that best describes your current French journey. We will guide you to
-            the appropriate program or assessment.
+            Select the level you want to start next. We’ll tell you whether you can begin directly,
+            need a short assessment, or should speak with our team first.
           </p>
         </div>
       </section>
 
-      <section className="full-bleed-section-ghl px-6 py-16 md:py-24">
-        <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
+      <section aria-label="Choose your next French level" className="full-bleed-section-ghl px-4 py-12 sm:px-6 md:py-16">
+        <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 xl:grid-cols-4">
           {paths.map((path, index) => {
             const styles = accentStyles[path.accent];
-            const Icon = path.Icon;
 
             return (
               <article
-                key={path.eyebrow}
-                className={`flex min-h-[390px] flex-col rounded-3xl border bg-white p-7 shadow-[0_16px_45px_rgba(15,23,42,0.06)] md:p-9 ${styles.border}`}
+                key={path.level}
+                className={`flex min-w-0 flex-col rounded-3xl border bg-white p-6 shadow-[0_16px_45px_rgba(15,23,42,0.06)] ${styles.border}`}
               >
-                <div className="flex items-start justify-between gap-5">
-                  <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${styles.icon}`}>
-                    <Icon className="h-6 w-6" aria-hidden />
-                  </div>
-                  <span className="font-display text-sm font-bold text-slate-300">0{index + 1}</span>
+                <div className="flex items-start justify-between gap-4">
+                  <h2 className="font-display font-bold tracking-tight">
+                    <span className="block text-sm uppercase tracking-[0.12em] text-slate-600">{path.heading}{' '}</span>
+                    <span className={`mt-2 block text-6xl leading-none ${styles.level}`}>{path.level}</span>
+                  </h2>
+                  <span aria-hidden className="font-display text-sm font-bold text-slate-400">0{index + 1}</span>
                 </div>
 
-                <p className={`mt-7 text-sm font-bold uppercase tracking-[0.14em] ${styles.eyebrow}`}>
-                  {path.eyebrow}
+                <p className={`mt-5 self-start rounded-full px-3 py-1.5 text-xs font-bold ${styles.badge}`}>
+                  {path.requirement}
                 </p>
-                <h2 className="font-display mt-3 text-3xl font-bold tracking-tight text-slate-950">
-                  {path.title}
-                </h2>
-                <p className="mt-3 font-semibold text-slate-800">{path.destination}</p>
+                {path.foundation && (
+                  <p className="mt-5 text-sm font-semibold text-slate-800">{path.foundation}</p>
+                )}
                 <p className="mt-4 flex-1 text-sm leading-7 text-slate-600">{path.description}</p>
 
-                {'href' in path ? (
-                  <a
-                    href={path.href}
-                    className={`mt-8 inline-flex items-center justify-center gap-2 rounded-xl px-6 py-4 text-center text-sm font-bold text-white shadow-lg transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${styles.button}`}
-                  >
-                    {path.action}
-                    <ArrowRight className="h-4 w-4" aria-hidden />
-                  </a>
-                ) : (
-                  <div className="mt-8 flex min-h-13 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 px-6 py-4 text-center text-sm font-bold text-slate-500">
-                    {path.action}
-                  </div>
-                )}
+                <a
+                  href={path.href}
+                  className={`mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-3 py-4 text-center text-sm font-bold text-white shadow-lg transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${styles.button}`}
+                >
+                  {path.action}
+                  <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
+                </a>
               </article>
             );
           })}
         </div>
       </section>
 
-      <section className="full-bleed-section-ghl border-y border-slate-200 bg-slate-50 px-6 py-16">
-        <div className="mx-auto max-w-5xl">
-          <div className="grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:items-center">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.14em] text-blue-700">
-                How it works
-              </p>
-              <h2 className="font-display mt-3 text-3xl font-bold tracking-tight text-slate-950">
-                One page. One clear next step.
-              </h2>
-            </div>
-            <ol className="grid gap-4 sm:grid-cols-3">
-              {[
-                ['1', 'Choose your pathway'],
-                ['2', 'Review the details'],
-                ['3', 'Join or book your test'],
-              ].map(([number, label]) => (
-                <li key={number} className="rounded-2xl border border-slate-200 bg-white p-5">
-                  <span className="font-display text-sm font-bold text-blue-700">{number}</span>
-                  <p className="mt-3 text-sm font-semibold leading-6 text-slate-800">{label}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
+      <section className="full-bleed-section-ghl border-y border-slate-200 bg-slate-50 px-6 py-12 md:py-16">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="font-display text-3xl font-bold tracking-tight text-slate-950">
+            How Placement Works
+          </h2>
+          <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              'Choose the level you want to start',
+              'Complete an assessment if your level requires one',
+              'Frenchify reviews your result',
+              'Start the recommended program',
+            ].map((label, index) => (
+              <li key={label} className="rounded-2xl border border-slate-200 bg-white p-5">
+                <span aria-hidden className="font-display text-sm font-bold text-blue-700">{index + 1}</span>
+                <p className="mt-3 text-sm font-semibold leading-6 text-slate-800">{label}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-6 text-sm leading-7 text-slate-600">
+            A1 students can start directly. For B2 / Final Prep, a guidance call with Punya Sharma
+            replaces the automatic assessment step. We’ll review your exam readiness and recommend
+            whether you can start B2 or need another assessment or step first.
+          </p>
         </div>
       </section>
 
-      <section className="full-bleed-section-ghl px-6 py-14">
+      <section className="full-bleed-section-ghl px-6 py-10">
         <div className="mx-auto flex max-w-3xl items-start gap-3 rounded-2xl border border-slate-200 p-6 text-sm leading-6 text-slate-600">
-          <LockKeyhole className="mt-0.5 h-5 w-5 shrink-0 text-slate-500" aria-hidden />
+          <MessageCircle className="mt-0.5 h-5 w-5 shrink-0 text-blue-700" aria-hidden />
           <p>
-            Not sure which option applies to you? Contact{' '}
-            <a className="font-semibold text-blue-700 underline underline-offset-4" href="mailto:admin@frenchifywithvyom.com">
-              admin@frenchifywithvyom.com
-            </a>{' '}
-            before booking.
+            Not sure which level applies to you?{' '}
+            <a
+              className="font-semibold text-blue-700 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+              href="https://www.frenchifywithvyom.com/contact/"
+            >
+              Book a guidance call with our team.
+            </a>
           </p>
         </div>
       </section>

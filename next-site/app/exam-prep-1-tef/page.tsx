@@ -8,9 +8,11 @@ import ProgramTabs from './_components/ProgramTabs';
 export const metadata = {
   title: 'Exam Prep 1 for TEF Canada - Frenchify with Vyom',
   description:
-    'Three focused TEF Canada Exam Prep 1 programs: EP1 Intensive, EP1 Flex and CLB 5 Speaking and Listening. Book your compulsory Analysis Test and get placed in the right one.',
+    'Three focused TEF Canada B1 / Exam Prep 1 programs: EP1 Intensive, EP1 Flex and CLB 5 Speaking and Listening. Book the Test to Start B1 to check your A2 foundation.',
   alternates: { canonical: 'https://frenchifywithvyom.com/exam-prep-1-tef' },
 };
+
+const b1EntryCheckout = 'https://learn.frenchifywithvyom.com/web/checkout/693645b55324d3f59baadd0b';
 
 const fees = [
   { name: 'EP1 Intensive', price: '$899 CAD' },
@@ -20,8 +22,8 @@ const fees = [
 
 const faqs: FaqItem[] = [
   {
-    q: 'Do I need to take the Analysis Test even if I know I am at B1 level?',
-    a: 'Yes, the Analysis Test is compulsory for all students before registering for any Exam Prep 1 program. It only takes a short time and ensures we place you correctly so your preparation is targeted and effective. Book here 👉 frenchifywithvyom.com/analysis-page',
+    q: 'Do I need the Test to Start B1 even if I believe I am already at B1 level?',
+    a: 'Yes. Before registering for B1 / Exam Prep 1, complete the Test to Start B1 so we can confirm that your A2 foundation is strong enough for exam-focused preparation. Use any Book Test to Start B1 button on this page to go directly to checkout.',
   },
   {
     q: 'What is the difference between EP1 Intensive and EP1 Flex?',
@@ -37,16 +39,16 @@ const faqs: FaqItem[] = [
   },
   {
     q: 'How do I register?',
-    a: 'Send an E-Transfer to frenchifyfee@gmail.com and mention which program you are joining along with your full name. Your access will be activated within 24 hours. If you have questions before registering, book a call with our team here 👉 frenchifywithvyom.com/book-online',
+    a: 'First, complete the Test to Start B1. Then send an E-Transfer to frenchifyfee@gmail.com and mention which program you are joining along with your full name. Your access will be activated within 24 hours. If you have questions before registering, book a call with our team here 👉 frenchifywithvyom.com/book-online',
   },
   {
     q: 'Is there a refund policy?',
-    a: 'All fees are non refundable once access is granted. We strongly recommend completing the Analysis Test and booking a consultation call before registering if you have any questions 👉 frenchifywithvyom.com/book-online',
+    a: 'All fees are non refundable once access is granted. We strongly recommend completing the Test to Start B1 and booking a consultation call before registering if you have any questions 👉 frenchifywithvyom.com/book-online',
   },
 ];
 
 const registerSteps = [
-  'Book and complete your Analysis Test at frenchifywithvyom.com/analysis-page',
+  <span key="b1-entry">Book and complete the{' '}<a href={b1EntryCheckout} className="font-semibold text-brand-blue underline underline-offset-4">Test to Start B1</a>.</span>,
   'Send an E-Transfer to frenchifyfee@gmail.com and mention the program name and your full name',
   'A team member will reach out via your Student Portal within 24 hours to activate your access',
   'If you have questions first, book a call with our team at frenchifywithvyom.com/book-online',
@@ -63,7 +65,7 @@ export default function ExamPrep1TefPage() {
           <Reveal>
             <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 font-semibold text-sm px-5 py-2 rounded-full mb-6">
               <Sparkles className="w-4 h-4" />
-              TEF Canada Exam Prep 1
+              TEF Canada B1 / Exam Prep 1
             </div>
           </Reveal>
           <Reveal delay={0.1}>
@@ -84,18 +86,18 @@ export default function ExamPrep1TefPage() {
                 <ClipboardCheck className="w-5 h-5" />
               </span>
               <p className="text-gray-700 leading-relaxed">
-                Before getting started with any program, an Analysis Test is compulsory. This helps
-                us place you correctly and make the most of your preparation time.
+                Before starting B1 / Exam Prep 1, complete the Test to Start B1. This helps us
+                confirm that your A2 foundation is strong enough for exam-focused preparation.
               </p>
             </div>
           </Reveal>
           <Reveal delay={0.4}>
             <Magnetic>
               <Link
-                href="/analysis-page"
+                href={b1EntryCheckout}
                 className="inline-flex items-center justify-center bg-blue-600 hover:bg-brand-blue-deep text-white font-semibold px-7 py-3.5 rounded-lg shadow transition-all duration-300 mt-7"
               >
-                Book Your Analysis Test <ArrowRight className="w-4 h-4 ml-2" />
+                Book Test to Start B1 <ArrowRight className="w-4 h-4 ml-2 shrink-0" />
               </Link>
             </Magnetic>
           </Reveal>
@@ -134,8 +136,8 @@ export default function ExamPrep1TefPage() {
                 Step One
               </p>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
-                Before You Begin, the Analysis Test is{' '}
-                <span className="gradient-text">Compulsory</span>
+                Before You Begin — Complete the{' '}
+                <span className="gradient-text">Test to Start B1</span>
               </h2>
             </div>
           </Reveal>
@@ -145,17 +147,16 @@ export default function ExamPrep1TefPage() {
                 <ClipboardCheck className="w-7 h-7" />
               </span>
               <p className="text-gray-700 leading-relaxed mt-6">
-                Before registering for any of the three programs, every student must complete an
-                Analysis Test. This is a short live assessment that helps us understand your current
-                level, identify your strengths and weaknesses, and make sure you are placed in the
-                right program so your preparation is as effective as possible.
+                Before registering for B1 / Exam Prep 1, complete the Test to Start B1. This
+                assessment helps us review your A2 foundation, identify your strengths and areas
+                to improve, and recommend the right program for your exam preparation.
               </p>
               <Magnetic>
                 <Link
-                  href="/analysis-page"
+                  href={b1EntryCheckout}
                   className="inline-flex items-center justify-center bg-blue-600 hover:bg-brand-blue-deep text-white font-semibold px-7 py-3.5 rounded-lg shadow transition-all duration-300 mt-8"
                 >
-                  Book Your Analysis Test <ArrowRight className="w-4 h-4 ml-2" />
+                  Book Test to Start B1 <ArrowRight className="w-4 h-4 ml-2 shrink-0" />
                 </Link>
               </Magnetic>
             </div>
@@ -189,7 +190,7 @@ export default function ExamPrep1TefPage() {
                 Ready to <span className="gradient-text">Get Started?</span>
               </h2>
               <p className="text-gray-600 mt-4">
-                Complete your Analysis Test first, then register for the program that fits you best.
+                Complete the Test to Start B1, then choose the B1 program that fits you best.
               </p>
             </div>
           </Reveal>
@@ -234,10 +235,10 @@ export default function ExamPrep1TefPage() {
               <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <Magnetic>
                   <Link
-                    href="/analysis-page"
+                    href={b1EntryCheckout}
                     className="inline-flex items-center justify-center bg-blue-600 hover:bg-brand-blue-deep text-white font-semibold px-7 py-3.5 rounded-lg shadow transition-all duration-300"
                   >
-                    Book Your Analysis Test <ArrowRight className="w-4 h-4 ml-2" />
+                    Book Test to Start B1 <ArrowRight className="w-4 h-4 ml-2 shrink-0" />
                   </Link>
                 </Magnetic>
                 <Link
