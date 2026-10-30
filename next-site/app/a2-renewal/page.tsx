@@ -259,7 +259,7 @@ export default function A2RenewalPage() {
                   <Gift className="w-7 h-7" />
                 </span>
                 <h2 className="font-display text-2xl md:text-3xl font-bold text-gray-900 tracking-tight mb-4">
-                  How to Get A2 1 Month Renewal Worth $199 CAD, Free?
+                  How to Get A2 1 Month Renewal Worth $149 CAD, Free?
                 </h2>
                 <p className="text-gray-700 leading-relaxed max-w-2xl mx-auto">
                   Pre-register and pay the fee for B1, your next level, to get 1 month of A2 Online

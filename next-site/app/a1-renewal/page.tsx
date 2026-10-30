@@ -331,11 +331,11 @@ export default function A1RenewalPage() {
                   <Gift className="w-7 h-7" />
                 </span>
                 <h2 className="font-display text-2xl md:text-3xl font-bold text-gray-900 tracking-tight mb-4">
-                  How to Get A1 1 Month Renewal Worth $199 CAD, Free?
+                  How to Get A1 1 Month Renewal Worth $149 CAD, Free?
                 </h2>
                 <p className="text-gray-700 leading-relaxed max-w-2xl mx-auto">
                   Pre-register and pay the fee for A2, your next level, to get 1 month of A1 Online
-                  Course + Live Sessions renewal for free.
+                  Program renewal for free.
                 </p>
                 <div className="mt-6 flex gap-3 rounded-xl bg-blue-50/70 border border-blue-100 p-4 text-left">
                   <ShieldAlert className="w-5 h-5 text-brand-blue shrink-0 mt-0.5" />
