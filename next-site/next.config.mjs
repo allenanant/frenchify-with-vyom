@@ -111,6 +111,7 @@ const nextConfig = {
         '/webinar-12-july',
         '/webinar-26-july-2026',
         '/webinar-2aug2026',
+        '/frenchify_beginner_program', // old link, sent to the webinar per Allen 2026-11-04
       ].map((source) => ({ source, destination: '/sunday-webinar', permanent: false })),
 
       // Catch-all for any weekly clone URL not in the list above — old ad
