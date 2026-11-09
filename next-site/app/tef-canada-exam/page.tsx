@@ -119,6 +119,30 @@ const mentors: Mentor[] = [
     // B1 Flex calendar - the Flex-program version of her 30 min session.
     link: 'https://api.leadconnectorhq.com/widget/bookings/shilpa-rathore-30-mins-one-on-onf25esfyjd43imvyjvf',
   },
+  {
+    name: 'Aakriti Punaini',
+    blurb:
+      'Prepare a speaking topic for your level and get feedback on structure, pronunciation and fluency.',
+    // Headshot supplied by Vyom, Nov 2026 - not on the GHL CDN like the others.
+    img: '/images/mentors/aakriti-punaini.webp',
+    badge: { Icon: Award, text: 'TEF & TCF Speaking Instructor', color: 'text-blue-600' },
+    // Her calendar says she cleared TEF Canada; it says nothing about sitting TCF.
+    certifiedLabel: 'TEF Canada Certified',
+    clb: ['CLB 11', 'CLB 12', 'CLB 8', 'CLB 7'],
+    link: 'https://api.leadconnectorhq.com/widget/bookings/aakriti-punaini-30-mins-one-onjcn0xy',
+  },
+  {
+    name: 'Darsh Patel',
+    blurb:
+      'Prepare a speaking topic for your level and get feedback on structure, pronunciation and fluency.',
+    // Headshot supplied by Vyom, Nov 2026 - not on the GHL CDN like the others.
+    img: '/images/mentors/darsh-patel.webp',
+    badge: { Icon: CheckCircle2, text: 'Cleared TEF with Frenchify', color: 'text-green-600' },
+    // His calendar says he cleared TEF Canada; it says nothing about sitting TCF.
+    certifiedLabel: 'TEF Canada Certified',
+    clb: ['CLB 12', 'CLB 12', 'CLB 8', 'CLB 9'],
+    link: 'https://api.leadconnectorhq.com/widget/bookings/darsh-patel-30-mins-one-on-one5kdzks',
+  },
 ];
 
 const faqs: FaqItem[] = [

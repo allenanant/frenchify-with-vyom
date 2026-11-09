@@ -500,6 +500,55 @@ export default function ContactExperience() {
               </span>
             ))}
           </Reveal>
+
+          {/* Vyom's own wording (WhatsApp, 9 Nov 2026), asked for "somewhere visible". */}
+          <Reveal className="mx-auto mt-10 max-w-3xl" delay={0.16}>
+            <section
+              id="reach-us"
+              aria-labelledby="reach-us-title"
+              className="scroll-mt-[180px] rounded-3xl border-2 border-amber-300 bg-amber-50/70 p-6 text-left shadow-[0_20px_55px_-40px_rgba(245,158,11,0.7)] sm:p-8"
+            >
+              <div className="flex items-start gap-4">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-amber-700 shadow-sm">
+                  <Mail className="h-6 w-6" aria-hidden="true" />
+                </span>
+                <div className="min-w-0">
+                  <h2
+                    id="reach-us-title"
+                    className="font-display text-2xl font-bold text-[#121a31] sm:text-3xl"
+                  >
+                    How to reach us
+                  </h2>
+                  <p className="mt-3 text-[15px] leading-7 text-[#3f4762] sm:text-base">
+                    Frenchify is currently not available for inbound calls. The best way to reach us
+                    is by email at{' '}
+                    <a
+                      href="mailto:admin@frenchifywithvyom.com"
+                      className={cn(
+                        'break-words font-bold text-brand-blue underline decoration-blue-200 decoration-2 underline-offset-4 hover:text-brand-blue-deep',
+                        focusRing
+                      )}
+                    >
+                      admin@frenchifywithvyom.com
+                    </a>
+                  </p>
+                  <p className="mt-3 text-[15px] leading-7 text-[#3f4762] sm:text-base">
+                    If you don&apos;t hear back, please follow up within 24 hours and we will do our
+                    best to reply as soon as possible.
+                  </p>
+                  <p className="mt-3 text-[15px] leading-7 text-[#3f4762] sm:text-base">
+                    If you would like to speak over a call, let us know in your email and we will
+                    arrange one based on your requirements.
+                  </p>
+                  <p className="mt-4 text-[15px] font-semibold leading-7 text-[#121a31] sm:text-base">
+                    Thank you,
+                    <br />
+                    Vyom
+                  </p>
+                </div>
+              </div>
+            </section>
+          </Reveal>
         </div>
       </section>
 

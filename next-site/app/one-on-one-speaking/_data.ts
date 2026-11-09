@@ -273,6 +273,60 @@ export const mentors: Mentor[] = [
       },
     ],
   },
+  {
+    slug: "aakriti-punaini",
+    name: "Aakriti Punaini",
+    // Headshot supplied by Vyom, Nov 2026 - not on the GHL CDN like the others.
+    photo: "/images/mentors/aakriti-punaini.webp",
+    specialty: "TEF & TCF Speaking Instructor",
+    // Reading · Listening · Writing · Speaking, as her calendar lists them.
+    clb: "CLB 11 · 12 · 8 · 7",
+    blurb:
+      "Prepare a speaking topic for your level and exam type so Aakriti can give you feedback on sentence structure, pronunciation and fluency, or practise spontaneous speaking in the session.",
+    sessions: [
+      {
+        bookingUrl:
+          "https://api.leadconnectorhq.com/widget/bookings/aakriti-punaini-30-mins-one-on",
+        price: "CA$10.99",
+        duration: 30,
+        label: "30 Mins One-on-One Speaking",
+      },
+      {
+        bookingUrl:
+          "https://api.leadconnectorhq.com/widget/bookings/aakriti-punaini-50-mins-one-onvo7zxt",
+        price: "CA$16.99",
+        duration: 50,
+        label: "50 Mins One-on-One Speaking",
+      },
+    ],
+  },
+  {
+    slug: "darsh-patel",
+    name: "Darsh Patel",
+    // Headshot supplied by Vyom, Nov 2026 - not on the GHL CDN like the others.
+    photo: "/images/mentors/darsh-patel.webp",
+    specialty: "Cleared TEF with Frenchify",
+    // Reading · Listening · Writing · Speaking, as his calendar lists them.
+    clb: "CLB 12 · 12 · 8 · 9",
+    blurb:
+      "Prepare a speaking topic for your level and exam type so Darsh can give you feedback on sentence structure, pronunciation and fluency, or practise spontaneous speaking in the session.",
+    sessions: [
+      {
+        bookingUrl:
+          "https://api.leadconnectorhq.com/widget/bookings/darsh-patel-30-mins-one-on-one",
+        price: "CA$10.99",
+        duration: 30,
+        label: "30 Mins One-on-One Speaking",
+      },
+      {
+        bookingUrl:
+          "https://api.leadconnectorhq.com/widget/bookings/darsh-patel-50-mins-one-on-onendrb71",
+        price: "CA$17.99",
+        duration: 50,
+        label: "50 Mins One-on-One Speaking",
+      },
+    ],
+  },
 ];
 
 export const bookingSteps = [
