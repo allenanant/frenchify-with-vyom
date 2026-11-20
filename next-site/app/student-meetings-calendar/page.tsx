@@ -28,17 +28,6 @@ type Mentor = {
 
 const mentors: Mentor[] = [
   {
-    name: 'Rajan Gurjar',
-    variant: 'cleared-first',
-    avatar: { type: 'initials', text: 'RG', bg: 'bg-blue-100', fg: 'text-brand-blue' },
-    certification: 'TEF Certified',
-    clbScores: ['CLB 9', 'CLB 11', 'CLB 8', 'CLB 7'],
-    sessions: [
-      { label: '30 Mins Session', href: 'https://api.leadconnectorhq.com/widget/bookings/rajan-gurjar-30-mins-one-on-on', price: '$11.99' },
-      { label: '50 Mins Session', href: 'https://api.leadconnectorhq.com/widget/bookings/rajan-gurjar-30-mins-one-on-onf25esf', price: '$18.99' },
-    ],
-  },
-  {
     name: 'Jay Patel',
     variant: 'cleared-second',
     avatar: {
