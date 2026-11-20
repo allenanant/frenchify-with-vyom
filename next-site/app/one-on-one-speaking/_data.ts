@@ -84,29 +84,6 @@ export const mentors: Mentor[] = [
     ],
   },
   {
-    slug: "rajan-gurjar",
-    name: "Rajan Gurjar",
-    photo: `${MEDIA}/698cc13f5cec6ca7d09cb2b2.png`,
-    specialty: "Cleared in 1st Attempt",
-    clb: "CLB 9 · 11 · 8 · 7",
-    blurb:
-      "Prepare your monologues or Section A / Section B beforehand so Rajan can give you proper feedback on structure and pronunciation.",
-    sessions: [
-      {
-        calendarId: "T5Ddra0eBJHPMFRa9nlS",
-        price: "CA$11.99",
-        duration: 30,
-        label: "30 Mins One-on-One Speaking",
-      },
-      {
-        calendarId: "1PfDCPTpveVy2tQMFkXp",
-        price: "CA$18.99",
-        duration: 50,
-        label: "50 Mins One-on-One Speaking",
-      },
-    ],
-  },
-  {
     slug: "jay-patel",
     name: "Jay Patel",
     photo: `${MEDIA}/698a37fd0708e455aec9723a.png`,

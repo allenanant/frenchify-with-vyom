@@ -56,16 +56,6 @@ const mentors: Mentor[] = [
     link: 'https://api.leadconnectorhq.com/widget/bookings/ashish-kohli-30-mins-one-on-onf25esfyjd43id7imab2rcn57',
   },
   {
-    name: 'Rajan Gurjar',
-    blurb:
-      'Prepare your monologues or Section A / Section B beforehand for feedback on structure and pronunciation.',
-    img: 'https://assets.cdn.filesafe.space/cmjlzerv4DUDyZFj6PYO/media/698cc13f5cec6ca7d09cb2b2.png',
-    badge: { Icon: CheckCircle2, text: 'Cleared in 1st Attempt', color: 'text-green-600' },
-    certifiedLabel: 'TEF & TCF Certified',
-    clb: ['CLB 9', 'CLB 11', 'CLB 8', 'CLB 7'],
-    link: 'https://api.leadconnectorhq.com/widget/bookings/rajan-gurjar-30-mins-one-on-onf25esfyjd43i',
-  },
-  {
     name: 'Tapas Rastogi',
     blurb:
       'A focused one-on-one built around where your score is actually losing marks.',
