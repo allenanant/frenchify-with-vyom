@@ -13,6 +13,7 @@ import { redirect } from 'next/navigation';
 import matter from 'gray-matter';
 import * as auth from '@/lib/tickets/auth';
 import { stampNow, toIsoStamp } from '@/lib/content-date';
+import { isWallLevel, toWallLevel, WALL_LEVEL_LABELS, type WallLevel } from '@/lib/wall-levels';
 import {
   SCHEDULE_REPO_PATH,
   formatWebinarDate,
@@ -92,13 +93,13 @@ export async function stageImages(fd: FormData): Promise<{ ok: true; blobs: Arra
 
 export async function publishResults(input: {
   title: string;
-  level: 'clb7' | 'clb5';
+  level: WallLevel;
   blobs: Array<{ sha: string; ext: string }>;
 }): Promise<Result> {
   const denied = await gate();
   if (denied) return { ok: false, error: denied };
   const title = input.title.trim().slice(0, 120) || `Results ${today()}`;
-  if (input.level !== 'clb5' && input.level !== 'clb7') return { ok: false, error: 'Pick CLB 7+ or CLB 5.' };
+  if (!isWallLevel(input.level)) return { ok: false, error: 'Pick which wall these results go on.' };
   if (input.blobs.length === 0) return { ok: false, error: 'Add at least one screenshot.' };
   if (input.blobs.length > MAX_BATCH) return { ok: false, error: `Maximum ${MAX_BATCH} images per upload.` };
 
@@ -117,7 +118,7 @@ export async function publishResults(input: {
 
   try {
     await commitFiles({
-      message: `Admin: add ${input.blobs.length} ${input.level === 'clb7' ? 'CLB 7+' : 'CLB 5'} result(s) — ${title}`,
+      message: `Admin: add ${input.blobs.length} ${WALL_LEVEL_LABELS[input.level]} result(s) — ${title}`,
       files,
     });
   } catch (e) {
@@ -154,7 +155,9 @@ export async function deleteResultImage(input: { entryPath: string; imageUrl: st
             path: input.entryPath,
             content: serializeWallEntry({
               title: String(data.title ?? ''),
-              level: data.clbLevel === 'clb5' ? 'clb5' : 'clb7',
+              // Keep the batch on its own wall. The old clb5-or-clb7 check
+              // would have moved a TCF batch to CLB 7+ on any single delete.
+              level: toWallLevel(data.clbLevel),
               createdAt: toIsoStamp(data.createdAt),
               images,
             }),

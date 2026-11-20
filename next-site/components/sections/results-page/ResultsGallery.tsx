@@ -1,24 +1,69 @@
 'use client';
 
-import { useState, useCallback, useEffect, type CSSProperties } from 'react';
+import { Fragment, useState, useCallback, useEffect, type CSSProperties } from 'react';
 import { ArrowUp, X, ChevronLeft, ChevronRight, ListFilter } from 'lucide-react';
+import { WALL_LEVELS, WALL_LEVEL_LABELS, type WallLevel } from '@/lib/wall-levels';
 
 type ResultsGalleryProps = {
-  clb7Images: string[];
-  clb5Images: string[];
+  walls: Record<WallLevel, string[]>;
 };
 
-type Filter = 'all' | 'clb7' | 'clb5';
+type Filter = 'all' | WallLevel;
 
-export default function ResultsGallery({ clb7Images, clb5Images }: ResultsGalleryProps) {
+// Text and colours for each wall. Class names are written out in full so
+// Tailwind finds them (it does not scan lib/).
+const SECTIONS: Record<
+  WallLevel,
+  { badge: string; heading: string; blurb: string; ping: string; dot: string; text: string; spacing: string }
+> = {
+  clb7: {
+    badge: 'CLB 7+ Results',
+    heading: 'Advanced Proficiency',
+    blurb: 'These students achieved CLB 7 or higher, demonstrating exceptional French language proficiency',
+    ping: 'bg-blue-400',
+    dot: 'bg-blue-500',
+    text: 'text-blue-700',
+    spacing: 'mb-24',
+  },
+  clb5: {
+    badge: 'CLB 5 Results',
+    heading: 'Intermediate Success',
+    blurb: 'Strong foundation results that open doors to Canadian immigration opportunities',
+    ping: 'bg-emerald-400',
+    dot: 'bg-emerald-500',
+    text: 'text-emerald-700',
+    spacing: 'mb-20',
+  },
+  'tcf-clb7': {
+    badge: 'TCF CLB 7 Results',
+    heading: 'TCF Canada: CLB 7',
+    blurb: 'These students reached CLB 7 on the TCF Canada exam',
+    ping: 'bg-indigo-400',
+    dot: 'bg-indigo-500',
+    text: 'text-indigo-700',
+    spacing: 'mb-20',
+  },
+  'tcf-clb5': {
+    badge: 'TCF CLB 5 Results',
+    heading: 'TCF Canada: CLB 5',
+    blurb: 'These students reached CLB 5 on the TCF Canada exam',
+    ping: 'bg-teal-400',
+    dot: 'bg-teal-500',
+    text: 'text-teal-700',
+    spacing: 'mb-20',
+  },
+};
+
+export default function ResultsGallery({ walls }: ResultsGalleryProps) {
   const [filter, setFilter] = useState<Filter>('all');
-  const [lightbox, setLightbox] = useState<{ section: 'clb7' | 'clb5'; index: number } | null>(null);
+  const [lightbox, setLightbox] = useState<{ section: WallLevel; index: number } | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  const showClb7 = clb7Images.length > 0 && (filter === 'all' || filter === 'clb7');
-  const showClb5 = clb5Images.length > 0 && (filter === 'all' || filter === 'clb5');
+  // A wall with no images yet gets no filter button and no section.
+  const filledLevels = WALL_LEVELS.filter((level) => walls[level].length > 0);
+  const isShown = (level: WallLevel) => walls[level].length > 0 && (filter === 'all' || filter === level);
 
-  const openLightbox = useCallback((section: 'clb7' | 'clb5', index: number) => {
+  const openLightbox = useCallback((section: WallLevel, index: number) => {
     setLightbox({ section, index });
   }, []);
 
@@ -28,12 +73,12 @@ export default function ResultsGallery({ clb7Images, clb5Images }: ResultsGaller
     (dir: number) => {
       setLightbox((prev) => {
         if (!prev) return prev;
-        const arr = prev.section === 'clb7' ? clb7Images : clb5Images;
+        const arr = walls[prev.section];
         const next = (prev.index + dir + arr.length) % arr.length;
         return { ...prev, index: next };
       });
     },
-    [clb7Images, clb5Images]
+    [walls]
   );
 
   useEffect(() => {
@@ -59,12 +104,16 @@ export default function ResultsGallery({ clb7Images, clb5Images }: ResultsGaller
 
   const filterBtn = (key: Filter, label: string) => (
     <button
+      key={key}
       onClick={() => {
         setFilter(key);
-        const targetId =
-          key === 'clb5' ? 'clb5-section' : 'clb7-section';
-        const el = document.getElementById(targetId);
-        if (el) window.scrollTo({ top: el.offsetTop - 150, behavior: 'smooth' });
+        // Measure after React has hidden the other walls. Measured before,
+        // the page is still long and the scroll lands near the footer.
+        const targetLevel = key === 'all' ? filledLevels[0] : key;
+        window.setTimeout(() => {
+          const el = targetLevel ? document.getElementById(`${targetLevel}-section`) : null;
+          if (el) window.scrollTo({ top: el.offsetTop - 150, behavior: 'smooth' });
+        }, 50);
       }}
       className={`px-6 py-2.5 rounded-full font-medium text-sm border border-slate-200 transition-all ${
         filter === key
@@ -84,7 +133,47 @@ export default function ResultsGallery({ clb7Images, clb5Images }: ResultsGaller
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
   };
 
-  const currentArray = lightbox ? (lightbox.section === 'clb7' ? clb7Images : clb5Images) : [];
+  const currentArray = lightbox ? walls[lightbox.section] : [];
+
+  const renderSection = (level: WallLevel) => {
+    const s = SECTIONS[level];
+    const images = walls[level];
+    return (
+      <div className={`max-w-7xl mx-auto px-6 ${s.spacing}`} id={`${level}-section`}>
+        <div className="flex flex-col items-center mb-12">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-4" style={glassBadgeStyle}>
+            <span className="relative flex h-3 w-3">
+              <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${s.ping} opacity-75`} />
+              <span className={`relative inline-flex rounded-full h-3 w-3 ${s.dot}`} />
+            </span>
+            <span className={`text-sm font-bold tracking-wide ${s.text}`}>{s.badge}</span>
+          </div>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-800 text-center tracking-tight">
+            {s.heading}
+          </h2>
+          <p className="text-slate-600 mt-2 text-center max-w-xl">{s.blurb}</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {images.map((src, i) => (
+            <div
+              key={src}
+              onClick={() => openLightbox(level, i)}
+              className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/60 bg-white/80 backdrop-blur-md shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-blue/25 hover:border-brand-blue"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={src}
+                loading="lazy"
+                alt="Test Result"
+                className="w-full h-auto block transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+          ))}
+          <PrivacyResultCard />
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -97,98 +186,19 @@ export default function ResultsGallery({ clb7Images, clb5Images }: ResultsGaller
           </div>
           <div className="flex flex-wrap gap-2 justify-center">
             {filterBtn('all', 'All Results')}
-            {filterBtn('clb7', 'CLB 7+')}
-            {filterBtn('clb5', 'CLB 5')}
+            {filledLevels.map((level) => filterBtn(level, WALL_LEVEL_LABELS[level]))}
           </div>
         </div>
       </div>
 
-      {/* CLB 7 SECTION */}
-      {showClb7 && (
-        <div className="max-w-7xl mx-auto px-6 mb-24" id="clb7-section">
-          <div className="flex flex-col items-center mb-12">
-            <div
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-4"
-              style={glassBadgeStyle}
-            >
-              <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500" />
-              </span>
-              <span className="text-sm font-bold tracking-wide text-blue-700">CLB 7+ Results</span>
-            </div>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-800 text-center tracking-tight">
-              Advanced Proficiency
-            </h2>
-            <p className="text-slate-600 mt-2 text-center max-w-xl">
-              These students achieved CLB 7 or higher, demonstrating exceptional French language proficiency
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {clb7Images.map((src, i) => (
-              <div
-                key={src}
-                onClick={() => openLightbox('clb7', i)}
-                className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/60 bg-white/80 backdrop-blur-md shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-blue/25 hover:border-brand-blue"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={src}
-                  loading="lazy"
-                  alt="Test Result"
-                  className="w-full h-auto block transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-            ))}
-            <PrivacyResultCard />
-          </div>
-        </div>
-      )}
-
-      {/* Testimonial Carousel Section - reviews widget stays between sections */}
-      {filter === 'all' && <ReviewWidget />}
-
-      {/* CLB 5 SECTION */}
-      {showClb5 && (
-        <div className="max-w-7xl mx-auto px-6 mb-20" id="clb5-section">
-          <div className="flex flex-col items-center mb-12">
-            <div
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-4"
-              style={glassBadgeStyle}
-            >
-              <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
-              </span>
-              <span className="text-sm font-bold tracking-wide text-emerald-700">CLB 5 Results</span>
-            </div>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-800 text-center tracking-tight">
-              Intermediate Success
-            </h2>
-            <p className="text-slate-600 mt-2 text-center max-w-xl">
-              Strong foundation results that open doors to Canadian immigration opportunities
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {clb5Images.map((src, i) => (
-              <div
-                key={src}
-                onClick={() => openLightbox('clb5', i)}
-                className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/60 bg-white/80 backdrop-blur-md shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-blue/25 hover:border-brand-blue"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={src}
-                  loading="lazy"
-                  alt="Test Result"
-                  className="w-full h-auto block transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-            ))}
-            <PrivacyResultCard />
-          </div>
-        </div>
-      )}
+      {/* One section per wall. The reviews widget stays after the first wall
+          (CLB 7+), where it has always been. */}
+      {WALL_LEVELS.map((level, i) => (
+        <Fragment key={level}>
+          {isShown(level) && renderSection(level)}
+          {i === 0 && filter === 'all' && <ReviewWidget />}
+        </Fragment>
+      ))}
 
       {/* Scroll to Top Button */}
       <button

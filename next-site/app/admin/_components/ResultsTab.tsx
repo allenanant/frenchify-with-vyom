@@ -4,10 +4,35 @@ import { useRef, useState, useTransition } from 'react';
 import { Plus, Trash2, X, ImagePlus } from 'lucide-react';
 import { deleteResultImage, publishResults } from '@/lib/content-admin/actions';
 import type { AdminWallEntry } from '@/lib/content-admin/content';
+import { WALL_LEVELS, WALL_LEVEL_LABELS, type WallLevel } from '@/lib/wall-levels';
 import { field, label, primaryBtn, card } from '@/app/student-support/staff/ui';
 import { stageAll } from './uploadFlow';
 
 const LIVE_NOTE = 'The website is updating itself — changes go live in about 2 minutes.';
+
+// One line under each wall name in the "Which wall?" picker.
+const LEVEL_SUB: Record<WallLevel, string> = {
+  clb7: 'Advanced proficiency',
+  clb5: 'Intermediate success',
+  'tcf-clb7': 'TCF Canada exam',
+  'tcf-clb5': 'TCF Canada exam',
+};
+
+const LEVEL_TONE: Record<WallLevel, Tone> = {
+  clb7: 'blue',
+  clb5: 'emerald',
+  'tcf-clb7': 'indigo',
+  'tcf-clb5': 'teal',
+};
+
+type Tone = 'blue' | 'emerald' | 'indigo' | 'teal';
+
+const TONE_CLASS: Record<Tone, string> = {
+  blue: 'bg-blue-50 text-blue-700',
+  emerald: 'bg-emerald-50 text-emerald-700',
+  indigo: 'bg-indigo-50 text-indigo-700',
+  teal: 'bg-teal-50 text-teal-700',
+};
 
 type Props = {
   wall: AdminWallEntry[];
@@ -18,13 +43,10 @@ type Props = {
 export default function ResultsTab({ wall, onDone, onError }: Props) {
   const [adding, setAdding] = useState(false);
 
-  const flat = (level: 'clb7' | 'clb5') =>
+  const flat = (level: WallLevel) =>
     wall
       .filter((e) => e.level === level)
       .flatMap((e) => e.images.map((url) => ({ url, entryPath: e.path })));
-
-  const clb7 = flat('clb7');
-  const clb5 = flat('clb5');
 
   return (
     <div className="space-y-10">
@@ -35,8 +57,20 @@ export default function ResultsTab({ wall, onDone, onError }: Props) {
       )}
       {adding && <AddResults onClose={() => setAdding(false)} onDone={onDone} onError={onError} />}
 
-      <Section title="CLB 7+ results" count={clb7.length} tone="blue" images={clb7} onDone={onDone} onError={onError} />
-      <Section title="CLB 5 results" count={clb5.length} tone="emerald" images={clb5} onDone={onDone} onError={onError} />
+      {WALL_LEVELS.map((level) => {
+        const images = flat(level);
+        return (
+          <Section
+            key={level}
+            title={`${WALL_LEVEL_LABELS[level]} results`}
+            count={images.length}
+            tone={LEVEL_TONE[level]}
+            images={images}
+            onDone={onDone}
+            onError={onError}
+          />
+        );
+      })}
     </div>
   );
 }
@@ -51,7 +85,7 @@ function Section({
 }: {
   title: string;
   count: number;
-  tone: 'blue' | 'emerald';
+  tone: Tone;
   images: Array<{ url: string; entryPath: string }>;
   onDone: (t: string) => void;
   onError: (t: string) => void;
@@ -74,11 +108,7 @@ function Section({
     <section>
       <div className="mb-4 flex items-center gap-2.5">
         <h2 className="font-display text-lg font-bold text-brand-ink">{title}</h2>
-        <span
-          className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-            tone === 'blue' ? 'bg-blue-50 text-blue-700' : 'bg-emerald-50 text-emerald-700'
-          }`}
-        >
+        <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${TONE_CLASS[tone]}`}>
           {count}
         </span>
       </div>
@@ -120,7 +150,7 @@ function AddResults({
   onDone: (t: string) => void;
   onError: (t: string) => void;
 }) {
-  const [level, setLevel] = useState<'clb7' | 'clb5'>('clb7');
+  const [level, setLevel] = useState<WallLevel>('clb7');
   const [title, setTitle] = useState('');
   const [files, setFiles] = useState<File[]>([]);
   const [status, setStatus] = useState<string | null>(null);
@@ -146,7 +176,7 @@ function AddResults({
       setStatus('Publishing…');
       const res = await publishResults({ title, level, blobs });
       if (!res.ok) throw new Error(res.error);
-      onDone(`${files.length} result(s) added to the ${level === 'clb7' ? 'CLB 7+' : 'CLB 5'} wall. ${LIVE_NOTE}`);
+      onDone(`${files.length} result(s) added to the ${WALL_LEVEL_LABELS[level]} wall. ${LIVE_NOTE}`);
       onClose();
     } catch (e) {
       setStatus(null);
@@ -154,11 +184,12 @@ function AddResults({
     }
   };
 
-  const levelBtn = (value: 'clb7' | 'clb5', text: string, sub: string) => (
+  const levelBtn = (value: WallLevel, text: string, sub: string) => (
     <button
+      key={value}
       type="button"
       onClick={() => setLevel(value)}
-      className={`flex-1 rounded-xl border-2 px-4 py-3 text-left transition ${
+      className={`rounded-xl border-2 px-4 py-3 text-left transition ${
         level === value ? 'border-brand-blue bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'
       }`}
     >
@@ -179,9 +210,8 @@ function AddResults({
       <div className="space-y-5">
         <div>
           <span className={label}>Which wall do these belong on?</span>
-          <div className="flex gap-3">
-            {levelBtn('clb7', 'CLB 7+', 'Advanced proficiency')}
-            {levelBtn('clb5', 'CLB 5', 'Intermediate success')}
+          <div className="grid grid-cols-2 gap-3">
+            {WALL_LEVELS.map((value) => levelBtn(value, WALL_LEVEL_LABELS[value], LEVEL_SUB[value]))}
           </div>
         </div>
 

@@ -106,6 +106,8 @@ collections:
         options:
           - { label: "CLB 7+", value: "clb7" }
           - { label: "CLB 5", value: "clb5" }
+          - { label: "TCF CLB 7", value: "tcf-clb7" }
+          - { label: "TCF CLB 5", value: "tcf-clb5" }
       - { label: "Result Screenshots (add as many as you want)", name: "images", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
       - { label: "Upload Date (auto)", name: "createdAt", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
 

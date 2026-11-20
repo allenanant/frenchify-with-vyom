@@ -1,21 +1,20 @@
 // Server-only loader for the Wall of Excellence (/results-page).
 // Reads CMS entries from content/wall-results/*.md — one file per upload
-// batch, each tagged clb7 or clb5 with a list of result screenshot images.
+// batch, each tagged with a wall level (see lib/wall-levels.ts) and a list of
+// result screenshot images.
 
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { newestFirst } from './content-date';
+import { emptyWalls, toWallLevel, type WallLevel } from './wall-levels';
 
-export type WallResults = {
-  clb7: string[];
-  clb5: string[];
-};
+export type WallResults = Record<WallLevel, string[]>;
 
 const CONTENT_DIR = path.join(process.cwd(), 'content', 'wall-results');
 
 export function getWallResults(): WallResults {
-  const results: WallResults = { clb7: [], clb5: [] };
+  const results: WallResults = emptyWalls();
   if (!fs.existsSync(CONTENT_DIR)) return results;
 
   const entries = fs
@@ -24,15 +23,14 @@ export function getWallResults(): WallResults {
     .map((file) => {
       const raw = fs.readFileSync(path.join(CONTENT_DIR, file), 'utf-8');
       const { data } = matter(raw);
-      const level: keyof WallResults = data.clbLevel === 'clb5' ? 'clb5' : 'clb7';
       return {
-        level,
+        level: toWallLevel(data.clbLevel),
         images: Array.isArray(data.images) ? (data.images as unknown[]).map(String) : [],
         createdAt: data.createdAt,
         id: file,
       };
     })
-    // Newest batch first, on both walls. See lib/content-date.ts for why this
+    // Newest batch first, on every wall. See lib/content-date.ts for why this
     // cannot be a string comparison.
     .sort(newestFirst);
 

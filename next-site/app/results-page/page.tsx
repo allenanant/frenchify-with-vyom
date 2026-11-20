@@ -15,7 +15,7 @@ export const metadata = {
 };
 
 export default function ResultsPage() {
-  const { clb7, clb5 } = getWallResults();
+  const walls = getWallResults();
   return (
     <>
       <main className="pt-32 pb-20 relative overflow-hidden aurora-bg">
@@ -41,7 +41,7 @@ export default function ResultsPage() {
           </Reveal>
         </div>
 
-        <ResultsGallery clb7Images={clb7} clb5Images={clb5} />
+        <ResultsGallery walls={walls} />
 
         {/* Enhanced CTA Section */}
         <div className="mt-24 text-center relative z-10 max-w-6xl mx-auto px-6">

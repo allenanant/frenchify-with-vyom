@@ -10,6 +10,7 @@
 import 'server-only';
 import matter from 'gray-matter';
 import { newestFirst, toDateOnly } from '../content-date';
+import { toWallLevel, type WallLevel } from '../wall-levels';
 import { listTree, readBlob } from './github';
 
 export const ANNOUNCEMENTS_DIR = 'next-site/content/announcements';
@@ -41,7 +42,7 @@ export type AdminAnnouncement = {
 export type AdminWallEntry = {
   path: string;
   title: string;
-  level: 'clb7' | 'clb5';
+  level: WallLevel;
   /** YYYY-MM-DD, for display. */
   createdAt: string;
   /** The raw stamp, kept at full precision so same-day batches still order. */
@@ -92,7 +93,7 @@ export async function fetchWallEntries(): Promise<AdminWallEntry[]> {
       return {
         path: n.path,
         title: String(data.title ?? '(untitled)'),
-        level: data.clbLevel === 'clb5' ? ('clb5' as const) : ('clb7' as const),
+        level: toWallLevel(data.clbLevel),
         createdAt: dstr(data.createdAt),
         stamp: data.createdAt,
         images: Array.isArray(data.images) ? (data.images as unknown[]).map(String) : [],
@@ -126,7 +127,7 @@ function frontmatter(fields: Array<[string, string | boolean | string[] | undefi
   return lines.join('\n');
 }
 
-export function serializeWallEntry(e: { title: string; level: 'clb7' | 'clb5'; createdAt: string; images: string[] }): string {
+export function serializeWallEntry(e: { title: string; level: WallLevel; createdAt: string; images: string[] }): string {
   return frontmatter([
     ['title', e.title],
     ['clbLevel', e.level],
