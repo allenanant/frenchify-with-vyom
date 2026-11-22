@@ -64,12 +64,12 @@ export type Webinar = {
 };
 
 const DEFAULTS: WebinarSchedule = {
-  startsAt: '2026-08-09T14:00:00-04:00',
+  startsAt: '2026-08-09T20:00:00-04:00',
   joinUrl: '',
   joinUrlFor: '',
   autoRoll: true,
   weekday: 0,
-  hour: 14,
+  hour: 20,
   minute: 0,
   updatedAt: '',
 };
