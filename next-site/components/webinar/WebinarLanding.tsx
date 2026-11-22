@@ -16,6 +16,7 @@ import WebinarPixel from '@/components/webinar/WebinarPixel';
 import FunnelFooter from '@/components/webinar/FunnelFooter';
 import YouTubeFacade from '@/components/webinar/YouTubeFacade';
 import { Card, Cta, Divider, H2, Label, Lead, Section } from '@/components/webinar/ui';
+import { BLACK_FRIDAY, isBlackFridayOn } from '@/lib/promo';
 import { getWallResults } from '@/lib/wall-results';
 import type { Webinar } from '@/lib/webinar';
 
@@ -164,11 +165,34 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
   // CLB 7 first: it is the score that unlocks the francophone draws, so the
   // four that load eagerly are the four that answer the page's promise.
   const resultImages = [...clb7, ...clb5];
+  // Black Friday 2026: banner + CTA tag, both off by themselves after the
+  // date in lib/promo.ts.
+  const blackFriday = isBlackFridayOn();
+  const ctaTeaser = blackFriday ? BLACK_FRIDAY.tag : undefined;
 
   return (
     <>
+      {/* 0 — PROMO BANNER. A slim notice, not a band, and not a link: the
+          page keeps its four CTAs. */}
+      {blackFriday ? (
+        <div
+          role="note"
+          className="w-full bg-fnl-ink-bg px-5 py-2.5 text-center text-[13px] leading-[1.4] text-white md:text-[14px]"
+        >
+          <span className="font-bold uppercase tracking-[0.06em]">{BLACK_FRIDAY.tag}</span>
+          <span aria-hidden className="mx-2 text-white/50">
+            ·
+          </span>
+          <span className="text-white/85">Get it in the free live workshop.</span>
+        </div>
+      ) : null}
+
       {/* 1 — HERO */}
-      <HeroSection startsAt={webinar.startsAt} displayDate={webinar.displayDate} />
+      <HeroSection
+        startsAt={webinar.startsAt}
+        displayDate={webinar.displayDate}
+        ctaTeaser={ctaTeaser}
+      />
 
       {/* 2 — FACT STRIP. Three facts, hairline separated. Not three cards. */}
       <section className="w-full border-y border-fnl-line bg-fnl-surface">
@@ -327,7 +351,7 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
         </p>
 
         <div className="mt-10 flex justify-center">
-          <Cta href="/webinar-form/" className="max-w-[420px]">
+          <Cta href="/webinar-form/" teaser={ctaTeaser} className="max-w-[420px]">
             Reserve My Free Spot
           </Cta>
         </div>
@@ -438,7 +462,12 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
             Today&apos;s Price: FREE! (Plus $497 in Bonuses)
           </p>
           <div className="mt-8 flex justify-center">
-            <Cta href="/webinar-form/" variant="onInk" className="max-w-[420px]">
+            <Cta
+              href="/webinar-form/"
+              variant="onInk"
+              teaser={ctaTeaser}
+              className="max-w-[420px]"
+            >
               Reserve My Free Spot
             </Cta>
           </div>
@@ -541,7 +570,12 @@ export default function WebinarLanding({ webinar }: { webinar: Webinar }) {
           </div>
 
           <div className="mt-8 flex justify-center">
-            <Cta href="/webinar-form/" variant="onInk" className="max-w-[420px]">
+            <Cta
+              href="/webinar-form/"
+              variant="onInk"
+              teaser={ctaTeaser}
+              className="max-w-[420px]"
+            >
               Claim My Spot Before It&apos;s Full
             </Cta>
           </div>

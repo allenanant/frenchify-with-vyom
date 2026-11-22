@@ -28,9 +28,11 @@ type Props = {
   startsAt: string;
   /** The long, human date printed under the clock. */
   displayDate: string;
+  /** Promo tag for the CTA, e.g. "Black Friday offer". Omit for none. */
+  ctaTeaser?: string;
 };
 
-export default function HeroSection({ startsAt, displayDate }: Props) {
+export default function HeroSection({ startsAt, displayDate, ctaTeaser }: Props) {
   return (
     <section className="w-full bg-fnl-surface">
       <div className="mx-auto flex w-full max-w-[1120px] flex-col items-center px-5 py-10 text-center md:px-8 md:py-20">
@@ -61,7 +63,7 @@ export default function HeroSection({ startsAt, displayDate }: Props) {
 
         <VideoFacade className="mt-8 max-w-[680px]" />
 
-        <Cta href="/webinar-form/" className="mt-7 max-w-[420px]">
+        <Cta href="/webinar-form/" teaser={ctaTeaser} className="mt-7 max-w-[420px]">
           Reserve My Free Spot
         </Cta>
 

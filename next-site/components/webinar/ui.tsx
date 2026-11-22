@@ -112,11 +112,14 @@ const CTA_VARIANT = {
 export function Cta({
   href,
   variant = 'primary',
+  teaser,
   className,
   children,
 }: {
   href: string;
   variant?: keyof typeof CTA_VARIANT;
+  /** Optional promo tag pinned to the button's top edge (e.g. "Black Friday offer"). */
+  teaser?: string;
   className?: string;
   children: ReactNode;
 }) {
@@ -124,11 +127,17 @@ export function Cta({
     <a
       href={href}
       className={cn(
-        'inline-flex w-full items-center justify-center rounded-[10px] px-7 py-4 text-[16px] font-semibold leading-none transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fnl-primary focus-visible:ring-offset-2 sm:w-auto',
+        'relative inline-flex w-full items-center justify-center rounded-[10px] px-7 py-4 text-[16px] font-semibold leading-none transition-colors duration-[120ms] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fnl-primary focus-visible:ring-offset-2 sm:w-auto',
         CTA_VARIANT[variant],
         className
       )}
     >
+      {teaser ? (
+        // The white ring keeps the tag readable where it overlaps a navy band.
+        <span className="pointer-events-none absolute -top-3 right-3 whitespace-nowrap rounded-full bg-fnl-ink px-2.5 py-1 text-[11px] font-bold uppercase leading-none tracking-[0.06em] text-white ring-2 ring-white">
+          {teaser}
+        </span>
+      ) : null}
       {children}
     </a>
   );
