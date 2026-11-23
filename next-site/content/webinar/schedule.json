@@ -7,7 +7,7 @@
   "hour": 20,
   "minute": 0,
   "encore": {
-    "enabled": false,
+    "enabled": true,
     "weekday": 0,
     "hour": 20,
     "minute": 0,

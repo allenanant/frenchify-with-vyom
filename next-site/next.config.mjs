@@ -57,6 +57,11 @@ const nextConfig = {
       { source: '/webinar-thankyou', destination: '/thank-you-for-registeration', permanent: true },
       { source: '/thank-you-webinar', destination: '/thank-you-for-registeration', permanent: true },
       { source: '/thank-you-for-registration', destination: '/thank-you-for-registeration', permanent: true },
+      // The old GHL reschedule page. The approved WhatsApp template
+      // webinar_repeat_final still links here, so send it to the waiting
+      // room, which shows the next session (the Sunday repeat once Saturday ends).
+      { source: '/webinar-reschedule', destination: '/waiting-room', permanent: false },
+      { source: '/webinar-reschedule-page', destination: '/waiting-room', permanent: false },
       // ---- Every landing page the GHL funnel ever cloned ----
       // "Frenchify Webinar (Sunday)" in GoHighLevel has 46 steps, 40 of them
       // landing pages: one clone per week going back to 24 August 2025. Each
