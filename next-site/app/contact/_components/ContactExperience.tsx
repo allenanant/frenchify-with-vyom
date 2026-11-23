@@ -682,7 +682,7 @@ export default function ContactExperience() {
                   Free live session with Vyom
                 </span>
                 <h3 className="mt-5 font-display text-2xl font-bold text-[#121a31] sm:text-3xl">
-                  Sunday Masterclass
+                  Saturday Masterclass
                 </h3>
                 <p className="mt-3 flex-1 text-[15px] leading-7 text-[#5d6380]">
                   Join Vyom live to understand how Frenchify works and ask your questions.
