@@ -19,10 +19,10 @@ import { Label } from '@/components/webinar/ui';
 /** WebP: 6 KB against the PNG's 20 KB, and it is eager on all three pages. */
 const LOGO = '/brand/frenchify-logo.webp';
 
-export function WebinarDateBadge({ date }: { date: string }) {
+export function WebinarDateBadge({ date, label = 'Workshop date' }: { date: string; label?: string }) {
   return (
     <div className="my-6 rounded-[10px] border border-fnl-line bg-fnl-surface-alt p-5 text-left">
-      <Label>Workshop date</Label>
+      <Label>{label}</Label>
       <p className="mt-1 text-[17px] font-bold leading-[1.3] text-fnl-ink">{date}</p>
     </div>
   );

@@ -33,6 +33,27 @@ export const GHL_WEBINAR_FORM_ID = '3APCQqdqGuJSH8iTWgS1';
 
 const SCHEDULE_FILE = path.join(process.cwd(), 'content', 'webinar', 'schedule.json');
 
+/**
+ * The repeat session (Allen, 23 Nov 2026). From the week of 28 Nov the main
+ * webinar runs on Saturday and the ads point at it; a repeat runs the next day
+ * for registrants who missed it. It is a weekly slot of its own rather than an
+ * offset from the main date, so it still resolves correctly after the main
+ * date has rolled on to next week (which happens the moment Saturday's
+ * session ends). Only the waiting room serves it; every other funnel page
+ * shows the main session, because that is what the ads sell.
+ */
+export type EncoreSchedule = {
+  enabled: boolean;
+  /** 0 = Sunday. */
+  weekday: number;
+  hour: number;
+  minute: number;
+  /** WebinarJam room for the repeat. Set each week alongside the main link. */
+  joinUrl: string;
+  /** The repeat instant `joinUrl` belongs to, so last week's link can't leak. */
+  joinUrlFor: string;
+};
+
 export type WebinarSchedule = {
   /** ISO instant with offset, e.g. 2026-08-09T14:00:00-04:00 */
   startsAt: string;
@@ -45,10 +66,13 @@ export type WebinarSchedule = {
   weekday: number;
   hour: number;
   minute: number;
+  encore: EncoreSchedule;
   updatedAt: string;
 };
 
 export type Webinar = {
+  /** 'encore' is the repeat session; only the waiting room ever gets one. */
+  kind: 'main' | 'encore';
   startsAt: string;
   startsAtMs: number;
   /** "Sunday 9th August 2026 | 2:00 PM (Montreal Time, Eastern Time – GMT -4)" */
@@ -71,8 +95,19 @@ const DEFAULTS: WebinarSchedule = {
   weekday: 0,
   hour: 20,
   minute: 0,
+  encore: {
+    enabled: false,
+    weekday: 0,
+    hour: 20,
+    minute: 0,
+    joinUrl: '',
+    joinUrlFor: '',
+  },
   updatedAt: '',
 };
+
+/** How long a session counts as "current" after it starts. */
+const SESSION_MS = 90 * 60_000;
 
 /* ------------------------------------------------------------------ */
 /* Time zone maths. Intl is the only thing here that knows about DST,  */
@@ -220,7 +255,24 @@ export function normalizeSchedule(raw: unknown): WebinarSchedule {
     weekday,
     hour,
     minute,
+    encore: normalizeEncore(r.encore),
     updatedAt: typeof r.updatedAt === 'string' ? r.updatedAt : '',
+  };
+}
+
+function normalizeEncore(raw: unknown): EncoreSchedule {
+  const d = DEFAULTS.encore;
+  const e = (raw ?? {}) as Partial<EncoreSchedule>;
+  const int = (v: unknown, lo: number, hi: number, fallback: number) =>
+    Number.isInteger(v) && (v as number) >= lo && (v as number) <= hi ? (v as number) : fallback;
+  return {
+    // Missing block = no repeat, which is exactly how the site behaved before.
+    enabled: e.enabled === true,
+    weekday: int(e.weekday, 0, 6, d.weekday),
+    hour: int(e.hour, 0, 23, d.hour),
+    minute: int(e.minute, 0, 59, d.minute),
+    joinUrl: typeof e.joinUrl === 'string' ? e.joinUrl.trim() : '',
+    joinUrlFor: typeof e.joinUrlFor === 'string' ? e.joinUrlFor : '',
   };
 }
 
@@ -232,7 +284,7 @@ export function resolveWebinar(schedule: WebinarSchedule, now: Date = new Date()
   const stored = new Date(schedule.startsAt);
   // A webinar stays "current" through its 90-minute run, so the waiting room
   // keeps redirecting late arrivals instead of jumping to next Sunday mid-session.
-  const stillCurrent = stored.getTime() + 90 * 60_000 > now.getTime();
+  const stillCurrent = stored.getTime() + SESSION_MS > now.getTime();
 
   let at = stored;
   let rolled = false;
@@ -250,6 +302,7 @@ export function resolveWebinar(schedule: WebinarSchedule, now: Date = new Date()
     Math.abs(new Date(schedule.joinUrlFor).getTime() - at.getTime()) < 60_000;
 
   return {
+    kind: 'main',
     startsAt,
     startsAtMs: at.getTime(),
     displayDate: formatWebinarDate(at),
@@ -260,9 +313,53 @@ export function resolveWebinar(schedule: WebinarSchedule, now: Date = new Date()
   };
 }
 
+/** The next repeat slot that has not finished yet, or null when it is off. */
+export function nextEncoreInstant(encore: EncoreSchedule, now: Date = new Date()): Date | null {
+  if (!encore.enabled) return null;
+  // Starting the search a session-length back keeps a repeat that is under
+  // way "current", so late arrivals are still sent in rather than told to
+  // wait a week.
+  return nextOccurrence(WEBINAR_TZ, encore.weekday, encore.hour, encore.minute, new Date(now.getTime() - SESSION_MS));
+}
+
+export function resolveEncore(schedule: WebinarSchedule, now: Date = new Date()): Webinar | null {
+  const at = nextEncoreInstant(schedule.encore, now);
+  if (!at) return null;
+  const { joinUrl, joinUrlFor } = schedule.encore;
+  const linkIsCurrent =
+    !!joinUrl && !!joinUrlFor && Math.abs(new Date(joinUrlFor).getTime() - at.getTime()) < 60_000;
+  return {
+    kind: 'encore',
+    startsAt: at.toISOString(),
+    startsAtMs: at.getTime(),
+    displayDate: formatWebinarDate(at),
+    shortDate: formatWebinarShortDate(at),
+    slug: webinarSlug(at),
+    joinUrl: linkIsCurrent ? joinUrl : '',
+    rolled: false,
+  };
+}
+
+/**
+ * Whichever session is next for someone already registered: the main one
+ * until it has finished, then the repeat until that has finished. Only the
+ * waiting room uses this.
+ */
+export function resolveNextSession(schedule: WebinarSchedule, now: Date = new Date()): Webinar {
+  const main = resolveWebinar(schedule, now);
+  const encore = resolveEncore(schedule, now);
+  const open = (w: Webinar) => w.startsAtMs + SESSION_MS > now.getTime();
+  if (encore && open(encore) && (!open(main) || encore.startsAtMs < main.startsAtMs)) return encore;
+  return main;
+}
+
 /** The one call pages make. */
 export function getWebinar(now: Date = new Date()): Webinar {
   return resolveWebinar(readSchedule(), now);
+}
+
+export function getNextSession(now: Date = new Date()): Webinar {
+  return resolveNextSession(readSchedule(), now);
 }
 
 /** Next scheduled slot after a given instant — used by the weekly roll. */

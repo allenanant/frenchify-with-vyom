@@ -10,12 +10,16 @@
  *
  * URL kept as /waiting-room to match the GHL page, because it is stored in
  * custom values, WhatsApp templates and emails that have already gone out.
+ *
+ * Once the main (Saturday) session has finished, this page switches to the
+ * repeat session and its own link, so the Sunday reminders can point here
+ * too. The repeat is worded as a repeat, never as live.
  */
 
 import type { Metadata } from 'next';
 import FunnelShell, { WebinarDateBadge } from '@/components/webinar/FunnelShell';
 import Countdown from '@/components/webinar/Countdown';
-import { getWebinar } from '@/lib/webinar';
+import { getNextSession } from '@/lib/webinar';
 
 export const metadata: Metadata = {
   title: 'Webinar Starting Soon',
@@ -29,24 +33,29 @@ export const metadata: Metadata = {
 export const revalidate = 120;
 
 export default function WaitingRoomPage() {
-  const webinar = getWebinar();
+  const webinar = getNextSession();
+  const repeat = webinar.kind === 'encore';
 
   return (
     <FunnelShell>
       <h1 className="font-display text-[26px] font-extrabold leading-[1.1] tracking-[-0.015em] text-fnl-ink sm:text-[34px]">
-        You&apos;ll be redirected to the webinar automatically
+        {repeat
+          ? 'You\u2019ll be taken to the repeat session automatically'
+          : 'You\u2019ll be redirected to the webinar automatically'}
       </h1>
       <p className="mt-3 text-[17px] leading-[1.55] text-fnl-body">
-        Thank you for joining us! We&apos;re just getting things ready and will begin at the scheduled time.
+        {repeat
+          ? 'Thank you for joining us! This is the repeat of the workshop for everyone who could not make the first session. It begins at the scheduled time.'
+          : 'Thank you for joining us! We\u2019re just getting things ready and will begin at the scheduled time.'}
       </p>
 
-      <WebinarDateBadge date={webinar.displayDate} />
+      <WebinarDateBadge date={webinar.displayDate} label={repeat ? 'Repeat session' : 'Workshop date'} />
 
       <Countdown
         targetIso={webinar.startsAt}
         joinUrl={webinar.joinUrl}
         redirectOnExpiry
-        expiredLabel="We're live — taking you in now"
+        expiredLabel={repeat ? 'Starting now — taking you in' : "We're live — taking you in now"}
         className="mb-6"
       />
 
@@ -59,7 +68,7 @@ export default function WaitingRoomPage() {
           <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-fnl-primary" />
         </span>
         <p className="text-[16px] font-semibold leading-[1.4] text-fnl-ink">
-          Waiting for the host to start the session...
+          {repeat ? 'Waiting for the session to start...' : 'Waiting for the host to start the session...'}
         </p>
       </div>
 

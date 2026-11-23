@@ -1,10 +1,18 @@
 {
-  "startsAt": "2026-11-30T01:00:00.000Z",
-  "joinUrl": "https://event.webinarjam.com/0o9k5/go/live/glqkvfytwsxs6",
-  "joinUrlFor": "2026-11-23T01:00:00.000Z",
+  "startsAt": "2026-11-29T01:00:00.000Z",
+  "joinUrl": "",
+  "joinUrlFor": "",
   "autoRoll": true,
-  "weekday": 0,
+  "weekday": 6,
   "hour": 20,
   "minute": 0,
-  "updatedAt": "2026-11-23T05:19:15.833Z"
+  "encore": {
+    "enabled": false,
+    "weekday": 0,
+    "hour": 20,
+    "minute": 0,
+    "joinUrl": "",
+    "joinUrlFor": ""
+  },
+  "updatedAt": "2026-11-23T10:37:43.887Z"
 }

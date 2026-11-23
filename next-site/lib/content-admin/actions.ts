@@ -17,6 +17,7 @@ import { isWallLevel, toWallLevel, WALL_LEVEL_LABELS, type WallLevel } from '@/l
 import {
   SCHEDULE_REPO_PATH,
   formatWebinarDate,
+  nextEncoreInstant,
   readSchedule,
   serializeSchedule,
   webinarInstantFor,
@@ -262,6 +263,15 @@ export async function publishWebinarSchedule(input: {
   time: string;
   joinUrl: string;
   autoRoll: boolean;
+  /** The weekly repeat session. Optional so an older open admin tab still saves. */
+  encore?: {
+    enabled: boolean;
+    /** 0 = Sunday. */
+    weekday: number;
+    /** 24h local time in the webinar's timezone, "HH:MM". */
+    time: string;
+    joinUrl: string;
+  };
 }): Promise<Result> {
   const denied = await gate();
   if (denied) return { ok: false, error: denied };
@@ -274,6 +284,18 @@ export async function publishWebinarSchedule(input: {
     return { ok: false, error: 'The webinar link must be a full https:// address.' };
   }
 
+  const encoreIn = input.encore;
+  if (encoreIn) {
+    if (!Number.isInteger(encoreIn.weekday) || encoreIn.weekday < 0 || encoreIn.weekday > 6) {
+      return { ok: false, error: 'Pick a day for the repeat session.' };
+    }
+    if (!/^\d{2}:\d{2}$/.test(encoreIn.time)) return { ok: false, error: 'Pick a start time for the repeat session.' };
+    const u = encoreIn.joinUrl.trim();
+    if (u && !/^https:\/\/\S+$/i.test(u)) {
+      return { ok: false, error: 'The repeat session link must be a full https:// address.' };
+    }
+  }
+
   const [y, m, d] = input.date.split('-').map(Number);
   const [hh, mm] = input.time.split(':').map(Number);
   const startsAt = webinarInstantFor(y, m, d, hh, mm);
@@ -281,8 +303,28 @@ export async function publishWebinarSchedule(input: {
 
   const current = readSchedule();
   const iso = startsAt.toISOString();
+
+  let encore = current.encore;
+  if (encoreIn) {
+    const [eh, em] = encoreIn.time.split(':').map(Number);
+    const encoreJoinUrl = encoreIn.joinUrl.trim();
+    encore = {
+      enabled: encoreIn.enabled,
+      weekday: encoreIn.weekday,
+      hour: eh,
+      minute: em,
+      joinUrl: encoreJoinUrl,
+      joinUrlFor: '',
+    };
+    // Same rule as the main link: tie it to the next repeat that has not
+    // finished, which is the one the waiting room will be serving.
+    const nextRepeat = nextEncoreInstant(encore);
+    if (encoreJoinUrl && nextRepeat) encore.joinUrlFor = nextRepeat.toISOString();
+  }
+
   const updated = {
     ...current,
+    encore,
     startsAt: iso,
     joinUrl,
     // Tie the link to this exact webinar so a later date change cannot leave

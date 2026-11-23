@@ -23,6 +23,7 @@ const BARE_PREFIXES = [
   // own legal-only FunnelFooter instead. '/webinar' also covers /webinar/<slug>,
   // the dated alias each week's ads point at.
   '/sunday-webinar',
+  '/saturday-webinar',
   '/webinar',
 ];
 
@@ -31,14 +32,14 @@ const BARE_PREFIXES = [
  * the public support form straight from the TagMango portal, so the
  * marketing nav has no business being there.
  */
-const HEADER_BARE_PREFIXES = ['/student-support', '/sunday-webinar', '/webinar'];
+const HEADER_BARE_PREFIXES = ['/student-support', '/sunday-webinar', '/saturday-webinar', '/webinar'];
 
 /**
  * Pages that keep the footer but drop the floating "Get in touch" bubble. On
  * the paid-traffic webinar pages it is the only thing on screen offering a way
  * out that isn't registering.
  */
-const CTA_BARE_PREFIXES = ['/sunday-webinar', '/webinar'];
+const CTA_BARE_PREFIXES = ['/sunday-webinar', '/saturday-webinar', '/webinar'];
 
 export default function ChromeGate({
   children,

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { currentUser } from '@/lib/tickets/auth';
 import { fetchAnnouncements, fetchWallEntries } from '@/lib/content-admin/content';
-import { readSchedule, resolveWebinar, webinarFormFields } from '@/lib/webinar';
+import { readSchedule, resolveEncore, resolveWebinar, webinarFormFields } from '@/lib/webinar';
 import AdminLogin from './_components/AdminLogin';
 import AdminShell from './_components/AdminShell';
 import type { WebinarAdminState } from './_components/WebinarTab';
@@ -53,6 +53,8 @@ function webinarAdminState(): WebinarAdminState {
   const schedule = readSchedule();
   const shown = resolveWebinar(schedule);
   const fields = webinarFormFields(new Date(shown.startsAt));
+  const repeat = resolveEncore(schedule);
+  const pad = (n: number) => String(n).padStart(2, '0');
   return {
     date: fields.date,
     time: fields.time,
@@ -61,5 +63,15 @@ function webinarAdminState(): WebinarAdminState {
     displayDate: shown.displayDate,
     slug: shown.slug,
     linkIsCurrent: Boolean(shown.joinUrl),
+    encore: {
+      enabled: schedule.encore.enabled,
+      weekday: schedule.encore.weekday,
+      time: `${pad(schedule.encore.hour)}:${pad(schedule.encore.minute)}`,
+      // Prefilled with the link only while it is still the current one, like
+      // the main link, so last week's room is not saved forward by accident.
+      joinUrl: repeat?.joinUrl ?? '',
+      displayDate: repeat?.displayDate ?? '',
+      linkIsCurrent: Boolean(repeat?.joinUrl),
+    },
   };
 }
