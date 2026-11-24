@@ -29,13 +29,6 @@ export default function OneOnOneSpeakingPage() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Book practice sessions with successful Frenchify students who have cleared their exam
-              and achieved their PR dreams.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.2}>
             <div className="inline-flex items-center bg-yellow-50 border border-yellow-200 rounded-lg px-6 py-3 text-yellow-800 text-sm font-medium">
               <Lock className="w-4 h-4 mr-2 shrink-0" />
               Exclusive for Frenchify Students Only
