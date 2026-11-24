@@ -1,15 +1,15 @@
-import { CalendarDays, Info, Lock, MessageSquare } from 'lucide-react';
+import { CalendarDays, Check, Info, Lock, MessageSquare } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
 import Stagger from '@/components/motion/Stagger';
 import FaqAccordion from '@/components/FaqAccordion';
 import MentorRail from '@/components/booking/MentorRail';
 import MentorCard from './_components/MentorCard';
-import { bookingSteps, faqs, levels, mentors } from './_data';
+import { bookingSteps, faqs, levels, mentors, sessionUses } from './_data';
 
 export const metadata = {
-  title: 'One-on-One TEF Mentorship - Frenchify with Vyom',
+  title: 'One-on-One Mentorship',
   description:
-    'Book one-on-one speaking sessions with Frenchify students who have cleared the TEF Canada exam. Practise Section A and Section B, get feedback on structure and pronunciation, and build exam confidence.',
+    'Book one-on-one mentorship and speaking sessions with successful Frenchify students. Practise speaking, discuss your study plan, get feedback on structure and pronunciation, and build exam confidence.',
   alternates: { canonical: 'https://frenchifywithvyom.com/one-on-one-speaking' },
 };
 
@@ -24,14 +24,14 @@ export default function OneOnOneSpeakingPage() {
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 text-center">
           <Reveal>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
-              One-on-One <span className="gradient-text">TEF Mentorship</span>
+              One-on-One <span className="gradient-text">Mentorship</span>
             </h1>
           </Reveal>
 
           <Reveal delay={0.1}>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Book practice sessions with successful Frenchify students who have cleared their TEF
-              Canada exam and achieved their PR dreams.
+              Book practice sessions with successful Frenchify students who have cleared their exam
+              and achieved their PR dreams.
             </p>
           </Reveal>
 
@@ -114,7 +114,7 @@ export default function OneOnOneSpeakingPage() {
               How to Book One-on-One Speaking Sessions
             </h2>
             <p className="text-gray-600 text-center mt-4 max-w-2xl mx-auto">
-              These are one of the fastest ways to improve your fluency, confidence and TEF speaking
+              These are one of the fastest ways to improve your fluency, confidence and speaking
               performance.
             </p>
           </Reveal>
@@ -153,28 +153,104 @@ export default function OneOnOneSpeakingPage() {
       <section className="bg-white py-14 md:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 text-center tracking-tight mb-12">
-              How Do These <span className="gradient-text">Sessions Work?</span>
-            </h2>
+            <div className="text-center mb-12">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-500 mb-3">
+                One-on-One Mentorship
+              </p>
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
+                How Do These <span className="gradient-text">Sessions Work?</span>
+              </h2>
+              <div
+                className="w-12 h-0.5 rounded-full bg-brand-gradient mx-auto mt-4"
+                aria-hidden
+              />
+            </div>
           </Reveal>
 
           <Stagger className="grid md:grid-cols-3 gap-6">
             {levels.map((l) => (
-              <div key={l.level} className="premium-card p-6 md:p-8 h-full">
-                <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-brand-gradient text-white font-display font-bold">
+              <div
+                key={l.level}
+                className="premium-card relative overflow-hidden p-6 md:p-8 h-full flex flex-col"
+              >
+                <div
+                  className="absolute inset-x-0 top-0 h-[3px] bg-brand-gradient"
+                  aria-hidden
+                />
+
+                <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-brand-blue to-brand-amber text-white font-display font-bold shadow-sm">
                   {l.level}
                 </span>
-                <h3 className="font-display text-lg font-bold text-gray-900 mt-5 mb-3 tracking-tight">
+
+                <h3 className="font-display text-lg font-bold text-gray-900 mt-5 tracking-tight">
                   {l.title}
                 </h3>
-                {l.body.map((p, i) => (
-                  <p key={i} className="text-gray-600 text-sm leading-relaxed mb-3 last:mb-0">
-                    {p}
+                <p className="text-xs font-medium text-gray-500 mt-0.5">{l.subtitle}</p>
+
+                {l.paragraphs && (
+                  <div className="mt-5 border-t border-gray-100 divide-y divide-gray-100">
+                    {l.paragraphs.map((p, i) => (
+                      <p
+                        key={i}
+                        className="text-gray-600 text-sm leading-relaxed py-4 first:pt-4 last:pb-0"
+                      >
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                )}
+
+                {l.items && (
+                  <ul className="mt-5 border-t border-gray-100 divide-y divide-gray-100">
+                    {l.items.map((item) => (
+                      <li key={item.tag} className="flex items-start gap-3 py-3.5">
+                        <span className="inline-flex items-center justify-center shrink-0 min-w-[3.25rem] px-2.5 py-1 rounded-full bg-blue-50 text-brand-blue text-[11px] font-bold uppercase tracking-wider leading-none">
+                          {item.tag}
+                        </span>
+                        <span className="text-sm text-gray-700 leading-snug">{item.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {l.note && (
+                  <p className="mt-auto pt-4 border-t border-gray-100 text-xs text-gray-500 leading-relaxed">
+                    {l.note}
                   </p>
-                ))}
+                )}
               </div>
             ))}
           </Stagger>
+
+          <Reveal delay={0.15}>
+            <div className="relative overflow-hidden mt-8 rounded-2xl bg-[#0B1B33] px-6 py-7 sm:px-8 sm:py-8 md:px-10 md:py-9 text-white shadow-soft">
+              <div
+                className="pointer-events-none absolute -top-20 -right-16 w-72 h-72 rounded-full bg-amber-500/15 blur-3xl"
+                aria-hidden
+              />
+              <div
+                className="pointer-events-none absolute -bottom-24 -left-16 w-64 h-64 rounded-full bg-brand-blue/15 blur-3xl"
+                aria-hidden
+              />
+
+              <h3 className="relative font-display text-xl md:text-2xl font-bold tracking-tight text-white mb-6">
+                How You Can Use <span className="text-amber-400">These Sessions</span>
+              </h3>
+
+              <ul className="relative grid sm:grid-cols-2 gap-x-10 gap-y-4">
+                {sessionUses.map((use) => (
+                  <li key={use} className="flex items-center gap-3">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-400 text-[#0B1B33] shrink-0">
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    </span>
+                    <span className="text-sm md:text-[15px] text-slate-200 leading-snug">
+                      {use}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
         </div>
       </section>
 

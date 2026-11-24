@@ -314,29 +314,58 @@ export const bookingSteps = [
   "You will receive an email with the meeting link to join",
 ];
 
-export const levels = [
+export type LevelItem = {
+  tag: string;
+  text: string;
+};
+
+export type LevelCard = {
+  level: string;
+  title: string;
+  subtitle: string;
+  paragraphs?: string[];
+  items?: LevelItem[];
+  note?: string;
+};
+
+export const levels: LevelCard[] = [
   {
     level: "A2",
-    title: "A2 Students (Start Early)",
-    body: [
+    title: "A2 Students",
+    subtitle: "Start early",
+    paragraphs: [
       "You can start booking sessions from A2 level, recommended after completing 60% of the A2 course and speaking assignments.",
-      "Prepare 1 topic before the session, speak on it, and receive feedback on pronunciation, flow and structure. Do another on the spot if there is time.",
+      "Practise your speaking and get feedback on your flow, grammar and pronunciation. Come prepared with a topic, or ask the instructor to give you one on the spot.",
     ],
   },
   {
     level: "B1",
-    title: "B1 Students (TEF Section A Practice)",
-    body: [
-      "At B1 level, sessions are ideal for Section A speaking prompts and monologue practice to build exam confidence.",
+    title: "B1 Students",
+    subtitle: "TEF and TCF",
+    items: [
+      { tag: "TEF", text: "Section A speaking practice" },
+      { tag: "TCF", text: "Tasks 1 and 2" },
+      { tag: "ALL", text: "General speaking practice" },
     ],
+    note: "Pre-registered for B2? You can also practise the B2 tasks in your sessions.",
   },
   {
     level: "B2",
-    title: "B2 Students (Full TEF Simulation)",
-    body: [
-      "At B2 level, sessions help you practise both Section A and Section B roleplays with CLB 9/10 level feedback.",
+    title: "B2 Students",
+    subtitle: "TEF and TCF",
+    items: [
+      { tag: "TEF", text: "Section A and Section B roleplays" },
+      { tag: "TCF", text: "Tasks 1, 2 and 3" },
+      { tag: "ALL", text: "General speaking practice" },
     ],
   },
+];
+
+export const sessionUses = [
+  "Discuss your study plan",
+  "Get guidance on your exam practice",
+  "Ask for writing suggestions",
+  "Bring any question you have",
 ];
 
 export const faqs = [
