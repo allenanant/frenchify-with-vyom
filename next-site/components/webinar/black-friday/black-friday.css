@@ -163,6 +163,9 @@
   scroll-snap-type:x proximity;scroll-padding-inline:var(--edge);
   scrollbar-width:thin;scrollbar-color:rgba(247,248,250,.18) transparent;}
 .bfp .rail:focus-visible{outline-offset:-2px;border-radius:12px}
+.bfp .rail-track{display:flex;flex:none}
+.bfp .rail-set{display:flex;gap:16px}
+.bfp .rail-set[aria-hidden]{display:none}
 .bfp .cert{flex:0 0 212px;height:178px;border-radius:12px;border:1px solid rgba(247,248,250,.18);background:var(--ink);overflow:hidden;scroll-snap-align:start}
 .bfp .cert img{width:100%;height:100%;object-fit:cover}
 .bfp .cert-more{flex:0 0 180px;height:178px;display:flex;flex-direction:column;justify-content:space-between;padding:20px 22px;border-radius:12px;border:1px solid rgba(247,248,250,.15);background:rgba(247,248,250,.04);color:rgba(247,248,250,.7);scroll-snap-align:start}
@@ -593,6 +596,19 @@
 .bfp .r-free{transform-origin: left 70%; animation: bfp-stamp linear both; animation-timing-function: var(--ease-expo); animation-timeline: view(); animation-range: entry 40% cover 45%;}
 .bfp .playlist{animation: bfp-scale-in linear both; animation-timing-function: var(--ease-quart); animation-timeline: view(); animation-range: entry 0% cover 35%;}
 .bfp .playlist img{animation: bfp-zoom-out linear both; animation-timeline: view(); animation-range: entry 0% exit 100%;}}}
+@keyframes bfp-marquee{to { transform: translate3d(-50%, 0, 0); }}
+@media (prefers-reduced-motion: no-preference){.bfp .rail{overflow: hidden; scroll-snap-type: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--bfp-fade, 64px), #000 calc(100% - var(--bfp-fade, 64px)), transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 var(--bfp-fade, 64px), #000 calc(100% - var(--bfp-fade, 64px)), transparent);}
+.bfp .rail-track{width: max-content; animation: bfp-marquee calc(var(--bfp-marquee-n, 13) * 5.5s) linear infinite;}
+.bfp .rail-set{padding-right: 16px;}
+.bfp .rail-set[aria-hidden]{display: flex;}
+.bfp .rail:active .rail-track,.bfp .rail:focus-visible .rail-track{animation-play-state: paused;}
+.bfp .rail-foot p{display: none;}
+.bfp .rail-foot{margin-top: 36px;}}
+@media (prefers-reduced-motion: no-preference) and (hover: hover){.bfp .rail:hover .rail-track{animation-play-state: paused;}}
+@media (prefers-reduced-motion: no-preference) and (max-width: 899px){.bfp .rail{--bfp-fade: 28px;}
+.bfp .rail-foot{margin-top: 28px;}}
 @media (prefers-reduced-motion: reduce){.bfp *,.bfp *::before,.bfp *::after{animation: none !important; transition: none !important;}}
 
 /* ---------- Next.js only ---------- */

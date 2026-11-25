@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { Sora } from 'next/font/google';
 import ForwardTracking from '@/components/webinar/ForwardTracking';
 import WebinarPixel from '@/components/webinar/WebinarPixel';
@@ -506,20 +507,34 @@ export default function BlackFridayLanding({ webinar }: { webinar: Webinar }) {
                 150+ Verified results
               </p>
             </div>
-            {/* Scroll-snap rail: momentum and snapping are the browser's, so it
-                works with JavaScript off and costs no hydration. */}
-            <div className="rail" role="group" aria-label="Real TEF and TCF results from Frenchify students" tabIndex={0}>
-              {results.map((src) => (
-                <div className="cert" key={src}>
-                  {/* Empty alt on purpose: the heading describes the group, and
-                      100+ identical alt strings would only be noise. */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} width={940} height={788} alt="" loading="lazy" decoding="async" />
-                </div>
-              ))}
-              <div className="cert-more">
-                <Icon id="arrow-thin" size={22} />
-                <p>and more...</p>
+            {/* The results slide right to left in a loop (Allen, 25 Nov 2026).
+                The track holds the set twice and CSS moves it by one set, so the
+                loop has no visible joint and needs no JavaScript. With reduced
+                motion the copy is hidden and the rail scrolls by hand. */}
+            <div
+              className="rail"
+              role="group"
+              aria-label="Real TEF and TCF results from Frenchify students"
+              tabIndex={0}
+              style={{ '--bfp-marquee-n': results.length + 1 } as CSSProperties}
+            >
+              <div className="rail-track">
+                {[false, true].map((copy) => (
+                  <div className="rail-set" aria-hidden={copy || undefined} key={copy ? 'copy' : 'set'}>
+                    {results.map((src) => (
+                      <div className="cert" key={src}>
+                        {/* Empty alt on purpose: the heading describes the group, and
+                            100+ identical alt strings would only be noise. */}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={src} width={940} height={788} alt="" loading="lazy" decoding="async" />
+                      </div>
+                    ))}
+                    <div className="cert-more">
+                      <Icon id="arrow-thin" size={22} />
+                      <p>and more...</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
             <div className="wrap rail-foot">
