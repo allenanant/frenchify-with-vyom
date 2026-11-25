@@ -9,7 +9,7 @@
 
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import BlackFridayLanding from '@/components/webinar/BlackFridayLanding';
+import WebinarTicketLanding from '@/components/webinar/WebinarTicketLanding';
 import { isBlackFridayOn } from '@/lib/promo';
 import { getWebinar } from '@/lib/webinar';
 
@@ -45,5 +45,5 @@ export const revalidate = 600;
 
 export default function BlackFridayWebinarPage() {
   if (!isBlackFridayOn()) redirect('/sunday-webinar/');
-  return <BlackFridayLanding webinar={getWebinar()} />;
+  return <WebinarTicketLanding webinar={getWebinar()} blackFriday />;
 }

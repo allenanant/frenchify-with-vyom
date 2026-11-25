@@ -6,7 +6,7 @@
  */
 
 import type { Metadata } from 'next';
-import WebinarLanding from '@/components/webinar/WebinarLanding';
+import MainWebinarLanding from '@/components/webinar/MainWebinarLanding';
 import { getWebinar } from '@/lib/webinar';
 
 export const metadata: Metadata = {
@@ -20,5 +20,5 @@ export const metadata: Metadata = {
 export const revalidate = 600;
 
 export default function SaturdayWebinarPage() {
-  return <WebinarLanding webinar={getWebinar()} />;
+  return <MainWebinarLanding webinar={getWebinar()} />;
 }

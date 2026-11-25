@@ -7,11 +7,20 @@
  * them down. The landing page revalidates every 600 s, so the switch lands
  * within ten minutes of the deadline.
  *
- * End = 1 Dec 2026 00:00 Montreal (EST, GMT -5), i.e. the banner shows through
- * Cyber Monday 30 Nov. Move the date here to stretch or cut it short.
+ * End = when the Saturday 28 Nov 2026 workshop ends (8:00 PM EST start + the
+ * 90-minute session, i.e. 9:30 PM EST, Sun 29 Nov 8:00 AM India). That is the
+ * moment the pages move to the next Saturday, and the Black Friday words must
+ * not promise the offer for that date (Allen, 25 Nov 2026; it was 1 Dec
+ * before). At that moment:
+ *  - /black-friday-webinar sends visitors to /sunday-webinar,
+ *  - /sunday-webinar and its aliases switch to the Gold Ticket design with no
+ *    Black Friday words (MainWebinarLanding),
+ *  - the home page top bar goes back to the masterclass bar.
+ * Pages revalidate every 600 s, so each switch lands within about ten minutes.
+ * Move the date here to stretch or cut it short.
  */
 export const BLACK_FRIDAY = {
-  endsAt: '2026-12-01T05:00:00.000Z',
+  endsAt: '2026-11-29T02:30:00.000Z',
   tag: 'Black Friday offer',
 } as const;
 

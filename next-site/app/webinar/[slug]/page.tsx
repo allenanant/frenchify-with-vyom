@@ -14,7 +14,7 @@
 
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import WebinarLanding from '@/components/webinar/WebinarLanding';
+import MainWebinarLanding from '@/components/webinar/MainWebinarLanding';
 import { getWebinar } from '@/lib/webinar';
 
 export const revalidate = 600;
@@ -34,5 +34,5 @@ export const metadata: Metadata = {
 export default async function DatedWebinarPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   if (!SLUG_RE.test(slug)) notFound();
-  return <WebinarLanding webinar={getWebinar()} />;
+  return <MainWebinarLanding webinar={getWebinar()} />;
 }

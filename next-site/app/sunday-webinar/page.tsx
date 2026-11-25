@@ -6,7 +6,7 @@
  */
 
 import type { Metadata } from 'next';
-import WebinarLanding from '@/components/webinar/WebinarLanding';
+import MainWebinarLanding from '@/components/webinar/MainWebinarLanding';
 import { getWebinar } from '@/lib/webinar';
 
 const TITLE = 'French for Canadian PR: Live Assessment Workshop';
@@ -48,5 +48,5 @@ export const metadata: Metadata = {
 export const revalidate = 600;
 
 export default function SundayWebinarPage() {
-  return <WebinarLanding webinar={getWebinar()} />;
+  return <MainWebinarLanding webinar={getWebinar()} />;
 }

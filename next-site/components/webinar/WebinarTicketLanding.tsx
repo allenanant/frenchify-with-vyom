@@ -10,11 +10,16 @@ import { WEBINAR_TZ, type Webinar } from '@/lib/webinar';
 import './black-friday/black-friday.css';
 
 /**
- * Black Friday 2026 webinar landing page, design "Option 2 (Gold Ticket)".
- * Vyom picked it on 25 Nov 2026 from three designs on the preview site
+ * The webinar landing page, design "Option 2 (Gold Ticket)". Vyom picked it
+ * on 25 Nov 2026 from three designs on the preview site
  * (allenanant.github.io/frenchify-black-friday-preview), with two changes:
  * the dates / results / host block right after the hero, and a straight
  * (not tilted) hero ticket.
+ *
+ * It first ran as the Black Friday 2026 page (/black-friday-webinar). After
+ * Black Friday it is the main page (/sunday-webinar and its aliases) with the
+ * same look and no Black Friday words (Allen, 25 Nov 2026). `blackFriday`
+ * switches those words on or off; everything else is the same page.
  *
  * Same funnel as /sunday-webinar: every CTA is a real <a> to /webinar-form/,
  * ForwardTracking carries the ad parameters onto those links, and the Meta
@@ -47,12 +52,13 @@ const LEGAL = [
   { href: '/refund-policy/', label: 'Refund Policy' },
 ];
 
+// Shown only while `blackFriday` is on. ASD-STE100.
+const blackFridayFaq = {
+  q: 'What is the Black Friday offer?',
+  a: 'Vyom shows the offer live in the workshop. Only workshop guests get it. Reserve your free spot to see it.',
+};
+
 const faqs = [
-  // New for Black Friday, ASD-STE100.
-  {
-    q: 'What is the Black Friday offer?',
-    a: 'Vyom shows the offer live in the workshop. Only workshop guests get it. Reserve your free spot to see it.',
-  },
   {
     q: 'I don’t have time to learn a new language',
     a: 'The assessment reveals if you have enough time based on your specific timeline. Many students reach CLB 7 in 8-12 months with just 2-3 hours daily.',
@@ -229,7 +235,14 @@ function IconSprite() {
 
 /* ------------------------------------------------------------------ */
 
-export default function BlackFridayLanding({ webinar }: { webinar: Webinar }) {
+export default function WebinarTicketLanding({
+  webinar,
+  blackFriday,
+}: {
+  webinar: Webinar;
+  /** Black Friday words on (the Black Friday page) or off (the main page). */
+  blackFriday: boolean;
+}) {
   const { clb7, clb5 } = getWallResults();
   // CLB 7 first, as on /sunday-webinar: it is the score the page promises.
   const results = [...clb7, ...clb5];
@@ -266,9 +279,11 @@ export default function BlackFridayLanding({ webinar }: { webinar: Webinar }) {
               <div className="hero">
                 <div className="hero-copy">
                   <p className="eyebrow">Free live workshop · Limited seats</p>
-                  <p className="bf-word">
-                    <span className="w">Black</span> <span className="w">Friday</span>
-                  </p>
+                  {blackFriday && (
+                    <p className="bf-word">
+                      <span className="w">Black</span> <span className="w">Friday</span>
+                    </p>
+                  )}
                   <div className="hero-text">
                     <h1 id="hero-title">
                       French for Canadian PR:<br /> Live Assessment Workshop
@@ -281,7 +296,7 @@ export default function BlackFridayLanding({ webinar }: { webinar: Webinar }) {
                   <div className="hero-cta">
                     <Cta>Reserve My Free Spot</Cta>
                     <p className="price-note">
-                      <s>$19 CAD</s> <span>Free for Black Friday</span>
+                      <s>$19 CAD</s> <span>{blackFriday ? 'Free for Black Friday' : 'Free today'}</span>
                     </p>
                   </div>
                 </div>
@@ -333,7 +348,10 @@ export default function BlackFridayLanding({ webinar }: { webinar: Webinar }) {
           </section>
 
           {/* S1 · At a glance: dates, results, host, offer steps */}
-          <section className="s-glance" aria-label="Workshop dates, results and the Black Friday offer">
+          <section
+            className="s-glance"
+            aria-label={blackFriday ? 'Workshop dates, results and the Black Friday offer' : 'Workshop dates, results and how to join'}
+          >
             <div className="wrap">
               <p className="g-when">
                 <span className="seg g-start">
@@ -381,11 +399,11 @@ export default function BlackFridayLanding({ webinar }: { webinar: Webinar }) {
               </div>
 
               <div className="g-offer">
-                <p className="g-offer-title">How to get the Black Friday offer:</p>
+                <p className="g-offer-title">{blackFriday ? 'How to get the Black Friday offer:' : 'How to join:'}</p>
                 <ol className="g-steps">
                   <li>Reserve your free spot</li>
                   <li>Join the live workshop on {mtl.dayMonth}</li>
-                  <li>Get the offer from Vyom, live</li>
+                  <li>{blackFriday ? 'Get the offer from Vyom, live' : 'Get your French plan from Vyom, live'}</li>
                 </ol>
               </div>
             </div>
@@ -680,8 +698,13 @@ export default function BlackFridayLanding({ webinar }: { webinar: Webinar }) {
                     <p className="r-bonus">(Plus $497 in Bonuses)</p>
                   </div>
                   <div className="r-act">
-                    {/* New for Black Friday, ASD-STE100. */}
-                    <p className="r-note">Plus the Black Friday offer, only in the live workshop.</p>
+                    {/* ASD-STE100. Without Black Friday the note keeps its place
+                        so the receipt looks the same. */}
+                    <p className="r-note">
+                      {blackFriday
+                        ? 'Plus the Black Friday offer, only in the live workshop.'
+                        : 'Seats are limited. Reserve your free spot now.'}
+                    </p>
                     <Cta>Reserve My Free Spot</Cta>
                   </div>
                 </div>
@@ -712,7 +735,7 @@ export default function BlackFridayLanding({ webinar }: { webinar: Webinar }) {
                 Still Have Doubts?
               </h2>
               <div className="faq">
-                {faqs.map(({ q, a }, i) => (
+                {(blackFriday ? [blackFridayFaq, ...faqs] : faqs).map(({ q, a }, i) => (
                   <details key={q} open={i === 0}>
                     <summary>
                       <span>“{q}”</span>
