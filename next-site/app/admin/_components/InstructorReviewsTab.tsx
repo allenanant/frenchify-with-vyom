@@ -74,6 +74,7 @@ type DashboardPayload = {
   formKey: string;
   appUrl: string;
   testCount: number;
+  testLink?: { aid: string; tt: string };
   summary: {
     totalReviews: number;
     overallAvg: number | null;
@@ -135,11 +136,12 @@ export default function InstructorReviewsTab({
   const [testModalOpen, setTestModalOpen] = useState(false);
   const [tInstructor, setTInstructor] = useState('Ashish Kohli');
   const [tType, setTType] = useState<string>('One-on-One Speaking');
-  const [tStudent, setTStudent] = useState('Vyom Test');
+  const [showTest, setShowTest] = useState(false);
   const [clearing, setClearing] = useState(false);
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const loadSeq = useRef(0);
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -156,17 +158,21 @@ export default function InstructorReviewsTab({
     if (fDays !== 'all') p.set('days', fDays);
     if (fScore !== 'all') p.set('score', fScore);
     if (fSearch) p.set('q', fSearch);
+    if (showTest) p.set('includeTest', '1');
     return p.toString();
-  }, [fInstructor, fType, fDays, fScore, fSearch]);
+  }, [fInstructor, fType, fDays, fScore, fSearch, showTest]);
 
   const load = useCallback(
     async (silent = false) => {
+      // Only the newest request may fill the table; slower, older answers are dropped.
+      const seq = ++loadSeq.current;
       if (!silent) setRefreshing(true);
       try {
-        const res = await fetch(`/api/admin/instructor-reviews${filterQs ? `?${filterQs}` : ''}`, {
+        const res = await fetch(`/api/admin/instructor-reviews/${filterQs ? `?${filterQs}` : ''}`, {
           cache: 'no-store',
         });
         const json = await res.json().catch(() => null);
+        if (seq !== loadSeq.current) return;
         if (!res.ok || !json || json.ok === false) {
           setFetchErr(json?.error || 'Could not load instructor reviews.');
           return;
@@ -181,10 +187,12 @@ export default function InstructorReviewsTab({
           );
         }
       } catch {
-        setFetchErr('Could not reach the Instructor Reviews service. Try again.');
+        if (seq === loadSeq.current) setFetchErr('Could not reach the Instructor Reviews service. Try again.');
       } finally {
-        setLoading(false);
-        setRefreshing(false);
+        if (seq === loadSeq.current) {
+          setLoading(false);
+          setRefreshing(false);
+        }
       }
     },
     [filterQs]
@@ -234,7 +242,7 @@ export default function InstructorReviewsTab({
   const handleClearTest = async () => {
     setClearing(true);
     try {
-      const res = await fetch('/api/admin/instructor-reviews/test', { method: 'DELETE' });
+      const res = await fetch('/api/admin/instructor-reviews/test/', { method: 'DELETE' });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.ok) {
         onDone(`Cleared ${json.deletedReviews ?? 0} test review(s).`);
@@ -252,7 +260,7 @@ export default function InstructorReviewsTab({
   const handleDeleteOneTest = async (id: number) => {
     setDeletingId(id);
     try {
-      const res = await fetch(`/api/admin/instructor-reviews/test/${id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/admin/instructor-reviews/test/${id}/`, { method: 'DELETE' });
       if (res.ok) {
         await load();
       } else {
@@ -266,22 +274,22 @@ export default function InstructorReviewsTab({
   };
 
   const launchTestLink = () => {
-    if (!data?.formKey) return;
-    const aid = `test_${Date.now()}`;
-    const student = tStudent.trim() || 'Vyom Test';
+    // The rating service signs each test link; an unsigned "test" link is refused.
+    if (!data?.formKey || !data.testLink) {
+      onError('Test links need the latest rating service. Refresh the page and try again.');
+      return;
+    }
     const params = new URLSearchParams({
       k: data.formKey,
-      aid,
-      student,
-      email: 'test@frenchifywithvyom.com',
+      aid: data.testLink.aid,
+      tt: data.testLink.tt,
       instructor: tInstructor,
       type: tType,
-      cal: `${tInstructor} - ${tType}`,
-      when: `${new Date().toLocaleDateString('en-CA')} 10:00 AM ET`,
       test: '1',
     });
     window.open(`/rate/?${params.toString()}`, '_blank', 'noopener,noreferrer');
     setTestModalOpen(false);
+    load(true); // get a fresh signed link for the next test
   };
 
   const activeFilterParts = useMemo(() => {
@@ -378,6 +386,18 @@ export default function InstructorReviewsTab({
           </button>
 
           {data.testCount > 0 && (
+            <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-gray-300 bg-white px-3 py-2 text-xs font-semibold text-gray-700">
+              <input
+                type="checkbox"
+                className="h-3.5 w-3.5 accent-brand-blue"
+                checked={showTest}
+                onChange={(e) => setShowTest(e.target.checked)}
+              />
+              Show test rows
+            </label>
+          )}
+
+          {data.testCount > 0 && (
             <button
               type="button"
               onClick={handleClearTest}
@@ -390,7 +410,7 @@ export default function InstructorReviewsTab({
           )}
 
           <a
-            href={`/api/admin/instructor-reviews/export${filterQs ? `?${filterQs}` : ''}`}
+            href={`/api/admin/instructor-reviews/export/${filterQs ? `?${filterQs}` : ''}`}
             className="inline-flex items-center gap-1.5 rounded-xl bg-brand-blue px-3.5 py-2 text-xs font-semibold text-white shadow-soft transition hover:bg-brand-blue-deep"
           >
             <Download className="h-3.5 w-3.5" />
@@ -403,9 +423,8 @@ export default function InstructorReviewsTab({
         <div className="flex items-start gap-2.5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" />
           <p>
-            <strong className="font-semibold">Pre-Live Review Mode:</strong> Low-score alerts (&lt;= 2 stars) to Vyom
-            are currently paused and logged in the Alerts tab only. No live student emails or Vyom alerts send until
-            workflows are published.
+            <strong className="font-semibold">Alerts are off:</strong> Low-score alerts (2 stars or less) do not go to
+            Vyom now. They show in the Alerts tab only.
           </p>
         </div>
       )}
@@ -947,18 +966,6 @@ export default function InstructorReviewsTab({
                 </select>
               </div>
 
-              <div>
-                <label className="mb-1 block text-xs font-semibold text-gray-700" htmlFor="test-student">
-                  Test Student Name
-                </label>
-                <input
-                  id="test-student"
-                  type="text"
-                  className={selectCls}
-                  value={tStudent}
-                  onChange={(e) => setTStudent(e.target.value)}
-                />
-              </div>
             </div>
 
             <div className="mt-5 flex justify-end gap-2">

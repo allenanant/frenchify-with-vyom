@@ -26,6 +26,14 @@ export function pickFilterSearchParams(source: URLSearchParams): string {
   return out.toString();
 }
 
+/** The visitor's IP as Vercel sees it. Sent to the rating service so its per-person rate limit works. */
+export function clientIpFrom(req: Request): string {
+  const real = (req.headers.get('x-real-ip') || '').trim();
+  if (real) return real.slice(0, 64);
+  const fwd = (req.headers.get('x-forwarded-for') || '').split(',')[0].trim();
+  return (fwd || 'unknown').slice(0, 64);
+}
+
 export async function reviewsFetch(pathWithQuery: string, init: RequestInit = {}): Promise<Response> {
   const cfg = getReviewsConfig();
   if (!cfg) {
