@@ -25,6 +25,8 @@ const BARE_PREFIXES = [
   '/sunday-webinar',
   '/saturday-webinar',
   '/webinar',
+  // Black Friday 2026 landing page. Same funnel, same rules.
+  '/black-friday-webinar',
 ];
 
 /**
