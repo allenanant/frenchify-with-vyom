@@ -81,7 +81,7 @@ const includes = [
 
 /* ------------------------------------------------------------------ */
 /* Dates. Everything on the page comes from the one webinar schedule,  */
-/* shown in Montreal time with the India time next to it.              */
+/* shown in Eastern time (EST, Toronto) with the India time next to it. */
 /* ------------------------------------------------------------------ */
 
 function when(ms: number, timeZone: string) {
@@ -95,6 +95,7 @@ function when(ms: number, timeZone: string) {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
+    timeZoneName: 'short',
   }).formatToParts(new Date(ms))) {
     p[part.type] = part.value;
   }
@@ -111,6 +112,8 @@ function when(ms: number, timeZone: string) {
     time: `${p.hour}:${p.minute} ${period}`,
     /** "8 PM" when on the hour, else "8:30 PM" */
     timeShort: p.minute === '00' ? `${p.hour} ${period}` : `${p.hour}:${p.minute} ${period}`,
+    /** "EST" in winter, "EDT" in summer (Allen, 25 Nov 2026: write EST, Toronto time) */
+    zone: p.timeZoneName,
   };
 }
 
@@ -233,7 +236,7 @@ export default function BlackFridayLanding({ webinar }: { webinar: Webinar }) {
 
   const mtl = when(webinar.startsAtMs, WEBINAR_TZ);
   const ind = when(webinar.startsAtMs, INDIA_TZ);
-  const dateLine = `${mtl.short} · ${mtl.time} Montreal · Online`;
+  const dateLine = `${mtl.short} · ${mtl.time} ${mtl.zone} · Online`;
   // The server's clock at render time: both live clocks start from it so the
   // first client render matches this HTML.
   const renderedAt = Date.now();
@@ -299,7 +302,7 @@ export default function BlackFridayLanding({ webinar }: { webinar: Webinar }) {
                       </div>
                       <div>
                         <span className="t-label">Time</span>
-                        <span className="t-val">{mtl.timeShort} Montreal</span>
+                        <span className="t-val">{mtl.timeShort} {mtl.zone}</span>
                       </div>
                       <div>
                         <span className="t-label">Length</span>
@@ -335,7 +338,7 @@ export default function BlackFridayLanding({ webinar }: { webinar: Webinar }) {
                 <span className="seg g-start">
                   <BfStartsIn targetIso={webinar.startsAt} renderedAt={renderedAt} />
                 </span>
-                {' '}· <span className="seg">{mtl.short}, {mtl.time} Montreal</span>
+                {' '}· <span className="seg">{mtl.short}, {mtl.time} {mtl.zone}</span>
                 {' '}· <span className="seg">{ind.short}, {ind.time} in India</span>
               </p>
 
@@ -538,7 +541,7 @@ export default function BlackFridayLanding({ webinar }: { webinar: Webinar }) {
                 </p>
                 <p className="facts">
                   <Icon id="clock" size={20} />
-                  90 minutes, live online. {mtl.short}, {mtl.time} Montreal.
+                  90 minutes, live online. {mtl.short}, {mtl.time} {mtl.zone}.
                 </p>
               </div>
               <ol className="timeline">
@@ -741,7 +744,7 @@ export default function BlackFridayLanding({ webinar }: { webinar: Webinar }) {
                 <div className="cd-col">
                   <BfCountdownDigits targetIso={webinar.startsAt} renderedAt={renderedAt} />
                   <p className="cd-when">
-                    {mtl.long} {mtl.year}, {mtl.time} Montreal{' '}
+                    {mtl.long} {mtl.year}, {mtl.time} {mtl.zone}{' '}
                     <span>
                       {ind.long}, {ind.time} in India
                     </span>
