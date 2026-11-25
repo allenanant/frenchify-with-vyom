@@ -1,28 +1,41 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Megaphone, Trophy, CalendarClock, LogOut, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Megaphone, Trophy, CalendarClock, Star, LogOut, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { adminSignOut } from '@/lib/content-admin/actions';
 import type { AdminAnnouncement, AdminWallEntry } from '@/lib/content-admin/content';
 import ResultsTab from './ResultsTab';
 import AnnouncementsTab from './AnnouncementsTab';
 import WebinarTab, { type WebinarAdminState } from './WebinarTab';
+import InstructorReviewsTab from './InstructorReviewsTab';
 
 export type Banner = { kind: 'ok' | 'error'; text: string } | null;
 
+type TabId = 'announcements' | 'results' | 'webinar' | 'reviews';
+
 type Props = {
   userName: string;
+  isAdmin: boolean;
   announcements: AdminAnnouncement[];
   wall: AdminWallEntry[];
   webinar: WebinarAdminState;
   loadError: string | null;
 };
 
-export default function AdminShell({ userName, announcements, wall, webinar, loadError }: Props) {
-  const [tab, setTab] = useState<'announcements' | 'results' | 'webinar'>('announcements');
+export default function AdminShell({ userName, isAdmin, announcements, wall, webinar, loadError }: Props) {
+  const [tab, setTab] = useState<TabId>('announcements');
   const [banner, setBanner] = useState<Banner>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get('tab');
+    if (q === 'results' || q === 'webinar' || q === 'announcements') {
+      setTab(q);
+    } else if (q === 'reviews' && isAdmin) {
+      setTab('reviews');
+    }
+  }, [isAdmin]);
 
   const done = (text: string) => {
     setBanner({ kind: 'ok', text });
@@ -38,7 +51,7 @@ export default function AdminShell({ userName, announcements, wall, webinar, loa
   };
 
   const tabBtn = (active: boolean) =>
-    `flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-[15px] font-semibold transition ${
+    `flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl px-3 py-3 text-sm font-semibold transition sm:px-4 sm:py-3.5 sm:text-[15px] ${
       active ? 'bg-brand-blue text-white shadow-premium' : 'bg-white text-gray-700 hover:bg-blue-50'
     }`;
 
@@ -80,16 +93,25 @@ export default function AdminShell({ userName, announcements, wall, webinar, loa
           </div>
         )}
 
-        <div className="mb-8 flex flex-wrap gap-2 rounded-2xl border border-gray-200 bg-gray-100 p-1.5">
+        <div
+          className={`mb-8 gap-2 rounded-2xl border border-gray-200 bg-gray-100 p-1.5 ${
+            isAdmin ? 'grid grid-cols-2 sm:flex sm:flex-wrap' : 'flex flex-wrap'
+          }`}
+        >
           <button className={tabBtn(tab === 'announcements')} onClick={() => setTab('announcements')}>
-            <Megaphone className="h-5 w-5" /> Announcements
+            <Megaphone className="h-4 w-4 sm:h-5 sm:w-5" /> Announcements
           </button>
           <button className={tabBtn(tab === 'results')} onClick={() => setTab('results')}>
-            <Trophy className="h-5 w-5" /> Results
+            <Trophy className="h-4 w-4 sm:h-5 sm:w-5" /> Results
           </button>
           <button className={tabBtn(tab === 'webinar')} onClick={() => setTab('webinar')}>
-            <CalendarClock className="h-5 w-5" /> Webinar
+            <CalendarClock className="h-4 w-4 sm:h-5 sm:w-5" /> Webinar
           </button>
+          {isAdmin && (
+            <button className={tabBtn(tab === 'reviews')} onClick={() => setTab('reviews')}>
+              <Star className="h-4 w-4 sm:h-5 sm:w-5" /> Reviews
+            </button>
+          )}
         </div>
 
         {tab === 'announcements' && (
@@ -97,6 +119,7 @@ export default function AdminShell({ userName, announcements, wall, webinar, loa
         )}
         {tab === 'results' && <ResultsTab wall={wall} onDone={done} onError={fail} />}
         {tab === 'webinar' && <WebinarTab initial={webinar} onDone={done} onError={fail} />}
+        {tab === 'reviews' && isAdmin && <InstructorReviewsTab onDone={done} onError={fail} />}
       </div>
     </main>
   );

@@ -36,6 +36,7 @@ export default async function AdminPage() {
   return (
     <AdminShell
       userName={user.name}
+      isAdmin={user.role === 'admin'}
       announcements={announcements}
       wall={wall}
       webinar={webinarAdminState()}
