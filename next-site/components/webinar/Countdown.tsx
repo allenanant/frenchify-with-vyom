@@ -27,8 +27,7 @@ type Props = {
   redirectDelaySeconds?: number;
   /** Copy shown in place of the digits once time is up. */
   expiredLabel?: string;
-  /** 'gold' is the dark tone with gold digits, for the Black Friday page. */
-  tone?: 'light' | 'dark' | 'gold';
+  tone?: 'light' | 'dark';
   className?: string;
 };
 
@@ -75,15 +74,13 @@ export default function Countdown({
     return () => clearTimeout(id);
   }, [expired, redirectOnExpiry, joinUrl, redirectDelaySeconds]);
 
-  const dark = tone !== 'light';
+  const dark = tone === 'dark';
   // The last day is the only time this thing is allowed to change colour, and
   // `accent` is the only token licensed for it. It fails contrast on the navy
   // band, so there the digits stay white and the urgency is carried by the copy
   // next to the clock.
   const urgent = remaining !== null && remaining > 0 && remaining < 86_400_000;
-  const cell = tone === 'gold'
-    ? 'bg-[#D9B254]/10 border-[#D9B254]/35 text-[#E2C171]'
-    : dark
+  const cell = dark
     ? 'bg-white/5 border-white/20 text-white'
     : urgent
       ? 'bg-fnl-surface-alt border-fnl-accent/40 text-fnl-accent'

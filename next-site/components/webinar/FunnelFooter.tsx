@@ -18,26 +18,11 @@ const LEGAL = [
   { href: '/refund-policy/', label: 'Refund Policy' },
 ];
 
-export default function FunnelFooter({
-  className,
-  tone = 'light',
-}: {
-  className?: string;
-  /** 'dark' for the black Black Friday page. */
-  tone?: 'light' | 'dark';
-}) {
-  const dark = tone === 'dark';
-  const text = dark ? 'text-white/60' : 'text-fnl-mute';
+export default function FunnelFooter({ className }: { className?: string }) {
   return (
-    <footer
-      className={cn(
-        'w-full border-t',
-        dark ? 'border-white/10 bg-[#06080D]' : 'border-fnl-line bg-fnl-surface',
-        className
-      )}
-    >
+    <footer className={cn('w-full border-t border-fnl-line bg-fnl-surface', className)}>
       <div className="mx-auto flex w-full max-w-[1120px] flex-col items-center gap-4 px-5 py-10 text-center md:flex-row md:justify-between md:px-8 md:text-left">
-        <p className={cn('text-[15px] leading-[1.5]', text)}>
+        <p className="text-[15px] leading-[1.5] text-fnl-mute">
           © {new Date().getFullYear()} Frenchify with Vyom Inc. All rights reserved.
         </p>
         <nav aria-label="Legal" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
@@ -48,11 +33,7 @@ export default function FunnelFooter({
               /* py-2.5 gets these to a 44px tap target. They were 23px, which
                  is a miss on the one set of links that has to stay reachable
                  for legal reasons. */
-              className={cn(
-                'inline-flex items-center py-2.5 text-[15px] leading-[1.5] transition-colors duration-[120ms]',
-                text,
-                dark ? 'hover:text-white' : 'hover:text-fnl-ink'
-              )}
+              className="inline-flex items-center py-2.5 text-[15px] leading-[1.5] text-fnl-mute transition-colors duration-[120ms] hover:text-fnl-ink"
             >
               {item.label}
             </a>
