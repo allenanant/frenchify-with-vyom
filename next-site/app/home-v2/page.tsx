@@ -10,6 +10,10 @@ import HomeV2TestimonialQuotes from './_components/HomeV2TestimonialQuotes';
 import HomeV2Faq from './_components/HomeV2Faq';
 import HomeV2MegaCta from './_components/HomeV2MegaCta';
 
+// Re-render every 10 min so the Black Friday top bar switches off on time
+// (lib/promo.ts).
+export const revalidate = 600;
+
 export const metadata = {
   title: 'Home',
   description:
@@ -20,7 +24,7 @@ export default function HomeV2Page() {
   return (
     <>
       <BodyClass className="has-notice-bars is-home-v2" />
-      <NoticeBars />
+      <NoticeBars blackFriday />
       <HomeV2Hero />
       <HomeV2PlanFinder />
       <HomeV2Stats />
