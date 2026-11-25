@@ -266,7 +266,7 @@ export default function InstructorReviewsTab({
   };
 
   const launchTestLink = () => {
-    if (!data?.appUrl || !data?.formKey) return;
+    if (!data?.formKey) return;
     const aid = `test_${Date.now()}`;
     const student = tStudent.trim() || 'Vyom Test';
     const params = new URLSearchParams({
@@ -280,7 +280,7 @@ export default function InstructorReviewsTab({
       when: `${new Date().toLocaleDateString('en-CA')} 10:00 AM ET`,
       test: '1',
     });
-    window.open(`${data.appUrl}/rate?${params.toString()}`, '_blank', 'noopener,noreferrer');
+    window.open(`/rate/?${params.toString()}`, '_blank', 'noopener,noreferrer');
     setTestModalOpen(false);
   };
 
