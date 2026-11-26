@@ -4,10 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { ArrowRight, Sparkles, BadgeCheck, Globe2 } from 'lucide-react';
-import Magnetic from '@/components/motion/Magnetic';
-import Reveal from '@/components/motion/Reveal';
-import TextReveal from '@/components/motion/TextReveal';
+import { ArrowRight, Sparkles, BadgeCheck, ClipboardCheck, Globe2 } from 'lucide-react';
+import { FRENCH_PR_QUIZ_CTA, FRENCH_PR_QUIZ_PATH } from '@/lib/french-pr-quiz';
 
 const HERO_IMAGE_SRC = '/vyom-hero-classroom-aug24-2026.webp';
 
@@ -56,112 +54,38 @@ export default function HomeV2Hero() {
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
           {/* LEFT: Headline + CTA (kept on left so it doesn't overlap Vyom) */}
           <motion.div style={{ y: titleY }} className="lg:col-span-7 relative z-10">
-            <Reveal direction="up">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-7 rounded-full bg-white border border-blue-100 shadow-[0_8px_24px_-12px_rgba(37,99,235,0.25)]">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600" />
-                </span>
-                <span className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-blue-700">
-                  150+ Students Cleared TEF/TCF for Canadian PR
-                </span>
-              </div>
-            </Reveal>
-
-            <h1 className="font-display font-bold text-[#111827] tracking-[-0.04em] leading-[0.96] text-[40px] sm:text-[54px] md:text-[46px] lg:text-[72px]">
-              <TextReveal
-                as="span"
-                text="Clearing TEF & TCF"
-                className="block"
-                stagger={0.06}
-              />
-              <span className="block overflow-hidden">
-                <motion.span
-                  initial={{ y: '100%', opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{
-                    duration: 0.9,
-                    delay: 0.4,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  className="inline-block shimmer-text"
-                >
-                  with Frenchify.
-                </motion.span>
+            <div className="mb-5 inline-flex items-center gap-3 sm:mb-6">
+              <span className="grid h-[54px] w-[54px] shrink-0 place-items-center rounded-2xl border border-amber-300 bg-[#fbbf24] text-[#0A1426] shadow-[0_10px_25px_-10px_#f59e0b] sm:h-16 sm:w-16">
+                <ClipboardCheck className="h-8 w-8 sm:h-9 sm:w-9" aria-hidden="true" />
               </span>
+              <span className="text-xs font-extrabold uppercase tracking-[0.16em] text-blue-800 sm:text-sm">Start here · Free quiz</span>
+            </div>
+
+            <h1 className="max-w-[640px] font-display text-[38px] font-bold leading-[1.03] tracking-[-0.045em] text-[#0A1426] sm:text-[54px] md:text-[49px] lg:text-[64px]">
+              Short on Time for French? <span className="text-[#1d4ed8]">Find Out What to Prioritize Now.</span>
             </h1>
 
-            <Reveal direction="up" delay={0.7}>
-              <p className="mt-7 max-w-[620px] text-[16px] md:text-[18px] leading-[1.55] text-[#374151]">
-                Not sure where to start? Get a personalized TEF/TCF Canada study plan and unlock our full French roadmap completely free.
-              </p>
-            </Reveal>
+            <p className="mt-5 max-w-[510px] text-[16px] leading-relaxed text-[#374151] md:text-[18px]">
+              Take the quick quiz to get a free, personalized French study plan for Canadian PR. Tell us your level, goal, and study preferences, and see what to focus on first for TEF or TCF Canada.
+            </p>
 
-            <Reveal direction="up" delay={0.85}>
-              <section
-                aria-labelledby="plan-video-heading"
-                className="mt-7 max-w-[560px]"
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <Link
+                href={FRENCH_PR_QUIZ_PATH}
+                className="group inline-flex min-h-[60px] w-full items-center justify-center gap-3 rounded-full bg-[#fbbf24] px-6 py-3 text-center text-[16px] font-extrabold leading-tight text-[#0A1426] shadow-[0_15px_32px_-9px_rgba(245,158,11,0.7)] transition-colors hover:bg-[#f59e0b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700 sm:w-auto sm:px-7 sm:text-[17px]"
               >
-                <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                  <h2
-                    id="plan-video-heading"
-                    className="text-[14px] font-extrabold text-[#111827] sm:text-[15px]"
-                  >
-                    Watch how your free personalized plan works
-                  </h2>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-bold text-[#4b5563] shadow-sm ring-1 ring-[#dbeafe]">
-                    <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#2563eb]" />
-                    Starts muted
-                  </span>
-                </div>
+                {FRENCH_PR_QUIZ_CTA}
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#0A1426] text-white">
+                  <ArrowRight className="h-[17px] w-[17px] transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                </span>
+              </Link>
+              <Link href="/courses/" className="inline-flex min-h-11 items-center text-sm font-bold text-[#1e3a8a] underline decoration-blue-300 underline-offset-4 hover:decoration-blue-700">
+                Explore Programs
+              </Link>
+            </div>
 
-                <div className="relative aspect-video overflow-hidden rounded-[22px] border border-white/80 bg-[#071936] shadow-[0_24px_60px_-20px_rgba(7,25,54,0.5)] ring-1 ring-[#dbeafe]">
-                  <iframe
-                    src="https://www.youtube-nocookie.com/embed/VchV9QvuKpI?autoplay=1&mute=1&playsinline=1&rel=0"
-                    title="Free Roadmap for PR in Canada — Frenchify"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                    className="absolute inset-0 h-full w-full border-0"
-                  />
-                </div>
-                <p className="mt-2 text-[11px] font-medium text-[#6b7280] sm:text-[12px]">
-                  Tap the speaker in the video to hear Vyom explain what you will receive.
-                </p>
-              </section>
-            </Reveal>
-
-            <Reveal direction="up" delay={0.95}>
-              <div className="mt-7 flex flex-wrap items-center gap-4">
-                <Magnetic className="w-full sm:w-auto">
-                  <Link
-                    href="/personalized-french-plan-pr"
-                    className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#f59e0b] px-6 py-4 text-center text-[14px] font-bold leading-snug text-[#111827] shadow-[0_18px_40px_-12px_rgba(245,158,11,0.65)] hover:bg-[#fbbf24] transition-all duration-300 sm:w-auto sm:px-7 sm:text-[15px]"
-                  >
-                    Create my personalized French Plan for PR
-                    <span className="grid h-7 w-7 place-items-center rounded-full bg-white/30 group-hover:bg-white/45 transition-colors">
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </span>
-                  </Link>
-                </Magnetic>
-                <Magnetic className="w-full sm:w-auto">
-                  <Link
-                    href="/courses"
-                    className="group inline-flex w-full items-center justify-center gap-3 rounded-full border border-[#dbeafe] bg-white px-6 py-4 text-[15px] font-semibold text-[#252525] hover:border-[#2563eb] transition-colors duration-300 sm:w-auto"
-                  >
-                    <span className="grid h-7 w-7 place-items-center rounded-full bg-blue-50 text-[#2563eb]">
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </span>
-                    Explore Programs
-                  </Link>
-                </Magnetic>
-              </div>
-            </Reveal>
-
-            <Reveal direction="up" delay={1.1}>
-              <p className="mt-5 text-[12px] font-semibold text-[#4b5563] sm:text-[13px]">
-                Takes 2 minutes • Free full roadmap included • Save access with your email
-              </p>
+            <div className="mt-2">
+              <p className="text-[13px] font-semibold text-[#4b5563]">Completely free · No account or payment needed</p>
               <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3 text-[13px] text-[#4b5563]">
                 <span className="inline-flex items-center gap-1.5">
                   <BadgeCheck className="h-4 w-4 text-[#16a34a]" />
@@ -176,7 +100,7 @@ export default function HomeV2Hero() {
                   <span className="font-medium">Flexible Live + Self-Paced Options</span>
                 </span>
               </div>
-            </Reveal>
+            </div>
 
             {/* Mobile-only full-width hero image (below the content) */}
             <div className="md:hidden -mx-5 mt-8">

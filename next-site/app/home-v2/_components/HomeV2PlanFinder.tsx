@@ -1,14 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Clock3, Flag, GraduationCap, TimerReset } from 'lucide-react';
+import { ArrowRight, BookOpen, Flag, GraduationCap, TimerReset } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
+import { FRENCH_PR_QUIZ_CTA, FRENCH_PR_QUIZ_PATH } from '@/lib/french-pr-quiz';
 
 const signals = [
   { Icon: GraduationCap, title: 'Your current French level', copy: 'Start at the right foundation.' },
   { Icon: Flag, title: 'Your CLB goal', copy: 'Plan for CLB 5 or CLB 7+.' },
-  { Icon: TimerReset, title: 'Your work permit timeline', copy: 'Match your path to your urgency.' },
-  { Icon: Clock3, title: 'Your daily study time', copy: 'Build a plan you can sustain.' },
+  { Icon: TimerReset, title: 'Your timeline', copy: 'Know what to prioritize if your work permit timeline is tight.' },
+  { Icon: BookOpen, title: 'How you like to study', copy: 'Find a study format that fits your schedule.' },
 ];
 
 export default function HomeV2PlanFinder() {
@@ -29,7 +30,7 @@ export default function HomeV2PlanFinder() {
               Not sure where to start?
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-[16px] leading-[1.7] text-[#5f6b7a] md:text-[18px]">
-              Answer 8 quick questions, get the Frenchify path that matches your level and PR goal, and unlock the full French roadmap completely free.
+              Take the free quiz to see what to study first and get a personalized path for your TEF or TCF Canada goal.
             </p>
           </div>
         </Reveal>
@@ -53,14 +54,14 @@ export default function HomeV2PlanFinder() {
         <Reveal delay={0.32}>
           <div className="mt-10 text-center">
             <Link
-              href="/personalized-french-plan-pr"
+              href={FRENCH_PR_QUIZ_PATH}
               className="group inline-flex min-h-14 w-full max-w-[440px] items-center justify-center gap-3 rounded-full bg-[#f59e0b] px-6 py-4 text-center text-[14px] font-bold leading-snug text-[#111827] shadow-[0_18px_38px_-14px_rgba(245,158,11,0.65)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#fbbf24] sm:w-auto sm:px-7 sm:text-[15px]"
             >
-              Create my personalized French Plan for PR
+              {FRENCH_PR_QUIZ_CTA}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </Link>
             <p className="mt-4 text-[12px] font-medium text-[#6b7280]">
-              Takes 2 minutes • Free roadmap included • No commitment
+              Completely free · No account or payment needed
             </p>
           </div>
         </Reveal>
