@@ -6,6 +6,7 @@ import Reveal from '@/components/motion/Reveal';
 type Stat = {
   Icon: typeof Award;
   text: string;
+  prefix?: string;
   label: string;
   sub: string;
   accent: string;
@@ -15,22 +16,23 @@ const stats: Stat[] = [
   {
     Icon: GraduationCap,
     text: '5+ Years',
-    label: 'Teaching experience',
+    label: 'TEF/TCF Experience',
     sub: 'Vyom is a pioneer in French for Canadian PR, specializing in TEF, TCF, and TEFAQ preparation.',
     accent: 'from-[#2563eb] to-[#3b82f6]',
   },
   {
     Icon: Award,
-    text: 'Verified',
-    label: 'TEF/TCF Results',
-    sub: 'For CLB 5, CLB 7, work permit extensions, PNP programs and more…',
+    text: '2,000+',
+    label: 'Students Helped',
+    sub: 'Join a growing online community of 60,000+ members learning French and preparing for TEF and TCF Canada.',
     accent: 'from-[#f59e0b] to-[#fbbf24]',
   },
   {
     Icon: Layers,
     text: 'CLB 7+',
-    label: 'Highest & Most Truthful results in the French Coaching Industry',
-    sub: 'Most students clear their target score within 5 to 11 months, real roadmap, real expectations, no false promises',
+    prefix: 'Verified',
+    label: 'Highest and Most Truthful Results in the French Coaching Industry',
+    sub: 'Most students clear their target score within 5 to 11 months. No false promises.',
     accent: 'from-[#16a34a] to-[#22c55e]',
   },
 ];
@@ -67,7 +69,8 @@ export default function HomeV2Stats() {
                     0{i + 1}
                   </span>
                 </div>
-                <div className="mt-10 font-display font-bold text-[#111827] tracking-[-0.04em] leading-[0.95] text-[44px] md:text-[38px] lg:text-[50px] xl:text-[64px]">
+                <div className="relative mt-10 font-display font-bold text-[#111827] tracking-[-0.04em] leading-[0.95] text-[44px] md:text-[38px] lg:text-[50px] xl:text-[64px]">
+                  {s.prefix && <><span className="absolute bottom-full mb-2 block text-xs font-extrabold uppercase leading-none tracking-[0.16em] text-green-700">{s.prefix}</span>{' '}</>}
                   {s.text}
                 </div>
                 <div className="mt-3 text-[15px] font-semibold leading-snug text-[#252525]">
