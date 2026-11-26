@@ -54,52 +54,63 @@ export default function HomeV2Hero() {
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
           {/* LEFT: Headline + CTA (kept on left so it doesn't overlap Vyom) */}
           <motion.div style={{ y: titleY }} className="lg:col-span-7 relative z-10">
-            <div className="mb-5 inline-flex items-center gap-3 sm:mb-6">
-              <span className="grid h-[54px] w-[54px] shrink-0 place-items-center rounded-2xl border border-amber-300 bg-[#fbbf24] text-[#0A1426] shadow-[0_10px_25px_-10px_#f59e0b] sm:h-16 sm:w-16">
-                <ClipboardCheck className="h-8 w-8 sm:h-9 sm:w-9" aria-hidden="true" />
-              </span>
-              <span className="text-xs font-extrabold uppercase tracking-[0.16em] text-blue-800 sm:text-sm">Start here · Free quiz</span>
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-3.5 py-1.5 shadow-[0_8px_24px_-12px_rgba(37,99,235,0.25)]">
+              <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-blue-600" />
+              <span className="text-[12px] font-extrabold uppercase tracking-[0.18em] text-blue-700">150+ Students Cleared TEF/TCF for Canadian PR</span>
             </div>
 
-            <h1 className="max-w-[640px] font-display text-[38px] font-bold leading-[1.03] tracking-[-0.045em] text-[#0A1426] sm:text-[54px] md:text-[49px] lg:text-[64px]">
-              Short on Time for French? <span className="text-[#1d4ed8]">Find Out What to Prioritize Now.</span>
+            <h1 className="font-display font-bold text-[#111827] tracking-[-0.04em] leading-[0.96] text-[40px] sm:text-[54px] md:text-[46px] lg:text-[72px]">
+              <span className="block">Clearing TEF &amp; TCF</span>{' '}
+              <span className="block"><span className="inline-block shimmer-text">with Frenchify.</span></span>
             </h1>
 
-            <p className="mt-5 max-w-[510px] text-[16px] leading-relaxed text-[#374151] md:text-[18px]">
-              Take the quick quiz to get a free, personalized French study plan for Canadian PR. Tell us your level, goal, and study preferences, and see what to focus on first for TEF or TCF Canada.
-            </p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-              <Link
-                href={FRENCH_PR_QUIZ_PATH}
-                className="group inline-flex min-h-[60px] w-full items-center justify-center gap-3 rounded-full bg-[#fbbf24] px-6 py-3 text-center text-[16px] font-extrabold leading-tight text-[#0A1426] shadow-[0_15px_32px_-9px_rgba(245,158,11,0.7)] transition-colors hover:bg-[#f59e0b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700 sm:w-auto sm:px-7 sm:text-[17px]"
-              >
-                {FRENCH_PR_QUIZ_CTA}
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#0A1426] text-white">
-                  <ArrowRight className="h-[17px] w-[17px] transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+            <section aria-labelledby="homepage-quiz-heading" className="mt-7 max-w-[570px]">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <span className="grid h-[54px] w-[54px] shrink-0 place-items-center rounded-2xl border border-amber-300 bg-[#fbbf24] text-[#0A1426] shadow-[0_10px_25px_-10px_#f59e0b] sm:h-16 sm:w-16">
+                  <ClipboardCheck className="h-8 w-8 sm:h-9 sm:w-9" aria-hidden="true" />
                 </span>
-              </Link>
-              <Link href="/courses/" className="inline-flex min-h-11 items-center text-sm font-bold text-[#1e3a8a] underline decoration-blue-300 underline-offset-4 hover:decoration-blue-700">
-                Explore Programs
-              </Link>
-            </div>
-
-            <div className="mt-2">
-              <p className="text-[13px] font-semibold text-[#4b5563]">Completely free · No account or payment needed</p>
-              <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3 text-[13px] text-[#4b5563]">
-                <span className="inline-flex items-center gap-1.5">
-                  <BadgeCheck className="h-4 w-4 text-[#16a34a]" />
-                  <span className="font-medium">150+ Verified TEF/TCF Results</span>
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Globe2 className="h-4 w-4 text-[#2563eb]" />
-                  <span className="font-medium">TEF • TCF • TEFAQ</span>
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Sparkles className="h-4 w-4 text-[#f59e0b]" />
-                  <span className="font-medium">Flexible Live + Self-Paced Options</span>
-                </span>
+                <div>
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-blue-800 sm:text-xs">Start here · Free quiz</p>
+                  <h2 id="homepage-quiz-heading" className="mt-1.5 font-display text-[24px] font-bold leading-[1.14] tracking-[-0.025em] text-[#111827] sm:text-[31px]">
+                    Short on Time for French? <span className="text-[#1d4ed8]">Find Out What to Prioritize Now.</span>
+                  </h2>
+                </div>
               </div>
+              <p className="mt-3 text-[15px] leading-relaxed text-[#374151] md:text-[16px]">Get a free, personalized French study plan for Canadian PR. No account or payment needed.</p>
+
+              <div className="mt-5 flex flex-wrap items-center gap-3">
+                <a
+                  href={FRENCH_PR_QUIZ_PATH}
+                  className="group inline-flex min-h-[60px] w-full items-center justify-center gap-3 rounded-full bg-[#fbbf24] px-6 py-3 text-center text-[16px] font-extrabold leading-tight text-[#0A1426] shadow-[0_15px_32px_-9px_rgba(245,158,11,0.7)] transition-colors hover:bg-[#f59e0b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700 sm:w-auto sm:px-7 sm:text-[17px]"
+                >
+                  {FRENCH_PR_QUIZ_CTA}
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#0A1426] text-white">
+                    <ArrowRight className="h-[17px] w-[17px] transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                  </span>
+                </a>
+                <Link
+                  href="/courses/"
+                  className="group inline-flex min-h-[60px] w-full items-center justify-center gap-3 rounded-full border-2 border-[#93b4ed] bg-white px-6 py-3 text-center text-[16px] font-bold leading-tight text-[#1e3a8a] shadow-sm transition-colors hover:border-blue-700 hover:bg-blue-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700 sm:w-auto sm:text-[17px]"
+                >
+                  Explore Programs
+                  <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                </Link>
+              </div>
+            </section>
+
+            <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3 text-[13px] text-[#4b5563]">
+              <span className="inline-flex items-center gap-1.5">
+                <BadgeCheck className="h-4 w-4 text-[#16a34a]" />
+                <span className="font-medium">150+ Verified TEF/TCF Results</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Globe2 className="h-4 w-4 text-[#2563eb]" />
+                <span className="font-medium">TEF • TCF • TEFAQ</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Sparkles className="h-4 w-4 text-[#f59e0b]" />
+                <span className="font-medium">Flexible Live + Self-Paced Options</span>
+              </span>
             </div>
 
             {/* Mobile-only full-width hero image (below the content) */}

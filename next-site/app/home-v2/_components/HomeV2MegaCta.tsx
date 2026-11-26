@@ -77,7 +77,7 @@ export default function HomeV2MegaCta() {
               <Reveal direction="up" delay={0.3}>
                 <div className="mt-9 flex flex-wrap items-center gap-4">
                   <Magnetic className="w-full sm:w-auto">
-                    <Link
+                    <a
                       href={FRENCH_PR_QUIZ_PATH}
                       className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#fbbf24] px-7 py-4 text-[15px] font-bold text-[#0A1426] shadow-[0_20px_40px_-15px_rgba(245,158,11,0.45)] hover:bg-[#f59e0b] transition-colors duration-300 sm:w-auto"
                     >
@@ -86,7 +86,7 @@ export default function HomeV2MegaCta() {
                       <span className="grid h-7 w-7 place-items-center rounded-full bg-[#0A1426]/10 group-hover:bg-white/20 transition-colors">
                         <ArrowRight className="h-3.5 w-3.5" />
                       </span>
-                    </Link>
+                    </a>
                   </Magnetic>
                   <Magnetic className="w-full sm:w-auto">
                     <Link

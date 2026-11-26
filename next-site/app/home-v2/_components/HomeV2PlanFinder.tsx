@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { ArrowRight, BookOpen, Flag, GraduationCap, TimerReset } from 'lucide-react';
 import Reveal from '@/components/motion/Reveal';
 import { FRENCH_PR_QUIZ_CTA, FRENCH_PR_QUIZ_PATH } from '@/lib/french-pr-quiz';
@@ -53,13 +52,13 @@ export default function HomeV2PlanFinder() {
 
         <Reveal delay={0.32}>
           <div className="mt-10 text-center">
-            <Link
+            <a
               href={FRENCH_PR_QUIZ_PATH}
               className="group inline-flex min-h-14 w-full max-w-[440px] items-center justify-center gap-3 rounded-full bg-[#f59e0b] px-6 py-4 text-center text-[14px] font-bold leading-snug text-[#111827] shadow-[0_18px_38px_-14px_rgba(245,158,11,0.65)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#fbbf24] sm:w-auto sm:px-7 sm:text-[15px]"
             >
               {FRENCH_PR_QUIZ_CTA}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-            </Link>
+            </a>
             <p className="mt-4 text-[12px] font-medium text-[#6b7280]">
               Completely free · No account or payment needed
             </p>

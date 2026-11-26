@@ -133,6 +133,9 @@ const nextConfig = {
   },
   async rewrites() {
     return [
+      // Serve the supplied standalone quiz without inserting the site shell
+      // or depending on the LeadConnector preview URL.
+      { source: '/free-french-pr-plan', destination: '/french-pr-plan.html' },
       // Keep the Diwali campaign on the Frenchify domain while GoHighLevel
       // continues to own the funnel content, countdown and checkout controls.
       // This also means edits made to the source funnel appear at the public
