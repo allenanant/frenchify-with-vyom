@@ -18,17 +18,18 @@ function headers(token) {
  * @param {{ name: string, email: string, phone: string }} lead
  * @param {{ token?: string }} config
  * @param {typeof fetch} fetchImpl
+ * @returns {Promise<{ contactId: string }>}
  */
 export async function upsertFrenchifyContact(lead, config, fetchImpl = fetch) {
   if (!config.token) throw new Error('GHL contact routing is not configured.');
   const response = await fetchImpl(`${BASE}/contacts/upsert`, {
     method: 'POST',
     headers: headers(config.token),
-    body: JSON.stringify({ locationId: LOCATION, name: lead.name, email: lead.email, phone: lead.phone }),
+    body: JSON.stringify({ locationId: LOCATION, name: lead.name, email: lead.email, ...(lead.phone ? { phone: lead.phone } : {}) }),
     signal: AbortSignal.timeout(8_000),
   });
   const result = await response.json().catch(() => ({}));
-  if (!response.ok || !result.contact?.id || result.contact.locationId !== LOCATION) {
+  if (!response.ok || typeof result.contact?.id !== 'string' || !result.contact.id || result.contact.locationId !== LOCATION) {
     throw new Error(`Contact sync failed (${response.status}).`);
   }
   return { contactId: result.contact.id };
@@ -70,6 +71,22 @@ export async function enrollFrenchifyContact(contactId, config, fetchImpl = fetc
     throw new Error(`Lead workflow enrollment failed (${response.status}).`);
   }
   return { ok: true };
+}
+
+/** @param {string} contactId
+ * @param {{ title: string, body: string }} note
+ * @param {{ token?: string }} config
+ * @param {typeof fetch} fetchImpl */
+export async function addFrenchifyContactNote(contactId, note, config, fetchImpl = fetch) {
+  if (!config.token) throw new Error('GHL contact routing is not configured.');
+  const response = await fetchImpl(`${BASE}/contacts/${encodeURIComponent(contactId)}/notes`, {
+    method: 'POST',
+    headers: { ...headers(config.token), version: '2023-02-21' },
+    body: JSON.stringify(note),
+    signal: AbortSignal.timeout(6_000),
+  });
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok || !result.note?.id) throw new Error(`Contact note sync failed (${response.status}).`);
 }
 
 /** @param {{ name: string, email: string, phone: string }} lead
