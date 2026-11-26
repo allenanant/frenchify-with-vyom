@@ -1,15 +1,11 @@
 'use client';
 
 import { Layers, Award, GraduationCap } from 'lucide-react';
-import AnimatedNumber from '@/components/motion/AnimatedNumber';
 import Reveal from '@/components/motion/Reveal';
 
 type Stat = {
   Icon: typeof Award;
-  // Either an animated number (value + suffix) or a static display string.
-  value?: number;
-  suffix?: string;
-  text?: string;
+  text: string;
   label: string;
   sub: string;
   accent: string;
@@ -18,16 +14,15 @@ type Stat = {
 const stats: Stat[] = [
   {
     Icon: GraduationCap,
-    text: 'Since 2020',
-    label: 'Canada PR Specialized Training Only',
-    sub: 'Specialized preparation for TEF, TCF and TEFAQ Canada',
+    text: '5+ Years',
+    label: 'Teaching experience',
+    sub: 'Vyom is a pioneer in French for Canadian PR, specializing in TEF, TCF, and TEFAQ preparation.',
     accent: 'from-[#2563eb] to-[#3b82f6]',
   },
   {
     Icon: Award,
-    value: 150,
-    suffix: '+',
-    label: 'Real TEF/TCF Results',
+    text: 'Verified',
+    label: 'TEF/TCF Results',
     sub: 'For CLB 5, CLB 7, work permit extensions, PNP programs and more…',
     accent: 'from-[#f59e0b] to-[#fbbf24]',
   },
@@ -47,7 +42,7 @@ export default function HomeV2Stats() {
         <Reveal>
           <div className="max-w-2xl">
             <span className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#2667FF]">
-              By the numbers
+              Why Frenchify
             </span>
             <h2 className="mt-3 font-display text-[36px] md:text-[48px] font-bold text-[#111827] tracking-[-0.03em] leading-[1.05]">
               Real Results. Proven Experience.
@@ -58,7 +53,7 @@ export default function HomeV2Stats() {
         <div className="mt-12 grid md:grid-cols-3 gap-5">
           {stats.map((s, i) => (
             <Reveal key={s.label} delay={i * 0.12}>
-              <div className="group relative h-full rounded-3xl border border-[#e5e7eb] bg-white p-8 hover:border-[#dbeafe] transition-colors duration-500 overflow-hidden">
+              <div className="group relative h-full rounded-3xl border border-[#e5e7eb] bg-white p-8 transition-colors duration-500 hover:border-[#dbeafe] overflow-hidden md:p-5 lg:p-8">
                 <div
                   className={`absolute -top-24 -right-20 h-52 w-52 rounded-full bg-gradient-to-br ${s.accent} opacity-0 group-hover:opacity-10 blur-3xl transition-opacity duration-700`}
                 />
@@ -72,12 +67,8 @@ export default function HomeV2Stats() {
                     0{i + 1}
                   </span>
                 </div>
-                <div className="mt-10 font-display font-bold text-[#111827] tracking-[-0.04em] leading-[0.95] text-[44px] md:text-[56px] lg:text-[64px]">
-                  {typeof s.value === 'number' ? (
-                    <AnimatedNumber value={s.value} suffix={s.suffix} duration={1.6} />
-                  ) : (
-                    s.text
-                  )}
+                <div className="mt-10 font-display font-bold text-[#111827] tracking-[-0.04em] leading-[0.95] text-[44px] md:text-[38px] lg:text-[50px] xl:text-[64px]">
+                  {s.text}
                 </div>
                 <div className="mt-3 text-[15px] font-semibold leading-snug text-[#252525]">
                   {s.label}

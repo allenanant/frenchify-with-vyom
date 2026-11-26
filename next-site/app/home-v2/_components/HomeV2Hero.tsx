@@ -56,7 +56,7 @@ export default function HomeV2Hero() {
           <motion.div style={{ y: titleY }} className="lg:col-span-7 relative z-10">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-3.5 py-1.5 shadow-[0_8px_24px_-12px_rgba(37,99,235,0.25)]">
               <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-blue-600" />
-              <span className="text-[12px] font-extrabold uppercase tracking-[0.18em] text-blue-700">150+ Students Cleared TEF/TCF for Canadian PR</span>
+              <span className="text-[12px] font-extrabold uppercase tracking-[0.18em] text-blue-700">Vyom, a Pioneer in French for Canadian PR</span>
             </div>
 
             <h1 className="font-display font-bold text-[#111827] tracking-[-0.04em] leading-[0.96] text-[40px] sm:text-[54px] md:text-[46px] lg:text-[72px]">
@@ -101,7 +101,7 @@ export default function HomeV2Hero() {
             <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3 text-[13px] text-[#4b5563]">
               <span className="inline-flex items-center gap-1.5">
                 <BadgeCheck className="h-4 w-4 text-[#16a34a]" />
-                <span className="font-medium">150+ Verified TEF/TCF Results</span>
+                <span className="font-medium">Verified TEF/TCF Results</span>
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <Globe2 className="h-4 w-4 text-[#2563eb]" />
