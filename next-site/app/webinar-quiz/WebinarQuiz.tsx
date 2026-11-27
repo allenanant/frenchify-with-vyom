@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import Script from 'next/script';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import Countdown from '@/components/webinar/Countdown';
+import FunnelFooter from '@/components/webinar/FunnelFooter';
 import { WebinarDateBadge } from '@/components/webinar/FunnelShell';
 import { Label } from '@/components/webinar/ui';
 import { PIXEL_ID } from '@/components/webinar/WebinarPixel';
@@ -105,11 +107,14 @@ export default function WebinarQuiz({
   formSrc,
   tracking,
   displayDate,
+  startsAt,
 }: {
   formId: string;
   formSrc: string;
   tracking: Record<string, string>;
   displayDate: string;
+  /** ISO start time, for the same countdown as /webinar-form/. */
+  startsAt: string;
 }) {
   const [token, setToken] = useState('');
   const [answers, setAnswers] = useState<QuizAnswerIndexes>({});
@@ -235,9 +240,11 @@ export default function WebinarQuiz({
   const canGoBack = onForm || cur > 0;
 
   return (
-    <div className="flex min-h-[100svh] flex-col bg-fnl-surface sm:bg-fnl-surface-alt">
-      {/* Sticky progress. Always on screen, so the visitor knows how close
-          the end is without scrolling. */}
+    <div className={`flex min-h-[100svh] flex-col ${onForm ? 'bg-fnl-surface-alt' : 'bg-fnl-surface sm:bg-fnl-surface-alt'}`}>
+      {/* Sticky progress on the quiz steps, so the visitor knows how close
+          the end is without scrolling. The last step drops it, to match
+          /webinar-form/ exactly; "Change my answers" sits under the card. */}
+      {!onForm && (
       <header className="sticky top-0 z-30 border-b border-fnl-line bg-fnl-surface/95 backdrop-blur supports-[backdrop-filter]:bg-fnl-surface/85">
         <div className="mx-auto flex h-14 w-full max-w-[640px] items-center justify-between gap-3 px-4">
           <button
@@ -269,8 +276,16 @@ export default function WebinarQuiz({
           />
         </div>
       </header>
+      )}
 
-      <main className="relative mx-auto w-full max-w-[640px] flex-1 px-4 pb-10 pt-5 sm:my-10 sm:flex-none sm:rounded-[14px] sm:border sm:border-fnl-line sm:bg-fnl-surface sm:px-10 sm:pb-12 sm:pt-10">
+      <main
+        className={
+          onForm
+            ? // FunnelShell's main around its 640px card.
+              'relative mx-auto w-full max-w-[680px] flex-1 px-5 py-10 sm:py-14'
+            : 'relative mx-auto w-full max-w-[640px] flex-1 px-4 pb-10 pt-5 sm:my-10 sm:flex-none sm:rounded-[14px] sm:border sm:border-fnl-line sm:bg-fnl-surface sm:px-10 sm:pb-12 sm:pt-10'
+        }
+      >
         {!onForm && (
           <div>
             {cur === 0 && (
@@ -341,17 +356,32 @@ export default function WebinarQuiz({
             /webinar-form/, and the last step then opens with no wait.
             h-0 + overflow-hidden keeps the hidden form from adding page
             height; it still lays out at the real width, so GHL sizes it right. */}
+        {/* The last step is a copy of /webinar-form/ (FunnelShell card, same
+            logo, heading, sentence, date box, form box, note and countdown),
+            so it looks exactly like the main Sunday / Black Friday funnel
+            (Allen, 27 Nov). Only classes change between hidden and shown:
+            a new wrapper element here would remount the iframe. */}
         <div
-          className={onForm ? '' : 'pointer-events-none absolute inset-x-4 top-0 h-0 overflow-hidden opacity-0 sm:inset-x-10'}
+          className={
+            onForm
+              ? 'w-full rounded-[14px] border border-fnl-line bg-fnl-surface p-7 text-center sm:p-11'
+              : 'pointer-events-none absolute inset-x-5 top-0 h-0 overflow-hidden p-7 opacity-0'
+          }
           aria-hidden={!onForm}
           inert={!onForm}
         >
-          <p className="text-[13px] font-semibold uppercase tracking-[0.08em] text-fnl-primary">Last step</p>
-          <h2 className="mt-1.5 font-display text-[24px] font-extrabold leading-[1.15] text-fnl-ink sm:text-[28px]">
-            Save your free seat
+          <Image
+            src={LOGO}
+            alt="Frenchify with Vyom"
+            width={132}
+            height={38}
+            className="mx-auto mb-6 h-[38px] w-auto"
+          />
+          <h2 className="font-display text-[26px] font-extrabold leading-[1.1] tracking-[-0.015em] text-fnl-ink sm:text-[34px]">
+            You&apos;re Almost In!
           </h2>
-          <p className="mt-1.5 text-[16px] leading-[1.5] text-fnl-body">
-            Enter your details below. We send the workshop link to your email and WhatsApp.
+          <p className="mt-3 text-[17px] leading-[1.55] text-fnl-body">
+            Confirm your details below to secure your spot for this exclusive Canadian PR workshop.
           </p>
 
           <WebinarDateBadge date={displayDate} />
@@ -360,7 +390,7 @@ export default function WebinarQuiz({
               the reserved height on the wrapper so nothing below it jumps.
               form_embed.js sizes the iframe to the full form height, so the
               form has no scrollbar of its own. */}
-          <div className="-mx-1 rounded-[10px] border border-fnl-line bg-fnl-surface" style={FORM_BOX}>
+          <div className="rounded-[10px] border border-fnl-line bg-fnl-surface" style={FORM_BOX}>
             <iframe
               src={formSrc}
               id={`inline-${formId}`}
@@ -382,11 +412,27 @@ export default function WebinarQuiz({
             <Script src="https://link.msgsndr.com/js/form_embed.js" strategy="afterInteractive" />
           </div>
 
-          <p className="mt-5 text-center text-[14px] leading-[1.5] text-fnl-mute">
+          <p className="mt-5 text-[14px] leading-[1.5] text-fnl-mute">
             Your details go straight to Frenchify with Vyom. No spam, and you can leave the WhatsApp group any time.
           </p>
+
+          <Countdown targetIso={startsAt} expiredLabel="The workshop is starting" className="mt-7" />
         </div>
+
+        {onForm && (
+          <div className="mt-4 text-center">
+            <button
+              type="button"
+              onClick={goBack}
+              className="rounded-[10px] px-3 py-2.5 text-[15px] font-semibold text-fnl-mute transition-colors hover:text-fnl-ink"
+            >
+              &larr; Change my answers
+            </button>
+          </div>
+        )}
       </main>
+
+      <FunnelFooter className="border-t-0 bg-transparent" />
     </div>
   );
 }

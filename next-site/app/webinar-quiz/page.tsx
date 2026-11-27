@@ -14,7 +14,6 @@
  */
 
 import type { Metadata, Viewport } from 'next';
-import FunnelFooter from '@/components/webinar/FunnelFooter';
 import WebinarPixel from '@/components/webinar/WebinarPixel';
 import { GHL_WEBINAR_FORM_ID, getWebinar } from '@/lib/webinar';
 import { trackingQuery } from '@/lib/webinar-tracking';
@@ -54,8 +53,8 @@ export default async function WebinarQuizPage({
         formSrc={formSrc}
         tracking={Object.fromEntries(new URLSearchParams(tracking.slice(1)))}
         displayDate={webinar.displayDate}
+        startsAt={webinar.startsAt}
       />
-      <FunnelFooter />
     </>
   );
 }
