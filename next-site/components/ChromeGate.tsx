@@ -27,6 +27,9 @@ const BARE_PREFIXES = [
   '/webinar',
   // Black Friday 2026 landing page. Same funnel, same rules.
   '/black-friday-webinar',
+  // The quiz in front of the webinar form (paid traffic). It carries its own
+  // header and FunnelFooter.
+  '/quiz-webinar',
 ];
 
 /**

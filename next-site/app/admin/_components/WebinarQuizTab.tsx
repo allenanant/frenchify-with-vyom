@@ -5,7 +5,7 @@ import { Download, Loader2, RefreshCw, Search } from 'lucide-react';
 import { QUIZ_QUESTIONS, quizSequence, type QuizAnswerIndexes } from '@/lib/webinar-quiz';
 
 /**
- * Website Admin → Quiz. Every visit to /webinar-quiz/, newest first: the
+ * Website Admin → Quiz. Every visit to /quiz-webinar/, newest first: the
  * answers, how far the person got, and whether the answers reached their GHL
  * contact. Admins only (the API checks), because rows hold contact details.
  */
@@ -155,7 +155,7 @@ export default function WebinarQuizTab({ onError }: { onError: (text: string) =>
       <div className="rounded-2xl border border-gray-200 bg-white p-5">
         <h2 className="font-display text-lg font-bold text-brand-ink">Webinar quiz answers</h2>
         <p className="mt-1 text-sm text-gray-600">
-          From <a className="font-semibold text-brand-blue underline" href="/webinar-quiz/" target="_blank" rel="noopener">/webinar-quiz/</a>.
+          From <a className="font-semibold text-brand-blue underline" href="/quiz-webinar/" target="_blank" rel="noopener">/quiz-webinar/</a>.
           Each row is one visit. People who sign up also get their answers as a note and tags (wq-…) on their GHL contact.
         </p>
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">

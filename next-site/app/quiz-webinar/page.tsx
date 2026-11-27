@@ -1,5 +1,5 @@
 /**
- * /webinar-quiz/ — Vyom's quiz in front of the webinar registration form.
+ * /quiz-webinar/ — Vyom's quiz in front of the webinar registration form.
  *
  * The visitor answers the quiz one question at a time. The last step is the
  * same GHL form 3APCQqdqGuJSH8iTWgS1 that /webinar-form/ embeds, so a

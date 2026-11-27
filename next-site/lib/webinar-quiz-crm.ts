@@ -48,7 +48,7 @@ async function findContact(token: string, email: string) {
 
 function noteBody(row: db.QuizRow) {
   const indexes = row.answers as QuizAnswerIndexes;
-  const lines = ['Webinar quiz answers (frenchifywithvyom.com/webinar-quiz/)', ''];
+  const lines = ['Webinar quiz answers (frenchifywithvyom.com/quiz-webinar/)', ''];
   for (const q of QUIZ_QUESTIONS) {
     const i = indexes[q.id];
     if (i === undefined) continue;
