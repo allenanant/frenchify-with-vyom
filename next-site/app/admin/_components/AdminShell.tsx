@@ -2,17 +2,18 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Megaphone, Trophy, CalendarClock, Star, LogOut, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Megaphone, Trophy, CalendarClock, Star, ListChecks, LogOut, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { adminSignOut } from '@/lib/content-admin/actions';
 import type { AdminAnnouncement, AdminWallEntry } from '@/lib/content-admin/content';
 import ResultsTab from './ResultsTab';
 import AnnouncementsTab from './AnnouncementsTab';
 import WebinarTab, { type WebinarAdminState } from './WebinarTab';
 import InstructorReviewsTab from './InstructorReviewsTab';
+import WebinarQuizTab from './WebinarQuizTab';
 
 export type Banner = { kind: 'ok' | 'error'; text: string } | null;
 
-type TabId = 'announcements' | 'results' | 'webinar' | 'reviews';
+type TabId = 'announcements' | 'results' | 'webinar' | 'reviews' | 'quiz';
 
 type Props = {
   userName: string;
@@ -32,8 +33,8 @@ export default function AdminShell({ userName, isAdmin, announcements, wall, web
     const q = new URLSearchParams(window.location.search).get('tab');
     if (q === 'results' || q === 'webinar' || q === 'announcements') {
       setTab(q);
-    } else if (q === 'reviews' && isAdmin) {
-      setTab('reviews');
+    } else if ((q === 'reviews' || q === 'quiz') && isAdmin) {
+      setTab(q);
     }
   }, [isAdmin]);
 
@@ -112,6 +113,11 @@ export default function AdminShell({ userName, isAdmin, announcements, wall, web
               <Star className="h-4 w-4 sm:h-5 sm:w-5" /> Reviews
             </button>
           )}
+          {isAdmin && (
+            <button className={tabBtn(tab === 'quiz')} onClick={() => setTab('quiz')}>
+              <ListChecks className="h-4 w-4 sm:h-5 sm:w-5" /> Quiz
+            </button>
+          )}
         </div>
 
         {tab === 'announcements' && (
@@ -120,6 +126,7 @@ export default function AdminShell({ userName, isAdmin, announcements, wall, web
         {tab === 'results' && <ResultsTab wall={wall} onDone={done} onError={fail} />}
         {tab === 'webinar' && <WebinarTab initial={webinar} onDone={done} onError={fail} />}
         {tab === 'reviews' && isAdmin && <InstructorReviewsTab onDone={done} onError={fail} />}
+        {tab === 'quiz' && isAdmin && <WebinarQuizTab onError={fail} />}
       </div>
     </main>
   );

@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 /** Same dataset as GHL form 3APCQqdqGuJSH8iTWgS1. This is a public ID. */
-const PIXEL_ID = '710663761860853';
+export const PIXEL_ID = '710663761860853';
 
 type PixelWindow = Window & { fbq?: (...args: unknown[]) => void };
 
